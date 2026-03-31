@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>弋果美語太平新光分校 | Eagle American English Institute</title>
+<meta name="description" content="弋果美語太平新光分校，全外師、全美語、美加學制，劍橋英檢內建。台中太平區最專業的兒童美語教育機構。">
+<meta property="og:title" content="弋果美語太平新光分校">
+<meta property="og:description" content="讓孩子的英文，成為真正的超能力。全外師｜全美語｜美加學制｜劍橋英檢內建">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;scroll-behavior:smooth;scroll-padding-top:80px}
+body{min-height:100dvh;line-height:1.6;font-family:'Noto Sans TC','Plus Jakarta Sans',sans-serif;color:#2D3436;background-color:#F8F6F3}
+img,picture,video,canvas,svg{display:block;max-width:100%;height:auto}
+input,button,textarea,select{font:inherit;color:inherit}
+h1,h2,h3,h4,h5,h6{text-wrap:balance;line-height:1.2}
+p,li,figcaption{text-wrap:pretty}
+button{cursor:pointer;background:none;border:none}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+
+/* ========== DESIGN TOKENS ========== */
+:root{
+  --green:#2B7A4B;
+  --green-dark:#1E5C37;
+  --green-light:#E8F5EE;
+  --green-50:#f0faf4;
+  --orange:#E8863A;
+  --orange-dark:#D06E25;
+  --orange-light:#FFF3EB;
+  --blue:#4A90D9;
+  --blue-light:#EBF3FC;
+  --bg:#F8F6F3;
+  --bg-dark:#1E2A20;
+  --text:#2D3436;
+  --text-muted:#7B8794;
+  --surface:#FFFFFF;
+  --surface-dark:#F0EDE8;
+  --font-display:'Plus Jakarta Sans','Noto Sans TC',sans-serif;
+  --font-body:'Noto Sans TC','Plus Jakarta Sans',sans-serif;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:16px;
+  --radius-xl:24px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:0 12px 32px rgba(0,0,0,0.12);
+  --transition:180ms cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ========== UTILITIES ========== */
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+.section-padding{padding:80px 0}
+.section-title{font-family:var(--font-display);font-size:clamp(1.75rem,1.2rem+2vw,2.5rem);font-weight:800;text-align:center;margin-bottom:16px;color:var(--text)}
+.section-subtitle{text-align:center;color:var(--text-muted);font-size:1rem;max-width:600px;margin:0 auto 48px;line-height:1.7}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--radius-lg);font-weight:700;font-size:0.95rem;transition:all var(--transition);cursor:pointer;border:none;text-decoration:none}
+.btn-primary{background:var(--orange);color:#fff}
+.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,134,58,0.35)}
+.btn-secondary{background:var(--surface);color:var(--green);border:2px solid var(--green)}
+.btn-secondary:hover{background:var(--green);color:#fff;transform:translateY(-2px)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 6px 20px rgba(43,122,75,0.35)}
+
+/* ========== STICKY NAV ========== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(248,246,243,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:box-shadow 0.3s ease}
+.nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1200px;margin:0 auto;padding:0 20px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:var(--green)}
+.nav-logo svg{flex-shrink:0}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1.2}
+.nav-logo-text span:first-child{font-size:1.05rem;letter-spacing:-0.02em}
+.nav-logo-text span:last-child{font-size:0.7rem;color:var(--text-muted);font-weight:500}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-links a{font-size:0.88rem;font-weight:500;color:var(--text);padding:8px 14px;border-radius:var(--radius-sm);transition:all var(--transition)}
+.nav-links a:hover{color:var(--green);background:var(--green-light)}
+.nav-cta{background:var(--orange)!important;color:#fff!important;font-weight:700!important;padding:10px 20px!important;border-radius:var(--radius-md)!important}
+.nav-cta:hover{background:var(--orange-dark)!important;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--surface-dark);padding:16px 20px;z-index:999;box-shadow:var(--shadow-md)}
+.mobile-menu.active{display:flex;flex-direction:column;gap:4px}
+.mobile-menu a{display:block;padding:12px 16px;font-size:0.95rem;font-weight:500;color:var(--text);border-radius:var(--radius-sm);transition:all var(--transition)}
+.mobile-menu a:hover{background:var(--green-light);color:var(--green)}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+}
+
+/* ========== HERO ========== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 20px 80px;position:relative;overflow:hidden;background:linear-gradient(160deg,#E8F5EE 0%,#F8F6F3 30%,#FFF3EB 60%,#EBF3FC 100%)}
+.hero::before{content:'';position:absolute;top:-40%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(43,122,75,0.08) 0%,transparent 70%);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-30%;left:-15%;width:500px;height:500px;background:radial-gradient(circle,rgba(74,144,217,0.06) 0%,transparent 70%);border-radius:50%}
+.hero-content{position:relative;z-index:1;max-width:800px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface);padding:8px 20px;border-radius:var(--radius-xl);font-size:0.85rem;font-weight:600;color:var(--green);margin-bottom:28px;box-shadow:var(--shadow-sm)}
+.hero-badge::before{content:'';width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,1.2rem+4vw,3.8rem);font-weight:900;color:var(--text);margin-bottom:20px;letter-spacing:-0.02em;line-height:1.15}
+.hero h1 .highlight{color:var(--green);position:relative}
+.hero h1 .highlight::after{content:'';position:absolute;bottom:2px;left:0;right:0;height:8px;background:rgba(43,122,75,0.15);border-radius:4px;z-index:-1}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:16px}
+.hero-tag{background:rgba(255,255,255,0.8);padding:6px 16px;border-radius:var(--radius-xl);font-size:0.88rem;font-weight:600;color:var(--text);border:1px solid rgba(43,122,75,0.15)}
+.hero-school{font-size:1.1rem;font-weight:700;color:var(--green);margin-bottom:32px}
+.hero-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.hero-decor{position:absolute;z-index:0}
+.hero-decor-1{top:15%;left:8%;width:60px;height:60px;border:3px solid rgba(43,122,75,0.12);border-radius:50%;animation:float 6s ease-in-out infinite}
+.hero-decor-2{top:25%;right:12%;width:40px;height:40px;background:rgba(232,134,58,0.1);border-radius:var(--radius-md);animation:float 8s ease-in-out infinite 1s;transform:rotate(45deg)}
+.hero-decor-3{bottom:20%;left:15%;width:30px;height:30px;background:rgba(74,144,217,0.1);border-radius:50%;animation:float 7s ease-in-out infinite 0.5s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+
+/* ========== WHY EAGLE ========== */
+.why-eagle{background:var(--surface)}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.feature-card{background:var(--bg);border-radius:var(--radius-lg);padding:32px 24px;text-align:center;transition:all var(--transition);border:1px solid transparent}
+.feature-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--green-light)}
+.feature-icon{width:64px;height:64px;margin:0 auto 20px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:1.8rem}
+.feature-icon.green{background:var(--green-light);color:var(--green)}
+.feature-icon.orange{background:var(--orange-light);color:var(--orange)}
+.feature-icon.blue{background:var(--blue-light);color:var(--blue)}
+.feature-card h3{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:10px;color:var(--text)}
+.feature-card p{font-size:0.9rem;color:var(--text-muted);line-height:1.6}
+@media(max-width:768px){.features-grid{grid-template-columns:repeat(2,1fr);gap:16px}.feature-card{padding:24px 16px}}
+@media(max-width:480px){.features-grid{grid-template-columns:1fr}}
+
+/* ========== COURSES ========== */
+.courses-section{background:var(--bg)}
+.course-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:40px}
+.course-tab{padding:10px 20px;border-radius:var(--radius-xl);font-size:0.9rem;font-weight:600;color:var(--text-muted);background:var(--surface);border:2px solid var(--surface-dark);cursor:pointer;transition:all var(--transition)}
+.course-tab:hover{border-color:var(--green);color:var(--green)}
+.course-tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+.course-panel{display:none;max-width:900px;margin:0 auto}
+.course-panel.active{display:block;animation:fadeInUp 0.4s ease}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.course-content{background:var(--surface);border-radius:var(--radius-lg);padding:40px;box-shadow:var(--shadow-sm);border:1px solid rgba(0,0,0,0.04)}
+.course-header{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.course-badge{width:56px;height:56px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:#fff}
+.course-header h3{font-family:var(--font-display);font-size:1.4rem;font-weight:800}
+.course-header h3 small{display:block;font-size:0.85rem;font-weight:500;color:var(--text-muted);margin-top:4px}
+.course-details{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px}
+.course-detail{padding:20px;background:var(--bg);border-radius:var(--radius-md)}
+.course-detail h4{font-size:0.8rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
+.course-detail p{font-size:0.95rem;color:var(--text);line-height:1.6}
+@media(max-width:768px){.course-details{grid-template-columns:1fr}.course-content{padding:24px}.course-tabs{gap:6px}.course-tab{padding:8px 14px;font-size:0.82rem}}
+
+/* ========== CAMP ========== */
+.camp-section{background:linear-gradient(160deg,var(--green) 0%,#1E5C37 100%);color:#fff;position:relative;overflow:hidden}
+.camp-section::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.05) 0%,transparent 70%);border-radius:50%}
+.camp-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.camp-text h2{font-family:var(--font-display);font-size:clamp(1.75rem,1.2rem+2vw,2.5rem);font-weight:800;margin-bottom:16px}
+.camp-text p{font-size:1rem;line-height:1.7;opacity:0.9;margin-bottom:24px}
+.camp-features{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+.camp-feature{display:flex;align-items:center;gap:12px;font-size:0.95rem;font-weight:500}
+.camp-feature-dot{width:8px;height:8px;background:var(--orange);border-radius:50%;flex-shrink:0}
+.camp-visual{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.camp-card{background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border-radius:var(--radius-lg);padding:24px;border:1px solid rgba(255,255,255,0.15);text-align:center;transition:all var(--transition)}
+.camp-card:hover{background:rgba(255,255,255,0.15);transform:translateY(-4px)}
+.camp-card-icon{font-size:2rem;margin-bottom:12px}
+.camp-card h4{font-size:0.95rem;font-weight:700;margin-bottom:6px}
+.camp-card p{font-size:0.8rem;opacity:0.8}
+@media(max-width:768px){.camp-inner{grid-template-columns:1fr}.camp-visual{grid-template-columns:1fr 1fr}}
+
+/* ========== SEMINAR ========== */
+.seminar-section{background:var(--surface)}
+.seminar-cards{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:800px;margin:0 auto}
+.seminar-card{background:var(--bg);border-radius:var(--radius-lg);padding:40px;text-align:center;border:2px solid transparent;transition:all var(--transition)}
+.seminar-card:hover{border-color:var(--green);box-shadow:var(--shadow-md);transform:translateY(-4px)}
+.seminar-card-icon{width:72px;height:72px;margin:0 auto 20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem}
+.seminar-card-icon.semester{background:var(--green-light);color:var(--green)}
+.seminar-card-icon.camp{background:var(--orange-light);color:var(--orange)}
+.seminar-card h3{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:10px}
+.seminar-card p{font-size:0.9rem;color:var(--text-muted);line-height:1.6;margin-bottom:24px}
+@media(max-width:600px){.seminar-cards{grid-template-columns:1fr}}
+
+/* ========== BOOKING ========== */
+.booking-section{background:var(--bg)}
+.booking-wrap{max-width:900px;margin:0 auto;background:var(--surface);border-radius:var(--radius-lg);padding:40px;box-shadow:var(--shadow-sm)}
+.booking-desc{text-align:center;color:var(--text-muted);font-size:0.95rem;margin-bottom:32px}
+.calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.calendar-header h3{font-family:var(--font-display);font-size:1.2rem;font-weight:700}
+.calendar-nav{display:flex;gap:8px}
+.calendar-nav button{width:40px;height:40px;border-radius:var(--radius-sm);border:1px solid var(--surface-dark);display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all var(--transition)}
+.calendar-nav button:hover{background:var(--green-light);border-color:var(--green);color:var(--green)}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:24px}
+.calendar-day-header{text-align:center;font-size:0.75rem;font-weight:700;color:var(--text-muted);padding:8px 0;text-transform:uppercase}
+.calendar-day{text-align:center;padding:10px 4px;border-radius:var(--radius-sm);font-size:0.9rem;cursor:pointer;transition:all var(--transition);position:relative;min-height:42px;display:flex;align-items:center;justify-content:center}
+.calendar-day:hover:not(.disabled):not(.empty){background:var(--green-light);color:var(--green)}
+.calendar-day.today{font-weight:700;border:2px solid var(--green)}
+.calendar-day.selected{background:var(--green);color:#fff;font-weight:700}
+.calendar-day.disabled{color:#ccc;cursor:not-allowed;background:rgba(0,0,0,0.02)}
+.calendar-day.empty{cursor:default}
+.calendar-day.has-slots::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;background:var(--orange);border-radius:50%}
+.calendar-day.selected.has-slots::after{background:#fff}
+.slots-panel{border-top:1px solid var(--surface-dark);padding-top:24px;display:none}
+.slots-panel.active{display:block;animation:fadeInUp 0.3s ease}
+.slots-panel h4{font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--text)}
+.slots-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.slot-btn{padding:10px 20px;border-radius:var(--radius-md);border:2px solid var(--green);color:var(--green);font-weight:600;font-size:0.9rem;cursor:pointer;transition:all var(--transition)}
+.slot-btn:hover:not(.booked){background:var(--green);color:#fff}
+.slot-btn.selected{background:var(--green);color:#fff}
+.slot-btn.booked{border-color:#ccc;color:#999;cursor:not-allowed;background:#f5f5f5}
+.booking-form{display:none;border-top:1px solid var(--surface-dark);padding-top:24px;margin-top:24px}
+.booking-form.active{display:block;animation:fadeInUp 0.3s ease}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:0.85rem;font-weight:600;color:var(--text)}
+.form-group input,.form-group select,.form-group textarea{padding:12px 16px;border:2px solid var(--surface-dark);border-radius:var(--radius-md);font-size:0.95rem;transition:all var(--transition);background:var(--bg)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--green);background:#fff}
+.form-group textarea{resize:vertical;min-height:80px}
+.booking-confirm{display:none;text-align:center;padding:40px 20px}
+.booking-confirm.active{display:block;animation:fadeInUp 0.4s ease}
+.booking-confirm-icon{width:72px;height:72px;margin:0 auto 20px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--green)}
+.booking-confirm h3{font-size:1.2rem;font-weight:700;margin-bottom:10px}
+.booking-confirm p{color:var(--text-muted);font-size:0.95rem}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}.booking-wrap{padding:24px}}
+
+/* ========== GIFT PACKAGE ========== */
+.gift-section{background:var(--surface)}
+.gift-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:60px}
+.gift-card{background:var(--bg);border-radius:var(--radius-lg);padding:24px 16px;text-align:center;transition:all var(--transition);border:1px solid transparent}
+.gift-card:hover{border-color:var(--orange);transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.gift-card-icon{font-size:2.2rem;margin-bottom:12px}
+.gift-card h4{font-size:0.95rem;font-weight:700;color:var(--text)}
+@media(max-width:768px){.gift-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:480px){.gift-grid{grid-template-columns:repeat(2,1fr)}}
+.plans-title{font-family:var(--font-display);font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:32px;color:var(--text)}
+.plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto}
+.plan-card{border-radius:var(--radius-lg);padding:36px;position:relative;overflow:hidden;transition:all var(--transition)}
+.plan-card:hover{transform:translateY(-4px)}
+.plan-a{background:linear-gradient(135deg,var(--green),#1E5C37);color:#fff;box-shadow:0 8px 30px rgba(43,122,75,0.3)}
+.plan-b{background:var(--bg);border:2px solid var(--surface-dark)}
+.plan-badge{display:inline-block;padding:4px 14px;border-radius:var(--radius-xl);font-size:0.75rem;font-weight:700;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em}
+.plan-a .plan-badge{background:rgba(255,255,255,0.2);color:#fff}
+.plan-b .plan-badge{background:var(--surface-dark);color:var(--text-muted)}
+.plan-card h3{font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:20px}
+.plan-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;font-size:0.95rem;line-height:1.5}
+.plan-item-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;margin-top:2px}
+.plan-a .plan-item-icon{background:rgba(255,255,255,0.2);color:#fff}
+.plan-b .plan-item-icon{background:var(--surface-dark);color:var(--text-muted)}
+.plan-highlight{margin-top:24px;padding:16px;border-radius:var(--radius-md);font-size:0.9rem;font-weight:700;text-align:center}
+.plan-a .plan-highlight{background:rgba(255,255,255,0.15)}
+.plan-b .plan-highlight{background:var(--surface-dark);color:var(--text-muted)}
+@media(max-width:600px){.plans-grid{grid-template-columns:1fr}}
+
+/* ========== INQUIRY FORM ========== */
+.inquiry-section{background:var(--bg)}
+.inquiry-wrap{max-width:800px;margin:0 auto;background:var(--surface);border-radius:var(--radius-lg);padding:48px;box-shadow:var(--shadow-sm)}
+.inquiry-wrap h2{font-family:var(--font-display);font-size:1.6rem;font-weight:800;text-align:center;margin-bottom:8px}
+.inquiry-subtitle{text-align:center;color:var(--text-muted);font-size:0.9rem;margin-bottom:32px}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:10px}
+.checkbox-label{display:flex;align-items:center;gap:6px;padding:8px 16px;border:2px solid var(--surface-dark);border-radius:var(--radius-md);cursor:pointer;font-size:0.9rem;transition:all var(--transition)}
+.checkbox-label:hover{border-color:var(--green)}
+.checkbox-label input{width:16px;height:16px;accent-color:var(--green)}
+.checkbox-label:has(input:checked){background:var(--green-light);border-color:var(--green);color:var(--green);font-weight:600}
+.inquiry-confirm{display:none;text-align:center;padding:40px 20px}
+.inquiry-confirm.active{display:block;animation:fadeInUp 0.4s ease}
+.inquiry-confirm-icon{width:72px;height:72px;margin:0 auto 20px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--green)}
+.inquiry-confirm h3{font-size:1.2rem;font-weight:700;margin-bottom:10px}
+.inquiry-confirm p{color:var(--text-muted);font-size:0.95rem;line-height:1.7}
+@media(max-width:600px){.inquiry-wrap{padding:24px}}
+
+/* ========== SOCIAL ========== */
+.social-section{background:var(--surface)}
+.social-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:800px;margin:0 auto}
+.social-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 24px;border-radius:var(--radius-lg);background:var(--bg);transition:all var(--transition);border:2px solid transparent}
+.social-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.social-card.ig:hover{border-color:#E4405F}
+.social-card.fb:hover{border-color:#1877F2}
+.social-card.line:hover{border-color:#06C755}
+.social-card-icon{width:64px;height:64px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.social-card.ig .social-card-icon{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+.social-card.fb .social-card-icon{background:#1877F2;color:#fff}
+.social-card.line .social-card-icon{background:#06C755;color:#fff}
+.social-card h4{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:6px;color:var(--text)}
+.social-card p{font-size:0.85rem;color:var(--text-muted)}
+@media(max-width:600px){.social-grid{grid-template-columns:1fr}}
+
+/* ========== FOOTER ========== */
+.footer{background:var(--bg-dark);color:#fff;padding:60px 0 0}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto;padding:0 20px 40px}
+.footer h4{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:16px}
+.footer-info p{font-size:0.9rem;line-height:1.8;opacity:0.85}
+.footer-links a{display:block;font-size:0.9rem;padding:4px 0;opacity:0.75;transition:all var(--transition)}
+.footer-links a:hover{opacity:1;color:var(--orange)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding:20px;text-align:center;font-size:0.8rem;opacity:0.6}
+.back-to-top{position:fixed;bottom:24px;right:24px;width:48px;height:48px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-lg);cursor:pointer;transition:all var(--transition);opacity:0;pointer-events:none;z-index:900;font-size:1.2rem}
+.back-to-top.visible{opacity:1;pointer-events:auto}
+.back-to-top:hover{background:var(--green-dark);transform:translateY(-3px)}
+@media(max-width:768px){.footer-inner{grid-template-columns:1fr}}
+
+/* ========== SCROLL ANIMATIONS ========== */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ========== FORM VALIDATION ========== */
+.form-group input.error,.form-group select.error,.form-group textarea.error{border-color:#e74c3c}
+.error-msg{font-size:0.75rem;color:#e74c3c;display:none}
+.error-msg.show{display:block}
+</style>
+</head>
+<body>
+
+<!-- ========== NAVIGATION ========== -->
+<nav class="nav" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="弋果美語">
+        <circle cx="20" cy="20" r="19" stroke="#2B7A4B" stroke-width="2" fill="none"/>
+        <path d="M12 24 L20 12 L28 24" stroke="#2B7A4B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M15 21 L20 15 L25 21" stroke="#E8863A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M20 12 L20 8" stroke="#2B7A4B" stroke-width="2" stroke-linecap="round"/>
+        <path d="M10 26 L20 28 L30 26" stroke="#2B7A4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="17" cy="20" r="1.2" fill="#2B7A4B"/>
+        <circle cx="23" cy="20" r="1.2" fill="#2B7A4B"/>
+      </svg>
+      <div class="nav-logo-text">
+        <span>弋果美語</span>
+        <span>太平新光分校</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#courses">課程介紹</a>
+      <a href="#seminar">說明會報名</a>
+      <a href="#booking">預約參訪</a>
+      <a href="#inquiry">問課諮詢</a>
+      <a href="#contact">聯繫我們</a>
+      <a href="#booking" class="nav-cta">立即報名</a>
+    </div>
+    <button class="hamburger" onclick="toggleMobile()" aria-label="選單">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#courses" onclick="closeMobile()">課程介紹</a>
+  <a href="#seminar" onclick="closeMobile()">說明會報名</a>
+  <a href="#booking" onclick="closeMobile()">預約參訪</a>
+  <a href="#inquiry" onclick="closeMobile()">問課諮詢</a>
+  <a href="#contact" onclick="closeMobile()">聯繫我們</a>
+  <a href="#booking" class="btn btn-primary" style="text-align:center;margin-top:8px" onclick="closeMobile()">立即報名</a>
+</div>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="hero">
+  <div class="hero-decor hero-decor-1"></div>
+  <div class="hero-decor hero-decor-2"></div>
+  <div class="hero-decor hero-decor-3"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🎓 2026 招生中</div>
+    <h1>讓孩子的英文，<br>成為真正的<span class="highlight">超能力</span></h1>
+    <div class="hero-tags">
+      <span class="hero-tag">全外師</span>
+      <span class="hero-tag">全美語</span>
+      <span class="hero-tag">美加學制</span>
+      <span class="hero-tag">劍橋英檢內建</span>
+    </div>
+    <p class="hero-school">弋果美語太平新光分校</p>
+    <div class="hero-buttons">
+      <a href="#booking" class="btn btn-primary">免費預約體驗 →</a>
+      <a href="#courses" class="btn btn-secondary">了解課程</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHY EAGLE ========== -->
+<section class="why-eagle section-padding" id="why">
+  <div class="container">
+    <h2 class="section-title reveal">為什麼選弋果？</h2>
+    <p class="section-subtitle reveal">專業、信任、成果——給孩子最好的英語學習環境</p>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon green">👨‍🏫</div>
+        <h3>100% 全外師教學</h3>
+        <p>純正美語環境，母語式沉浸學習，讓孩子自然開口說英文</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon blue">📜</div>
+        <h3>劍橋英檢內建</h3>
+        <p>課程內建劍橋檢定，不另收費，學習成果有國際認證</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon orange">📚</div>
+        <h3>安親課輔一站式</h3>
+        <p>英文＋課業，一次搞定，家長省時省力更安心</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon green">📈</div>
+        <h3>明確晉級路徑</h3>
+        <p>Grade 制度，進度看得見，每一步成長都有紀錄</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COURSES ========== -->
+<section class="courses-section section-padding" id="courses">
+  <div class="container">
+    <h2 class="section-title reveal">課程介紹</h2>
+    <p class="section-subtitle reveal">多元班型，量身打造最適合孩子的英語學習計畫</p>
+    <div class="course-tabs reveal">
+      <button class="course-tab active" data-course="immersion">浸潤班</button>
+      <button class="course-tab" data-course="elite">菁英班</button>
+      <button class="course-tab" data-course="standard">標準班</button>
+      <button class="course-tab" data-course="gept">全民英檢班</button>
+      <button class="course-tab" data-course="afterschool">安親課輔班</button>
+      <button class="course-tab" data-course="daycare">托育班</button>
+    </div>
+
+    <div class="course-panel active" id="panel-immersion">
+      <div class="course-content">
+        <div class="course-header">
+          <div class="course-badge" style="background:var(--green)">IM</div>
+          <h3>浸潤班 Immersion<small>沉浸式全美語，培養語感與自信</small></h3>
+        </div>
+        <div class="course-details">
+          <div class="course-detail"><h4>適合對象</h4><p>幼稚園～低年級</p></div>
+          <div class="course-detail"><h4>課程特色</h4><p>每天全美語環境，遊戲＋故事＋生活情境，自然培養英語直覺</p></div>
+          <div class="course-detail"><h4>學習成果</h4><p>自然累積聽說讀寫語感，銜接美加小學程度</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-panel" id="panel-elite">
+      <div class="course-content">
+        <div class="course-header">
+          <div class="course-badge" style="background:var(--blue)">EL</div>
+          <h3>菁英班 Elite<small>密集訓練，目標導向的英語菁英課程</small></h3>
+        </div>
+        <div class="course-details">
+          <div class="course-detail"><h4>適合對象</h4><p>國小 1～6 年級</p></div>
+          <div class="course-detail"><h4>課程特色</h4><p>密集全外師課程，美加學制同步，系統化英語學習</p></div>
+          <div class="course-detail"><h4>學習成果</h4><p>Grade 2 畢業＝國中會考精熟<br>Grade 3＝GEPT 初級</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-panel" id="panel-standard">
+      <div class="course-content">
+        <div class="course-header">
+          <div class="course-badge" style="background:var(--orange)">ST</div>
+          <h3>標準班 Standard<small>穩健學習，不增加壓力的英語進步方案</small></h3>
+        </div>
+        <div class="course-details">
+          <div class="course-detail"><h4>適合對象</h4><p>國小 1 年級～國中 3 年級</p></div>
+          <div class="course-detail"><h4>課程特色</h4><p>每週 2 天 4.5 小時，全外師教學，學習不增加壓力</p></div>
+          <div class="course-detail"><h4>學習成果</h4><p>穩固基礎，英文不落後，循序漸進提升能力</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-panel" id="panel-gept">
+      <div class="course-content">
+        <div class="course-header">
+          <div class="course-badge" style="background:#8B5CF6">GP</div>
+          <h3>全民英檢班 GEPT<small>升學英檢專攻，全面準備一次到位</small></h3>
+        </div>
+        <div class="course-details">
+          <div class="course-detail"><h4>適合對象</h4><p>需要升學英檢的學生</p></div>
+          <div class="course-detail"><h4>課程特色</h4><p>對應 GEPT 等級訓練，聽說讀寫全面準備</p></div>
+          <div class="course-detail"><h4>學習成果</h4><p>有效取得英檢證照，升學加分利器</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-panel" id="panel-afterschool">
+      <div class="course-content">
+        <div class="course-header">
+          <div class="course-badge" style="background:#10B981">AS</div>
+          <h3>安親課輔班 After-School<small>課業輔導＋英文學習，一站搞定</small></h3>
+        </div>
+        <div class="course-details">
+          <div class="course-detail"><h4>適合對象</h4><p>國小學生</p></div>
+          <div class="course-detail"><h4>課程特色</h4><p>學校課業輔導＋英文學習一站式，雙管齊下</p></div>
+          <div class="course-detail"><h4>學習成果</h4><p>課業有人顧，英文有人教，家長最安心</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-panel" id="panel-daycare">
+      <div class="course-content">
+        <div class="course-header">
+          <div class="course-badge" style="background:#F59E0B">DC</div>
+          <h3>托育班 Daycare<small>安全照護＋英語啟蒙，快樂成長</small></h3>
+        </div>
+        <div class="course-details">
+          <div class="course-detail"><h4>適合對象</h4><p>幼兒</p></div>
+          <div class="course-detail"><h4>課程特色</h4><p>安全照護環境＋英語啟蒙，在愛與關懷中學習</p></div>
+          <div class="course-detail"><h4>學習成果</h4><p>在玩樂中自然接觸英文，建立語感基礎</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CAMP ========== -->
+<section class="camp-section section-padding" id="camp">
+  <div class="container">
+    <div class="camp-inner">
+      <div class="camp-text">
+        <h2 class="reveal">🏕️ 寒暑假營隊課程</h2>
+        <p class="reveal">全英文主題式營隊，讓孩子在假期也能快樂學英文。每梯次 5 天密集英文沉浸體驗，探索科學、藝術、戶外活動等多元主題。</p>
+        <div class="camp-features reveal">
+          <div class="camp-feature"><span class="camp-feature-dot"></span>全外師帶隊，全程英語溝通</div>
+          <div class="camp-feature"><span class="camp-feature-dot"></span>科學、藝術、戶外探索多元主題</div>
+          <div class="camp-feature"><span class="camp-feature-dot"></span>每梯次 5 天密集英文沉浸</div>
+          <div class="camp-feature"><span class="camp-feature-dot"></span>小班制教學，照顧每一位孩子</div>
+        </div>
+        <a href="https://bmtech.live/f/eaglexinguang1" target="_blank" rel="noopener noreferrer" class="btn btn-primary reveal">了解營隊詳情 →</a>
+      </div>
+      <div class="camp-visual reveal">
+        <div class="camp-card"><div class="camp-card-icon">🔬</div><h4>科學探索營</h4><p>動手做實驗，用英文學科學</p></div>
+        <div class="camp-card"><div class="camp-card-icon">🎨</div><h4>藝術創作營</h4><p>發揮創意，用英文表達想法</p></div>
+        <div class="camp-card"><div class="camp-card-icon">🌲</div><h4>戶外冒險營</h4><p>走進自然，用英文認識世界</p></div>
+        <div class="camp-card"><div class="camp-card-icon">🎭</div><h4>英語戲劇營</h4><p>演出自信，用英文說故事</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SEMINAR ========== -->
+<section class="seminar-section section-padding" id="seminar">
+  <div class="container">
+    <h2 class="section-title reveal">免費線上家長說明會</h2>
+    <p class="section-subtitle reveal">了解弋果教學理念、課程規劃、學費方案，為孩子做出最好的選擇</p>
+    <div class="seminar-cards">
+      <div class="seminar-card reveal">
+        <div class="seminar-card-icon semester">📖</div>
+        <h3>學期課程說明會</h3>
+        <p>完整介紹各班型課程規劃、教學理念與學費方案，讓您全面了解弋果美語的教學優勢。</p>
+        <a href="https://bmtech.live/f/eaglexinguang1" target="_blank" rel="noopener noreferrer" class="btn btn-green">報名學期說明會 →</a>
+      </div>
+      <div class="seminar-card reveal">
+        <div class="seminar-card-icon camp">🏕️</div>
+        <h3>營隊課程說明會</h3>
+        <p>了解寒暑假營隊的主題規劃、課程時間與報名優惠，為孩子安排最充實的假期。</p>
+        <a href="https://bmtech.live/f/eaglexinguang1" target="_blank" rel="noopener noreferrer" class="btn btn-primary">報名營隊說明會 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== BOOKING SYSTEM ========== -->
+<section class="booking-section section-padding" id="booking">
+  <div class="container">
+    <h2 class="section-title reveal">預約參訪與體驗</h2>
+    <p class="section-subtitle reveal">選擇方便的時間，親自來校參觀，或讓孩子體驗一堂全外師課程</p>
+    <div class="booking-wrap reveal" id="bookingSystem">
+      <p class="booking-desc">請先選擇日期，再選擇時段。免費體驗一堂全外師課程，感受弋果教學氛圍。</p>
+      <div class="calendar-header">
+        <h3 id="calendarTitle"></h3>
+        <div class="calendar-nav">
+          <button onclick="prevMonth()" aria-label="上個月">◀</button>
+          <button onclick="nextMonth()" aria-label="下個月">▶</button>
+        </div>
+      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+      <div class="slots-panel" id="slotsPanel">
+        <h4 id="slotsDate"></h4>
+        <div class="slots-list" id="slotsList"></div>
+      </div>
+      <div class="booking-form" id="bookingForm">
+        <h4 style="margin-bottom:16px;font-weight:700">填寫預約資訊</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>預約類型 *</label>
+            <select id="bkType">
+              <option value="">請選擇</option>
+              <option value="參訪校區">參訪校區</option>
+              <option value="英文程度檢測">英文程度檢測</option>
+              <option value="課程體驗">課程體驗</option>
+            </select>
+            <span class="error-msg" id="bkTypeErr">請選擇預約類型</span>
+          </div>
+          <div class="form-group">
+            <label>想了解的班型</label>
+            <select id="bkClass">
+              <option value="">請選擇</option>
+              <option>浸潤班</option>
+              <option>菁英班</option>
+              <option>標準班</option>
+              <option>全民英檢班</option>
+              <option>安親課輔班</option>
+              <option>托育班</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>家長姓名 *</label>
+            <input type="text" id="bkParent" placeholder="請輸入姓名">
+            <span class="error-msg" id="bkParentErr">請輸入家長姓名</span>
+          </div>
+          <div class="form-group">
+            <label>聯繫電話 *</label>
+            <input type="tel" id="bkPhone" placeholder="09XX-XXX-XXX">
+            <span class="error-msg" id="bkPhoneErr">請輸入聯繫電話</span>
+          </div>
+          <div class="form-group">
+            <label>孩子姓名 *</label>
+            <input type="text" id="bkChild" placeholder="請輸入孩子姓名">
+            <span class="error-msg" id="bkChildErr">請輸入孩子姓名</span>
+          </div>
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="submitBooking()">確認預約</button>
+          </div>
+        </div>
+      </div>
+      <div class="booking-confirm" id="bookingConfirm">
+        <div class="booking-confirm-icon">✓</div>
+        <h3>預約成功！</h3>
+        <p id="confirmDetails"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GIFT PACKAGE ========== -->
+<section class="gift-section section-padding" id="gift">
+  <div class="container">
+    <h2 class="section-title reveal">課程禮包</h2>
+    <p class="section-subtitle reveal">報名即享豐富好禮，讓學習之旅從美好開始</p>
+    <div class="gift-grid reveal">
+      <div class="gift-card"><div class="gift-card-icon">🎒</div><h4>弋果專屬書包</h4></div>
+      <div class="gift-card"><div class="gift-card-icon">📚</div><h4>精選英文繪本一套</h4></div>
+      <div class="gift-card"><div class="gift-card-icon">🎫</div><h4>課程體驗券</h4></div>
+      <div class="gift-card"><div class="gift-card-icon">✏️</div><h4>學習文具禮盒</h4></div>
+      <div class="gift-card"><div class="gift-card-icon">🥤</div><h4>弋果限量水壺</h4></div>
+    </div>
+    <h3 class="plans-title reveal">🎉 早鳥優惠方案比較</h3>
+    <div class="plans-grid reveal">
+      <div class="plan-card plan-a">
+        <span class="plan-badge">★ 最推薦</span>
+        <h3>方案 A — 提前一個月報名</h3>
+        <div class="plan-item"><span class="plan-item-icon">✓</span><span>教材費折抵最高 <strong>$12,000</strong></span></div>
+        <div class="plan-item"><span class="plan-item-icon">✓</span><span>營隊課程 <strong>85 折</strong></span></div>
+        <div class="plan-item"><span class="plan-item-icon">✓</span><span>報名禮包全部贈品</span></div>
+        <div class="plan-highlight">早報一個月，多省超過 $2,000！</div>
+      </div>
+      <div class="plan-card plan-b">
+        <span class="plan-badge">一般優惠</span>
+        <h3>方案 B — 開學前報名</h3>
+        <div class="plan-item"><span class="plan-item-icon">✓</span><span>教材費折抵最高 $6,000</span></div>
+        <div class="plan-item"><span class="plan-item-icon">✓</span><span>營隊課程 9 折</span></div>
+        <div class="plan-item"><span class="plan-item-icon">✓</span><span>報名禮包全部贈品</span></div>
+        <div class="plan-highlight">開學前報名也有優惠</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== INQUIRY FORM ========== -->
+<section class="inquiry-section section-padding" id="inquiry">
+  <div class="container">
+    <div class="inquiry-wrap reveal" id="inquirySystem">
+      <h2>問課諮詢</h2>
+      <p class="inquiry-subtitle">填寫以下資料，我們將在 24 小時內與您聯繫</p>
+      <form id="inquiryForm" onsubmit="return submitInquiry(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>家長姓名 *</label>
+            <input type="text" id="iqParent" placeholder="請輸入姓名" required>
+            <span class="error-msg" id="iqParentErr">請輸入家長姓名</span>
+          </div>
+          <div class="form-group">
+            <label>聯繫電話 *</label>
+            <input type="tel" id="iqPhone" placeholder="09XX-XXX-XXX" required>
+            <span class="error-msg" id="iqPhoneErr">請輸入聯繫電話</span>
+          </div>
+          <div class="form-group">
+            <label>孩子姓名 *</label>
+            <input type="text" id="iqChild" placeholder="請輸入孩子姓名" required>
+            <span class="error-msg" id="iqChildErr">請輸入孩子姓名</span>
+          </div>
+          <div class="form-group">
+            <label>目前年級 *</label>
+            <select id="iqGrade" required>
+              <option value="">請選擇</option>
+              <option>幼幼班</option>
+              <option>小班</option>
+              <option>中班</option>
+              <option>大班</option>
+              <option>國小1年級</option>
+              <option>國小2年級</option>
+              <option>國小3年級</option>
+              <option>國小4年級</option>
+              <option>國小5年級</option>
+              <option>國小6年級</option>
+              <option>國中1年級</option>
+              <option>國中2年級</option>
+              <option>國中3年級</option>
+            </select>
+            <span class="error-msg" id="iqGradeErr">請選擇年級</span>
+          </div>
+          <div class="form-group full">
+            <label>感興趣的班型 *（可複選）</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="浸潤班">浸潤班</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="菁英班">菁英班</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="標準班">標準班</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="全民英檢班">全民英檢班</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="安親課輔班">安親課輔班</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="托育班">托育班</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="營隊">營隊</label>
+            </div>
+            <span class="error-msg" id="iqClassesErr">請至少選擇一項</span>
+          </div>
+          <div class="form-group">
+            <label>LINE ID *</label>
+            <input type="text" id="iqLine" placeholder="請輸入 LINE ID" required>
+            <span class="error-msg" id="iqLineErr">請輸入 LINE ID</span>
+          </div>
+          <div class="form-group">
+            <label>目前英文程度 *</label>
+            <select id="iqLevel" required>
+              <option value="">請選擇</option>
+              <option>零基礎</option>
+              <option>有基礎但不敢開口</option>
+              <option>學校英文中等</option>
+              <option>英文程度不錯想進階</option>
+              <option>已有英檢證照</option>
+            </select>
+            <span class="error-msg" id="iqLevelErr">請選擇英文程度</span>
+          </div>
+          <div class="form-group full">
+            <label>想問的問題（選填）</label>
+            <textarea id="iqQuestion" placeholder="有任何問題都可以在這裡告訴我們..." rows="3"></textarea>
+          </div>
+          <div class="form-group full" style="text-align:center;margin-top:8px">
+            <button type="submit" class="btn btn-primary" style="justify-content:center">送出諮詢 →</button>
+          </div>
+        </div>
+      </form>
+      <div class="inquiry-confirm" id="inquiryConfirm">
+        <div class="inquiry-confirm-icon">💌</div>
+        <h3>感謝您的諮詢！</h3>
+        <p>我們將在 24 小時內透過 LINE 或電話與您聯繫。<br>期待與您和孩子的相見！</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SOCIAL ========== -->
+<section class="social-section section-padding" id="social">
+  <div class="container">
+    <h2 class="section-title reveal">追蹤我們</h2>
+    <p class="section-subtitle reveal">關注弋果太平新光的最新消息與教學日常</p>
+    <div class="social-grid reveal">
+      <a href="https://www.instagram.com/eagle__xinguang" target="_blank" rel="noopener noreferrer" class="social-card ig">
+        <div class="social-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </div>
+        <h4>Instagram</h4>
+        <p>追蹤我們的教學日常</p>
+      </a>
+      <a href="https://www.facebook.com/eaglexinguang" target="_blank" rel="noopener noreferrer" class="social-card fb">
+        <div class="social-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </div>
+        <h4>Facebook</h4>
+        <p>掌握最新活動消息</p>
+      </a>
+      <a href="https://lin.ee/o1wzF7a" target="_blank" rel="noopener noreferrer" class="social-card line">
+        <div class="social-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.271.173-.508.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        </div>
+        <h4>LINE 官方帳號</h4>
+        <p>一對一諮詢最方便</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer" id="contact">
+  <div class="footer-inner">
+    <div class="footer-info">
+      <h4>弋果美語太平新光分校</h4>
+      <p>
+        📍 台中市太平區新光路 — Eagle American English Institute<br>
+        📞 歡迎來電洽詢<br>
+        🕐 週一至週五 10:00 - 21:00<br>
+        🌐 全外師、全美語、美加學制
+      </p>
+    </div>
+    <div class="footer-links">
+      <h4>快速導覽</h4>
+      <a href="#courses">課程介紹</a>
+      <a href="#camp">營隊課程</a>
+      <a href="#seminar">說明會報名</a>
+      <a href="#booking">預約參訪</a>
+      <a href="#inquiry">問課諮詢</a>
+    </div>
+    <div class="footer-links">
+      <h4>社群連結</h4>
+      <a href="https://www.instagram.com/eagle__xinguang" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.facebook.com/eaglexinguang" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a href="https://lin.ee/o1wzF7a" target="_blank" rel="noopener noreferrer">LINE 官方帳號</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 弋果美語太平新光分校 Eagle American English Institute. All rights reserved.
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到頂部">↑</button>
+
+<script>
+/* ========== MOBILE MENU ========== */
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('active')}
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('active')}
+
+/* ========== STICKY NAV ========== */
+window.addEventListener('scroll',function(){
+  const nav=document.getElementById('navbar');
+  const btt=document.getElementById('backToTop');
+  if(window.scrollY>50)nav.classList.add('scrolled');else nav.classList.remove('scrolled');
+  if(window.scrollY>600)btt.classList.add('visible');else btt.classList.remove('visible');
+});
+
+/* ========== SCROLL REVEAL ========== */
+const revealObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* ========== COURSE TABS ========== */
+document.querySelectorAll('.course-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.course-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.course-panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-'+tab.dataset.course).classList.add('active');
+  });
+});
+
+/* ========== BOOKING CALENDAR SYSTEM ========== */
+(function(){
+  // Weekly available slots: 0=Sun..6=Sat
+  const weeklySlots={
+    1:['14:00-15:00','19:00-20:00'], // Mon
+    2:['19:00-20:00'],                // Tue
+    3:['14:00-15:00','19:00-20:00'], // Wed
+    4:['14:00-15:00'],                // Thu
+    5:['14:00-15:00','19:00-20:00']  // Fri
+  };
+
+  // Taiwan 2026 national holidays (inclusive date ranges)
+  const holidayRanges=[
+    ['2026-01-01','2026-01-01'],
+    ['2026-02-14','2026-02-22'],
+    ['2026-02-27','2026-03-01'],
+    ['2026-04-03','2026-04-06'],
+    ['2026-05-01','2026-05-03'],
+    ['2026-06-19','2026-06-21'],
+    ['2026-09-25','2026-09-28'],
+    ['2026-10-09','2026-10-11'],
+    ['2026-10-24','2026-10-26'],
+    ['2026-12-25','2026-12-27']
+  ];
+
+  // Build set of all holiday dates
+  const holidays=new Set();
+  holidayRanges.forEach(([s,e])=>{
+    let d=new Date(s+'T00:00:00');
+    const end=new Date(e+'T00:00:00');
+    while(d<=end){
+      holidays.add(d.toISOString().slice(0,10));
+      d=new Date(d.getTime()+86400000);
+    }
+  });
+
+  function dateStr(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`}
+
+  function isHoliday(ds){return holidays.has(ds)}
+
+  // In-memory booking storage (persists during session)
+  const _bookings={};
+  function getBookings(){return _bookings;}
+  function saveBooking(dateKey,slot,info){
+    if(!_bookings[dateKey])_bookings[dateKey]={};
+    _bookings[dateKey][slot]=info;
+  }
+  function isSlotBooked(dateKey,slot){
+    return _bookings[dateKey]&&_bookings[dateKey][slot];
+  }
+
+  const now=new Date();
+  let currentYear=now.getFullYear();
+  let currentMonth=now.getMonth();
+  let selectedDate=null;
+  let selectedSlot=null;
+
+  const monthNames=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  const dayHeaders=['日','一','二','三','四','五','六'];
+
+  function renderCalendar(){
+    const grid=document.getElementById('calendarGrid');
+    const title=document.getElementById('calendarTitle');
+    title.textContent=`${currentYear} 年 ${monthNames[currentMonth]}`;
+    grid.innerHTML='';
+
+    // Day headers
+    dayHeaders.forEach(d=>{
+      const el=document.createElement('div');
+      el.className='calendar-day-header';
+      el.textContent=d;
+      grid.appendChild(el);
+    });
+
+    const firstDay=new Date(currentYear,currentMonth,1).getDay();
+    const daysInMonth=new Date(currentYear,currentMonth+1,0).getDate();
+    const today=new Date();
+    const todayStr=dateStr(today.getFullYear(),today.getMonth(),today.getDate());
+
+    // Empty cells
+    for(let i=0;i<firstDay;i++){
+      const el=document.createElement('div');
+      el.className='calendar-day empty';
+      grid.appendChild(el);
+    }
+
+    // Day cells
+    for(let d=1;d<=daysInMonth;d++){
+      const el=document.createElement('div');
+      el.className='calendar-day';
+      el.textContent=d;
+      const ds=dateStr(currentYear,currentMonth,d);
+      const dayOfWeek=new Date(currentYear,currentMonth,d).getDay();
+      const isWeekend=dayOfWeek===0||dayOfWeek===6;
+      const isHol=isHoliday(ds);
+      const isPast=new Date(currentYear,currentMonth,d)<new Date(today.getFullYear(),today.getMonth(),today.getDate());
+      const hasSlots=weeklySlots[dayOfWeek];
+
+      if(isWeekend||isHol||isPast||!hasSlots){
+        el.classList.add('disabled');
+        if(isHol&&!isWeekend)el.title='國定假日';
+      }else{
+        el.classList.add('has-slots');
+        el.addEventListener('click',()=>selectDate(ds,d,dayOfWeek));
+      }
+      if(ds===todayStr)el.classList.add('today');
+      if(selectedDate===ds)el.classList.add('selected');
+      grid.appendChild(el);
+    }
+
+    // Hide slots panel if month changed
+    document.getElementById('slotsPanel').classList.remove('active');
+    document.getElementById('bookingForm').classList.remove('active');
+  }
+
+  function selectDate(ds,day,dow){
+    selectedDate=ds;
+    selectedSlot=null;
+    renderCalendar();
+
+    // Show slots
+    const panel=document.getElementById('slotsPanel');
+    const slotsDate=document.getElementById('slotsDate');
+    const slotsList=document.getElementById('slotsList');
+
+    slotsDate.textContent=`${ds.replace(/-/g,'/')} 可預約時段`;
+    slotsList.innerHTML='';
+
+    const slots=weeklySlots[dow]||[];
+    slots.forEach(slot=>{
+      const btn=document.createElement('button');
+      btn.className='slot-btn';
+      const booked=isSlotBooked(ds,slot);
+      if(booked){
+        btn.classList.add('booked');
+        btn.textContent=slot+' 已額滿';
+      }else{
+        btn.textContent=slot;
+        btn.addEventListener('click',()=>{
+          document.querySelectorAll('.slot-btn').forEach(b=>{if(!b.classList.contains('booked'))b.classList.remove('selected')});
+          btn.classList.add('selected');
+          selectedSlot=slot;
+          document.getElementById('bookingForm').classList.add('active');
+          document.getElementById('bookingConfirm').classList.remove('active');
+        });
+      }
+      slotsList.appendChild(btn);
+    });
+
+    panel.classList.add('active');
+    document.getElementById('bookingForm').classList.remove('active');
+    document.getElementById('bookingConfirm').classList.remove('active');
+  }
+
+  window.prevMonth=function(){
+    currentMonth--;
+    if(currentMonth<0){currentMonth=11;currentYear--;}
+    selectedDate=null;selectedSlot=null;
+    renderCalendar();
+  };
+  window.nextMonth=function(){
+    currentMonth++;
+    if(currentMonth>11){currentMonth=0;currentYear++;}
+    selectedDate=null;selectedSlot=null;
+    renderCalendar();
+  };
+
+  window.submitBooking=function(){
+    let valid=true;
+    const type=document.getElementById('bkType');
+    const parent=document.getElementById('bkParent');
+    const phone=document.getElementById('bkPhone');
+    const child=document.getElementById('bkChild');
+
+    // Reset errors
+    [type,parent,phone,child].forEach(el=>{el.classList.remove('error')});
+    document.querySelectorAll('#bookingForm .error-msg').forEach(e=>e.classList.remove('show'));
+
+    if(!type.value){type.classList.add('error');document.getElementById('bkTypeErr').classList.add('show');valid=false}
+    if(!parent.value.trim()){parent.classList.add('error');document.getElementById('bkParentErr').classList.add('show');valid=false}
+    if(!phone.value.trim()){phone.classList.add('error');document.getElementById('bkPhoneErr').classList.add('show');valid=false}
+    if(!child.value.trim()){child.classList.add('error');document.getElementById('bkChildErr').classList.add('show');valid=false}
+
+    if(!selectedDate||!selectedSlot){alert('請先選擇日期與時段');return}
+    if(!valid)return;
+
+    saveBooking(selectedDate,selectedSlot,{
+      type:type.value,
+      parent:parent.value,
+      phone:phone.value,
+      child:child.value,
+      class:document.getElementById('bkClass').value
+    });
+
+    // Show confirmation
+    document.getElementById('bookingForm').classList.remove('active');
+    document.getElementById('slotsPanel').classList.remove('active');
+    const confirm=document.getElementById('bookingConfirm');
+    document.getElementById('confirmDetails').innerHTML=
+      `${parent.value} 您好，您已成功預約：<br><strong>${selectedDate} ${selectedSlot}</strong><br>預約類型：${type.value}<br>我們將以電話確認您的預約，感謝！`;
+    confirm.classList.add('active');
+
+    // Reset form
+    type.value='';parent.value='';phone.value='';child.value='';
+    document.getElementById('bkClass').value='';
+    selectedDate=null;selectedSlot=null;
+    renderCalendar();
+  };
+
+  renderCalendar();
+})();
+
+/* ========== INQUIRY FORM ========== */
+function submitInquiry(e){
+  e.preventDefault();
+  let valid=true;
+
+  const fields=[
+    {id:'iqParent',err:'iqParentErr'},
+    {id:'iqPhone',err:'iqPhoneErr'},
+    {id:'iqChild',err:'iqChildErr'},
+    {id:'iqGrade',err:'iqGradeErr'},
+    {id:'iqLine',err:'iqLineErr'},
+    {id:'iqLevel',err:'iqLevelErr'}
+  ];
+
+  // Reset
+  fields.forEach(f=>{
+    document.getElementById(f.id).classList.remove('error');
+    document.getElementById(f.err).classList.remove('show');
+  });
+  document.getElementById('iqClassesErr').classList.remove('show');
+
+  // Validate
+  fields.forEach(f=>{
+    const el=document.getElementById(f.id);
+    if(!el.value.trim()){el.classList.add('error');document.getElementById(f.err).classList.add('show');valid=false}
+  });
+
+  // Checkbox validation
+  const checkboxes=document.querySelectorAll('input[name="iqClasses"]:checked');
+  if(checkboxes.length===0){document.getElementById('iqClassesErr').classList.add('show');valid=false}
+
+  if(!valid)return false;
+
+  // Hide form, show confirmation
+  document.getElementById('inquiryForm').style.display='none';
+  document.getElementById('inquiryConfirm').classList.add('active');
+  return false;
+}
+</script>
+</body>
+</html>
