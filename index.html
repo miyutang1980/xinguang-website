@@ -273,6 +273,22 @@ ul{list-style:none}
 @media(max-width:768px){.im-intro{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr 1fr}.im-summary-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.im-summary-grid{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr}}
 
+/* ===== INQUIRY FORM UPGRADES ===== */
+.iq-section-label{font-size:0.78rem;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--green-light);display:flex;align-items:center;gap:8px}
+.req{color:#e53e3e;margin-left:2px}
+.iq-suggest-box{background:var(--green-50);border:1.5px solid rgba(43,122,75,0.25);border-radius:var(--radius-md);padding:18px 22px;margin:20px 0}
+.iq-suggest-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:0.95rem}
+.iq-suggest-content-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-size:0.88rem;line-height:1.6}
+.iq-suggest-badge{background:var(--green);color:#fff;font-size:0.75rem;font-weight:800;padding:3px 10px;border-radius:50px;white-space:nowrap;flex-shrink:0}
+.iq-suggest-badge.amber{background:var(--orange)}
+.iq-suggest-badge.blue{background:var(--blue)}
+.iq-suggest-note{font-size:0.8rem;color:var(--text-muted);margin-top:10px;line-height:1.6;border-top:1px solid rgba(43,122,75,0.15);padding-top:8px}
+/* Camp day picker */
+.camp-day-btn{padding:7px 14px;border-radius:50px;border:2px solid var(--surface-dark);font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.15s;background:var(--surface);color:var(--text);font-family:var(--font-body)}
+.camp-day-btn:hover{border-color:var(--green);color:var(--green)}
+.camp-day-btn.selected{background:var(--green);color:#fff;border-color:var(--green)}
+
+
 /* ===== BOOKING RULES BAR ===== */
 .booking-rules-bar{display:flex;flex-wrap:wrap;gap:16px;max-width:900px;margin:0 auto 32px;background:var(--surface);border-radius:var(--radius-lg);padding:20px 24px;border:1px solid var(--surface-dark);box-shadow:var(--shadow-sm)}
 .bkrule-item{flex:1;min-width:200px;display:flex;align-items:flex-start;gap:12px}
@@ -2517,33 +2533,47 @@ ul{list-style:none}
             </div>
 
             <!-- 二、報名課程 -->
-            <div class="camp-reg-section" style="margin-top:28px">二、報名課程期別</div>
-            <div class="camp-reg-courses" id="cr_courses">
-              <label class="camp-course-option" id="co_july" onclick="selectCourse('july')">
-                <input type="checkbox" id="cr_july" value="july" onchange="calcPrice()">
-                <div class="camp-course-info">
+            <div class="camp-reg-section" style="margin-top:28px">二、選擇期別與天數</div>
+            <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:14px">每期最短 <strong>5 天</strong>，最多 20 天。不論幾天，<strong>教材費皆需購買</strong>（開課前一週另行通知）。</p>
+
+            <div style="display:flex;flex-direction:column;gap:16px" id="cr_courses">
+              <!-- 七月 -->
+              <div class="camp-course-option" id="co_july_wrap">
+                <input type="checkbox" id="cr_july" onchange="toggleCampDays('july');calcPrice()">
+                <div class="camp-course-info" style="flex:1">
                   <strong>🔬 七月｜超能科學派 Science Through Discovery</strong>
-                  <span>7/01 – 7/28 · 20 個上課日 · 每天 09:00–17:00</span>
+                  <span>7/01 – 7/28 · 最多 20 個上課日 · 每天 09:00–17:00</span>
+                  <div class="camp-days-picker" id="days_july" style="display:none;margin-top:10px">
+                    <label style="font-size:0.82rem;font-weight:700;color:var(--green)">選擇上課天數：</label>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px" id="days_july_btns"></div>
+                    <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">最短 5 天，最多 20 天。實際上課週次由工作人員安排確認。</p>
+                  </div>
                 </div>
-              </label>
-              <label class="camp-course-option" id="co_aug" onclick="selectCourse('aug')">
-                <input type="checkbox" id="cr_aug" value="aug" onchange="calcPrice()">
-                <div class="camp-course-info">
+              </div>
+
+              <!-- 八月 -->
+              <div class="camp-course-option" id="co_aug_wrap">
+                <input type="checkbox" id="cr_aug" onchange="toggleCampDays('aug');calcPrice()">
+                <div class="camp-course-info" style="flex:1">
                   <strong>🕵️ 八月｜謎案追查隊 Mystery Hunters</strong>
-                  <span>7/29 – 8/25 · 20 個上課日 · 每天 09:00–17:00</span>
+                  <span>7/29 – 8/25 · 最多 20 個上課日 · 每天 09:00–17:00</span>
+                  <div class="camp-days-picker" id="days_aug" style="display:none;margin-top:10px">
+                    <label style="font-size:0.82rem;font-weight:700;color:var(--green)">選擇上課天數：</label>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px" id="days_aug_btns"></div>
+                    <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">最短 5 天，最多 20 天。實際上課週次由工作人員安排確認。</p>
+                  </div>
                 </div>
-              </label>
+              </div>
             </div>
 
             <!-- 費用說明 -->
-            <div class="camp-price-box" id="campPriceBox">
+            <div class="camp-price-box" id="campPriceBox" style="margin-top:16px">
               <div class="camp-price-early" id="campEarlyBird" style="display:none">⚡ 5/31 前報名享 85 折優惠</div>
-              <div id="campPriceDetail" style="color:var(--text-muted);font-size:0.88rem">請先選擇報名期別</div>
+              <div id="campPriceDetail" style="color:var(--text-muted);font-size:0.88rem">請先勾選期別並選擇天數</div>
               <p class="camp-price-note">
-                📌 每天費用：<strong>NTD 1,760 元</strong>（未折扣）｜每期 20 天<br>
-                📌 5/31 前完成報名繳費：<strong>85 折（NTD 1,496 元 / 天）</strong><br>
-                📌 教材費：不含於課程費用，將於營隊開始前一週另行開單收取<br>
-                📌 到校時間：最早 08:00｜最晚接走 18:00
+                📌 每天費用：<strong>NTD 1,760 元</strong>（未折扣）｜5/31 前：<strong>85 折 NTD 1,496 元/天</strong><br>
+                📌 教材費：<strong>不論幾天皆需購買</strong>，將於開課前一週另行開單通知<br>
+                📌 到校時間：最早 08:00｜正課 09:00–17:00｜最晚接走 18:00
               </p>
             </div>
 
@@ -2720,87 +2750,151 @@ ul{list-style:none}
   <div class="container">
     <div class="inquiry-wrap reveal" id="inquirySystem">
       <h2>問課諮詢</h2>
-      <p class="inquiry-subtitle">填寫以下資料，我們將在 24 小時內與您聯繫</p>
+      <p class="inquiry-subtitle">填寫完成後，系統將自動為孩子建議適合的班型與級別，我們也會在 24 小時內聯繫您確認。</p>
+
       <form id="inquiryForm" onsubmit="return submitInquiry(event)">
+        <!-- ── 一、聯繫資料 ── -->
+        <div class="iq-section-label">一、聯繫資料</div>
         <div class="form-grid">
           <div class="form-group">
-            <label>家長姓名 *</label>
+            <label>家長姓名 <span class="req">*</span></label>
             <input type="text" id="iqParent" placeholder="請輸入姓名" required>
             <span class="error-msg" id="iqParentErr">請輸入家長姓名</span>
           </div>
           <div class="form-group">
-            <label>聯繫電話 *</label>
+            <label>聯繫電話 <span class="req">*</span></label>
             <input type="tel" id="iqPhone" placeholder="09XX-XXX-XXX" required>
             <span class="error-msg" id="iqPhoneErr">請輸入聯繫電話</span>
           </div>
           <div class="form-group">
-            <label>孩子姓名 *</label>
+            <label>孩子姓名 <span class="req">*</span></label>
             <input type="text" id="iqChild" placeholder="請輸入孩子姓名" required>
             <span class="error-msg" id="iqChildErr">請輸入孩子姓名</span>
           </div>
           <div class="form-group">
-            <label>目前年級 *</label>
-            <select id="iqGrade" required>
-              <option value="">請選擇</option>
-              <option>幼幼班</option>
-              <option>小班</option>
-              <option>中班</option>
-              <option>大班</option>
-              <option>國小1年級</option>
-              <option>國小2年級</option>
-              <option>國小3年級</option>
-              <option>國小4年級</option>
-              <option>國小5年級</option>
-              <option>國小6年級</option>
-              <option>國中1年級</option>
-              <option>國中2年級</option>
-              <option>國中3年級</option>
-            </select>
-            <span class="error-msg" id="iqGradeErr">請選擇年級</span>
-          </div>
-          <div class="form-group full">
-            <label>感興趣的班型 *（可複選）</label>
-            <div class="checkbox-group">
-              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="浸潤班">浸潤班</label>
-              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="菁英班">菁英班</label>
-              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="標準班">標準班</label>
-              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="全民英檢班">全民英檢班</label>
-              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="安親課輔班">安親課輔班</label>
-              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="托育班">托育班</label>
-              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="營隊">營隊</label>
-            </div>
-            <span class="error-msg" id="iqClassesErr">請至少選擇一項</span>
-          </div>
-          <div class="form-group">
-            <label>LINE ID *</label>
+            <label>LINE ID <span class="req">*</span></label>
             <input type="text" id="iqLine" placeholder="請輸入 LINE ID" required>
             <span class="error-msg" id="iqLineErr">請輸入 LINE ID</span>
           </div>
+        </div>
+
+        <!-- ── 二、孩子基本狀況 ── -->
+        <div class="iq-section-label" style="margin-top:24px">二、孩子基本狀況</div>
+        <div class="form-grid">
           <div class="form-group">
-            <label>目前英文程度 *</label>
-            <select id="iqLevel" required>
+            <label>目前年級 <span class="req">*</span></label>
+            <select id="iqGrade" required onchange="iqAutoSuggest()">
               <option value="">請選擇</option>
-              <option>零基礎</option>
-              <option>有基礎但不敢開口</option>
-              <option>學校英文中等</option>
-              <option>英文程度不錯想進階</option>
-              <option>已有英檢證照</option>
+              <option>幼幼班</option><option>小班</option><option>中班</option><option>大班</option>
+              <option>國小1年級</option><option>國小2年級</option><option>國小3年級</option>
+              <option>國小4年級</option><option>國小5年級</option><option>國小6年級</option>
+              <option>國中1年級</option><option>國中2年級</option><option>國中3年級</option>
+            </select>
+            <span class="error-msg" id="iqGradeErr">請選擇年級</span>
+          </div>
+          <div class="form-group">
+            <label>目前英文程度 <span class="req">*</span></label>
+            <select id="iqLevel" required onchange="iqAutoSuggest()">
+              <option value="">請選擇</option>
+              <option value="zero">從未接觸英文</option>
+              <option value="starter">認識字母，會簡單問候</option>
+              <option value="basic">有基礎，但不敢開口說</option>
+              <option value="mid">學校英文中等，聽說讀寫都有接觸</option>
+              <option value="good">英文不錯，想系統化進階</option>
+              <option value="cert">已有英檢/劍橋證照</option>
             </select>
             <span class="error-msg" id="iqLevelErr">請選擇英文程度</span>
           </div>
+          <div class="form-group">
+            <label>目前是否已在補習或上英文課？</label>
+            <select id="iqCurrentClass" onchange="iqAutoSuggest()">
+              <option value="">請選擇</option>
+              <option value="no">沒有，是第一次</option>
+              <option value="yes_other">有，在別的地方學</option>
+              <option value="yes_here">有，在太平新光在校生</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>孩子上課的主要目標？ <span class="req">*</span></label>
+            <select id="iqGoal" required onchange="iqAutoSuggest()">
+              <option value="">請選擇</option>
+              <option value="env">全美語環境，自然浸潤</option>
+              <option value="fast">快速提升英文程度</option>
+              <option value="cert">準備英檢或劍橋考試</option>
+              <option value="hw">課後有人顧功課就好</option>
+              <option value="stable">穩固基礎，不落後</option>
+              <option value="camp">暑假營隊探索</option>
+            </select>
+            <span class="error-msg" id="iqGoalErr">請選擇主要目標</span>
+          </div>
+          <div class="form-group">
+            <label>每週希望上課天數？</label>
+            <select id="iqDays" onchange="iqAutoSuggest()">
+              <option value="">請選擇</option>
+              <option value="5">每天（5天）——全力衝刺</option>
+              <option value="3">3天——密集但留一點空間</option>
+              <option value="2">2天——穩健不增加壓力</option>
+              <option value="camp">只想報夏令營</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>需要安親課輔服務嗎？</label>
+            <select id="iqNeedHw" onchange="iqAutoSuggest()">
+              <option value="">請選擇</option>
+              <option value="yes_full">需要——英文+各科功課都要</option>
+              <option value="yes_self">需要——孩子自己寫，有人看顧就好</option>
+              <option value="no">不需要，純英文課</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ── 系統建議 ── -->
+        <div class="iq-suggest-box" id="iqSuggestBox" style="display:none">
+          <div class="iq-suggest-header">
+            <span>🎯</span>
+            <strong>根據您的填寫，系統建議如下：</strong>
+          </div>
+          <div id="iqSuggestContent"></div>
+          <p class="iq-suggest-note">以上為初步建議，招生老師會在回電時進一步確認，並安排適合的程度檢測。</p>
+        </div>
+
+        <!-- ── 三、感興趣的班型 ── -->
+        <div class="iq-section-label" style="margin-top:24px">三、感興趣的班型（可複選）<span style="font-weight:400;color:var(--text-muted);font-size:0.8rem;margin-left:6px">系統已自動勾選建議班型，可自行調整</span></div>
+        <div class="form-grid">
           <div class="form-group full">
-            <label>想問的問題（選填）</label>
-            <textarea id="iqQuestion" placeholder="有任何問題都可以在這裡告訴我們..." rows="3"></textarea>
+            <div class="checkbox-group">
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="浸潤班">浸潤班（每週5天・全美語沉浸）</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="菁英班">菁英班（每週5天・密集進階）</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="標準班">標準班（每週2天・穩健基礎）</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="全民英檢班">全民英檢班（備考初級/中級）</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="安親課輔班">安親課輔班（各科課業輔導+英文）</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="托育班">托育班（在校自習環境）</label>
+              <label class="checkbox-label"><input type="checkbox" name="iqClasses" value="營隊">夏令營（七月・八月）</label>
+            </div>
+            <span class="error-msg" id="iqClassesErr">請至少選擇一項</span>
+          </div>
+        </div>
+
+        <!-- ── 四、其他 ── -->
+        <div class="iq-section-label" style="margin-top:24px">四、補充說明</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>想特別問老師的問題（選填）</label>
+            <textarea id="iqQuestion" placeholder="例如：孩子很害羞、曾經有不好的學習經驗、有特定時間限制...任何想讓老師提前了解的都可以寫" rows="3"></textarea>
           </div>
           <div class="form-group full" style="text-align:center;margin-top:8px">
-            <button type="submit" class="btn btn-primary" style="justify-content:center">送出諮詢 →</button>
+            <button type="submit" class="btn btn-primary" style="justify-content:center;font-size:1rem;padding:14px 48px">送出諮詢，等待老師回電 →</button>
           </div>
         </div>
       </form>
+
+      <!-- Confirm -->
       <div class="inquiry-confirm" id="inquiryConfirm">
         <div class="inquiry-confirm-icon">💌</div>
-        <h3>感謝您的諮詢！</h3>
-        <p>我們將在 24 小時內透過 LINE 或電話與您聯繫。<br>期待與您和孩子的相見！</p>
+        <h3>諮詢資料已送出！</h3>
+        <div id="iqConfirmDetails"></div>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;margin-top:16px">我們將在 <strong>24 小時內</strong>透過 LINE 或電話與您聯繫確認。<br>招生老師會依您填寫的資訊，<strong>安排最適合孩子的程度檢測與試聽</strong>。</p>
+        <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-primary" style="margin-top:20px;display:inline-flex">或立即 LINE 我們 →</a>
       </div>
     </div>
   </div>
@@ -3224,40 +3318,329 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
 /* ========== INQUIRY FORM ========== */
 function submitInquiry(e){
   e.preventDefault();
-  let valid=true;
-
-  const fields=[
-    {id:'iqParent',err:'iqParentErr'},
-    {id:'iqPhone',err:'iqPhoneErr'},
-    {id:'iqChild',err:'iqChildErr'},
-    {id:'iqGrade',err:'iqGradeErr'},
-    {id:'iqLine',err:'iqLineErr'},
-    {id:'iqLevel',err:'iqLevelErr'}
-  ];
-
-  // Reset
-  fields.forEach(f=>{
-    document.getElementById(f.id).classList.remove('error');
-    document.getElementById(f.err).classList.remove('show');
+  var valid = true;
+  // Validate required fields
+  ['iqParent','iqPhone','iqChild','iqLine'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('error');
+    if (!el.value.trim()) { el.classList.add('error'); valid = false; }
   });
-  document.getElementById('iqClassesErr').classList.remove('show');
-
-  // Validate
-  fields.forEach(f=>{
-    const el=document.getElementById(f.id);
-    if(!el.value.trim()){el.classList.add('error');document.getElementById(f.err).classList.add('show');valid=false}
+  ['iqGrade','iqLevel','iqGoal'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (!el.value) { el.classList.add('error'); valid = false; }
   });
+  var checkboxes = document.querySelectorAll('input[name="iqClasses"]:checked');
+  if (checkboxes.length === 0) {
+    var errEl = document.getElementById('iqClassesErr');
+    if (errEl) errEl.classList.add('show');
+    valid = false;
+  }
+  if (!valid) return false;
 
-  // Checkbox validation
-  const checkboxes=document.querySelectorAll('input[name="iqClasses"]:checked');
-  if(checkboxes.length===0){document.getElementById('iqClassesErr').classList.add('show');valid=false}
+  // Collect data
+  var goal = (document.getElementById('iqGoal')||{}).value||'';
+  var days = (document.getElementById('iqDays')||{}).value||'';
+  var hw   = (document.getElementById('iqNeedHw')||{}).value||'';
+  var curClass = (document.getElementById('iqCurrentClass')||{}).value||'';
+  var level = document.getElementById('iqLevel').value;
+  var grade = document.getElementById('iqGrade').value;
+  var classes = Array.from(checkboxes).map(function(c){return c.value;}).join('、');
+  var question = (document.getElementById('iqQuestion')||{}).value || '';
+  var suggestEl = document.getElementById('iqSuggestContent');
+  var suggestText = suggestEl ? suggestEl.innerText.trim() : '';
 
-  if(!valid)return false;
+  var data = {
+    ts: new Date().toLocaleString('zh-TW'),
+    parent: document.getElementById('iqParent').value.trim(),
+    child: document.getElementById('iqChild').value.trim(),
+    phone: document.getElementById('iqPhone').value.trim(),
+    line: (document.getElementById('iqLine')||{}).value||'',
+    grade: grade, level: level, goal: goal, days: days, hw: hw, curClass: curClass,
+    classes: classes, question: question, suggestClasses: suggestText
+  };
+  data.callScript = generateCallScript(data);
+  if (typeof adminSaveInquiry === 'function') adminSaveInquiry(data);
+
+  // Build confirm message
+  var confirmEl = document.getElementById('iqConfirmDetails');
+  if (confirmEl) {
+    confirmEl.innerHTML =
+      '<div style="background:var(--green-50);border-radius:10px;padding:14px 16px;margin:12px 0;text-align:left;font-size:0.9rem;line-height:2">' +
+      '👤 <strong>' + data.parent + '</strong>，孩子：<strong>' + data.child + '</strong>（' + data.grade + '）<br>' +
+      '📞 ' + data.phone + (data.line ? '  ｜  LINE: ' + data.line : '') + '<br>' +
+      '📚 感興趣班型：' + (data.classes||'—') +
+      (suggestText ? '<br>🎯 系統建議：' + suggestText.split('
+')[0] : '') +
+      '</div>';
+  }
 
   // Hide form, show confirmation
   document.getElementById('inquiryForm').style.display='none';
   document.getElementById('inquiryConfirm').classList.add('active');
+  window.scrollTo({top:document.getElementById('inquiryConfirm').offsetTop-100,behavior:'smooth'});
   return false;
+}
+
+
+/* ========== INQUIRY AUTO-SUGGEST ENGINE ========== */
+var _iqSubmissions = [];
+
+function iqAutoSuggest() {
+  var grade = document.getElementById('iqGrade') ? document.getElementById('iqGrade').value : '';
+  var level = document.getElementById('iqLevel') ? document.getElementById('iqLevel').value : '';
+  var goal  = document.getElementById('iqGoal')  ? document.getElementById('iqGoal').value  : '';
+  var days  = document.getElementById('iqDays')  ? document.getElementById('iqDays').value  : '';
+  var hw    = document.getElementById('iqNeedHw')? document.getElementById('iqNeedHw').value: '';
+  var curClass = document.getElementById('iqCurrentClass') ? document.getElementById('iqCurrentClass').value : '';
+
+  if (!grade && !level && !goal) return;
+  var box = document.getElementById('iqSuggestBox');
+  var content = document.getElementById('iqSuggestContent');
+  if (!box || !content) return;
+
+  var suggestions = [];
+  var levelLabel = {zero:'零基礎',starter:'字母啟蒙',basic:'有基礎不敢開口',mid:'中等程度',good:'英文不錯',cert:'有英檢證照'};
+  var gradeGroup = '';
+  if (['幼幼班','小班','中班','大班'].includes(grade)) gradeGroup = 'kinder';
+  else if (['國小1年級','國小2年級','國小3年級'].includes(grade)) gradeGroup = 'lowerElem';
+  else if (['國小4年級','國小5年級','國小6年級'].includes(grade)) gradeGroup = 'upperElem';
+  else if (['國中1年級','國中2年級','國中3年級'].includes(grade)) gradeGroup = 'junior';
+
+  // --- Class suggestion logic ---
+  var classList = [];
+  var levelNote = '';
+  var testNote = '';
+
+  if (goal === 'env' || gradeGroup === 'kinder') {
+    classList.push({name:'浸潤班', note:'全美語沉浸環境，幼稚園～低年級最適合', color:'green'});
+    levelNote = '建議從 Starter A/B 開始評測';
+  } else if (goal === 'fast' || days === '5') {
+    classList.push({name:'菁英班', note:'每週5天密集，最快累積英文實力', color:'green'});
+    levelNote = '建議安排入班評測，確認從 Grade 1A 或更高開始';
+  } else if (goal === 'cert' || level === 'cert' || level === 'good') {
+    classList.push({name:'全民英檢班', note:'針對初級/中級備考，初試＋複試系統訓練', color:'blue'});
+    levelNote = '建議先進行程度測驗，確認初級或中級';
+  } else if (goal === 'stable' || days === '2') {
+    classList.push({name:'標準班', note:'每週2天，穩健推進不增加壓力', color:'green'});
+    levelNote = '建議入班評測後對應 Grade 1A-4D';
+  } else if (goal === 'hw') {
+    classList.push({name:'安親課輔班', note:'各科功課輔導+量身訂做評量', color:'amber'});
+  } else if (goal === 'camp' || days === 'camp') {
+    classList.push({name:'夏令營', note:'七月科學派 / 八月謎案追查隊，可選5-20天', color:'amber'});
+    levelNote = '不需事先評測，直接報名即可';
+  }
+
+  if (hw === 'yes_full') { classList.push({name:'安親課輔班', note:'英文+各科全科輔導', color:'amber'}); }
+  else if (hw === 'yes_self') { classList.push({name:'托育班', note:'在校自習環境，孩子自主完成功課', color:'amber'}); }
+
+  if (level === 'zero' || level === 'starter') testNote = '⚠️ 因目前為零基礎/啟蒙階段，建議報名時安排 <strong>免費評測</strong>，確認從 Starter A 或 Starter B 開始。';
+  else if (curClass === 'no') testNote = '⚠️ 這是孩子第一次上英文課，建議來校時安排 <strong>30 分鐘免費程度評測</strong>，讓老師了解起點。';
+  else if (curClass === 'yes_other') testNote = '⚠️ 曾在其他地方學習，建議安排 <strong>免費銜接評測</strong>，確認最適合的入班級別。';
+
+  // --- Build HTML ---
+  var rows = '';
+  classList.forEach(function(c){
+    rows += '<div class="iq-suggest-content-row"><span class="iq-suggest-badge ' + c.color + '">' + c.name + '</span><span>' + c.note + '</span></div>';
+  });
+  if (levelNote) rows += '<div class="iq-suggest-content-row"><span class="iq-suggest-badge" style="background:#6B7280">📊 級別建議</span><span>' + levelNote + '</span></div>';
+  if (testNote) rows += '<div style="background:#FFFBEB;border-radius:8px;padding:10px 14px;font-size:0.84rem;line-height:1.65;margin-top:6px;border:1px solid #FEF3C7">' + testNote + '</div>';
+
+  content.innerHTML = rows;
+  box.style.display = rows ? 'block' : 'none';
+
+  // Auto-check suggested classes
+  if (classList.length > 0) {
+    var allCbs = document.querySelectorAll('[name="iqClasses"]');
+    allCbs.forEach(function(cb){ if (!cb.checked) cb.checked = false; });
+    classList.forEach(function(c){
+      allCbs.forEach(function(cb){
+        var val = cb.value;
+        if (val.includes(c.name) || (c.name === '夏令營' && val === '營隊') || (c.name === '安親課輔班' && val === '安親課輔班') || (c.name === '托育班' && val === '托育班')) cb.checked = true;
+      });
+    });
+  }
+}
+
+/* ========== CAMP DAY PICKER ========== */
+(function initCampDays(){
+  var months = ['july','aug'];
+  months.forEach(function(m){
+    var container = document.getElementById('days_' + m + '_btns');
+    if (!container) return;
+    [5,8,10,12,15,18,20].forEach(function(d){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'camp-day-btn';
+      btn.dataset.days = d;
+      btn.dataset.month = m;
+      btn.textContent = d + ' 天' + (d===20?' (全期)':'') + (d===5?' (最短)':'');
+      btn.onclick = function(){
+        container.querySelectorAll('.camp-day-btn').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        calcPrice();
+      };
+      container.appendChild(btn);
+    });
+  });
+})();
+
+function toggleCampDays(month) {
+  var cb = document.getElementById('cr_' + month);
+  var picker = document.getElementById('days_' + month);
+  if (!cb || !picker) return;
+  picker.style.display = cb.checked ? 'block' : 'none';
+  if (!cb.checked) {
+    var btns = document.querySelectorAll('#days_' + month + '_btns .camp-day-btn');
+    btns.forEach(function(b){ b.classList.remove('selected'); });
+  }
+  calcPrice();
+}
+
+/* ========== UPDATED calcPrice with day selection ========== */
+// Override previous calcPrice
+window.calcPrice = function() {
+  var july = document.getElementById('cr_july') && document.getElementById('cr_july').checked;
+  var aug  = document.getElementById('cr_aug')  && document.getElementById('cr_aug').checked;
+  var detail = document.getElementById('campPriceDetail');
+  var earlyBird = document.getElementById('campEarlyBird');
+  if (!detail) return;
+
+  function getSelectedDays(month) {
+    var btn = document.querySelector('#days_' + month + '_btns .camp-day-btn.selected');
+    return btn ? parseInt(btn.dataset.days) : 0;
+  }
+
+  var julyDays = july ? (getSelectedDays('july') || 0) : 0;
+  var augDays  = aug  ? (getSelectedDays('aug')  || 0) : 0;
+
+  if (!july && !aug) {
+    detail.innerHTML = '<span style="color:var(--text-muted)">請先勾選期別並選擇天數</span>';
+    if (earlyBird) earlyBird.style.display = 'none';
+    return;
+  }
+
+  var now = new Date();
+  var deadline = new Date('2026-05-31T23:59:59');
+  var isEarly = now <= deadline;
+  var normalDay = 1760, discDay = 1496;
+
+  if (earlyBird) earlyBird.style.display = isEarly ? 'flex' : 'none';
+
+  var rows = '';
+  var total = 0;
+  var origTotal = 0;
+
+  if (july) {
+    if (julyDays === 0) {
+      rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🔬 七月｜超能科學派</span><span style="color:var(--text-muted)">← 請選擇天數</span></div>';
+    } else {
+      var price = (isEarly ? discDay : normalDay) * julyDays;
+      var orig  = normalDay * julyDays;
+      total += price; origTotal += orig;
+      rows += '<div class="camp-price-row"><span>🔬 七月｜超能科學派 (' + julyDays + '天)</span><span>' + (isEarly?discDay:normalDay).toLocaleString() + ' × ' + julyDays + ' = <strong>' + price.toLocaleString() + '</strong> 元</span></div>';
+    }
+  }
+  if (aug) {
+    if (augDays === 0) {
+      rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🕵️ 八月｜謎案追查隊</span><span style="color:var(--text-muted)">← 請選擇天數</span></div>';
+    } else {
+      var price2 = (isEarly ? discDay : normalDay) * augDays;
+      var orig2  = normalDay * augDays;
+      total += price2; origTotal += orig2;
+      rows += '<div class="camp-price-row"><span>🕵️ 八月｜謎案追查隊 (' + augDays + '天)</span><span>' + (isEarly?discDay:normalDay).toLocaleString() + ' × ' + augDays + ' = <strong>' + price2.toLocaleString() + '</strong> 元</span></div>';
+    }
+  }
+  if (total > 0) {
+    var saving = origTotal - total;
+    if (isEarly && saving > 0) rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🎉 85 折優惠折扣</span><span>-' + saving.toLocaleString() + ' 元</span></div>';
+    rows += '<div class="camp-price-row total"><span>課程費用合計（不含教材費）</span><span>NTD ' + total.toLocaleString() + ' 元</span></div>';
+    rows += '<div style="background:#FEF9EE;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:0.8rem;color:#92400E">📦 <strong>教材費另計</strong>，不論幾天均需購買，將於開課前一週另行開單收取</div>';
+  }
+
+  detail.innerHTML = rows || '<span style="color:var(--text-muted)">請選擇天數以計算費用</span>';
+
+  // Sync checkbox visual
+  ['july','aug'].forEach(function(id){
+    var cb = document.getElementById('cr_' + id);
+    var opt = document.getElementById('co_' + id + '_wrap');
+    if (cb && opt) opt.classList.toggle('selected', cb.checked);
+  });
+};
+
+/* ========== ADMIN DATA STORE ========== */
+var _adminData = { inquiries: [], campRegs: [] };
+
+function adminSaveInquiry(data) { _adminData.inquiries.push(data); }
+function adminSaveCamp(data)    { _adminData.campRegs.push(data); }
+
+// Admin access: add /admin URL param to see data
+(function(){
+  if (window.location.search.includes('admin=xinguang2026')) {
+    setTimeout(function(){
+      var panel = document.createElement('div');
+      panel.id = 'adminPanel';
+      panel.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:9999;background:#1E2A20;color:#fff;border-radius:12px;padding:16px;max-width:420px;max-height:80vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.5);font-size:0.8rem';
+      function refresh(){
+        var html2 = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><strong style="font-size:1rem">📋 問課資料後台</strong><button onclick="this.closest('#adminPanel').remove()" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer">關閉</button></div>';
+        html2 += '<div style="margin-bottom:10px;color:#aaa">問課諮詢：' + _adminData.inquiries.length + ' 筆 ｜ 夏令營報名：' + _adminData.campRegs.length + ' 筆</div>';
+        _adminData.inquiries.forEach(function(d, i){
+          html2 += '<div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:10px;margin-bottom:8px">';
+          html2 += '<div style="font-weight:700;color:#7DFFB3">#' + (i+1) + ' ' + d.parent + ' ｜ ' + d.child + '</div>';
+          html2 += '<div style="color:#ccc;margin-top:4px">📞 ' + d.phone + ' ｜ LINE: ' + (d.line||'—') + '</div>';
+          html2 += '<div style="color:#ccc">📚 ' + d.grade + ' ｜ ' + d.level + ' ｜ 目標: ' + d.goal + '</div>';
+          html2 += '<div style="color:#FFD700;margin-top:4px">✅ 建議班型：' + (d.suggestClasses||'—') + '</div>';
+          html2 += '<div style="color:#ccc">感興趣：' + (d.classes||'—') + '</div>';
+          html2 += '<div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-top:4px">' + d.ts + '</div>';
+          if (d.callScript) {
+            html2 += '<div style="background:rgba(255,200,0,0.1);border-radius:6px;padding:8px;margin-top:8px;color:#FFD700;font-size:0.78rem"><strong>📞 回電引導腳本：</strong><br>' + d.callScript.replace(/\n/g,'<br>') + '</div>';
+          }
+          html2 += '</div>';
+        });
+        if (_adminData.campRegs.length > 0) {
+          html2 += '<div style="font-weight:700;color:#FF8C00;margin:12px 0 8px">🏕️ 夏令營報名</div>';
+          _adminData.campRegs.forEach(function(d, i){
+            html2 += '<div style="background:rgba(255,140,0,0.08);border-radius:8px;padding:10px;margin-bottom:8px">';
+            html2 += '<div style="font-weight:700;color:#FFD700">#' + (i+1) + ' ' + d.pname + ' ｜ ' + d.sname + ' (' + d.grade + ')</div>';
+            html2 += '<div style="color:#ccc">📞 ' + d.phone + '</div>';
+            html2 += '<div style="color:#FF8C00">🏕️ ' + d.courses + '</div>';
+            html2 += '<div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-top:4px">' + d.ts + '</div>';
+            html2 += '</div>';
+          });
+        }
+        panel.innerHTML = html2;
+      }
+      refresh();
+      document.body.appendChild(panel);
+      setInterval(refresh, 3000);
+    }, 1000);
+  }
+})();
+
+/* ========== CALL SCRIPT GENERATOR ========== */
+function generateCallScript(data) {
+  var lines = [];
+  lines.push('您好，我是太平新光分校的' + data.parent + '的老師，請問是' + data.parent + '家長嗎？');
+  lines.push('');
+  lines.push('📋 確認問題：');
+  lines.push('1. 請確認孩子 ' + (data.child||'') + ' 目前 ' + (data.grade||'') + '，英文 ' + (data.level||'') + '，這樣正確嗎？');
+
+  if (data.goal === 'env') lines.push('2. 您希望讓孩子在全英文環境自然學習，請問是希望平日每天都來，還是有天數限制？');
+  else if (data.goal === 'fast') lines.push('2. 您希望孩子快速提升，我們有每週5天的菁英班，請問孩子週間的時間安排方便嗎？');
+  else if (data.goal === 'cert') lines.push('2. 您提到想準備英檢，請問是目標全民英檢初級還是中級？孩子現在學校英文成績大概在幾分左右？');
+  else if (data.goal === 'hw') lines.push('2. 您需要安親服務，請問孩子放學大約幾點？需要接送安排嗎？');
+  else if (data.goal === 'stable') lines.push('2. 您希望孩子穩固基礎，我們的標準班每週2天4.5小時，請問哪幾天比較方便？');
+  else if (data.goal === 'camp') lines.push('2. 您對夏令營有興趣，請問是七月、八月，還是兩期都考慮？大概希望報名幾天？');
+
+  lines.push('3. 孩子之前有上過英文課或補習嗎？在哪裡學的？學多久了？');
+  lines.push('4. 有沒有什麼特別需要老師提前知道的（例如孩子個性、怕生、有學習困難等）？');
+  lines.push('');
+  lines.push('📅 確認行程：');
+  lines.push('我想為孩子安排一次免費的程度評測和校區參觀，大約需要30-40分鐘。');
+  lines.push('請問本週或下週，哪天下午或晚上比較方便？');
+  lines.push('我們的參訪時段：週一/三/五 14:00-15:00、19:00-20:00，週二/四 晚上 19:00-20:00。');
+  return lines.join('\n');
 }
 
 /* ========== CAMP REGISTRATION ========== */
@@ -3347,6 +3730,25 @@ function submitCampReg() {
     errEl.style.display = 'block';
     return;
   }
+
+  // Collect days
+  function getSelDays(m) {
+    var btn = document.querySelector('#days_' + m + '_btns .camp-day-btn.selected');
+    return btn ? btn.dataset.days + ' 天' : '未選';
+  }
+  var julyInfo = july ? '七月 ' + getSelDays('july') : '';
+  var augInfo  = aug  ? '八月 ' + getSelDays('aug')  : '';
+  var campCourses = [julyInfo, augInfo].filter(Boolean).join(' / ');
+
+  var campData = {
+    ts: new Date().toLocaleString('zh-TW'),
+    pname: pname, sname: sname, grade: grade,
+    enrolled: enrolled, phone: phone,
+    line: document.getElementById('cr_line').value.trim(),
+    courses: campCourses,
+    diet: diet || '無'
+  };
+  adminSaveCamp(campData);
 
   // Show success
   document.getElementById('campFormBody').style.display = 'none';
