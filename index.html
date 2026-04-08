@@ -191,6 +191,28 @@ ul{list-style:none}
 @media(max-width:768px){.im-intro{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr 1fr}.im-summary-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.im-summary-grid{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr}}
 
+/* ===== ELITE LEVEL SELECTOR ===== */
+.el-level-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.el-level-tab{padding:6px 14px;border-radius:20px;font-size:0.8rem;font-weight:700;color:var(--text-muted);background:var(--surface);border:2px solid var(--surface-dark);cursor:pointer;transition:all 0.2s;font-family:var(--font-body)}
+.el-level-tab:hover{border-color:var(--blue);color:var(--blue)}
+.el-level-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.el-level-panel{display:none}
+.el-level-panel.active{display:block;animation:fadeInUp 0.3s ease}
+.el-level-header{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--radius-md);margin-bottom:20px}
+.el-level-emoji{font-size:1.8rem;flex-shrink:0}
+.el-level-header strong{display:block;font-size:1rem;font-weight:800;color:var(--text)}
+.el-level-header p{font-size:0.85rem;color:var(--text-muted);margin-top:2px}
+.el-subject-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+.el-subject-cell{background:var(--bg);border-radius:var(--radius-md);padding:14px}
+.el-subject-icon{font-size:1rem;margin-bottom:4px;display:block}
+.el-subject-cell h5{font-size:0.78rem;font-weight:800;color:var(--text);margin-bottom:6px}
+.el-subject-cell p{font-size:0.8rem;color:var(--text-muted);line-height:1.6}
+.el-highlight{background:var(--blue);color:#fff;border-radius:var(--radius-md);padding:14px 18px;font-size:0.88rem;line-height:1.6;font-weight:500}
+.el-section-title{font-family:var(--font-display);font-size:0.9rem;font-weight:800;color:var(--text);margin:28px 0 14px;display:flex;align-items:center;gap:8px}
+.el-section-title::before{content:'';display:block;width:3px;height:16px;background:var(--blue);border-radius:2px}
+@media(max-width:768px){.el-subject-row{grid-template-columns:1fr 1fr}.el-level-tabs{gap:4px}.el-level-tab{padding:5px 10px;font-size:0.73rem}}
+@media(max-width:480px){.el-subject-row{grid-template-columns:1fr}}
+
 /* ========== CAMP ========== */
 .camp-section{background:linear-gradient(160deg,var(--green) 0%,#1E5C37 100%);color:#fff;position:relative;overflow:hidden}
 .camp-section::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.05) 0%,transparent 70%);border-radius:50%}
@@ -691,13 +713,11 @@ ul{list-style:none}
 
     <div class="course-panel" id="panel-elite">
       <div class="course-content">
-        <!-- Header -->
         <div class="course-header">
           <div class="course-badge" style="background:var(--blue)">EL</div>
           <h3>菁英班 Intensive<small>想快速衝英文？這班就是為你的孩子設計的</small></h3>
         </div>
 
-        <!-- Intro Cards -->
         <div class="im-intro">
           <div class="im-intro-card" style="background:#EBF3FC;border-left:4px solid var(--blue)">
             <h4 style="color:#2563EB">菁英班是什麼感覺？</h4>
@@ -709,193 +729,335 @@ ul{list-style:none}
           </div>
         </div>
 
-        <!-- Level Map -->
-        <div class="im-subjects">
-          <div class="im-subjects-title" style="color:var(--blue)">🗺️ 闖關地圖：從 Starter 到 Grade 4，每一關都有具體任務</div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px">
-            <div style="background:#EBF3FC;border-radius:10px;padding:14px;text-align:center">
-              <div style="font-size:1.4rem;margin-bottom:4px">🌱</div>
-              <strong style="color:var(--blue);font-size:0.85rem">Starter A / B</strong>
-              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">英文新鮮人啟蒙，從 A-Z 發音到生活對話，天天開口說 26 句日常英文</p>
-            </div>
-            <div style="background:#EBF3FC;border-radius:10px;padding:14px;text-align:center">
-              <div style="font-size:1.4rem;margin-bottom:4px">🚀</div>
-              <strong style="color:var(--blue);font-size:0.85rem">Grade 1A → 1C</strong>
-              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">打通 Phonics、文法、閱讀三條主線，開始讀故事、寫句子，英文起飛</p>
-            </div>
-            <div style="background:#EBF3FC;border-radius:10px;padding:14px;text-align:center">
-              <div style="font-size:1.4rem;margin-bottom:4px">⚡</div>
-              <strong style="color:var(--blue);font-size:0.85rem">Grade 2A → 4C</strong>
-              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">正式進入 Language Arts，讀說寫全面加速，對應會考 / 英檢等級</p>
-            </div>
-          </div>
+        <div class="el-section-title">🗺️ 點選關卡，查看每一關的各科目學習重點</div>
+        <div class="el-level-tabs">
+  <button class="el-level-tab active" data-level="SA" onclick="switchLevel(this)">Starter A</button>
+  <button class="el-level-tab" data-level="SB" onclick="switchLevel(this)">Starter B</button>
+  <button class="el-level-tab" data-level="1A" onclick="switchLevel(this)">Grade 1A</button>
+  <button class="el-level-tab" data-level="1B" onclick="switchLevel(this)">Grade 1B</button>
+  <button class="el-level-tab" data-level="1C" onclick="switchLevel(this)">Grade 1C</button>
+  <button class="el-level-tab" data-level="2A" onclick="switchLevel(this)">Grade 2A</button>
+  <button class="el-level-tab" data-level="2B" onclick="switchLevel(this)">Grade 2B</button>
+  <button class="el-level-tab" data-level="2C" onclick="switchLevel(this)">Grade 2C</button>
+  <button class="el-level-tab" data-level="3A" onclick="switchLevel(this)">Grade 3A</button>
+  <button class="el-level-tab" data-level="3B" onclick="switchLevel(this)">Grade 3B</button>
+  <button class="el-level-tab" data-level="3C" onclick="switchLevel(this)">Grade 3C</button>
+  <button class="el-level-tab" data-level="4A" onclick="switchLevel(this)">Grade 4A</button>
+  <button class="el-level-tab" data-level="4B" onclick="switchLevel(this)">Grade 4B</button>
+  <button class="el-level-tab" data-level="4C" onclick="switchLevel(this)">Grade 4C</button>
+</div>
 
-          <!-- Accordion: Phonics -->
-          <div class="im-subject-accordion">
-            <button class="im-subject-btn" onclick="toggleSubject(this)">
-              <div class="im-subject-icon" style="background:#EBF3FC">🔤</div>
-              <div class="im-subject-label"><strong>自然拼讀 Phonics</strong><span>Starter 就從 A-Z 開始，Grade 4 前通關所有拼音規則</span></div>
-              <span class="im-subject-chevron">▼</span>
-            </button>
-            <div class="im-subject-body">
-              <p class="im-subject-desc">菁英班的 Phonics 跟浸潤班最大的不同：它是每一關的「通關門票」。Starter A 就開始練發音，一路到 Grade 4 全部搞定複合母音、默音字、三字母組合。每個孩子必須真的會了才能晉級，不是大家一起走，是確認這個孩子真的過關。</p>
-              <table class="im-grade-table">
-                <thead><tr><th>級數</th><th>Phonics 學什麼</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Starter A/B</strong></td><td>26 字母發音、辨識與書寫；短母音 ă/ĕ/ĭ/ŏ/ŭ 全練過</td></tr>
-                  <tr><td><strong>Grade 1A/B</strong></td><td>長母音、子音 Blends (st/pr/fl/tr…)、Digraphs (ch/sh/th)</td></tr>
-                  <tr><td><strong>Grade 1C</strong></td><td>縮寫字、複數 -s/-es、-ed/-ing 結尾</td></tr>
-                  <tr><td><strong>Grade 2A</strong></td><td>L/S/R 三組 Blends、軟硬 c/g、母音雙字組合、Diphthongs</td></tr>
-                  <tr><td><strong>Grade 3A</strong></td><td>三字母 Blend、最終 Blends、默音字、所有母音對組合</td></tr>
-                  <tr><td><strong>Grade 4A</strong></td><td>Vowel digraphs 全套（ai/ay/ei/ee/ea/oa/ow/oo/au/aw/ew）、默音字完整版</td></tr>
-                </tbody>
-              </table>
-              <div class="im-highlights">
-                <div class="im-highlight-item">每關都有明確的 Phonics 清單，家長隨時知道孩子卡在哪裡</div>
-                <div class="im-highlight-item">過了就是真的過了，沒過不硬推——菁英班的進度比速度更重要</div>
-                <div class="im-highlight-item">Grade 4 後，孩子看到任何英文字都能自己發音，不用老師拼給他聽</div>
-              </div>
-            </div>
-          </div>
+        <div class="el-level-panel active" id="el-panel-SA">
+  <div class="el-level-header" style="background:#EBF3FC">
+    <span class="el-level-emoji">🌱</span>
+    <div>
+      <strong>Starter A</strong>
+      <p>英文零基礎？從 A-Z 發音和 26 句日常對話出發</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>26 字母發音辨識與書寫；字首字尾 A–Z 發音訓練</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>圖卡詞彙辨識（Key Vocabulary）；看圖指認 Additional Vocabulary</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>日常對話 26 句：天氣/生日/時間/喜好/位置，自然問答反應訓練</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>—（本級重點在口說與 Phonics 啟蒙）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>「Hello. How are you?」到「Where are you?」26 句完整日常對話體系</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—（本級重點在聽說啟蒙）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：第一次接觸英文就從真實對話開始，不背死台詞——遇到外師不會愣住</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-SB">
+  <div class="el-level-header" style="background:#DCFCE7">
+    <span class="el-level-emoji">🌿</span>
+    <div>
+      <strong>Starter B</strong>
+      <p>會說了，開始讀故事、認識文法第一步</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>26 字母發音書寫；短母音 ă/ĕ/ĭ/ŏ/ŭ 全部認識與書寫</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>Bibs 故事系列：故事順序排列、因果辨別、預測結局；辨認字根與字尾</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>普通名詞（key vocabulary）；可數/不可數名詞；介系詞 in/on/under/over/beside</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>—（本級重點在短母音基礎鞏固）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>「Where is/are your ___?」「What are you doing?」等 14 種問答情境；聽問答自動反應</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—（本級重點在聽說閱讀啟蒙）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：短母音全部打通，Starter B 畢業的孩子看到 cat/hit/top 這類短字就能拼讀</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-1A">
+  <div class="el-level-header" style="background:#FEF3C7">
+    <span class="el-level-emoji">🚀</span>
+    <div>
+      <strong>Grade 1A</strong>
+      <p>Phonics 正式啟動，文法骨架搭好，開始讀故事</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>短母音 a/e/i/o/u；長母音 a/e/i/o/u；母音 y；-ed/-ing 結尾；複數 -s/-es；縮寫字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>主旨判斷、預測結局、故事順序、因果辨別、推論結論；Sight Words 辨認；故事聽讀流暢朗讀</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>名詞、A/An、This/That、Who?/What?、複數、I am/You are/He is/She is/It is/We are/They are；Where is/are？+介系詞 on/in/under；形容詞位置；There is/are</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>26 字母書寫；短母音 a/i 圖像配對拼字；字首 t/m/s/j/k/d... 書寫；字尾 d/t/m/s/g/b/p/n/x 書寫；Sight Words 六關訓練（描摹→配對→亂序→填空→造句→朗讀）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>聽懂兩步指令；Who/What/Where/Why 問答；專注聆聽並提問</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—（本級重點在 Phonics 與文法奠基）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：be 動詞完整系統（am/is/are）一次搭好，孩子說「I am hungry」「She is happy」再也不混</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-1B">
+  <div class="el-level-header" style="background:#F3E8FF">
+    <span class="el-level-emoji">⚡</span>
+    <div>
+      <strong>Grade 1B</strong>
+      <p>Blends 上場，文法加速：Can、進行式、所有格全來了</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>子音 Blends：st/pr/sn/fl/tr/gr/fr/sl/pl；Digraphs：ch/sh；字首/字尾子音；長短母音複習</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>主旨、故事順序、因果、預測、推論；加入：選最適合的字填空、選最能描述圖片的句子；辨識字根與字尾</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>Have got/Has got；命令句；Can（肯定/疑問/否定）；現在進行式（肯定）；現在進行式（否定/疑問）；be 動詞完整三形；冠詞；複數名詞；所有格 Whose?；所有格形容詞；Some/Any</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>短母音 o/u/e 圖像配對；短母音 a/i/o/u/e 單字書寫；cl/fl/sn/st Blend 拼字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>兩步指令聽懂並複述；Who/What/Where/Why 問答；聽故事後詢問和解釋</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—（本級重點在文法擴展）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Can 動詞三形（Can you swim? / Yes, I can. / No, I can't.）是英文基礎溝通的核心，1B 就完全搞定</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-1C">
+  <div class="el-level-header" style="background:#FFF3EB">
+    <span class="el-level-emoji">🔥</span>
+    <div>
+      <strong>Grade 1C</strong>
+      <p>文法衝刺關：過去式、現在式對比、19 個核心文法點全通</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>S Blends：st/sk/sm/sl/sc/sn/sw/sp；L Blends：cl/bl/gl/fl/pl；R Blends：fr/br/gr/cr/pr/dr/tr；母音對：ai/ay/ee/ea/oa/ow/oo；Digraphs：sh/ch/th/wh/ng；qu 開頭</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>主旨、順序、因果、預測、推論；填空選字；圖片選句；辨識字根；字母排序</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>be 動詞三形；冠詞；複數；所有格 Whose?；所有格形容詞；Some/Any/But；Have got；How much/How many?；Can；現在進行式；簡單現在式（肯定/否定/疑問）；進行式 vs 簡單現在式；Like/Love + V-ing；Was/Were；介系詞 on/in/at/to；過去式（肯定）；過去式（否定/疑問）</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>長母音 a/i/o/e 單字；高頻詞 20 個（all/are/I/you/said...）；顏色詞 8 個；Sight Words 六關訓練</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>兩步指令聽說；Who/What/Where/Why 問答</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—（本級文法密度最高，19 個文法點全通關）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Grade 1C 是整個菁英班最「硬核」的文法關卡——過去式、現在進行式、簡單現在式三種時態同時通關，完成後孩子已有完整基礎時態系統</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-2A">
+  <div class="el-level-header" style="background:#EBF3FC">
+    <span class="el-level-emoji">📘</span>
+    <div>
+      <strong>Grade 2A</strong>
+      <p>Language Arts 正式開始，寫作入門，標點符號全學</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>短/長母音 a/e/i/o/u；軟硬 c/g；L Blends：gl/pl/cl/fl/bl；S Blends：sm/sc/sl/st/sn/sp；R Blends：fr/br/gr/cr/dr/pr/tr</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>主旨、因果、預測、推論、填空選字；R-controlled 母音閱讀；規則/不規則複數；詞彙：多義詞、現實/幻想辨別、所有格、字母排序</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>大小寫規則（句首/人名/I/稱謂/地名/日期）；標點符號：句號/問號/驚嘆號/逗號/引號/冒號/縮寫點/所有格撇號/底線</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>短母音 a/e/i/o/u；字尾 -k；dr/tr/gr/br/fr；gl/bl/pl；字尾 sk/mp/ng</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>兩步指令；用描述性詞彙說人事物；口頭複述故事（角色、場景、情節）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>主旨寫作（找主題句/分類/標題）；序列寫作（first/next/last）；比較寫作（like/as）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Grade 2A 是「寫作元年」——第一次學寫主題句、序列段落、比較文，從此寫作有骨架</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-2B">
+  <div class="el-level-header" style="background:#DCFCE7">
+    <span class="el-level-emoji">📗</span>
+    <div>
+      <strong>Grade 2B</strong>
+      <p>R 控母音、默音字全通，寫作加入感官描寫和因果</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>字尾 Blends：st/sk/nd/nk/nt/mp/lt/lf/ft；三字母 Blends；默音字：kn/wr/ck/gh；母音對全套；y 的兩個聲音；Digraphs：sh/ch/th/thr/wh；R-Controlled：ar/er/ir/or/ur</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>加入：同義詞/反義詞辨別、兩步書面指令、比較故事場景和人物；複合字、縮寫字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>不規則動詞 has/have/is/are/was/were/ran/run/did/done/went/gone/saw/seen/came/come；比較形容詞；同音異義字 to/too/two；複數；縮寫；-ed/-s 動詞變化；I vs me</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>長母音 a/i/o/u/e；ar/ur/or；字尾 sh/th；字首 wh/sh/ch/th；常拼錯的字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>兩步指令；描述性詞彙說人事物；口頭複述故事</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>感官細節寫作（五感：看/聽/聞/味/觸）；邀請函寫作；因果寫作（問題→解決）；投訴信寫作</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Grade 2B 開始寫「感官描寫」——用看/聽/聞/味/觸讓文章活起來，這是很多台灣學生到高中都還不會的技巧</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-2C">
+  <div class="el-level-header" style="background:#FFF3EB">
+    <span class="el-level-emoji">📙</span>
+    <div>
+      <strong>Grade 2C</strong>
+      <p>Diphthongs 雙母音、前後綴全打通，正式開始學行書</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>Diphthongs：oi/oy/ou/ow；-ed/-ing/-s/-es 結尾；複數；縮寫；複合字；前綴 re/un；後綴 ful/ly；音節分割；反義詞、同義詞、同音異字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>加入：縮寫辨識（Jan./Sun./Mr./St.）、音節規則閱讀應用、前後綴意義理解</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>普通名詞 vs 專有名詞；動詞/形容詞/副詞；陳述/疑問/感嘆/命令句；句子合併（名詞/動詞/形容詞/副詞/受詞）</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>br/fr/tr；sl/sp；字尾 s；同音字；家庭稱謂詞；複合字；/u/ 音單字；-ed/-ing；/ou/ 音；數字詞</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>三到四步口說指令；主題發言；事件按序口述；用事實支撐觀點</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>序列寫作（怎麼做某事）；比較寫作（人物外觀）；行書書寫（Cursive）；感官細節寫作；謝謝卡；廣告文案</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Grade 2C 開始練行書（Cursive）！手寫英文質感直接拉開距離。同時學會寫廣告和感謝卡，英文有實際用途了</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-3A">
+  <div class="el-level-header" style="background:#EBF3FC">
+    <span class="el-level-emoji">🌟</span>
+    <div>
+      <strong>Grade 3A</strong>
+      <p>進入 Grade 3！開始讀說明文，口說能力大躍進</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>子音字首字尾；-ed/-ing/-s/-es 結尾；短/長母音；軟硬 c/g；long o -old；long i -ind；二/三字母 Blends；字尾 Blends；默音字；母音對全套</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文（expository text）主旨和細節辨別；用目錄/書名查資訊；四到五步書面指令；多音節字解碼；字典查字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>大小寫完整規則；標點符號完整系統；引號用法；do/have/am/is/are/was/were 全套</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>短/長母音；oi/ou 特殊母音；字尾雙子音；-le 結尾</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>多步指令；用事實與細節支持觀點；複述他人說話內容；適當展開回答</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>主旨段落（分類/標題/名詞用法）；序列寫作（食譜/How-to 說明文）；比較寫作（-er/-est、more/most、good/bad）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Grade 3A 首次讀「說明文」——這正是全民英檢和會考素養題的閱讀類型，從這關開始天天練</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-3B">
+  <div class="el-level-header" style="background:#FEF3C7">
+    <span class="el-level-emoji">💡</span>
+    <div>
+      <strong>Grade 3B</strong>
+      <p>前綴家族全打通，文法大關：主詞代名詞一致性、雙重否定</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>三字母 Blends；字尾 Blends；默音字 kn/wr/sc/ck/mb/gh；母音對完整版；複數和所有格；複合字；縮寫；前綴 un/dis/re/pre/over/mis；同音異字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文理解、主旨細節辨別；複雜字族解碼；字典查字；知識分類層次（dog/mammal/animal/living things）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>不規則動詞 sang/ran/wore/done/gave/went/ate/saw；形容詞在句中用法；同音異義字 hear/here、to/too/two、its/it's；規則/不規則複數；單複數所有格；縮寫（not/am/have/will/is/are）；動詞時態；動詞一致性；主詞代名詞一致；受詞代名詞一致；雙重否定辨識；名詞和代名詞</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>-ed/-ing；spl/spr/str；雙子音；縮寫；易拼錯字（been/school/once）；/s/ 音（sink/face）；/j/ 音（giant/gym）；複數（pony/ponies）；同音字；星期時間詞</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>多步指令；主題發言；事件按序口述；轉述他人</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>比較寫作（like/as＋有趣形容詞）；細節寫作（五感/人物/謎語/副詞）；事實與意見寫作（動物/自我介紹/虛構故事）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Grade 3B 挑戰「雙重否定」（double negatives）——很多台灣大學生都說不清楚的文法，3B 孩子直接搞定</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-3C">
+  <div class="el-level-header" style="background:#F3E8FF">
+    <span class="el-level-emoji">✍️</span>
+    <div>
+      <strong>Grade 3C</strong>
+      <p>後綴大家族，學會用字典查音節，寫作開始有觀點</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>y 的兩種聲音；子音對；字尾子音對；母音 + r；Diphthongs oi/oy/ou/ow；後綴 -ful/-less/-y/-ly/-able/-ish；音節分割；字典使用技巧（guide words）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文分析；前後綴意義理解；字典運用；利用句子和詞彙情境推測生字意義</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>動詞/形容詞/副詞/冠詞；陳述句和問句寫作；問號/驚嘆號用法；who/what 辨識；and/or/逗號合併句子；把兩個形容詞合進一個句子；用片語替換整個句子</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>-ld/-ft；/ar/ 音；/kw//skw/ 音；縮寫；假日名稱；/ur//or/ 音；默音 k/w；字尾 -lf/-mb/-tch；複合字；月份名稱</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>多步指令；事實支撐觀點；按序口述；複述他人發言；適當展開回答</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>因果寫作（because/since/on account of）；感謝信/公告/廣告文案；觀點寫作（從不同角色視角描述同一個故事）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Grade 3C 學「觀點寫作」（Point of View）——從同一個故事的不同角色視角下筆，這是批判思考和創意寫作的核心技能</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-4A">
+  <div class="el-level-header" style="background:#EBF3FC">
+    <span class="el-level-emoji">🏅</span>
+    <div>
+      <strong>Grade 4A</strong>
+      <p>Vowel Digraphs 全通，正式讀說明文結構，文學分析開始</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>子音字首字尾；短/長母音；軟硬 c/g；二/三字母 Blends；字尾 Blends；默音字 kn/wr/sc/ck/mb/gn/gh；母音對全套 ai/ay/ei/ee/ea/oa/ow/oo/au/aw/ew</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文結構分析（比較對比、因果、時間序）；讀不同目的（完整理解/找資訊/欣賞）；文學分析（主題/情節/場景/人物）；辨別寓言/神話/傳說/童話結構</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>大小寫完整系統（含商業書信）；完整標點系統；句子 vs 句子片段；友善書信五段；商業書信六段；日期地址逗號</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>短/長母音；o-e/oo/ew/ue/ui 母音群；雙音節母音；ow/ou/oi/oy 雙母音；c/k/ck；/s//j/ 音；縮寫詞</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>發問與回應；摘要口頭重點；精確指令；詩歌朗誦（節奏/音量/速度/語氣）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>行書書寫；主旨句；序列寫作（新聞故事）；比較段落；校對和修改</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Grade 4A 開始學寫「商業書信（Business Letter）」——六個段落結構，從 Heading 到 Signature，這個能力很多社會人士都不一定有</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-4B">
+  <div class="el-level-header" style="background:#FEF3C7">
+    <span class="el-level-emoji">🏆</span>
+    <div>
+      <strong>Grade 4B</strong>
+      <p>不規則動詞 15 個完全搞定，寫作加入日記、運動段落和 Tall Tale</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>母音對 ie/ou；y 的聲音；Digraphs：sh/th/wh/thr/shr/ng/ch/tch/gh/ph；R-controlled 母音；Diphthongs oi/oy/ou/ow；字尾 ed/ing/s/es/er/est；所有格（單複數）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文結構（比較對比/因果/時間序）；文學分析（主題/情節/場景/人物）；辨別幻想/寓言/神話/傳說結構</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>不規則動詞 15 組：came/come、rang/rung、sang/sung、took/taken、gave/given、ate/eaten、began/begun、fell/fallen、went/gone、sit/set、let/leave、can/may、of/have；比較形容詞；形容詞和副詞；同音字 your/you're、its/it's、there/their/they're；複合主詞；受詞代名詞；過去/現在/未來式；主詞動詞一致；雙重否定</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>ch/tch；ge/dge；複數名詞；s or c；職業 -er/-or；er/ear/ir/or/ur；比較 -er/-est；特殊複數 wives/leaves；前綴 re/un；同音字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>發問與回應；摘要口頭重點；精確指令；因果/比較口頭表達；詩歌朗誦</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>行書；比較段落（逐點比較）；細節寫作（五感/謎語/副詞片語）；事實與意見（日記/運動段落/Tall Tale）</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Tall Tale（誇張故事）寫作——培養幽默感和創意表達，孩子要用誇張技法寫一個有趣故事，然後用 cursive 行書寫出來</div>
+  </div>
+</div>
+<div class="el-level-panel" id="el-panel-4C">
+  <div class="el-level-header" style="background:#DCFCE7">
+    <span class="el-level-emoji">🎓</span>
+    <div>
+      <strong>Grade 4C</strong>
+      <p>最終關：字典高階技能、說服文、書評、觀點寫作全打通</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>複合字；縮寫；前綴 un/dis/re/pre/in/mis/over；後綴 ful/less/y/ly/able/ish/ment/ness；音節分割；反義詞/同義詞；同音字/同形異義字；字典技能：guide words/entry word/多義/發音標記/重音符號</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文結構完整分析；文學反應與分析（主題/情節/場景/人物/寓言/神話）；因果 vs 事實/意見辨別</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>八大詞類完整：名詞/代名詞/動詞/形容詞/副詞/冠詞；主語和謂語；but/and/or；句子合併；完整寫作流程：選題→收集想法→連結→草稿→修改→校對；段落三段式（開頭/中間/結尾）；說服文；計畫並撰寫報告</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>Schwa 音 a/e/o；字尾 -ly；-tion/-ture/-ure；數字詞；常拼錯字；ar/are/air/ear/ere；ful/less；前綴 ex；複合字；字尾 -ing</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>發問與回應；摘要正式簡報重點；精確指令；詩歌朗誦</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>行書；因果寫作（so/because/since/therefore）；說服文；廣告；商業書信；書評；不同觀點寫作</p></div>
+    </div>
+    <div class="el-highlight">🎯 亮點：Grade 4C 是菁英班的畢業關——學會完整寫作流程（選題→草稿→修改→校對），能寫說服文、商業書信、書評，英文表達能力正式達到國際水準</div>
+  </div>
+</div>
 
-          <!-- Accordion: Reading -->
-          <div class="im-subject-accordion">
-            <button class="im-subject-btn" onclick="toggleSubject(this)">
-              <div class="im-subject-icon" style="background:#DBEAFE">📚</div>
-              <div class="im-subject-label"><strong>閱讀理解 Reading</strong><span>從故事圖卡到讀整篇文章分析，一路往上打</span></div>
-              <span class="im-subject-chevron">▼</span>
-            </button>
-            <div class="im-subject-body">
-              <p class="im-subject-desc">菁英班的閱讀課不是「讀完就好」——每一個故事後面都有任務：找出主旨、預測結局、排出故事順序、找因果關係、推結論。這些看起來像語文課的技能，其實是英文思考力的核心訓練，也是全民英檢和國中會考最愛考的題型。</p>
-              <table class="im-grade-table">
-                <thead><tr><th>級數</th><th>閱讀技能</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Starter</strong></td><td>看圖指認、聽故事理解、生活詞彙配對</td></tr>
-                  <tr><td><strong>Grade 1</strong></td><td>主旨判斷、故事順序、因果推論、詞彙分類（動物/食物/玩具）</td></tr>
-                  <tr><td><strong>Grade 2</strong></td><td>多義詞、字根字尾、複數規則、辨別現實/幻想、拼字字母序排列</td></tr>
-                  <tr><td><strong>Grade 3</strong></td><td>多音節字解碼、同義詞/反義詞/同音字/多義詞綜合運用、字典查字</td></tr>
-                  <tr><td><strong>Grade 4</strong></td><td>說明文結構（比較對比/因果/時間序）、文學分析（主題/情節/人物/設定）、寓言/神話辨別</td></tr>
-                </tbody>
-              </table>
-              <div class="im-highlights">
-                <div class="im-highlight-item">Grade 4 開始讀「說明文」——就是全民英檢和會考素養題那種風格，天天在練🎯</div>
-                <div class="im-highlight-item">每一關閱讀技能都有具體任務，孩子「看到改變」而不是「感覺好像有進步」</div>
-                <div class="im-highlight-item">Oral Reading 每一關都要練，讀出來流暢才算過——不能只是眼睛掃過去</div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Accordion: Grammar -->
-          <div class="im-subject-accordion">
-            <button class="im-subject-btn" onclick="toggleSubject(this)">
-              <div class="im-subject-icon" style="background:#FFF3EB">📝</div>
-              <div class="im-subject-label"><strong>文法 Grammar / Language Arts</strong><span>從「我叫 ___」到能寫一封正式 Business Letter</span></div>
-              <span class="im-subject-chevron">▼</span>
-            </button>
-            <div class="im-subject-body">
-              <p class="im-subject-desc">菁英班文法課最厲害的地方是路線圖超清楚：Starter 從「How are you?」開始，一路學到 Grade 4 能寫六段式商業書信。每個文法點不只是背，是孩子要能在對話、寫作、發表裡實際用出來，老師確認後才算過。</p>
-              <table class="im-grade-table">
-                <thead><tr><th>級數</th><th>文法 / Language Arts 重點</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Starter A/B</strong></td><td>日常問答 26 句（天氣、生日、時間、喜好）；名詞、介系詞 in/on/under/over</td></tr>
-                  <tr><td><strong>Grade 1A</strong></td><td>名詞、A/An、This/That、疑問詞 Who/What、複數、be 動詞完整系統、介系詞、形容詞、There is/are</td></tr>
-                  <tr><td><strong>Grade 1B</strong></td><td>Have/Has got、命令句、Can（肯定/否定/疑問）、現在進行式、所有格 Whose?</td></tr>
-                  <tr><td><strong>Grade 2A</strong></td><td>大小寫規則、完整標點符號系統（引號/冒號/縮寫點/所有格撇號）</td></tr>
-                  <tr><td><strong>Grade 3A</strong></td><td>do/have/am/is/are/was/were 全套；引號在標題中的用法</td></tr>
-                  <tr><td><strong>Grade 4A</strong></td><td>句子 vs 句子片段；友善書信五段結構；商業書信六段結構；詩歌朗誦</td></tr>
-                </tbody>
-              </table>
-              <div class="im-highlights">
-                <div class="im-highlight-item">從 Starter 就說真實對話，不背死句——孩子遇到外師不會愣住</div>
-                <div class="im-highlight-item">Grade 4 學寫 Business Letter，這個能力連很多大人都不一定有😅</div>
-                <div class="im-highlight-item">文法進度跟閱讀、寫作完全同步，學了就用、用了就記</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Accordion: Spelling -->
-          <div class="im-subject-accordion">
-            <button class="im-subject-btn" onclick="toggleSubject(this)">
-              <div class="im-subject-icon" style="background:#F3E8FF">✏️</div>
-              <div class="im-subject-label"><strong>拼字 Spelling</strong><span>每一個字都是有脈絡的，不是隨機塞給你背</span></div>
-              <span class="im-subject-chevron">▼</span>
-            </button>
-            <div class="im-subject-body">
-              <p class="im-subject-desc">你以為拼字只是死背？錯了。菁英班的拼字是用來「固化 Phonics 規則」的武器。孩子學了某個發音規則，馬上就在拼字課裡用那個規則拼出十幾個字，規則跟詞彙同時進大腦，兩個科目互相加強，記憶效率直接翻倍。</p>
-              <table class="im-grade-table">
-                <thead><tr><th>級數</th><th>拼字重點</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Starter A/B</strong></td><td>26 字母書寫；短母音 a/i/o/u/e 配圖拼字；字首 cl/fl/sn/st 拼字</td></tr>
-                  <tr><td><strong>Grade 1A</strong></td><td>短母音全拼；字首字尾單字；辨識視覺詞 Sight Words（描摹、配對、亂序解碼）</td></tr>
-                  <tr><td><strong>Grade 2A</strong></td><td>L/R Blends 單字；-sk/-mp/-ng 字尾；短母音 a/e/i/o/u 完整字庫</td></tr>
-                  <tr><td><strong>Grade 3A</strong></td><td>短/長母音字；oi/ou 特殊母音；雙字尾子音；-le 結尾單字</td></tr>
-                  <tr><td><strong>Grade 4A</strong></td><td>o-e/oo/ew/ue/ui 母音群；ow/ou/oi/oy 雙母音；縮寫字拼法；/s//j/ 音拼字</td></tr>
-                </tbody>
-              </table>
-              <div class="im-highlights">
-                <div class="im-highlight-item">Sight Words 有六關練習法：描摹→配對→亂序解碼→填空→造句→朗讀，學透才走</div>
-                <div class="im-highlight-item">拼字課跟 Phonics 課完全連動，不是兩本分開的課本在各走各的</div>
-                <div class="im-highlight-item">學完某個級數的孩子，寫英文作文時拼錯字的頻率真的驟降</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Accordion: Oral Skills -->
-          <div class="im-subject-accordion">
-            <button class="im-subject-btn" onclick="toggleSubject(this)">
-              <div class="im-subject-icon" style="background:#DCFCE7">🎤</div>
-              <div class="im-subject-label"><strong>口說技能 Oral Skills</strong><span>不是在「上課」，是在「真的說英文」</span></div>
-              <span class="im-subject-chevron">▼</span>
-            </button>
-            <div class="im-subject-body">
-              <p class="im-subject-desc">很多孩子學英文多年，一開口就卡。菁英班的 Oral Skills 從第一堂課就不一樣——Starter A 就要能回答「What day is today?」「How's the weather?」這種真實問題，Grade 4 要能口頭摘要一篇文章的重點、朗誦詩歌、用不同語氣說原因和結果。每一關的口說標準都比前一關高，孩子是一直在被鍛鍊的。</p>
-              <table class="im-grade-table">
-                <thead><tr><th>級數</th><th>口說技能目標</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Starter A/B</strong></td><td>日常對話 26 句（天氣、生日、時間、喜好、位置）；問答自動反應</td></tr>
-                  <tr><td><strong>Grade 1</strong></td><td>聽懂兩步指令；回答 Who/What/Where/Why；專注聆聽並複述</td></tr>
-                  <tr><td><strong>Grade 2A</strong></td><td>用描述性詞彙說人事物；口頭複述故事（角色、場景、情節）</td></tr>
-                  <tr><td><strong>Grade 3A</strong></td><td>多步驟口說指令；用事實和細節支持觀點；轉述他人說話內容</td></tr>
-                  <tr><td><strong>Grade 4A</strong></td><td>口頭摘要文章主旨；給精確指令；用因果/比較結構傳遞資訊；詩歌朗誦</td></tr>
-                </tbody>
-              </table>
-              <div class="im-highlights">
-                <div class="im-highlight-item">Starter 就開始說真實對話，不是假假地背台詞——遇到外國人不會腦袋空白</div>
-                <div class="im-highlight-item">每一關口說標準都明確寫出來，家長問「這學期孩子該達到什麼？」有答案</div>
-                <div class="im-highlight-item">Grade 4 能當眾口頭報告一篇文章的重點，這種表達力在台灣超稀缺💎</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Accordion: Writing -->
-          <div class="im-subject-accordion">
-            <button class="im-subject-btn" onclick="toggleSubject(this)">
-              <div class="im-subject-icon" style="background:#FEF3C7">🖊️</div>
-              <div class="im-subject-label"><strong>寫作 Writing</strong><span>Grade 2 開始學寫故事，Grade 4 學寫新聞和商業信件</span></div>
-              <span class="im-subject-chevron">▼</span>
-            </button>
-            <div class="im-subject-body">
-              <p class="im-subject-desc">菁英班的寫作課有一個超直接的目標：讓孩子「寫得出一件事」。不是寫一個字，是寫一段話，有主旨、有順序、有比較、有細節。Grade 2 開始寫主旨句，Grade 4 能寫完整的 5 段新聞故事，還會用行書（cursive）寫出來。</p>
-              <table class="im-grade-table">
-                <thead><tr><th>級數</th><th>寫作任務</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Grade 2A</strong></td><td>主旨寫作（找主題句、分類列舉）；序列寫作（first/next/last）；比較寫作（like/as）</td></tr>
-                  <tr><td><strong>Grade 3A</strong></td><td>食譜寫作；How-to 說明文；用有趣動詞和形容詞讓寫作更生動</td></tr>
-                  <tr><td><strong>Grade 4A</strong></td><td>流暢行書書寫；Topic Sentence 練習；新聞故事撰寫；校對自己的文章</td></tr>
-                </tbody>
-              </table>
-              <div class="im-highlights">
-                <div class="im-highlight-item">每一個寫作技能都很具體——不是「練習寫作」，是「寫一個食譜」「寫一篇新聞」</div>
-                <div class="im-highlight-item">Grade 4 學校對（proofread），孩子寫完會自己抓錯，不再全靠老師改</div>
-                <div class="im-highlight-item">行書（Cursive）書寫讓英文手寫質感直接拉開距離，考試卷子看起來就不一樣</div>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /im-subjects -->
-
-        <!-- Summary -->
-        <div class="im-summary" style="background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 100%)">
+        <div class="im-summary" style="background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 100%);margin-top:28px">
           <h4>📌 菁英班孩子一年後的樣子</h4>
           <div class="im-summary-grid">
             <div class="im-summary-item"><strong>🔤 拼音通關</strong><p>每一關 Phonics 都確認過，看字能拼、拼字能寫</p></div>
@@ -1298,6 +1460,17 @@ const revealObserver=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}});
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+
+function switchLevel(btn) {
+  var container = btn.closest('#panel-elite');
+  container.querySelectorAll('.el-level-tab').forEach(function(t){t.classList.remove('active');});
+  container.querySelectorAll('.el-level-panel').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+  var lvId = btn.dataset.level;
+  var panel = container.querySelector('#el-panel-' + lvId);
+  if (panel) panel.classList.add('active');
+}
 
 /* ========== IMMERSION SUBJECT ACCORDION ========== */
 function toggleSubject(btn){
