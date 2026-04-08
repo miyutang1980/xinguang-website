@@ -252,6 +252,21 @@ ul{list-style:none}
 @media(max-width:768px){.im-intro{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr 1fr}.im-summary-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.im-summary-grid{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr}}
 
+/* ===== BOOKING RULES BAR ===== */
+.booking-rules-bar{display:flex;flex-wrap:wrap;gap:16px;max-width:900px;margin:0 auto 32px;background:var(--surface);border-radius:var(--radius-lg);padding:20px 24px;border:1px solid var(--surface-dark);box-shadow:var(--shadow-sm)}
+.bkrule-item{flex:1;min-width:200px;display:flex;align-items:flex-start;gap:12px}
+.bkrule-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.bkrule-item>div{display:flex;flex-direction:column;gap:3px}
+.bkrule-item strong{font-size:0.88rem;font-weight:800;color:var(--text)}
+.bkrule-item span,.bkrule-item a{font-size:0.8rem;color:var(--text-muted);line-height:1.55}
+.bkrule-line{border-left:1px solid var(--surface-dark);padding-left:16px}
+.bk-deadline-badge{display:inline-flex;align-items:center;gap:6px;background:#FEF2F2;color:#B91C1C;font-size:0.78rem;font-weight:700;padding:5px 12px;border-radius:50px;border:1px solid #FECACA;margin-bottom:12px}
+.bk-deadline-ok{background:#F0FDF4;color:#15803D;border-color:#BBF7D0}
+.bk-cancelled{text-align:center;padding:32px 20px;background:#FFF7ED;border-radius:var(--radius-lg);border:1px solid #FED7AA;margin-top:20px;display:none}
+.bk-cancelled.active{display:block}
+@media(max-width:640px){.booking-rules-bar{flex-direction:column}.bkrule-line{border-left:none;padding-left:0;border-top:1px solid var(--surface-dark);padding-top:12px}}
+
+
 /* ===== CAMP REGISTRATION FORM ===== */
 .camp-reg-wrap{background:var(--surface);border-radius:var(--radius-lg);padding:36px 40px;border:1px solid var(--surface-dark);box-shadow:var(--shadow-md);max-width:760px;margin:0 auto}
 .camp-reg-title{font-family:var(--font-display);font-size:1.25rem;font-weight:800;color:var(--text);margin-bottom:6px}
@@ -2558,8 +2573,23 @@ ul{list-style:none}
   <div class="container">
     <h2 class="section-title reveal">預約參訪與體驗</h2>
     <p class="section-subtitle reveal">選擇方便的時間，親自來校參觀，或讓孩子體驗一堂全外師課程</p>
+    <div class="booking-rules-bar reveal">
+      <div class="bkrule-item">
+        <span class="bkrule-icon">⏰</span>
+        <div><strong>截止預約規則</strong><span>預約日期的前兩天（含）中午 12:00 前完成預約<br>例：4/9 的時段，最晚 4/7 中午 12:00 前預約</span></div>
+      </div>
+      <div class="bkrule-item">
+        <span class="bkrule-icon">✏️</span>
+        <div><strong>異動或取消</strong><span>需在截止時間前，透過官方 LINE 告知，或回此表單重新預約</span></div>
+      </div>
+      <div class="bkrule-item bkrule-line">
+        <span class="bkrule-icon">💬</span>
+        <div><strong>官方 LINE</strong><a href="https://lin.ee/o1wzF7a" target="_blank" rel="noopener noreferrer" style="color:var(--green);font-weight:700;text-decoration:underline;font-size:0.88rem">點此聯繫太平新光分校 →</a></div>
+      </div>
+    </div>
     <div class="booking-wrap reveal" id="bookingSystem">
-      <p class="booking-desc">請先選擇日期，再選擇時段。免費體驗一堂全外師課程，感受太平新光的全外師教學氛圍。</p>
+      <p class="booking-desc">請先選擇日期，再選擇時段。灰色日期為不可預約（截止時間已過、假日或已額滿）。</p>
+      <div id="bkDeadlineInfo" class="bk-deadline-badge" style="display:none"></div>
       <div class="calendar-header">
         <h3 id="calendarTitle"></h3>
         <div class="calendar-nav">
@@ -3020,9 +3050,14 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
       const isPast=new Date(currentYear,currentMonth,d)<new Date(today.getFullYear(),today.getMonth(),today.getDate());
       const hasSlots=weeklySlots[dayOfWeek];
 
-      if(isWeekend||isHol||isPast||!hasSlots){
+      // Deadline: must book by noon 2 days before
+      const bkDeadline=new Date(currentYear,currentMonth,d-2,12,0,0);
+      const pastDeadline=now>bkDeadline;
+
+      if(isWeekend||isHol||isPast||!hasSlots||pastDeadline){
         el.classList.add('disabled');
         if(isHol&&!isWeekend)el.title='國定假日';
+        else if(pastDeadline&&!isPast&&!isWeekend&&!isHol&&hasSlots)el.title='預約截止（須提前2天中午前預約）';
       }else{
         el.classList.add('has-slots');
         el.addEventListener('click',()=>selectDate(ds,d,dayOfWeek));
@@ -3048,6 +3083,16 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     const slotsList=document.getElementById('slotsList');
 
     slotsDate.textContent=`${ds.replace(/-/g,'/')} 可預約時段`;
+    // Show deadline for selected date
+    const selParts=ds.split('-');
+    const selDeadline=new Date(parseInt(selParts[0]),parseInt(selParts[1])-1,parseInt(selParts[2])-2,12,0,0);
+    const dlInfo=document.getElementById('bkDeadlineInfo');
+    if(dlInfo){
+      const isOk=now<=selDeadline;
+      dlInfo.className='bk-deadline-badge'+(isOk?' bk-deadline-ok':'');
+      dlInfo.innerHTML=(isOk?'✅':'❌')+` 本時段預約截止：${selParts[1]}/${String(parseInt(selParts[2])-2).padStart(2,'0')} 中午 12:00`;
+      dlInfo.style.display='inline-flex';
+    }
     slotsList.innerHTML='';
 
     const slots=weeklySlots[dow]||[];
@@ -3120,8 +3165,26 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     document.getElementById('bookingForm').classList.remove('active');
     document.getElementById('slotsPanel').classList.remove('active');
     const confirm=document.getElementById('bookingConfirm');
+    // Calculate deadline for this booking (2 days before at noon)
+    const bkDateParts = selectedDate.split('-');
+    const bkDeadline = new Date(parseInt(bkDateParts[0]), parseInt(bkDateParts[1])-1, parseInt(bkDateParts[2])-2, 12, 0, 0);
+    const deadlineStr = bkDeadline.toLocaleDateString('zh-TW',{month:'2-digit',day:'2-digit'}) + ' 中午 12:00';
+
     document.getElementById('confirmDetails').innerHTML=
-      `${parent.value} 您好，您已成功預約：<br><strong>${selectedDate} ${selectedSlot}</strong><br>預約類型：${type.value}<br>我們將以電話確認您的預約，感謝！`;
+      `<div style="font-size:1.3rem;margin-bottom:12px">🎉</div>
+      <strong>${parent.value}</strong> 您好，預約已完成！<br><br>
+      <div style="background:var(--green-50);border-radius:10px;padding:12px 16px;margin:12px 0;text-align:left;font-size:0.9rem;line-height:1.8">
+        📅 預約日期時段：<strong>${selectedDate} ${selectedSlot}</strong><br>
+        📋 預約類型：${type.value}<br>
+        👶 學生姓名：${child.value}
+      </div>
+      <div style="background:#FFF7ED;border-radius:10px;padding:12px 16px;margin:12px 0;text-align:left;font-size:0.85rem;color:#92400E;line-height:1.75">
+        ⏰ <strong>異動或取消截止時間：${deadlineStr}</strong><br>
+        如需異動或取消，請在截止時間前：<br>
+        1️⃣ <a href="https://lin.ee/o1wzF7a" target="_blank" style="color:var(--green);font-weight:700">點此聯繫官方 LINE</a> 告知預約姓名、日期、時段<br>
+        2️⃣ 或返回此預約表單選擇新的時段
+      </div>
+      <p style="font-size:0.82rem;color:var(--text-muted)">我們將在 24 小時內以電話確認您的預約，感謝！</p>`;
     confirm.classList.add('active');
 
     // Reset form
@@ -3260,22 +3323,6 @@ function submitCampReg() {
     errEl.style.display = 'block';
     return;
   }
-
-  // Save to localStorage
-  var reg = {
-    id: 'CR-' + Date.now(),
-    ts: new Date().toISOString(),
-    sname: sname, grade: grade, enrolled: enrolled,
-    pname: pname, phone: phone,
-    line: document.getElementById('cr_line').value.trim(),
-    courses: (july?'七月超能科學派 ':'') + (aug?'八月謎案追查隊':''),
-    diet: diet || '無'
-  };
-  try {
-    var regs = JSON.parse(localStorage.getItem('campRegistrations') || '[]');
-    regs.push(reg);
-    localStorage.setItem('campRegistrations', JSON.stringify(regs));
-  } catch(e) {}
 
   // Show success
   document.getElementById('campFormBody').style.display = 'none';
