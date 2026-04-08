@@ -1072,16 +1072,479 @@ ul{list-style:none}
       </div><!-- /course-content -->
     </div><!-- /panel-elite -->
 
-    <div class="course-panel" id="panel-standard">
+        <div class="course-panel" id="panel-standard">
       <div class="course-content">
         <div class="course-header">
           <div class="course-badge" style="background:var(--orange)">ST</div>
-          <h3>標準班 Standard<small>穩健學習，不增加壓力的英語進步方案</small></h3>
+          <h3>標準班 Standard<small>一週 3 天，穩穩把英文基礎打好，不用每天補習</small></h3>
         </div>
-        <div class="course-details">
-          <div class="course-detail"><h4>適合對象</h4><p>國小 1 年級～國中 3 年級</p></div>
-          <div class="course-detail"><h4>課程特色</h4><p>每週 2 天 4.5 小時，全外師教學，學習不增加壓力</p></div>
-          <div class="course-detail"><h4>學習成果</h4><p>穩固基礎，英文不落後，循序漸進提升能力</p></div>
+
+        <div class="im-intro">
+          <div class="im-intro-card orange">
+            <h4>標準班是什麼節奏？</h4>
+            <p>一週 3 天（週一、三、五），每次 1.5 小時，課程內容和菁英班完全一樣，只是進度稍慢一點。孩子不用每天跑補習，但每週都有穩定的英文輸入，英文不落後、生活也不被綁死。從 Starter A 起步，一路可以走到 Grade 4D。</p>
+          </div>
+          <div class="im-intro-card" style="background:var(--green-50);border-left:4px solid var(--green)">
+            <h4 style="color:var(--green-dark)">適合誰？進度怎麼走？</h4>
+            <p>幼稚園～國中階段｜<strong>每週 3 堂 × 1.5 小時</strong>穩健推進<br>每個 Grade 分 A/B/C/D 四個子關卡，一關一關確認學會才推進<br>不需要每天補習，假日還給家人——但英文一直在走</p>
+          </div>
+        </div>
+
+        <div class="im-subjects">
+          <div class="im-subjects-title" style="color:var(--orange)">📋 點選關卡，看每一關在學什麼</div>
+          <div class="el-level-tabs" style="flex-wrap:wrap">
+  <button class="el-level-tab active" data-stdlevel="SA" onclick="switchStd(this)" style="background:var(--orange);color:#fff;border-color:var(--orange)">Starter A</button>
+  <button class="el-level-tab" data-stdlevel="SB" onclick="switchStd(this)" style="">Starter B</button>
+  <button class="el-level-tab" data-stdlevel="SC" onclick="switchStd(this)" style="">Starter C</button>
+  <button class="el-level-tab" data-stdlevel="1A" onclick="switchStd(this)" style="">Grade 1A</button>
+  <button class="el-level-tab" data-stdlevel="1B" onclick="switchStd(this)" style="">Grade 1B</button>
+  <button class="el-level-tab" data-stdlevel="1C" onclick="switchStd(this)" style="">Grade 1C</button>
+  <button class="el-level-tab" data-stdlevel="1D" onclick="switchStd(this)" style="">Grade 1D</button>
+  <button class="el-level-tab" data-stdlevel="2A" onclick="switchStd(this)" style="">Grade 2A</button>
+  <button class="el-level-tab" data-stdlevel="2B" onclick="switchStd(this)" style="">Grade 2B</button>
+  <button class="el-level-tab" data-stdlevel="2C" onclick="switchStd(this)" style="">Grade 2C</button>
+  <button class="el-level-tab" data-stdlevel="2D" onclick="switchStd(this)" style="">Grade 2D</button>
+  <button class="el-level-tab" data-stdlevel="3A" onclick="switchStd(this)" style="">Grade 3A</button>
+  <button class="el-level-tab" data-stdlevel="3B" onclick="switchStd(this)" style="">Grade 3B</button>
+  <button class="el-level-tab" data-stdlevel="3C" onclick="switchStd(this)" style="">Grade 3C</button>
+  <button class="el-level-tab" data-stdlevel="3D" onclick="switchStd(this)" style="">Grade 3D</button>
+  <button class="el-level-tab" data-stdlevel="4A" onclick="switchStd(this)" style="">Grade 4A</button>
+  <button class="el-level-tab" data-stdlevel="4B" onclick="switchStd(this)" style="">Grade 4B</button>
+  <button class="el-level-tab" data-stdlevel="4C" onclick="switchStd(this)" style="">Grade 4C</button>
+  <button class="el-level-tab" data-stdlevel="4D" onclick="switchStd(this)" style="">Grade 4D</button>
+</div>
+
+          <div class="std-level-panel" id="std-panel-SA" style="display:block">
+  <div class="el-level-header" style="background:#EBF3FC">
+    <span class="el-level-emoji">🌱</span>
+    <div>
+      <strong>Starter A</strong>
+      <p>英文第一天，從 A-Z 發音和 20 句日常英文開始</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>A–Z 字母發音、辨識與書寫；字首和字尾音練習</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>看圖指認關鍵詞彙；指認老師說的額外詞彙</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>日常對話 20 句：天氣/生日/日期/顏色/形狀/時間</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>—（本級重點在口說啟蒙）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>Hello / 天氣 / 年齡 / 生日 / 顏色 / 形狀 / 時間 完整 20 句日常對話</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：第一天就說真實英文，不死背台詞——問天氣、說生日、說幾點，全部活用</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-SB" style="display:none">
+  <div class="el-level-header" style="background:#DCFCE7">
+    <span class="el-level-emoji">🌿</span>
+    <div>
+      <strong>Starter B</strong>
+      <p>短母音全通，文法第一步，開始說完整句子</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>A–Z 字母發音書寫（複習）；短母音 ă/ĕ/ĭ/ŏ/ŭ 辨識與書寫</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>—（本級重點在 Phonics 和口說）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>普通名詞；單數/複數名詞</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>—</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>How old are you? / What time is it? / What did you do? / Where are you? 等 18 句問答</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：SA 說天氣和日期，SB 開始說「我做了什麼、我在哪裡、我幾歲」——口說場景大幅擴張</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-SC" style="display:none">
+  <div class="el-level-header" style="background:#FEF3C7">
+    <span class="el-level-emoji">🌻</span>
+    <div>
+      <strong>Starter C</strong>
+      <p>讀第一本故事書，文法加入形容詞和進行式</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>A–Z 字首字尾音；短母音 ă/ĕ/ĭ/ŏ/ŭ 全套</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>故事順序排列；因果辨別；預測結局；讀 Bibs 詞彙；辨識字根與字尾；正確朗讀</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>普通名詞；可數/不可數名詞；介系詞 in/on/under/over/beside；形容詞 10 個（big/little/tall...）；現在進行式（eating/playing/sleeping...）</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>—</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>Where is/are your ___? / What are you doing? / What do you want? / Do you like ___? 等 14 種問答</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：SC 是 Starter 系列的頂點——讀完 Bibs 故事、說進行式、用形容詞描述，孩子第一次真的讀故事、說自己在做什麼</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-1A" style="display:none">
+  <div class="el-level-header" style="background:#F5F0FF">
+    <span class="el-level-emoji">🚀</span>
+    <div>
+      <strong>Grade 1A</strong>
+      <p>Phonics 起飛，be 動詞完整系統，開始讀故事找主旨</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>A～Z 字首字尾音；短母音 a/e/i/o/u；長母音 a/i/u</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>主旨判斷、預測結局、故事順序、因果辨別、推論結論；Sight Words；流暢朗讀</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>名詞、A/An、This/That、Who?/What?、複數、I am/You are/He is/She is/It is/We are/They are</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>A～Z 字母書寫；字首 t/m/s/j/k/d/f/g/n/w/b/h/p/r；字尾 d/t/m/s/g/b；Sight Words 六關訓練</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>聽懂兩步指令；Who/What/Where/Why 問答；聽故事後提問</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：be 動詞完整系統一次搭好，1A 完成後孩子說「I am / She is / They are」再也不混</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-1B" style="display:none">
+  <div class="el-level-header" style="background:#EBF3FC">
+    <span class="el-level-emoji">⚡</span>
+    <div>
+      <strong>Grade 1B</strong>
+      <p>Blends 上場，Can 三形，現在進行式完整學會</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>長短母音全套；y 的母音音；-ed/-ing 結尾；複數 -s/-es；縮寫字；初始子音 S/M/P/N/T/C/K/R/B</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>主旨、順序、因果、預測、推論；選最適合填空的字；選最能描述圖片的句子</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>Where is/are? 介系詞 on/in/under；形容詞在句中的位置；There is/are；Have/Has got；命令句；Can（三形）；現在進行式（肯定/否定/疑問）</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>短母音 a/i/o/u/e 配圖拼字；字尾 p/n/x</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>兩步指令；Who/What/Where/Why 問答</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：Can 動詞三形（Can you swim? / Yes, I can. / No, I can't.）是英文基礎溝通核心，1B 就完整學完</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-1C" style="display:none">
+  <div class="el-level-header" style="background:#FFF3EB">
+    <span class="el-level-emoji">🔥</span>
+    <div>
+      <strong>Grade 1C</strong>
+      <p>S Blend、Digraph 全打通，10 個文法點密集通關</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>S Blends：st/sk/sm/sl/sc/sw/sn/sp；初始/最終子音；Digraphs：sh/ch/th/wh/ng</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>主旨、順序、因果、預測、推論；填空選字；圖片選句；字根字尾</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>be 動詞三形；冠詞；複數；所有格 Whose?；所有格形容詞；Some/Any；Have got；How much/How many；Can；現在進行式（肯定）</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>短母音 o/u/e；字首 cl/fl/sn/st/ch/th/wh/sh 拼字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>兩步指令；四大問句類型</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：Sight Words 六關練法（描摹→配對→亂序解碼→填空→造句→朗讀），每個關鍵詞都真的學會</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-1D" style="display:none">
+  <div class="el-level-header" style="background:#F0EBF8">
+    <span class="el-level-emoji">💫</span>
+    <div>
+      <strong>Grade 1D</strong>
+      <p>過去式到位！L/R Blend + 母音對，Grade 1 圓滿收尾</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>L Blends：cl/bl/gl/fl/pl；R Blends：fr/br/gr；字尾 Blends：st/sk；母音對：ai/ay/ee/ea/oa/ow/oo；Digraphs：sh/ch/th/wh/ng</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>全套五大閱讀技能；流暢朗讀</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>現在進行式否定/疑問；簡單現在式（三形）；進行式 vs 現在式對比；Like/Love + V-ing；Was/Were；介系詞 on/in/at/to；過去式（肯定/否定/疑問）</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>長母音 a/i/o/e 單字；高頻詞 20 個；顏色詞；Sight Words 六關</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>兩步指令；四大問句類型</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>—</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：1D 是 Grade 1 的畢業關，把過去式（三形）全通關——加上前三關，Grade 1 的 AM/IS/ARE/CAN/過去式時態完整到位</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-2A" style="display:none">
+  <div class="el-level-header" style="background:#EBF3FC">
+    <span class="el-level-emoji">📘</span>
+    <div>
+      <strong>Grade 2A</strong>
+      <p>Language Arts 正式開始，寫作第一課，學大小寫和標點符號</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>字首字尾子音；長短母音全套；軟硬 c/g；S Blends / L Blends</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>閱讀理解七大技能；詞彙深化：多義詞、現實/幻想辨別、所有格、複合字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>大小寫規則（句首/人名/I/稱謂/地名/日期）；標點符號：句號/問號/驚嘆號/逗號</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>短母音 a/e/i/o/u；字尾 -k；R Blends：dr/tr/gr/br/fr</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>兩步指令；描述性詞彙說人事物；口頭複述故事</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>主旨寫作（分類/標題/名詞）；序列寫作（first/next/last）；比較寫作（比較兩三張圖/比較人物）</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：2A 是『寫作元年』——第一次學怎麼寫主題句、排序段落、用大小寫，從此英文作文有骨架</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-2B" style="display:none">
+  <div class="el-level-header" style="background:#DCFCE7">
+    <span class="el-level-emoji">📗</span>
+    <div>
+      <strong>Grade 2B</strong>
+      <p>R 控母音、默音字、感官描寫，寫作開始有溫度</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>字尾 Blends：st/sk/nd/nk/nt/mp；三字母 Blends；默音字 kn/wr/ck/gh；母音對全套；R-Controlled：ar/er/ir/or/ur</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>加入同義詞/反義詞辨別；兩步書面指令；比較人物和場景</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>不規則動詞 has/have/is/are/was/were/ran/run...；比較形容詞；同音異義字 to/too/two；縮寫；I vs me</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>長母音 a/i/o/u/e；ar/ur/or；字尾 sh/th；常拼錯的字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>兩步指令；描述性詞彙說人事物；口頭複述故事</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>感官細節（五感）；邀請函；因果寫作；投訴信；序列寫作</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：2B 開始用五感（看/聽/聞/味/觸）寫作——讓文字有畫面感，這是很多學生到高中都還不會的技巧</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-2C" style="display:none">
+  <div class="el-level-header" style="background:#FFF3EB">
+    <span class="el-level-emoji">📙</span>
+    <div>
+      <strong>Grade 2C</strong>
+      <p>Diphthongs 雙母音打通，前後綴學完，行書開始練</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>Diphthongs：oi/oy/ou/ow；-ed/-ing/-s/-es；前綴 re/un；後綴 ful/ly；音節分割；同/反義詞；同音字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>縮寫辨識（Jan./Sun./Mr./St.）；音節閱讀；前後綴意義理解</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>普通/專有名詞；動詞/形容詞/副詞；陳述/疑問/感嘆/命令句；句子合併</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>br/fr/tr；sl/sp；同音字；複合字；-ed/-ing；數字詞</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>三到四步口說指令；事件按序口述；用事實支撐觀點</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>行書（Cursive）書寫！序列寫作（如何做一件事）；比較寫作（人物外觀）；感官細節；謝謝卡；廣告文案</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：2C 開始練行書——手寫英文質感直接拉開。同時能寫廣告、謝謝卡，英文真的有實際用途了</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-2D" style="display:none">
+  <div class="el-level-header" style="background:#F0EBF8">
+    <span class="el-level-emoji">✨</span>
+    <div>
+      <strong>Grade 2D</strong>
+      <p>因果寫作、說服段落、Grade 2 完整畢業</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>Diphthongs oi/oy/ou/ow 複習應用；字根字尾延伸</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>加入：認識說明文結構、多步驟書面指令、事實 vs 意見辨別</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>八大詞類（名詞/代名詞/動詞/形容詞/副詞）；陳述/疑問/感嘆/命令句進階；句子合併（名詞/動詞/形容詞/副詞/受詞）</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>字尾 -s；同音字；家庭稱謂；/ou/ 音；/u/ 音</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>三到四步口說；有邏輯順序地口述一件事；用事實支撐觀點</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>因果寫作（why/because）；觀點寫作（我覺得…為什麼…）；比較對比</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：2D 學「因果寫作」——用 because/since 連接原因和結果，Grade 2 畢業後孩子能寫一篇有說服力的短文</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-3A" style="display:none">
+  <div class="el-level-header" style="background:#EBF3FC">
+    <span class="el-level-emoji">🌟</span>
+    <div>
+      <strong>Grade 3A</strong>
+      <p>說明文登場！口說 9 大技能，行書流暢書寫</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>字首字尾子音；長短母音全套；軟硬 c/g；Long o -old；Long i -ind；二字母 Blends</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文（expository text）主旨和細節辨別；用目錄/書名查資訊；四到五步書面指令；多音節字解碼</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>大小寫完整規則（含友善書信格式）；引號；所有格；do/have/am/is/are/was/were 全套</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>短/長母音；oi/ou/aw/au 特殊母音</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>9 大口說技能：多步驟指令→描述性詞彙→複述故事→用事實支撐觀點→轉述他人→展開回答</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>行書流暢書寫；主旨段落；序列寫作（食譜/How-to）；比較寫作（er/est/good/bad）</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：3A 口說從 2 步指令升級到 9 大技能——轉述別人說的話、用事實支撐觀點，這是中高年級英文口語的核心</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-3B" style="display:none">
+  <div class="el-level-header" style="background:#FEF3C7">
+    <span class="el-level-emoji">💡</span>
+    <div>
+      <strong>Grade 3B</strong>
+      <p>前綴 6 種、同音字大關、雙重否定、主詞代名詞一致</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>三字母 Blends；字尾 Blends；默音字 kn/wr/sc/ck/mb/gh；前綴 un/dis/re/pre/over/mis；同音字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文分析；字典查字；知識分類（dog/mammal/animal/living things 階層）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>不規則動詞（sang/ran/wore/done/gave/went/ate/saw）；同音異義字（hear/here/to/too/two/its/it's）；動詞一致性；主詞代名詞一致；受詞代名詞；雙重否定辨識</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>-ed/-ing；spl/spr/str；雙子音；縮寫；易拼錯字；/s/ 音 / /j/ 音；複數（pony→ponies）；同音字；星期時間詞</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>多步驟口說指令；轉述他人說話；複述整個故事（人物/場景/情節）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>比較寫作（like/as＋有趣形容詞）；細節寫作（五感/人物/謎語/副詞）；事實與意見（動物/自我介紹/虛構故事）</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：3B 挑戰雙重否定（I don't have nothing 是錯的）——這個文法連很多大人都說不清楚，3B 孩子直接搞定</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-3C" style="display:none">
+  <div class="el-level-header" style="background:#F5F0FF">
+    <span class="el-level-emoji">✍️</span>
+    <div>
+      <strong>Grade 3C</strong>
+      <p>後綴 6 種、字典技能升級、觀點寫作</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>y 的兩種聲音；字尾子音對；母音 + r；Diphthongs oi/oy/ou/ow；後綴 -ful/-less/-y/-ly/-able/-ish；音節分割；字典使用（guide words）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文深度分析；前後綴理解；字典應用；從句子情境推測生字意義</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>動詞/形容詞/副詞/冠詞；問句和陳述句寫法；問號/驚嘆號；and/or/逗號合併句子；兩個形容詞合成一句；用片語替換整句</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>字尾 -ld/-ft；/ar/ 音；/kw//skw/ 音；縮寫；假日名稱；/ur//or/ 音；默音 k/w；月份名稱</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>多步驟指令；有邏輯順序口述；轉述他人；展開回答</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>因果寫作（because/since/on account of）；感謝信/公告/廣告文案；觀點寫作（從不同角色視角描述同一故事）</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：觀點寫作（Point of View）——同一個故事從不同角色視角下筆，這是創意寫作和批判思考的核心技能</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-3D" style="display:none">
+  <div class="el-level-header" style="background:#DCFCE7">
+    <span class="el-level-emoji">🎭</span>
+    <div>
+      <strong>Grade 3D</strong>
+      <p>Grade 3 完整收尾，說服文入門，文學分析啟蒙</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>字尾 Blends 複習；前後綴綜合應用；音節進階</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文結構完整分析；文學反應與分析（主題/情節/場景/人物）；因果 vs 事實/意見辨別</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>句子結構（陳述/疑問/感嘆/命令）進階應用；引號在對話中的完整用法；複雜標點符號</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>Grade 3 高頻詞彙整合複習；易拼錯字強化</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>多步驟口說；轉述他人；展開回答；口頭摘要文章主旨</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>完整段落校對（proofread）；說服段落入門；廣告寫作；報告寫作初階</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：3D 首次學校對（proofread）自己的文章，孩子寫完不再只是「交出去」，而是真的學會自己找錯</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-4A" style="display:none">
+  <div class="el-level-header" style="background:#EBF3FC">
+    <span class="el-level-emoji">🏅</span>
+    <div>
+      <strong>Grade 4A</strong>
+      <p>Vowel Digraphs 全通，說明文結構分析，文學元素入門</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>字首字尾子音；長短母音；軟硬 c/g；二/三字母 Blends；字尾 Blends；默音字 kn/wr/sc/ck/mb/gn/gh</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文結構分析（比較對比/因果/時間序）；文學分析（主題/情節/場景/人物）；寓言/神話/傳說/童話結構辨別</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>大小寫完整系統（含商業書信）；標點符號完整版；句子 vs 句子片段；各種逗號用法</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>長母音全套；o-e/oo/ew/ue/ui 母音群；雙音節母音；ow/ou/oi/oy；c/k/ck</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>思考性發問；口頭摘要文章主旨；精確指令；詩歌朗誦（節奏/音量/語氣）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>行書書寫（Cursive + Joined Italic）；主旨句練習；序列寫作（新聞故事）；校對自己的文章</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：4A 開始練行書 + 連結斜體（Joined Italic）——兩種手寫英文字體都會，書寫質感直接升一個檔次</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-4B" style="display:none">
+  <div class="el-level-header" style="background:#FEF3C7">
+    <span class="el-level-emoji">🏆</span>
+    <div>
+      <strong>Grade 4B</strong>
+      <p>不規則動詞 15 組完全搞定，日記、詩歌、Tall Tale 全寫</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>母音對 ie/ou；y 的聲音；Digraphs：sh/th/wh/thr/shr/ng/ch/tch/gh/ph；R-controlled；Diphthongs；字尾 ed/ing/s/es/er/est；所有格</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文結構（比較對比/因果/時間序）；文學分析（主題/情節/場景/人物）；寓言/神話/傳說辨別</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>不規則動詞 15 組：came/come、rang/rung、sang/sung、took/taken、gave/given、ate/eaten、began/begun、fell/fallen、went/gone、sit/set、let/leave、can/may、of/have；比較形容詞；形/副詞；同音字 your/you're、its/it's、there/their/they're；雙重否定；主詞動詞一致</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>ch/tch；ge/dge；複數名詞；-er/-or 職業詞；-er/-est 比較；特殊複數 wives/leaves；前綴 re/un；同音字</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>發問與回應；口頭摘要；精確指令；詩歌朗誦</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>行書；比較段落（逐點比較）；感官描寫（五感）；日記；Tall Tale 誇張故事</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：Tall Tale（誇張故事）寫作——孩子要用超誇張的方式描述主角的能力，培養幽默感和創意，然後用 Cursive 行書寫出來</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-4C" style="display:none">
+  <div class="el-level-header" style="background:#F5F0FF">
+    <span class="el-level-emoji">🎓</span>
+    <div>
+      <strong>Grade 4C</strong>
+      <p>字典高階技能、說服文、商業書信、觀點寫作全打通</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>後綴 -able/-ish/-ment/-ness；音節分割；同/反義詞；同音字/同形異義字；字典技能：guide words/entry/多義/音標/重音</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文結構完整分析；文學反應（主題/情節/場景/人物）；事實/意見辨別；寓言/神話/傳說辨別</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>八大詞類完整（名詞/代名詞/動詞/形容詞/副詞/冠詞）；主語和謂語；but/and/or；句子合併；完整寫作流程（選題→草稿→修改→校對）；說服文結構</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>Schwa 音 a/e/o；字尾 -ly；-tion/-ture/-ure；常拼錯字；ar/are/air/ear/ere；ful/less；前綴 ex；字尾 -ing</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>思考性發問；摘要正式簡報重點；精確指令；詩歌朗誦</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>行書；因果寫作（so/because/since/therefore）；說服文；廣告；商業書信；書評；不同觀點寫作</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：4C 是標準班的畢業關——學完整寫作流程（選題→草稿→修改→校對），能寫說服文、商業書信、書評，英文表達到達國際水準</div>
+  </div>
+</div>
+<div class="std-level-panel" id="std-panel-4D" style="display:none">
+  <div class="el-level-header" style="background:#DCFCE7">
+    <span class="el-level-emoji">🌈</span>
+    <div>
+      <strong>Grade 4D</strong>
+      <p>字典全通關，觀點寫作畢業，標準班最終里程碑</p>
+    </div>
+  </div>
+  <div class="el-level-body">
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">🔤</span><h5>自然拼讀 Phonics</h5><p>後綴 -able/-ish/-ment/-ness；音節分割；同/反義詞；同音字/同形異義字；字典技能全套（guide words/entry/多義/音標/重音）</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📖</span><h5>閱讀理解 Reading</h5><p>說明文結構完整分析；文學分析（主題/情節/場景/人物）；事實/意見辨別；多步驟說明文跟讀</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">📝</span><h5>文法 Grammar</h5><p>陳述/疑問/請求/感嘆句完整應用；主語和謂語；but/and/or；句子合併；完整寫作流程（選題→草稿→修改→校對）；說服文結構</p></div>
+    </div>
+    <div class="el-subject-row">
+      <div class="el-subject-cell"><span class="el-subject-icon">✏️</span><h5>拼字 Spelling</h5><p>數字詞；常拼錯字；ar/are/air/ear/ere；ful/less；前綴 ex；複合字；字尾 -ing</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🎤</span><h5>口說 Oral Skills</h5><p>思考性發問；摘要發言重點；精確指令；詩歌朗誦</p></div>
+      <div class="el-subject-cell"><span class="el-subject-icon">🖊️</span><h5>寫作 Writing</h5><p>說服文；廣告；商業書信；書評；觀點寫作（從不同視角描述同一個事件）；因果新聞故事</p></div>
+    </div>
+    <div class="el-highlight" style="background:var(--orange)">🎯 亮點：4D 觀點寫作的終極版——同一個事件，從不同人的視角寫下來。這個能力讓孩子的英文從「說清楚」升級到「說得有深度」</div>
+  </div>
+</div>
+
+
+          <div class="im-summary" style="background:linear-gradient(135deg,#c2410c 0%,var(--orange) 100%);margin-top:24px">
+            <h4>📌 標準班從 SA 走到 4D，孩子能做到……</h4>
+            <div class="im-summary-grid">
+              <div class="im-summary-item"><strong>🔤 拼音從零到全通</strong><p>SA 從 A–Z 到 4D 字典音標，每一步都有清楚地圖</p></div>
+              <div class="im-summary-item"><strong>📖 閱讀策略真的會用</strong><p>從故事順序到說明文分析，每一關有新技能</p></div>
+              <div class="im-summary-item"><strong>📝 文法紮實不跳關</strong><p>時態/詞類/標點符號，一關一關確認才往前</p></div>
+              <div class="im-summary-item"><strong>🎤 開口說完整的話</strong><p>SA 說天氣，4D 能口頭摘要一篇文章的重點</p></div>
+              <div class="im-summary-item"><strong>🖊️ 寫作從一句到一篇</strong><p>2A 學序列寫作，4D 能寫說服文和商業書信</p></div>
+              <div class="im-summary-item"><strong>📅 一週 3 天，英文不落後</strong><p>生活有彈性，孩子英文依然穩定前進</p></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1698,6 +2161,24 @@ const revealObserver=new IntersectionObserver((entries)=>{
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 
+
+function switchStd(btn) {
+  var container = btn.closest('#panel-standard');
+  container.querySelectorAll('[data-stdlevel]').forEach(function(t){
+    t.classList.remove('active');
+    t.style.background = '';
+    t.style.color = '';
+    t.style.borderColor = '';
+  });
+  container.querySelectorAll('.std-level-panel').forEach(function(p){ p.style.display='none'; });
+  btn.classList.add('active');
+  btn.style.background = 'var(--orange)';
+  btn.style.color = '#fff';
+  btn.style.borderColor = 'var(--orange)';
+  var id = btn.dataset.stdlevel;
+  var panel = container.querySelector('#std-panel-' + id);
+  if (panel) panel.style.display = 'block';
+}
 
 function switchGept(btn) {
   var container = btn.closest('#panel-gept');
