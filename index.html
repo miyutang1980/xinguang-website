@@ -1942,12 +1942,76 @@ ul{list-style:none}
       <div class="course-content">
         <div class="course-header">
           <div class="course-badge" style="background:#10B981">AS</div>
-          <h3>安親課輔班 After-School<small>課業輔導＋英文學習，一站搞定</small></h3>
+          <h3>安親課輔班 After-School<small>不是「寫完功課就好」，是針對你的孩子量身訂做的學習計畫</small></h3>
         </div>
-        <div class="course-details">
-          <div class="course-detail"><h4>適合對象</h4><p>國小學生</p></div>
-          <div class="course-detail"><h4>課程特色</h4><p>學校課業輔導＋英文學習一站式，雙管齊下</p></div>
-          <div class="course-detail"><h4>學習成果</h4><p>課業有人顧，英文有人教，家長最安心</p></div>
+        <div class="im-intro">
+          <div class="im-intro-card" style="background:#ECFDF5;border-left:4px solid #10B981">
+            <h4 style="color:#065F46">安親課輔班在做什麼？</h4>
+            <p>老師依照孩子的年級和版本，量身訂做學習進度和評量。不只陪寫功課——<strong>期中和期末會針對評量結果，挑出錯題，加深加廣概念輸入，把觀念真正除錯</strong>。讓孩子不是靠死背應付考試，而是真的搞懂。</p>
+          </div>
+          <div class="im-intro-card" style="background:#F0FDF4;border-left:4px solid #4ADE80">
+            <h4 style="color:#065F46">不同年級、不同教材、不同進度</h4>
+            <p>國語、數學、自然、社會——依照孩子目前的年級和使用版本（翰林/康軒/南一），老師掌握孩子的學習狀況，不是用同一套進度打發所有人。</p>
+          </div>
+        </div>
+        <div class="im-subjects">
+          <div class="im-subjects-title" style="color:#10B981">📋 安親課輔班怎麼運作</div>
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#ECFDF5">📚</div>
+              <div class="im-subject-label"><strong>日常課業輔導</strong><span>每天功課有人盯，不懂的當場問，不堆到考前才崩潰</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">老師依照孩子目前年級與教材版本（翰林/康軒/南一），掌握每個單元的進度，讓課輔真的對準孩子現在學的東西，而不是隨便翻翻。</p>
+              <div class="im-highlights">
+                <div class="im-highlight-item">每天課後老師陪讀，不懂的當場解決，觀念不留夜</div>
+                <div class="im-highlight-item">對應孩子學校教材版本，不是隨便給一本習題，而是真的搭上課堂進度</div>
+                <div class="im-highlight-item">每個年級的學習重點和難點不一樣，老師知道，不用家長自己去搞清楚</div>
+              </div>
+            </div>
+          </div>
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#ECFDF5">🎯</div>
+              <div class="im-subject-label"><strong>期中 &amp; 期末錯題除錯機制</strong><span>不只改對答案，而是把錯誤背後的觀念一起修正</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">這是安親課輔班和一般安親最不一樣的地方：期中考和期末考後，老師不是讓孩子「改完交回去就好」——而是針對每個孩子的<strong>錯題，加深加廣相關概念，真正除錯</strong>。</p>
+              <div class="im-highlights">
+                <div class="im-highlight-item">錯題不是「改對就沒事」，是找出這道題背後不懂的概念，重新輸入</div>
+                <div class="im-highlight-item">加深加廣：同一個概念換不同角度問，確認孩子真的懂，不是靠記答案</div>
+                <div class="im-highlight-item">期中考後的除錯輸入，讓期末考的同類型題目不再錯第二次</div>
+                <div class="im-highlight-item">家長不需要猜「這次考差是因為什麼」，老師有明確的除錯記錄</div>
+              </div>
+            </div>
+          </div>
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#ECFDF5">📊</div>
+              <div class="im-subject-label"><strong>學習評量與進度追蹤</strong><span>家長隨時清楚孩子在哪裡，不用等到成績單才知道</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <div class="im-highlights">
+                <div class="im-highlight-item">老師追蹤每個科目的單元進度，知道孩子哪裡卡住、哪裡已經過關</div>
+                <div class="im-highlight-item">量身訂做評量，不是全班同一份，是針對孩子目前的弱點設計</div>
+                <div class="im-highlight-item">評量結果讓家長看得懂——不是分數，是「這個概念還需要再練」</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="im-summary" style="background:linear-gradient(135deg,#065F46 0%,#10B981 100%)">
+          <h4>📌 安親課輔班，和一般安親最大的差距</h4>
+          <div class="im-summary-grid">
+            <div class="im-summary-item"><strong>📚 對應教材版本</strong><p>翰林/康軒/南一，跟學校課堂同步</p></div>
+            <div class="im-summary-item"><strong>🎯 錯題針對除錯</strong><p>不只改對，把背後觀念一起修</p></div>
+            <div class="im-summary-item"><strong>📈 加深加廣</strong><p>同觀念多角度確認，真的懂</p></div>
+            <div class="im-summary-item"><strong>🗓️ 期中&amp;期末評量</strong><p>考後不放過，建立複習機制</p></div>
+            <div class="im-summary-item"><strong>👤 量身訂做進度</strong><p>不是全班一套，孩子各走各的</p></div>
+            <div class="im-summary-item"><strong>💬 家長看得懂</strong><p>明確告訴你孩子哪裡需要加強</p></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1956,12 +2020,43 @@ ul{list-style:none}
       <div class="course-content">
         <div class="course-header">
           <div class="course-badge" style="background:#F59E0B">DC</div>
-          <h3>托育班 Daycare<small>安全照護＋英語啟蒙，快樂成長</small></h3>
+          <h3>托育班 Study Hall<small>在學校環境裡，自己把功課寫完再回家</small></h3>
         </div>
-        <div class="course-details">
-          <div class="course-detail"><h4>適合對象</h4><p>幼兒</p></div>
-          <div class="course-detail"><h4>課程特色</h4><p>安全照護環境＋英語啟蒙，在愛與關懷中學習</p></div>
-          <div class="course-detail"><h4>學習成果</h4><p>在玩樂中自然接觸英文，建立語感基礎</p></div>
+        <div class="im-intro">
+          <div class="im-intro-card" style="background:#FEF9EE;border-left:4px solid #F59E0B">
+            <h4 style="color:#B45309">托育班是什麼？</h4>
+            <p>不是安親、不是英文補習——托育班給的是一個<strong>安靜、有秩序的在校環境</strong>，讓孩子在老師的陪伴下，自主完成學校功課。適合不需要課業輔導、但家長下班前需要孩子有個安全去處的家庭。</p>
+          </div>
+          <div class="im-intro-card orange">
+            <h4>適合誰？</h4>
+            <p>學習能力自主、功課能自己完成的孩子<br>家長下班時間較晚，需要孩子課後有人看顧<br>不需要老師逐題解說，只需要一個<strong>專注的學習環境</strong></p>
+          </div>
+        </div>
+        <div class="im-subjects">
+          <div class="im-subjects-title" style="color:#F59E0B">✏️ 托育班提供什麼</div>
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#FEF9EE">🏫</div>
+              <div class="im-subject-label"><strong>在校自習環境</strong><span>安靜、有秩序、老師在場陪伴——就是孩子需要的那種氛圍</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <div class="im-highlights">
+                <div class="im-highlight-item">安靜的自習空間，讓孩子在不被干擾的環境下專注完成功課</div>
+                <div class="im-highlight-item">老師在場陪伴，遇到基本問題可以詢問，不必一個人乾瞪眼</div>
+                <div class="im-highlight-item">孩子學會在結構化環境中自我管理時間，是很多學生欠缺的基本功</div>
+                <div class="im-highlight-item">功課寫完、書包整理好，爸媽接走，親子都輕鬆</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="im-summary" style="background:linear-gradient(135deg,#92400e 0%,#F59E0B 100%)">
+          <h4>📌 托育班的核心價值</h4>
+          <div class="im-summary-grid">
+            <div class="im-summary-item"><strong>🏫 安全在校環境</strong><p>家長安心，孩子有人看顧</p></div>
+            <div class="im-summary-item"><strong>✏️ 自主完成功課</strong><p>自己寫完再回家，習慣養成</p></div>
+            <div class="im-summary-item"><strong>🤫 安靜自習氛圍</strong><p>不被干擾，專注力自然提升</p></div>
+          </div>
         </div>
       </div>
     </div>
