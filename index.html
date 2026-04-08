@@ -1088,17 +1088,254 @@ ul{list-style:none}
 
     <div class="course-panel" id="panel-gept">
       <div class="course-content">
+
         <div class="course-header">
-          <div class="course-badge" style="background:#8B5CF6">GP</div>
-          <h3>全民英檢班 GEPT<small>升學英檢專攻，全面準備一次到位</small></h3>
+          <div class="course-badge" style="background:#7C3AED">GP</div>
+          <h3>全民英檢班 GEPT<small>想考過英檢？我們從第一題陪你練到拿證書</small></h3>
         </div>
-        <div class="course-details">
-          <div class="course-detail"><h4>適合對象</h4><p>需要升學英檢的學生</p></div>
-          <div class="course-detail"><h4>課程特色</h4><p>對應 GEPT 等級訓練，聽說讀寫全面準備</p></div>
-          <div class="course-detail"><h4>學習成果</h4><p>有效取得英檢證照，升學加分利器</p></div>
+
+        <!-- 情境說明 -->
+        <div class="im-intro">
+          <div class="im-intro-card" style="background:#F5F0FF;border-left:4px solid #7C3AED">
+            <h4 style="color:#5B21B6">全民英檢是什麼？為什麼要考？</h4>
+            <p>全民英語能力分級檢定（GEPT）是台灣最主流的升學英文證照，高中申請入學、技職升學、大學在校加分，有張英檢在手比同學直接多一個籌碼。<br>我們開<strong>初級</strong>（A2，國中生適合）和<strong>中級</strong>（B1，高中生適合）兩個班，初試＋複試都練，不是只準備一半。</p>
+          </div>
+          <div class="im-intro-card orange">
+            <h4>課程怎麼安排？</h4>
+            <p>初試（閱讀＋聽力）：<strong>32 堂</strong>，約 16 週完成<br>複試（寫作＋口說）：<strong>24 堂</strong>，約 12 週完成<br>每週 2 堂 × 每堂 2 小時，不用每天補習也能準備好<br><strong>初級</strong>從看圖辨義練到克漏字；<strong>中級</strong>從段落閱讀練到英文 Essay</p>
+          </div>
         </div>
-      </div>
-    </div>
+
+        <!-- 等級切換 -->
+        <div class="im-subjects">
+          <div class="im-subjects-title" style="color:#7C3AED">📋 選你要考的等級，看課程怎麼準備</div>
+
+          <div class="el-level-tabs" style="margin-bottom:16px">
+            <button class="el-level-tab active" data-gept="elem" onclick="switchGept(this)" style="background:#7C3AED;color:#fff;border-color:#7C3AED">初級 Elementary</button>
+            <button class="el-level-tab" data-gept="inter" onclick="switchGept(this)">中級 Intermediate</button>
+          </div>
+
+          <!-- ══ 初級 ══ -->
+          <div class="gept-panel active" id="gept-elem">
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+              <div style="background:#F5F0FF;border-radius:10px;padding:14px;border-left:3px solid #7C3AED">
+                <strong style="font-size:0.85rem;color:#5B21B6">🎯 初試（32 堂）</strong>
+                <p style="font-size:0.82rem;color:#374151;margin-top:6px;line-height:1.65">
+                  閱讀：詞彙 + 克漏字 + 段落閱讀<br>
+                  聽力：看圖辨義 + 問答 + 對話 + 短文<br>
+                  教材：Spotlight on Testing 閱讀1+2、聽說（共 190 頁）
+                </p>
+              </div>
+              <div style="background:#F5F0FF;border-radius:10px;padding:14px;border-left:3px solid #A78BFA">
+                <strong style="font-size:0.85rem;color:#5B21B6">✍️ 複試（24 堂）</strong>
+                <p style="font-size:0.82rem;color:#374151;margin-top:6px;line-height:1.65">
+                  寫作：句子→段落寫作全流程<br>
+                  不考口說（初級複試只考寫作）<br>
+                  教材：Write Right 1+2（共 140 頁）
+                </p>
+              </div>
+            </div>
+
+            <!-- 初試科目 accordion -->
+            <div class="im-subject-accordion">
+              <button class="im-subject-btn" onclick="toggleSubject(this)">
+                <div class="im-subject-icon" style="background:#F5F0FF">📖</div>
+                <div class="im-subject-label"><strong>初試閱讀怎麼練？</strong><span>三題型一次搞定，學完就是備考實力</span></div>
+                <span class="im-subject-chevron">▼</span>
+              </button>
+              <div class="im-subject-body">
+                <p class="im-subject-desc">很多人背了一堆單字，但看到克漏字還是不知道填什麼——因為他們只練「記憶」，沒練「策略」。我們用 Spotlight on Testing 教你三個題型各自的答題方法，搭配初試格式的練習題，讓你在考場不慌。</p>
+                <table class="im-grade-table">
+                  <thead><tr><th>題型</th><th>考什麼</th><th>我們怎麼練</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>詞彙選擇</strong></td><td>選最適合的詞填入句子</td><td>情境主題詞彙記憶法，從語境猜義而非死背</td></tr>
+                    <tr><td><strong>克漏字</strong></td><td>填入缺少的字讓段落通順</td><td>先讀全文抓主旨，再看前後文推斷語意</td></tr>
+                    <tr><td><strong>閱讀理解</strong></td><td>讀完短文回答問題</td><td>略讀抓大意 → 尋讀找細節 → 推論隱含意思</td></tr>
+                  </tbody>
+                </table>
+                <div class="im-highlights">
+                  <div class="im-highlight-item">詞彙冊 1 打基礎（日常生活主題），詞彙冊 2 進階（加入推論題和跨句理解）</div>
+                  <div class="im-highlight-item">每個單元後有 Answer Key，錯了不是換一題，是搞懂為什麼錯——這才是進步的關鍵</div>
+                  <div class="im-highlight-item">Week 13 和 15 各一次全真模擬（計時 45 分鐘），壓力測試讓你考場不陌生</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="im-subject-accordion">
+              <button class="im-subject-btn" onclick="toggleSubject(this)">
+                <div class="im-subject-icon" style="background:#F5F0FF">🎧</div>
+                <div class="im-subject-label"><strong>初試聽力怎麼練？</strong><span>四大題型全覆蓋，從「聽不懂」到「答得準」</span></div>
+                <span class="im-subject-chevron">▼</span>
+              </button>
+              <div class="im-subject-body">
+                <p class="im-subject-desc">聽力最常見的問題是：聽得到聲音，但大腦來不及反應。我們用 83 頁的專項教材，從最基本的看圖辨義練起，一路到長對話、短文，每個題型都有明確的「聽什麼、怎麼答」策略訓練。</p>
+                <table class="im-grade-table">
+                  <thead><tr><th>題型</th><th>考什麼</th><th>攻略重點</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>看圖辨義</strong></td><td>聽句子選最符合的圖片</td><td>快速掃描圖片差異，預測關鍵詞再聽</td></tr>
+                    <tr><td><strong>問答</strong></td><td>聽問題選最佳回應</td><td>抓第一個字（who/what/where）決定答題方向</td></tr>
+                    <tr><td><strong>對話</strong></td><td>聽短對話回答問題</td><td>重點聽「人物、地點、問題核心」三要素</td></tr>
+                    <tr><td><strong>短文</strong></td><td>聽一段獨白回答問題</td><td>先看選項預測主題，再聽確認細節</td></tr>
+                  </tbody>
+                </table>
+                <div class="im-highlights">
+                  <div class="im-highlight-item">聽力同時也在練口說語感——跟讀訓練讓語調、連音自然內化，為複試打基礎</div>
+                  <div class="im-highlight-item">全書音檔格式和正式考試一致，讓學生提前熟悉真實考試的節奏和速度</div>
+                  <div class="im-highlight-item">Week 15 聽力全真模擬（25 分鐘），確認備考程度</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="im-subject-accordion">
+              <button class="im-subject-btn" onclick="toggleSubject(this)">
+                <div class="im-subject-icon" style="background:#F5F0FF">✍️</div>
+                <div class="im-subject-label"><strong>複試寫作怎麼練？</strong><span>從不知道寫什麼，到有段落有骨架</span></div>
+                <span class="im-subject-chevron">▼</span>
+              </button>
+              <div class="im-subject-body">
+                <p class="im-subject-desc">台灣學生寫作最大的問題不是英文差，是不知道「一段話應該長什麼樣子」。Write Right 1 從最基本的主題句開始，教你段落的完整骨架，Write Right 2 讓你練習各種類型的段落。學完，拿到題目不再腦袋空白。</p>
+                <table class="im-grade-table">
+                  <thead><tr><th>階段</th><th>教材</th><th>學會什麼</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>Week 1–6</strong></td><td>Write Right 1</td><td>什麼是好的主題句、支撐句怎麼寫、段落怎麼收尾；五步驟寫作流程：目標→範文分析→句型→大綱→初稿+終稿</td></tr>
+                    <tr><td><strong>Week 7–12</strong></td><td>Write Right 2</td><td>描述型、說明型、比較型、說服型、建議型段落分類練習；轉承詞系統；初稿→老師回饋→終稿的完整修改機制</td></tr>
+                  </tbody>
+                </table>
+                <div class="im-highlights">
+                  <div class="im-highlight-item">Write Right 有個超實用的「Writing Tips：Don't 清單」——列出學生最愛犯的錯，用 Good vs Bad 對比，看完就很難再犯同樣的錯</div>
+                  <div class="im-highlight-item">每單元都有草稿練習 + 終稿，老師針對草稿給回饋，學生再修改，才是真正的「學寫作」，不是「寫完交卷」</div>
+                  <div class="im-highlight-item">Week 11 全真模擬（計時 40 分鐘），練習在時間壓力下寫出完整段落</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="im-summary" style="background:linear-gradient(135deg,#4C1D95 0%,#6D28D9 100%);margin-top:24px">
+              <h4>📌 初級英檢班，一年後的孩子可以……</h4>
+              <div class="im-summary-grid">
+                <div class="im-summary-item"><strong>📖 閱讀</strong><p>看到克漏字不慌，三題型各有答題策略</p></div>
+                <div class="im-summary-item"><strong>🎧 聽力</strong><p>四大題型都練過，不只「聽得到」還「答得準」</p></div>
+                <div class="im-summary-item"><strong>✍️ 寫作</strong><p>段落有骨架，主題句、支撐句、結尾句一次到位</p></div>
+                <div class="im-summary-item"><strong>🗓️ 初試 32 堂</strong><p>16 週完成，兩次全真模擬考</p></div>
+                <div class="im-summary-item"><strong>📝 複試 24 堂</strong><p>12 週完成，5 種段落類型全練</p></div>
+                <div class="im-summary-item"><strong>🏅 目標成果</strong><p>通過初級初試 + 複試，拿到 GEPT 初級證書</p></div>
+              </div>
+            </div>
+
+          </div><!-- /gept-elem -->
+
+          <!-- ══ 中級 ══ -->
+          <div class="gept-panel" id="gept-inter" style="display:none">
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+              <div style="background:#EFF6FF;border-radius:10px;padding:14px;border-left:3px solid #2563EB">
+                <strong style="font-size:0.85rem;color:#1D4ED8">🎯 初試（32 堂）</strong>
+                <p style="font-size:0.82rem;color:#374151;margin-top:6px;line-height:1.65">
+                  閱讀：詞彙 + 克漏字 + 長篇閱讀分析<br>
+                  聽力：（依中級規格訓練）<br>
+                  教材：Spotlight Plus Reading 1+2（共 149 頁）
+                </p>
+              </div>
+              <div style="background:#EFF6FF;border-radius:10px;padding:14px;border-left:3px solid #60A5FA">
+                <strong style="font-size:0.85rem;color:#1D4ED8">🎤 複試（24 堂）</strong>
+                <p style="font-size:0.82rem;color:#374151;margin-top:6px;line-height:1.65">
+                  口說：朗讀 + 回答問題兩大題型<br>
+                  寫作：從段落升級到完整 Essay<br>
+                  教材：Easy Speaking 1+2、Write Right 2+3（共 269 頁）
+                </p>
+              </div>
+            </div>
+
+            <div class="im-subject-accordion">
+              <button class="im-subject-btn" onclick="toggleSubject(this)">
+                <div class="im-subject-icon" style="background:#EFF6FF">📚</div>
+                <div class="im-subject-label"><strong>中級初試閱讀怎麼練？</strong><span>文章更長、詞彙更難，需要真正的閱讀策略</span></div>
+                <span class="im-subject-chevron">▼</span>
+              </button>
+              <div class="im-subject-body">
+                <p class="im-subject-desc">中級閱讀跟初級最大的差別是：文章不再是「小短文」，是整篇說明文或文學文章，還要你分析作者觀點、推論隱含意思、辨別事實和意見。Spotlight Plus 教你三種策略，讓你不是「拼命讀完」，而是「有效率地找到答案」。</p>
+                <table class="im-grade-table">
+                  <thead><tr><th>策略</th><th>用在哪裡</th><th>具體怎麼做</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>略讀 Skimming</strong></td><td>30 秒抓文章大意</td><td>只讀第一句和最後一句，跳過細節，先知道「這篇在說什麼」</td></tr>
+                    <tr><td><strong>尋讀 Scanning</strong></td><td>找特定資訊</td><td>看到題目問「何時/何地/誰」，眼睛直接掃描對應字詞不逐行讀</td></tr>
+                    <tr><td><strong>推論 Inference</strong></td><td>答「作者暗示什麼」</td><td>找連接詞和語氣詞，判斷作者立場，這是中級最難也最值分的題型</td></tr>
+                  </tbody>
+                </table>
+                <div class="im-highlights">
+                  <div class="im-highlight-item">冊 1 打閱讀策略基礎（說明文主旨和段落結構），冊 2 進入跨段推論和「事實 vs 意見」辨別——中級高分關鍵</div>
+                  <div class="im-highlight-item">詞彙不靠死背：在閱讀語境中學詞彙，搭配同義替換練習，自然擴充中高頻詞彙量</div>
+                  <div class="im-highlight-item">Week 13 和 Week 15 各一次全真模擬（計時 65 分鐘），練出考場節奏感</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="im-subject-accordion">
+              <button class="im-subject-btn" onclick="toggleSubject(this)">
+                <div class="im-subject-icon" style="background:#EFF6FF">🎤</div>
+                <div class="im-subject-label"><strong>中級複試口說怎麼練？</strong><span>不是背台詞，是練出「有邏輯有內容」的臨場反應</span></div>
+                <span class="im-subject-chevron">▼</span>
+              </button>
+              <div class="im-subject-body">
+                <p class="im-subject-desc">台灣學生口說最怕的不是英文差，是「題目一拿到腦袋空白」。Easy Speaking 解決的就是這件事：用 PREP 框架（Point → Reason → Example → Point）讓你 30 秒內組出一個有頭有尾的回答，再練流暢度，而不是一開始就逼自己說完美英文。</p>
+                <table class="im-grade-table">
+                  <thead><tr><th>題型</th><th>考什麼</th><th>怎麼準備</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>朗讀測驗</strong></td><td>唸一段短文（評語音語調流暢度）</td><td>準備時間 30 秒內標記停頓和重音，避免吞音和錯誤連讀；冊 1 重點</td></tr>
+                    <tr><td><strong>回答問題</strong></td><td>回答開放式問題（計時 1.5 分鐘）</td><td>用 PREP 框架快速組織，高頻語塊輔助（In my opinion / For example...）；冊 1+2 重點</td></tr>
+                  </tbody>
+                </table>
+                <div class="im-highlights">
+                  <div class="im-highlight-item">Easy Speaking 1 大量示範答案讓你先模仿，Easy Speaking 2 逐步移除支架，你要自己說——這才叫「學會」不是「背起來」</div>
+                  <div class="im-highlight-item">涵蓋中級高頻話題：學校/教育、科技/環境、健康、社會文化，考試碰到不陌生</div>
+                  <div class="im-highlight-item">Week 10 口說全真計時模擬——很多人到這關才知道 1.5 分鐘有多緊張，提早練比考場現學強太多</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="im-subject-accordion">
+              <button class="im-subject-btn" onclick="toggleSubject(this)">
+                <div class="im-subject-icon" style="background:#EFF6FF">🖊️</div>
+                <div class="im-subject-label"><strong>中級複試寫作怎麼練？</strong><span>從一個段落到一篇完整文章，10 種類型全打通</span></div>
+                <span class="im-subject-chevron">▼</span>
+              </button>
+              <div class="im-subject-body">
+                <p class="im-subject-desc">中級寫作要你寫一篇「完整的英文文章（Essay）」，不只是一段話。Write Right 2 先複習段落，Write Right 3 帶你從段落升級到三段式文章架構，再把中級考試所有可能考的文章類型逐一練過，考試出什麼你都見過。</p>
+                <table class="im-grade-table">
+                  <thead><tr><th>文章類型</th><th>考試場景</th><th>關鍵句型</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>同意/不同意</strong></td><td>「你贊成…嗎？說明理由」</td><td>I agree/disagree that... / Even though / Not as...as...</td></tr>
+                    <tr><td><strong>意見文</strong></td><td>「你認為…」</td><td>In my opinion / On one hand...on the other hand / so that</td></tr>
+                    <tr><td><strong>建議文</strong></td><td>「怎麼解決…」</td><td>You should / If you... / -ing will make/help you</td></tr>
+                    <tr><td><strong>說服文</strong></td><td>「說服別人選擇…」</td><td>-est / That is why / Those who / will/won't</td></tr>
+                    <tr><td><strong>想像文</strong></td><td>「如果你是…你會…」</td><td>If I were / I would / in order to+V</td></tr>
+                  </tbody>
+                </table>
+                <div class="im-highlights">
+                  <div class="im-highlight-item">Unit 1 專門解構 Essay 的三段式架構（Introduction + Body + Conclusion），搞懂這個，後面 9 個單元都是套用和練習</div>
+                  <div class="im-highlight-item">每個單元有 Writing Model 範文 → 分析結構 → 練句型 → 寫大綱 → 初稿 → 老師回饋 → 終稿，完整走一遍才算過</div>
+                  <div class="im-highlight-item">Week 10 寫作全真模擬，Week 11 個人化回饋，最後衝刺聚焦你最弱的那個文章類型</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="im-summary" style="background:linear-gradient(135deg,#1e3a8a 0%,#2563EB 100%);margin-top:24px">
+              <h4>📌 中級英檢班，一年後的孩子可以……</h4>
+              <div class="im-summary-grid">
+                <div class="im-summary-item"><strong>📚 長篇閱讀</strong><p>三種策略切換自如，推論題不再是失分黑洞</p></div>
+                <div class="im-summary-item"><strong>🎤 開口有邏輯</strong><p>PREP 框架 30 秒組出完整回答，不卡不空白</p></div>
+                <div class="im-summary-item"><strong>🖊️ 文章有架構</strong><p>10 種 Essay 類型全練過，看到題目知道怎麼寫</p></div>
+                <div class="im-summary-item"><strong>🗓️ 初試 32 堂</strong><p>16 週完成，2 次全真模擬</p></div>
+                <div class="im-summary-item"><strong>📝 複試 24 堂</strong><p>12 週完成，口說 + 寫作雙科並進</p></div>
+                <div class="im-summary-item"><strong>🏅 目標成果</strong><p>通過中級初試 + 複試，GEPT 中級在手，升學加分</p></div>
+              </div>
+            </div>
+
+          </div><!-- /gept-inter -->
+
+        </div><!-- /im-subjects -->
+      </div><!-- /course-content -->
+    </div><!-- /panel-gept -->
 
     <div class="course-panel" id="panel-afterschool">
       <div class="course-content">
@@ -1461,6 +1698,24 @@ const revealObserver=new IntersectionObserver((entries)=>{
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 
+
+function switchGept(btn) {
+  var container = btn.closest('#panel-gept');
+  container.querySelectorAll('.el-level-tab').forEach(function(t){
+    t.classList.remove('active');
+    t.style.background = '';
+    t.style.color = '';
+    t.style.borderColor = '';
+  });
+  container.querySelectorAll('.gept-panel').forEach(function(p){ p.style.display='none'; });
+  btn.classList.add('active');
+  btn.style.background = '#7C3AED';
+  btn.style.color = '#fff';
+  btn.style.borderColor = '#7C3AED';
+  var id = btn.dataset.gept;
+  var panel = container.querySelector('#gept-' + id);
+  if (panel) panel.style.display = 'block';
+}
 
 function switchLevel(btn) {
   var container = btn.closest('#panel-elite');
