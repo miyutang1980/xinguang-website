@@ -145,6 +145,52 @@ ul{list-style:none}
 .course-detail p{font-size:0.95rem;color:var(--text);line-height:1.6}
 @media(max-width:768px){.course-details{grid-template-columns:1fr}.course-content{padding:24px}.course-tabs{gap:6px}.course-tab{padding:8px 14px;font-size:0.82rem}}
 
+/* ===== IMMERSION EXPANDED STYLES ===== */
+.im-intro{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:28px 0}
+.im-intro-card{padding:20px 24px;border-radius:var(--radius-md);}
+.im-intro-card.green{background:var(--green-50);border-left:4px solid var(--green)}
+.im-intro-card.orange{background:var(--orange-light);border-left:4px solid var(--orange)}
+.im-intro-card h4{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.im-intro-card.green h4{color:var(--green-dark)}
+.im-intro-card.orange h4{color:var(--orange-dark)}
+.im-intro-card p{font-size:0.92rem;line-height:1.65;color:var(--text)}
+.im-subjects{margin-top:36px}
+.im-subjects-title{font-family:var(--font-display);font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.im-subjects-title::before{content:'';display:block;width:4px;height:20px;background:var(--green);border-radius:2px}
+.im-subject-accordion{border:1px solid rgba(0,0,0,0.08);border-radius:var(--radius-md);overflow:hidden;margin-bottom:10px;background:var(--surface)}
+.im-subject-btn{width:100%;display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;background:none;border:none;text-align:left;font-family:var(--font-body);transition:background 0.2s}
+.im-subject-btn:hover{background:var(--bg)}
+.im-subject-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.im-subject-label{flex:1}
+.im-subject-label strong{display:block;font-size:0.97rem;font-weight:700;color:var(--text)}
+.im-subject-label span{font-size:0.8rem;color:var(--text-muted)}
+.im-subject-chevron{font-size:0.8rem;color:var(--text-muted);transition:transform 0.3s;flex-shrink:0}
+.im-subject-accordion.open .im-subject-chevron{transform:rotate(180deg)}
+.im-subject-body{display:none;padding:0 20px 20px;animation:fadeInUp 0.25s ease}
+.im-subject-accordion.open .im-subject-body{display:block}
+.im-subject-desc{font-size:0.9rem;color:var(--text);line-height:1.75;margin-bottom:16px}
+.im-grade-table{width:100%;border-collapse:collapse;font-size:0.84rem;margin-bottom:14px}
+.im-grade-table th{background:var(--green);color:#fff;padding:8px 12px;text-align:left;font-weight:700}
+.im-grade-table th:first-child{width:80px}
+.im-grade-table td{padding:9px 12px;border-bottom:1px solid var(--surface-dark);color:var(--text);vertical-align:top}
+.im-grade-table tr:last-child td{border-bottom:none}
+.im-grade-table tr:nth-child(even) td{background:var(--bg)}
+.im-highlights{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.im-highlight-item{display:flex;align-items:flex-start;gap:10px;font-size:0.88rem;color:var(--text);line-height:1.6}
+.im-highlight-item::before{content:'✦';color:var(--orange);font-size:0.7rem;margin-top:4px;flex-shrink:0}
+.im-vocab-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.im-vocab-box{background:var(--green-50);border-radius:var(--radius-sm);padding:12px 14px;text-align:center}
+.im-vocab-box strong{display:block;font-size:1.15rem;font-weight:800;color:var(--green)}
+.im-vocab-box span{font-size:0.77rem;color:var(--text-muted)}
+.im-summary{margin-top:36px;background:var(--bg-dark);border-radius:var(--radius-lg);padding:28px 32px;color:#fff}
+.im-summary h4{font-family:var(--font-display);font-size:1rem;font-weight:800;margin-bottom:18px;color:#fff;opacity:0.9}
+.im-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.im-summary-item{background:rgba(255,255,255,0.07);border-radius:var(--radius-sm);padding:14px 16px}
+.im-summary-item strong{display:block;font-size:0.78rem;color:rgba(255,255,255,0.6);font-weight:600;margin-bottom:4px}
+.im-summary-item p{font-size:0.88rem;color:#fff;line-height:1.5}
+@media(max-width:768px){.im-intro{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr 1fr}.im-summary-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.im-summary-grid{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr}}
+
 /* ========== CAMP ========== */
 .camp-section{background:linear-gradient(160deg,var(--green) 0%,#1E5C37 100%);color:#fff;position:relative;overflow:hidden}
 .camp-section::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.05) 0%,transparent 70%);border-radius:50%}
@@ -411,17 +457,237 @@ ul{list-style:none}
 
     <div class="course-panel active" id="panel-immersion">
       <div class="course-content">
+        <!-- Header -->
         <div class="course-header">
           <div class="course-badge" style="background:var(--green)">IM</div>
-          <h3>浸潤班 Immersion<small>沉浸式全美語，培養語感與自信</small></h3>
+          <h3>浸潤班 Immersion<small>美加學制雙軌課程，讓孩子用英文認識世界</small></h3>
         </div>
-        <div class="course-details">
-          <div class="course-detail"><h4>適合對象</h4><p>幼稚園～低年級</p></div>
-          <div class="course-detail"><h4>課程特色</h4><p>每天全美語環境，遊戲＋故事＋生活情境，自然培養英語直覺</p></div>
-          <div class="course-detail"><h4>學習成果</h4><p>自然累積聽說讀寫語感，銜接美加小學程度</p></div>
+
+        <!-- Intro Cards -->
+        <div class="im-intro">
+          <div class="im-intro-card green">
+            <h4>核心理念</h4>
+            <p>弋果浸潤班不只是「學英文」，而是以英文為工具，同步學習自然科學、閱讀理解、寫作表達。每個 Grade 有明確的學習里程碑，讓家長看得到孩子的進步路徑。</p>
+          </div>
+          <div class="im-intro-card orange">
+            <h4>適合對象 &amp; 課程時數</h4>
+            <p>幼稚園～國小階段｜<strong>每週 10 小時</strong>密集美語沉浸<br>Grade K → Grade 3 階梯推進，每年晉升一個級數，完成 Grade 2 即達國中會考精熟程度。</p>
+          </div>
         </div>
-      </div>
-    </div>
+
+        <!-- Subject Accordions -->
+        <div class="im-subjects">
+          <div class="im-subjects-title">各科目課程介紹 &amp; 課程亮點</div>
+
+          <!-- PHONICS -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#E8F5EE">🔤</div>
+              <div class="im-subject-label"><strong>自然拼讀 Phonics</strong><span>看到新單字就能拼讀，不靠死背</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">自然拼讀是孩子打開英文世界的第一把鑰匙。弋果從 26 字母、短長母音出發，逐步進階到 Blends、Digraphs、Diphthongs、默音字、多音節字解碼，每個 Grade 都有系統性的拼音推進地圖，不跳躍、不堆砌。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>Grade</th><th>學習重點</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>GK</strong></td><td>26 字母辨識、讀音與書寫；短母音、基礎子音；consonant-vowel-consonant 拼讀</td></tr>
+                  <tr><td><strong>G1</strong></td><td>長短母音 (a/e/i/o/u)；S/L/R 組合；Vowel Digraphs；consonant digraphs：sh/ch/th/wh；縮寫字</td></tr>
+                  <tr><td><strong>G2</strong></td><td>三字母 blends (spl/spr/str)；R-controlled 母音 (ar/er/ir/or/ur)；Diphthongs (oi/oy/ou/ow)；前綴、後綴、複合字、同音異字</td></tr>
+                  <tr><td><strong>G3</strong></td><td>完整 Phonics 總複習；多音節字解碼；流暢朗讀（oral fluency）</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">孩子看到不認識的新單字也能「拼出來」，真正的自主解碼能力</div>
+                <div class="im-highlight-item">每個 Grade 拼音地圖清晰，家長知道孩子學到哪、該會什麼</div>
+                <div class="im-highlight-item">拼讀能力直接連結閱讀和拼字，讀寫齊頭並進，不是分開的科目</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- READING -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#EBF3FC">📖</div>
+              <div class="im-subject-label"><strong>閱讀理解 Reading</strong><span>每年累積 3,000 詞彙，訓練高階思考力</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">弋果閱讀訓練分三層：聽覺辨音 → 視覺識別 → 高階理解思考。從 GK 的故事聽讀，到 G3 的段落分析、推論、人物比較，每學期都有新的閱讀挑戰目標，不讓孩子停在舒適圈。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>Grade</th><th>閱讀能力成長</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>GK</strong></td><td>Sight Words 視覺詞辨認；獨立讀完 4 本故事書；物品分類、預測結果</td></tr>
+                  <tr><td><strong>G1</strong></td><td>預測故事結局；推論圖文含義；辨別因果；同義字/反義字/多義詞策略</td></tr>
+                  <tr><td><strong>G2</strong></td><td>回答 Where/When/Who/What/Why/How/Did/Do/Is/Are 全類型問句；高階段落理解</td></tr>
+                  <tr><td><strong>G3</strong></td><td>閱讀說明文 (expository text)；使用目錄查資訊；流暢朗讀；字典查生字</td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:0.82rem;font-weight:700;color:var(--green);margin-bottom:8px">年度詞彙量累積</p>
+              <div class="im-vocab-row">
+                <div class="im-vocab-box"><strong>3,000</strong><span>GK 年度詞彙</span></div>
+                <div class="im-vocab-box"><strong>3,000</strong><span>G1 年度詞彙</span></div>
+                <div class="im-vocab-box"><strong>3,000+</strong><span>G2 年度詞彙</span></div>
+              </div>
+              <div class="im-highlights">
+                <div class="im-highlight-item">不只「讀懂」，更要「讀出思考力」—— 預測、推論、比較、因果全涵蓋</div>
+                <div class="im-highlight-item">Synonym/Antonym/多義詞/情境詞義等策略，讓孩子詞彙活用，不死背</div>
+                <div class="im-highlight-item">閱讀難度分級推進（圖文並茂 → 純文字段落），不讓孩子挫折</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GRAMMAR -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#FFF3EB">📝</div>
+              <div class="im-subject-label"><strong>文法 Grammar / Language Arts</strong><span>每個文法點真正「會用」，不只「會填」</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">弋果文法不是填空測驗，而是讓孩子真正會用。每個文法點連結到說話和寫作場景，從基礎句型到完整語法系統，G2 起加入完整標點符號、詞類辨別和句型組合，直接接軌正式英語寫作。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>Grade</th><th>文法重點</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>GK–G1上</strong></td><td>基礎句型、名詞、冠詞、疑問句、複數、There is/are、Can、現在式、進行式</td></tr>
+                  <tr><td><strong>G1下</strong></td><td>過去式（肯定/否定/疑問）、所有格、介系詞、Like/Love/Don't like</td></tr>
+                  <tr><td><strong>G2上</strong></td><td>大小寫規則全系統、標點符號（引號、逗號、縮寫點、冒號）、動詞 has/have/is/are/was/were</td></tr>
+                  <tr><td><strong>G2下</strong></td><td>八大詞類（名詞/代名詞/動詞/形容詞/副詞）、陳述/疑問/感嘆/命令句、句子合併</td></tr>
+                  <tr><td><strong>G3</strong></td><td>不規則動詞、同音異義詞、所有格複數、完整語法綜合應用</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">每個文法點都有生活情境示例，學了馬上能開口用</div>
+                <div class="im-highlight-item">G2 起系統性學習標點符號，英文寫作質感直接升級</div>
+                <div class="im-highlight-item">從「知道規則」到「自己造句、自己寫段落」，語法真的內化</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SPELLING -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#F3E8FF">✏️</div>
+              <div class="im-subject-label"><strong>拼字 Spelling</strong><span>每年累積 446～496 個扎實詞彙</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">弋果拼字訓練建立在 Phonics 基礎上，每學期有明確的拼字字庫目標。每個字都來自課程情境，不是孤立死背，配合閱讀和寫作同步強化記憶。</p>
+              <div class="im-vocab-row">
+                <div class="im-vocab-box"><strong>446 字</strong><span>GK 年度拼字 (216+230)</span></div>
+                <div class="im-vocab-box"><strong>471 字</strong><span>G1 年度拼字 (216+255)</span></div>
+                <div class="im-vocab-box"><strong>496 字</strong><span>G2 年度拼字 (216+280)</span></div>
+              </div>
+              <div class="im-highlights">
+                <div class="im-highlight-item">字庫從短母音 → 長母音 → 複合字 → 前後綴 → 縮寫，層次清晰不雜亂</div>
+                <div class="im-highlight-item">G2 起加入同義字/反義詞/同音異字，拼字能力升級為真正的詞彙力</div>
+                <div class="im-highlight-item">每個 Grade 完成後，孩子手邊有一份具體的詞彙成就清單</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WRITING -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#FEF3C7">🖊️</div>
+              <div class="im-subject-label"><strong>寫作 Writing</strong><span>從抄句到段落敘述文，階段感清晰</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">寫作是弋果最強調的輸出科目之一。從 GK 的書寫姿勢和句子抄寫，到 G3 的比較文章、說明文、感官描寫，每個 Grade 都有專屬的寫作任務和日記練習。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>Grade</th><th>寫作能力重點</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>GK</strong></td><td>筆跡練習、簡單句子抄寫、日記入門寫作</td></tr>
+                  <tr><td><strong>G1</strong></td><td>日記/日誌、句子結構（主詞動詞一致）、詞彙表造句</td></tr>
+                  <tr><td><strong>G2上</strong></td><td>序列寫作、比較寫作、因果寫作、主旨寫作</td></tr>
+                  <tr><td><strong>G2下</strong></td><td>段落 vs 句子辨別、完整敘述文（有頭有尾）、自我校對</td></tr>
+                  <tr><td><strong>G3</strong></td><td>草書 (Cursive) 書寫；主旨、序列、比較、細節、感官描寫、謎語創作</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">每 Grade 都有日記/日誌寫作，養成孩子用英文表達自己想法的習慣</div>
+                <div class="im-highlight-item">G2 起學「段落」概念，從一句一句到有邏輯的連貫表達</div>
+                <div class="im-highlight-item">G3 學草書（Cursive Writing），英文書寫質感大幅提升</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCIENCE -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#DCFCE7">🔬</div>
+              <div class="im-subject-label"><strong>自然科學 Science</strong><span>全英文學真正的科學，直接對應素養考試題型</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">弋果的 Science 不是讀教科書，而是用英文學真正的科學知識。主題每學期更換，涵蓋生命科學、地球科學、物質科學、人體科學，全程英文授課，孩子在真實知識情境中強化語言能力。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>Grade</th><th>上學期主題</th><th>下學期主題</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>GK</strong></td><td>動物棲息地、身體特徵、植物分類</td><td>五感與感官保護；材料性質；地球日週期；季節變化</td></tr>
+                  <tr><td><strong>G1</strong></td><td>脊椎 / 無脊椎動物；生態環境；滅絕危機；環保回收</td><td>心肺胃骨骼肌肉；水的三態 &amp; 水循環；天氣 &amp; 季節</td></tr>
+                  <tr><td><strong>G2</strong></td><td>植物結構 &amp; 生命週期；自然 / 人工資源；廢棄物分類</td><td>飲食健康 &amp; 衛生；光 &amp; 聲的特性；太陽系 &amp; 月相</td></tr>
+                  <tr><td><strong>G3</strong></td><td colspan="2">跨域主題閱讀整合（配合 Phonics 與 Reading 科學詞彙）</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">Science 完全用英文授課，語言和知識同時輸入——這是一般補習班做不到的</div>
+                <div class="im-highlight-item">每個科學主題搭配觀察、實驗、比較、預測，動手動腦不死讀</div>
+                <div class="im-highlight-item">GEPT / 全民英檢 / 國中會考的素養題就考這類「跨域英文理解」，弋果孩子從 GK 就在練了</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EAGLE FUN -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#DBEAFE">🌐</div>
+              <div class="im-subject-label"><strong>知識素養學習 Eagle Fun</strong><span>跨域選修，銜接 GEPT / TOEFL，培養終身學習力</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">Eagle Fun 是弋果 2021 年因應台灣 108 課綱和全球教改趨勢加入的知識素養計畫。孩子透過 New Dimensions 教材建立的英文力，去閱讀和探索四大跨域主題，應對全球素養導向考試的題型需求。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>主題領域</th><th>說明</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>自然科學</strong></td><td>Natural Science — 對應理工類英文閱讀素養</td></tr>
+                  <tr><td><strong>生命科學</strong></td><td>Life Science — 對應生物醫學類英文素養</td></tr>
+                  <tr><td><strong>人文藝術</strong></td><td>Humanities &amp; Arts — 對應文史社會類英文素養</td></tr>
+                  <tr><td><strong>社會科學</strong></td><td>Social Science — 對應時事國際議題英文閱讀</td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:0.82rem;font-weight:700;color:var(--green);margin:12px 0 8px">多元評量方式</p>
+              <div class="im-vocab-row">
+                <div class="im-vocab-box"><strong>📋</strong><span>作業完成</span></div>
+                <div class="im-vocab-box"><strong>💡</strong><span>批判思考</span></div>
+                <div class="im-vocab-box"><strong>🎤</strong><span>課堂發表</span></div>
+              </div>
+              <div class="im-highlights">
+                <div class="im-highlight-item">直接對接 GEPT、全民英檢、TOEFL、IELTS 的素養題型設計方向</div>
+                <div class="im-highlight-item">假期自主學習 + 開學繳交，培養孩子的時間管理和主動學習力</div>
+                <div class="im-highlight-item">完成 Eagle Fun 課程可領取<strong>結業證書</strong>，作為學習歷程正式紀錄</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /im-subjects -->
+
+        <!-- Summary Bar -->
+        <div class="im-summary">
+          <h4>浸潤班課程亮點一覽</h4>
+          <div class="im-summary-grid">
+            <div class="im-summary-item"><strong>自然拼讀</strong><p>看到新單字就能拼讀，不靠死背</p></div>
+            <div class="im-summary-item"><strong>閱讀理解</strong><p>每年詞彙 3,000+，高階思考全覆蓋</p></div>
+            <div class="im-summary-item"><strong>文法應用</strong><p>每個文法點連結真實說話與寫作</p></div>
+            <div class="im-summary-item"><strong>拼字成就</strong><p>GK 446 字 → G1 471 字 → G2 496 字</p></div>
+            <div class="im-summary-item"><strong>寫作輸出</strong><p>GK 抄句 → G3 完整段落敘述文</p></div>
+            <div class="im-summary-item"><strong>自然科學</strong><p>全英文學科學，素養考試題型從小練</p></div>
+          </div>
+        </div>
+
+      </div><!-- /course-content -->
+    </div><!-- /panel-immersion -->
 
     <div class="course-panel" id="panel-elite">
       <div class="course-content">
@@ -825,6 +1091,16 @@ const revealObserver=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}});
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* ========== IMMERSION SUBJECT ACCORDION ========== */
+function toggleSubject(btn){
+  const acc = btn.closest('.im-subject-accordion');
+  const isOpen = acc.classList.contains('open');
+  // close all
+  document.querySelectorAll('.im-subject-accordion').forEach(a=>a.classList.remove('open'));
+  // toggle current
+  if(!isOpen) acc.classList.add('open');
+}
 
 /* ========== COURSE TABS ========== */
 document.querySelectorAll('.course-tab').forEach(tab=>{
