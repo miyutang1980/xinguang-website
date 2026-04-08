@@ -691,17 +691,224 @@ ul{list-style:none}
 
     <div class="course-panel" id="panel-elite">
       <div class="course-content">
+        <!-- Header -->
         <div class="course-header">
           <div class="course-badge" style="background:var(--blue)">EL</div>
-          <h3>菁英班 Elite<small>密集訓練，目標導向的英語菁英課程</small></h3>
+          <h3>菁英班 Intensive<small>想快速衝英文？這班就是為你的孩子設計的</small></h3>
         </div>
-        <div class="course-details">
-          <div class="course-detail"><h4>適合對象</h4><p>國小 1～6 年級</p></div>
-          <div class="course-detail"><h4>課程特色</h4><p>密集全外師課程，美加學制同步，系統化英語學習</p></div>
-          <div class="course-detail"><h4>學習成果</h4><p>Grade 2 畢業＝國中會考精熟<br>Grade 3＝GEPT 初級</p></div>
+
+        <!-- Intro Cards -->
+        <div class="im-intro">
+          <div class="im-intro-card" style="background:#EBF3FC;border-left:4px solid var(--blue)">
+            <h4 style="color:#2563EB">菁英班是什麼感覺？</h4>
+            <p>每週 7.5 小時密集美語訓練，Starter A/B 起步，一路闖關 Grade 1 → 2 → 3 → 4。每個孩子都有自己的闖關進度，老師知道他在哪一關、下一關要練什麼。不是塞進去跟班，是一個一個確認過關。</p>
+          </div>
+          <div class="im-intro-card orange">
+            <h4>適合誰？能衝多快？</h4>
+            <p>國小 1 年級～國中 3 年級｜<strong>每週 7.5 小時</strong>菁英強化⚡<br>完成 Grade 2 → 國中會考英文精熟程度<br>完成 Grade 3 → 可挑戰全民英檢初級<br>比標準班快 1.5 倍，真的差很多。</p>
+          </div>
         </div>
-      </div>
-    </div>
+
+        <!-- Level Map -->
+        <div class="im-subjects">
+          <div class="im-subjects-title" style="color:var(--blue)">🗺️ 闖關地圖：從 Starter 到 Grade 4，每一關都有具體任務</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px">
+            <div style="background:#EBF3FC;border-radius:10px;padding:14px;text-align:center">
+              <div style="font-size:1.4rem;margin-bottom:4px">🌱</div>
+              <strong style="color:var(--blue);font-size:0.85rem">Starter A / B</strong>
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">英文新鮮人啟蒙，從 A-Z 發音到生活對話，天天開口說 26 句日常英文</p>
+            </div>
+            <div style="background:#EBF3FC;border-radius:10px;padding:14px;text-align:center">
+              <div style="font-size:1.4rem;margin-bottom:4px">🚀</div>
+              <strong style="color:var(--blue);font-size:0.85rem">Grade 1A → 1C</strong>
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">打通 Phonics、文法、閱讀三條主線，開始讀故事、寫句子，英文起飛</p>
+            </div>
+            <div style="background:#EBF3FC;border-radius:10px;padding:14px;text-align:center">
+              <div style="font-size:1.4rem;margin-bottom:4px">⚡</div>
+              <strong style="color:var(--blue);font-size:0.85rem">Grade 2A → 4C</strong>
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">正式進入 Language Arts，讀說寫全面加速，對應會考 / 英檢等級</p>
+            </div>
+          </div>
+
+          <!-- Accordion: Phonics -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#EBF3FC">🔤</div>
+              <div class="im-subject-label"><strong>自然拼讀 Phonics</strong><span>Starter 就從 A-Z 開始，Grade 4 前通關所有拼音規則</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">菁英班的 Phonics 跟浸潤班最大的不同：它是每一關的「通關門票」。Starter A 就開始練發音，一路到 Grade 4 全部搞定複合母音、默音字、三字母組合。每個孩子必須真的會了才能晉級，不是大家一起走，是確認這個孩子真的過關。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>級數</th><th>Phonics 學什麼</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Starter A/B</strong></td><td>26 字母發音、辨識與書寫；短母音 ă/ĕ/ĭ/ŏ/ŭ 全練過</td></tr>
+                  <tr><td><strong>Grade 1A/B</strong></td><td>長母音、子音 Blends (st/pr/fl/tr…)、Digraphs (ch/sh/th)</td></tr>
+                  <tr><td><strong>Grade 1C</strong></td><td>縮寫字、複數 -s/-es、-ed/-ing 結尾</td></tr>
+                  <tr><td><strong>Grade 2A</strong></td><td>L/S/R 三組 Blends、軟硬 c/g、母音雙字組合、Diphthongs</td></tr>
+                  <tr><td><strong>Grade 3A</strong></td><td>三字母 Blend、最終 Blends、默音字、所有母音對組合</td></tr>
+                  <tr><td><strong>Grade 4A</strong></td><td>Vowel digraphs 全套（ai/ay/ei/ee/ea/oa/ow/oo/au/aw/ew）、默音字完整版</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">每關都有明確的 Phonics 清單，家長隨時知道孩子卡在哪裡</div>
+                <div class="im-highlight-item">過了就是真的過了，沒過不硬推——菁英班的進度比速度更重要</div>
+                <div class="im-highlight-item">Grade 4 後，孩子看到任何英文字都能自己發音，不用老師拼給他聽</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion: Reading -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#DBEAFE">📚</div>
+              <div class="im-subject-label"><strong>閱讀理解 Reading</strong><span>從故事圖卡到讀整篇文章分析，一路往上打</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">菁英班的閱讀課不是「讀完就好」——每一個故事後面都有任務：找出主旨、預測結局、排出故事順序、找因果關係、推結論。這些看起來像語文課的技能，其實是英文思考力的核心訓練，也是全民英檢和國中會考最愛考的題型。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>級數</th><th>閱讀技能</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Starter</strong></td><td>看圖指認、聽故事理解、生活詞彙配對</td></tr>
+                  <tr><td><strong>Grade 1</strong></td><td>主旨判斷、故事順序、因果推論、詞彙分類（動物/食物/玩具）</td></tr>
+                  <tr><td><strong>Grade 2</strong></td><td>多義詞、字根字尾、複數規則、辨別現實/幻想、拼字字母序排列</td></tr>
+                  <tr><td><strong>Grade 3</strong></td><td>多音節字解碼、同義詞/反義詞/同音字/多義詞綜合運用、字典查字</td></tr>
+                  <tr><td><strong>Grade 4</strong></td><td>說明文結構（比較對比/因果/時間序）、文學分析（主題/情節/人物/設定）、寓言/神話辨別</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">Grade 4 開始讀「說明文」——就是全民英檢和會考素養題那種風格，天天在練🎯</div>
+                <div class="im-highlight-item">每一關閱讀技能都有具體任務，孩子「看到改變」而不是「感覺好像有進步」</div>
+                <div class="im-highlight-item">Oral Reading 每一關都要練，讀出來流暢才算過——不能只是眼睛掃過去</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion: Grammar -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#FFF3EB">📝</div>
+              <div class="im-subject-label"><strong>文法 Grammar / Language Arts</strong><span>從「我叫 ___」到能寫一封正式 Business Letter</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">菁英班文法課最厲害的地方是路線圖超清楚：Starter 從「How are you?」開始，一路學到 Grade 4 能寫六段式商業書信。每個文法點不只是背，是孩子要能在對話、寫作、發表裡實際用出來，老師確認後才算過。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>級數</th><th>文法 / Language Arts 重點</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Starter A/B</strong></td><td>日常問答 26 句（天氣、生日、時間、喜好）；名詞、介系詞 in/on/under/over</td></tr>
+                  <tr><td><strong>Grade 1A</strong></td><td>名詞、A/An、This/That、疑問詞 Who/What、複數、be 動詞完整系統、介系詞、形容詞、There is/are</td></tr>
+                  <tr><td><strong>Grade 1B</strong></td><td>Have/Has got、命令句、Can（肯定/否定/疑問）、現在進行式、所有格 Whose?</td></tr>
+                  <tr><td><strong>Grade 2A</strong></td><td>大小寫規則、完整標點符號系統（引號/冒號/縮寫點/所有格撇號）</td></tr>
+                  <tr><td><strong>Grade 3A</strong></td><td>do/have/am/is/are/was/were 全套；引號在標題中的用法</td></tr>
+                  <tr><td><strong>Grade 4A</strong></td><td>句子 vs 句子片段；友善書信五段結構；商業書信六段結構；詩歌朗誦</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">從 Starter 就說真實對話，不背死句——孩子遇到外師不會愣住</div>
+                <div class="im-highlight-item">Grade 4 學寫 Business Letter，這個能力連很多大人都不一定有😅</div>
+                <div class="im-highlight-item">文法進度跟閱讀、寫作完全同步，學了就用、用了就記</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion: Spelling -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#F3E8FF">✏️</div>
+              <div class="im-subject-label"><strong>拼字 Spelling</strong><span>每一個字都是有脈絡的，不是隨機塞給你背</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">你以為拼字只是死背？錯了。菁英班的拼字是用來「固化 Phonics 規則」的武器。孩子學了某個發音規則，馬上就在拼字課裡用那個規則拼出十幾個字，規則跟詞彙同時進大腦，兩個科目互相加強，記憶效率直接翻倍。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>級數</th><th>拼字重點</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Starter A/B</strong></td><td>26 字母書寫；短母音 a/i/o/u/e 配圖拼字；字首 cl/fl/sn/st 拼字</td></tr>
+                  <tr><td><strong>Grade 1A</strong></td><td>短母音全拼；字首字尾單字；辨識視覺詞 Sight Words（描摹、配對、亂序解碼）</td></tr>
+                  <tr><td><strong>Grade 2A</strong></td><td>L/R Blends 單字；-sk/-mp/-ng 字尾；短母音 a/e/i/o/u 完整字庫</td></tr>
+                  <tr><td><strong>Grade 3A</strong></td><td>短/長母音字；oi/ou 特殊母音；雙字尾子音；-le 結尾單字</td></tr>
+                  <tr><td><strong>Grade 4A</strong></td><td>o-e/oo/ew/ue/ui 母音群；ow/ou/oi/oy 雙母音；縮寫字拼法；/s//j/ 音拼字</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">Sight Words 有六關練習法：描摹→配對→亂序解碼→填空→造句→朗讀，學透才走</div>
+                <div class="im-highlight-item">拼字課跟 Phonics 課完全連動，不是兩本分開的課本在各走各的</div>
+                <div class="im-highlight-item">學完某個級數的孩子，寫英文作文時拼錯字的頻率真的驟降</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion: Oral Skills -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#DCFCE7">🎤</div>
+              <div class="im-subject-label"><strong>口說技能 Oral Skills</strong><span>不是在「上課」，是在「真的說英文」</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">很多孩子學英文多年，一開口就卡。菁英班的 Oral Skills 從第一堂課就不一樣——Starter A 就要能回答「What day is today?」「How's the weather?」這種真實問題，Grade 4 要能口頭摘要一篇文章的重點、朗誦詩歌、用不同語氣說原因和結果。每一關的口說標準都比前一關高，孩子是一直在被鍛鍊的。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>級數</th><th>口說技能目標</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Starter A/B</strong></td><td>日常對話 26 句（天氣、生日、時間、喜好、位置）；問答自動反應</td></tr>
+                  <tr><td><strong>Grade 1</strong></td><td>聽懂兩步指令；回答 Who/What/Where/Why；專注聆聽並複述</td></tr>
+                  <tr><td><strong>Grade 2A</strong></td><td>用描述性詞彙說人事物；口頭複述故事（角色、場景、情節）</td></tr>
+                  <tr><td><strong>Grade 3A</strong></td><td>多步驟口說指令；用事實和細節支持觀點；轉述他人說話內容</td></tr>
+                  <tr><td><strong>Grade 4A</strong></td><td>口頭摘要文章主旨；給精確指令；用因果/比較結構傳遞資訊；詩歌朗誦</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">Starter 就開始說真實對話，不是假假地背台詞——遇到外國人不會腦袋空白</div>
+                <div class="im-highlight-item">每一關口說標準都明確寫出來，家長問「這學期孩子該達到什麼？」有答案</div>
+                <div class="im-highlight-item">Grade 4 能當眾口頭報告一篇文章的重點，這種表達力在台灣超稀缺💎</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion: Writing -->
+          <div class="im-subject-accordion">
+            <button class="im-subject-btn" onclick="toggleSubject(this)">
+              <div class="im-subject-icon" style="background:#FEF3C7">🖊️</div>
+              <div class="im-subject-label"><strong>寫作 Writing</strong><span>Grade 2 開始學寫故事，Grade 4 學寫新聞和商業信件</span></div>
+              <span class="im-subject-chevron">▼</span>
+            </button>
+            <div class="im-subject-body">
+              <p class="im-subject-desc">菁英班的寫作課有一個超直接的目標：讓孩子「寫得出一件事」。不是寫一個字，是寫一段話，有主旨、有順序、有比較、有細節。Grade 2 開始寫主旨句，Grade 4 能寫完整的 5 段新聞故事，還會用行書（cursive）寫出來。</p>
+              <table class="im-grade-table">
+                <thead><tr><th>級數</th><th>寫作任務</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Grade 2A</strong></td><td>主旨寫作（找主題句、分類列舉）；序列寫作（first/next/last）；比較寫作（like/as）</td></tr>
+                  <tr><td><strong>Grade 3A</strong></td><td>食譜寫作；How-to 說明文；用有趣動詞和形容詞讓寫作更生動</td></tr>
+                  <tr><td><strong>Grade 4A</strong></td><td>流暢行書書寫；Topic Sentence 練習；新聞故事撰寫；校對自己的文章</td></tr>
+                </tbody>
+              </table>
+              <div class="im-highlights">
+                <div class="im-highlight-item">每一個寫作技能都很具體——不是「練習寫作」，是「寫一個食譜」「寫一篇新聞」</div>
+                <div class="im-highlight-item">Grade 4 學校對（proofread），孩子寫完會自己抓錯，不再全靠老師改</div>
+                <div class="im-highlight-item">行書（Cursive）書寫讓英文手寫質感直接拉開距離，考試卷子看起來就不一樣</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /im-subjects -->
+
+        <!-- Summary -->
+        <div class="im-summary" style="background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 100%)">
+          <h4>📌 菁英班孩子一年後的樣子</h4>
+          <div class="im-summary-grid">
+            <div class="im-summary-item"><strong>🔤 拼音通關</strong><p>每一關 Phonics 都確認過，看字能拼、拼字能寫</p></div>
+            <div class="im-summary-item"><strong>📚 閱讀有思路</strong><p>不只讀懂，能找主旨、推因果、分析人物</p></div>
+            <div class="im-summary-item"><strong>📝 文法真的用得出來</strong><p>開口說、寫文章都靠得住，不是只會填空</p></div>
+            <div class="im-summary-item"><strong>🎤 開口不卡</strong><p>從 Starter 就練真實對話，遇到外師不怕了</p></div>
+            <div class="im-summary-item"><strong>🖊️ 寫出完整一段話</strong><p>有主旨有順序，Grade 4 還會寫新聞故事</p></div>
+            <div class="im-summary-item"><strong>🏆 進度看得見</strong><p>Starter→Grade 4 每一關都有清楚的任務清單</p></div>
+          </div>
+        </div>
+
+      </div><!-- /course-content -->
+    </div><!-- /panel-elite -->
 
     <div class="course-panel" id="panel-standard">
       <div class="course-content">
