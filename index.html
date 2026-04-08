@@ -252,6 +252,48 @@ ul{list-style:none}
 @media(max-width:768px){.im-intro{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr 1fr}.im-summary-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.im-summary-grid{grid-template-columns:1fr}.im-vocab-row{grid-template-columns:1fr}}
 
+/* ===== CAMP REGISTRATION FORM ===== */
+.camp-reg-wrap{background:var(--surface);border-radius:var(--radius-lg);padding:36px 40px;border:1px solid var(--surface-dark);box-shadow:var(--shadow-md);max-width:760px;margin:0 auto}
+.camp-reg-title{font-family:var(--font-display);font-size:1.25rem;font-weight:800;color:var(--text);margin-bottom:6px}
+.camp-reg-sub{font-size:0.88rem;color:var(--text-muted);margin-bottom:28px;line-height:1.6}
+.camp-reg-section{font-size:0.78rem;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin:24px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--green-light)}
+.camp-reg-section:first-of-type{margin-top:0}
+.camp-reg-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.camp-reg-grid.col3{grid-template-columns:1fr 1fr 1fr}
+.camp-reg-grid.col1{grid-template-columns:1fr}
+.camp-reg-field{display:flex;flex-direction:column;gap:5px}
+.camp-reg-field label{font-size:0.83rem;font-weight:600;color:var(--text)}
+.camp-reg-field .req{color:#e53e3e;margin-left:2px}
+.camp-reg-field input,.camp-reg-field select,.camp-reg-field textarea{
+  padding:10px 14px;border:1.5px solid var(--surface-dark);border-radius:var(--radius-sm);
+  font-family:var(--font-body);font-size:0.9rem;color:var(--text);background:var(--bg);
+  transition:border-color 0.2s;width:100%}
+.camp-reg-field input:focus,.camp-reg-field select:focus,.camp-reg-field textarea:focus{
+  outline:none;border-color:var(--green);background:#fff}
+.camp-reg-field input.error,.camp-reg-field select.error{border-color:#e53e3e}
+/* Course checkboxes */
+.camp-reg-courses{display:flex;flex-direction:column;gap:10px}
+.camp-course-option{border:1.5px solid var(--surface-dark);border-radius:var(--radius-md);padding:14px 16px;cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:12px}
+.camp-course-option:hover{border-color:var(--green)}
+.camp-course-option.selected{border-color:var(--green);background:var(--green-50)}
+.camp-course-option input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--green)}
+.camp-course-info{flex:1}
+.camp-course-info strong{display:block;font-size:0.9rem;font-weight:800;color:var(--text)}
+.camp-course-info span{font-size:0.8rem;color:var(--text-muted)}
+/* Pricing summary */
+.camp-price-box{background:var(--green-50);border-radius:var(--radius-md);padding:16px 20px;margin-top:16px;border:1px solid rgba(43,122,75,0.2)}
+.camp-price-row{display:flex;justify-content:space-between;align-items:center;font-size:0.88rem;margin-bottom:6px;color:var(--text)}
+.camp-price-row.total{font-weight:800;font-size:1rem;color:var(--green);padding-top:8px;border-top:1px solid rgba(43,122,75,0.2);margin-top:4px}
+.camp-price-note{font-size:0.78rem;color:var(--text-muted);margin-top:8px;line-height:1.6}
+.camp-price-early{display:inline-flex;align-items:center;gap:6px;background:var(--orange);color:#fff;font-size:0.78rem;font-weight:700;padding:4px 12px;border-radius:50px;margin-bottom:10px}
+/* Success */
+.camp-reg-success{text-align:center;padding:40px 20px;display:none}
+.camp-reg-success-icon{font-size:4rem;margin-bottom:16px}
+.camp-reg-success h3{font-size:1.4rem;font-weight:800;color:var(--green);margin-bottom:8px}
+.camp-reg-success p{font-size:0.95rem;color:var(--text-muted);line-height:1.7}
+@media(max-width:640px){.camp-reg-wrap{padding:24px 20px}.camp-reg-grid{grid-template-columns:1fr}.camp-reg-grid.col3{grid-template-columns:1fr 1fr}}
+
+
 /* ===== CAMP OVERHAUL ===== */
 .camp-hero{background:linear-gradient(160deg,#1E5C37 0%,#2B7A4B 100%);color:#fff;padding:60px 0 0}
 .camp-hero-inner{max-width:1100px;margin:0 auto;padding:0 2cm;text-align:center}
@@ -2366,11 +2408,124 @@ ul{list-style:none}
 
       </div><!-- /camp-aug -->
 
-      <!-- CTA -->
-      <div style="text-align:center;margin-top:40px;padding-top:32px;border-top:1px solid var(--surface-dark)">
-        <p style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:16px">報名夏令營 + 秋季班，可享早鳥優惠 🎁</p>
-        <a href="https://bmtech.live/f/eaglexinguang1" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="font-size:1rem;padding:14px 40px">立即報名夏令營 →</a>
-      </div>
+      <!-- REGISTRATION FORM -->
+      <div id="campRegSection" style="margin-top:48px;padding-top:36px;border-top:2px solid var(--surface-dark)">
+        <div style="text-align:center;margin-bottom:28px">
+          <h3 style="font-family:var(--font-display);font-size:1.5rem;font-weight:900;color:var(--text);margin-bottom:8px">🏕️ 立即報名 2026 夏令營</h3>
+          <p style="color:var(--text-muted);font-size:0.9rem">填寫完成後，我們將在 24 小時內以電話或 LINE 確認您的報名資訊</p>
+        </div>
+
+        <div class="camp-reg-wrap" id="campRegForm">
+          <!-- Success message (hidden by default) -->
+          <div class="camp-reg-success" id="campRegSuccess">
+            <div class="camp-reg-success-icon">🎉</div>
+            <h3>報名資訊已送出！</h3>
+            <p>感謝您報名 2026 太平新光夏令營。<br>我們將在 <strong>24 小時內</strong>以電話或 LINE 與您確認報名細節及繳費方式。<br><br>如有緊急問題，歡迎直接 LINE 我們：<a href="https://lin.ee/o1wzF7a" target="_blank" style="color:var(--green);font-weight:700">@太平新光分校</a></p>
+          </div>
+
+          <!-- Form (visible by default) -->
+          <div id="campFormBody">
+            <div class="camp-reg-title">夏令營報名表</div>
+            <p class="camp-reg-sub">帶 <span style="color:#e53e3e">*</span> 為必填欄位。請確實填寫，以利後續聯繫確認。</p>
+
+            <!-- 一、學生基本資料 -->
+            <div class="camp-reg-section">一、學生基本資料</div>
+            <div class="camp-reg-grid">
+              <div class="camp-reg-field">
+                <label>學生姓名 <span class="req">*</span></label>
+                <input type="text" id="cr_sname" placeholder="請輸入學生姓名">
+              </div>
+              <div class="camp-reg-field">
+                <label>目前就讀年級 <span class="req">*</span></label>
+                <select id="cr_grade">
+                  <option value="">請選擇</option>
+                  <option>幼稚園大班</option>
+                  <option>國小 1 年級</option>
+                  <option>國小 2 年級</option>
+                  <option>國小 3 年級</option>
+                  <option>國小 4 年級</option>
+                  <option>國小 5 年級</option>
+                  <option>國小 6 年級</option>
+                  <option>國中 1 年級</option>
+                  <option>國中 2 年級</option>
+                  <option>國中 3 年級</option>
+                </select>
+              </div>
+            </div>
+            <div class="camp-reg-grid" style="margin-top:14px">
+              <div class="camp-reg-field">
+                <label>是否為太平新光在校生 <span class="req">*</span></label>
+                <select id="cr_enrolled">
+                  <option value="">請選擇</option>
+                  <option value="yes">是，在校生</option>
+                  <option value="no">否，非在校生（需安排英文程度檢測入班）</option>
+                </select>
+              </div>
+              <div class="camp-reg-field">
+                <label>家長姓名 <span class="req">*</span></label>
+                <input type="text" id="cr_pname" placeholder="請輸入家長姓名">
+              </div>
+            </div>
+            <div class="camp-reg-grid" style="margin-top:14px">
+              <div class="camp-reg-field">
+                <label>聯絡電話 <span class="req">*</span></label>
+                <input type="tel" id="cr_phone" placeholder="0912-345-678">
+              </div>
+              <div class="camp-reg-field">
+                <label>LINE ID</label>
+                <input type="text" id="cr_line" placeholder="方便後續通知使用">
+              </div>
+            </div>
+
+            <!-- 二、報名課程 -->
+            <div class="camp-reg-section" style="margin-top:28px">二、報名課程期別</div>
+            <div class="camp-reg-courses" id="cr_courses">
+              <label class="camp-course-option" id="co_july" onclick="selectCourse('july')">
+                <input type="checkbox" id="cr_july" value="july" onchange="calcPrice()">
+                <div class="camp-course-info">
+                  <strong>🔬 七月｜超能科學派 Science Through Discovery</strong>
+                  <span>7/01 – 7/28 · 20 個上課日 · 每天 09:00–17:00</span>
+                </div>
+              </label>
+              <label class="camp-course-option" id="co_aug" onclick="selectCourse('aug')">
+                <input type="checkbox" id="cr_aug" value="aug" onchange="calcPrice()">
+                <div class="camp-course-info">
+                  <strong>🕵️ 八月｜謎案追查隊 Mystery Hunters</strong>
+                  <span>7/29 – 8/25 · 20 個上課日 · 每天 09:00–17:00</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- 費用說明 -->
+            <div class="camp-price-box" id="campPriceBox">
+              <div class="camp-price-early" id="campEarlyBird" style="display:none">⚡ 5/31 前報名享 85 折優惠</div>
+              <div id="campPriceDetail" style="color:var(--text-muted);font-size:0.88rem">請先選擇報名期別</div>
+              <p class="camp-price-note">
+                📌 每天費用：<strong>NTD 1,760 元</strong>（未折扣）｜每期 20 天<br>
+                📌 5/31 前完成報名繳費：<strong>85 折（NTD 1,496 元 / 天）</strong><br>
+                📌 教材費：不含於課程費用，將於營隊開始前一週另行開單收取<br>
+                📌 到校時間：最早 08:00｜最晚接走 18:00
+              </p>
+            </div>
+
+            <!-- 三、飲食注意事項 -->
+            <div class="camp-reg-section" style="margin-top:28px">三、飲食特殊注意事項</div>
+            <div class="camp-reg-grid camp-reg-grid col1">
+              <div class="camp-reg-field">
+                <label>飲食過敏或特殊需求</label>
+                <textarea id="cr_diet" rows="3" placeholder="例：堅果過敏、素食、不吃海鮮⋯⋯若無特殊需求請填「無」"></textarea>
+              </div>
+            </div>
+
+            <div id="campFormError" style="color:#e53e3e;font-size:0.85rem;margin-top:16px;display:none"></div>
+
+            <button onclick="submitCampReg()" class="btn btn-primary" style="width:100%;margin-top:24px;padding:16px;font-size:1rem;font-weight:800;letter-spacing:0.03em">
+              送出報名資訊 →
+            </button>
+            <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:12px">送出後我們會在 24 小時內電話或 LINE 與您確認，並告知繳費方式</p>
+          </div><!-- /campFormBody -->
+        </div><!-- /camp-reg-wrap -->
+      </div><!-- /campRegSection -->
 
     </div>
   </div>
@@ -3017,6 +3172,120 @@ function submitInquiry(e){
   document.getElementById('inquiryConfirm').classList.add('active');
   return false;
 }
+
+/* ========== CAMP REGISTRATION ========== */
+function selectCourse(id) {
+  var cb = document.getElementById('cr_' + id);
+  // click toggles checkbox
+  setTimeout(function() { calcPrice(); }, 10);
+  var opt = document.getElementById('co_' + id);
+  if (opt) {
+    var checked = document.getElementById('cr_' + id).checked;
+    opt.classList.toggle('selected', checked);
+  }
+}
+
+function calcPrice() {
+  var july = document.getElementById('cr_july') && document.getElementById('cr_july').checked;
+  var aug  = document.getElementById('cr_aug')  && document.getElementById('cr_aug').checked;
+  var detail = document.getElementById('campPriceDetail');
+  var earlyBird = document.getElementById('campEarlyBird');
+  if (!detail) return;
+
+  var now = new Date();
+  var deadline = new Date('2026-05-31T23:59:59');
+  var isEarly = now <= deadline;
+  var normalDay = 1760, discDay = 1496;
+
+  if (!july && !aug) {
+    detail.innerHTML = '<span style="color:var(--text-muted)">請先選擇報名期別</span>';
+    if (earlyBird) earlyBird.style.display = 'none';
+    return;
+  }
+  if (earlyBird) earlyBird.style.display = isEarly ? 'flex' : 'none';
+
+  var days = (july ? 20 : 0) + (aug ? 20 : 0);
+  var price = isEarly ? discDay * days : normalDay * days;
+  var origPrice = normalDay * days;
+  var saving = origPrice - price;
+
+  var rows = '';
+  if (july) rows += '<div class="camp-price-row"><span>🔬 七月｜超能科學派 (20天)</span><span>' + (isEarly ? discDay : normalDay).toLocaleString() + ' × 20 = <strong>' + (isEarly ? discDay*20 : normalDay*20).toLocaleString() + '</strong> 元</span></div>';
+  if (aug)  rows += '<div class="camp-price-row"><span>🕵️ 八月｜謎案追查隊 (20天)</span><span>' + (isEarly ? discDay : normalDay).toLocaleString() + ' × 20 = <strong>' + (isEarly ? discDay*20 : normalDay*20).toLocaleString() + '</strong> 元</span></div>';
+  if (isEarly && saving > 0) rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🎉 85 折優惠折扣</span><span>-' + saving.toLocaleString() + ' 元</span></div>';
+  rows += '<div class="camp-price-row total"><span>課程費用合計（不含教材費）</span><span>NTD ' + price.toLocaleString() + ' 元</span></div>';
+
+  detail.innerHTML = rows;
+  // sync checkbox visual
+  ['july','aug'].forEach(function(id){
+    var cb = document.getElementById('cr_' + id);
+    var opt = document.getElementById('co_' + id);
+    if (cb && opt) opt.classList.toggle('selected', cb.checked);
+  });
+}
+
+function submitCampReg() {
+  var errEl = document.getElementById('campFormError');
+  errEl.style.display = 'none';
+  var errors = [];
+
+  var sname = document.getElementById('cr_sname').value.trim();
+  var grade = document.getElementById('cr_grade').value;
+  var enrolled = document.getElementById('cr_enrolled').value;
+  var pname = document.getElementById('cr_pname').value.trim();
+  var phone = document.getElementById('cr_phone').value.trim();
+  var july = document.getElementById('cr_july').checked;
+  var aug  = document.getElementById('cr_aug').checked;
+  var diet = document.getElementById('cr_diet').value.trim();
+
+  if (!sname) errors.push('請填寫學生姓名');
+  if (!grade) errors.push('請選擇就讀年級');
+  if (!enrolled) errors.push('請選擇是否為在校生');
+  if (!pname) errors.push('請填寫家長姓名');
+  if (!phone) errors.push('請填寫聯絡電話');
+  if (!july && !aug) errors.push('請至少選擇一個報名期別');
+
+  // field highlights
+  ['cr_sname','cr_pname','cr_phone'].forEach(function(id){
+    var el = document.getElementById(id);
+    el.classList.toggle('error', !el.value.trim());
+  });
+  ['cr_grade','cr_enrolled'].forEach(function(id){
+    var el = document.getElementById(id);
+    el.classList.toggle('error', !el.value);
+  });
+
+  if (errors.length > 0) {
+    errEl.innerHTML = '⚠️ ' + errors.join('、');
+    errEl.style.display = 'block';
+    return;
+  }
+
+  // Save to localStorage
+  var reg = {
+    id: 'CR-' + Date.now(),
+    ts: new Date().toISOString(),
+    sname: sname, grade: grade, enrolled: enrolled,
+    pname: pname, phone: phone,
+    line: document.getElementById('cr_line').value.trim(),
+    courses: (july?'七月超能科學派 ':'') + (aug?'八月謎案追查隊':''),
+    diet: diet || '無'
+  };
+  try {
+    var regs = JSON.parse(localStorage.getItem('campRegistrations') || '[]');
+    regs.push(reg);
+    localStorage.setItem('campRegistrations', JSON.stringify(regs));
+  } catch(e) {}
+
+  // Show success
+  document.getElementById('campFormBody').style.display = 'none';
+  document.getElementById('campRegSuccess').style.display = 'block';
+  document.getElementById('campRegSuccess').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// Init price display on load
+document.addEventListener('DOMContentLoaded', function(){ calcPrice(); });
+
 /* ========== HERO CANVAS ANIMATION ========== */
 (function() {
   var canvas = document.getElementById('heroCanvas');
