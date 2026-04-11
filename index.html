@@ -3247,7 +3247,7 @@ body {
             <span class="error-msg" id="bkPurposeErr">請至少勾選一項</span>
           </div>
           <input type="hidden" id="bkType" value="參訪校區">
-          <div class="form-group">
+          <div class="form-group" id="bkClassGroup">
             <label>想了解的班型</label>
             <select id="bkClass">
               <option value="">請選擇</option>
@@ -3258,6 +3258,12 @@ body {
               <option>安親課輔班</option>
               <option>托育班</option>
             </select>
+          </div>
+          <div class="form-group" id="bkTrialAssessInfo" style="display:none;grid-column:1/-1">
+            <div style="background:#F0FDF4;border:1.5px solid var(--green);border-radius:10px;padding:12px 16px;font-size:0.85rem;line-height:1.7">
+              <strong style="color:var(--green-dark)">📊 檢測分班結果</strong>
+              <div id="bkTrialAssessContent" style="margin-top:4px;color:var(--text)">輸入學生姓名後自動帶入</div>
+            </div>
           </div>
           <div class="form-group">
             <label>家長姓名 *</label>
@@ -3271,7 +3277,7 @@ body {
           </div>
           <div class="form-group">
             <label>孩子姓名 *</label>
-            <input type="text" id="bkChild" placeholder="請輸入孩子姓名">
+            <input type="text" id="bkChild" placeholder="請輸入孩子姓名" onblur="lookupTrialAssess()">
             <span class="error-msg" id="bkChildErr">請輸入孩子姓名</span>
           </div>
           <div class="form-group">
@@ -4913,6 +4919,32 @@ document.addEventListener('click',function(e){
 
 /* ===== BOOKING TYPE SWITCHER ===== */
 var _currentBkType = 'visitTest';
+function lookupTrialAssess(){
+  if(_currentBkType !== 'trial') return;
+  var sname = (document.getElementById('bkChild')||{}).value.trim();
+  var infoEl = document.getElementById('bkTrialAssessContent');
+  if(!sname || !infoEl) return;
+  var adminData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
+  var assessments = adminData.assessments || [];
+  var match = assessments.find(function(a){ return a.studentName && a.studentName.indexOf(sname) >= 0; });
+  if(match){
+    var cls = match.finalClass || match.classType || '—';
+    var oral = match.oralLevel || '—';
+    infoEl.innerHTML = '✅ <strong>' + (match.studentName||sname) + '</strong>（' + (match.grade||'—') + '）→ 分班：<strong style="color:var(--green)">' + cls + '</strong>　口說：' + oral;
+    var bkCls = document.getElementById('bkClass');
+    if(bkCls) bkCls.value = cls;
+  } else {
+    // 檢查是否有檢測預約（還沒出結果）
+    var bookings = (adminData.bookingRegs || []);
+    var hasTest = bookings.some(function(b){ return b.student && b.student.indexOf(sname) >= 0 && b.type && b.type.indexOf('檢測') >= 0 && b.status !== '已取消'; });
+    if(hasTest){
+      infoEl.innerHTML = '⏳ <strong>' + sname + '</strong> 已預約檢測，分班結果待出爐';
+    } else {
+      infoEl.innerHTML = '<span style="color:#e74c3c">⚠️ 查無「' + sname + '」的檢測紀錄，請先預約程度檢測</span>';
+    }
+  }
+}
+
 function toggleTestFeeNotice(){
   var n = document.getElementById('testFeeNotice');
   var cb = document.getElementById('bkTest');
@@ -4928,9 +4960,15 @@ function switchBkType(type, btn) {
   document.querySelectorAll('.bk-desc-panel').forEach(function(p){ p.classList.remove('active'); });
   var panel = document.getElementById('bkDesc-' + type);
   if(panel) panel.classList.add('active');
-  // Show/hide purpose checkboxes
+  // Show/hide purpose checkboxes + class selector
   var pg = document.getElementById('bkPurposeGroup');
   if(pg) pg.style.display = (type === 'trial') ? 'none' : '';
+  var cg = document.getElementById('bkClassGroup');
+  if(cg) cg.style.display = (type === 'trial') ? 'none' : '';
+  var tai = document.getElementById('bkTrialAssessInfo');
+  if(tai) tai.style.display = (type === 'trial') ? '' : 'none';
+  var tfn = document.getElementById('testFeeNotice');
+  if(tfn) tfn.style.display = 'none';
   // Reset checkboxes when switching
   if(type === 'visitTest'){
     var v = document.getElementById('bkVisit'); if(v) v.checked = false;
@@ -5383,20 +5421,24 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
 
   window.submitBooking=function(){
     let valid=true;
-    // 體驗課模式：後台比對是否有檢測紀錄
+    // 體驗課模式：後台比對是否有檢測紀錄，有則自動帶入分班結果
     if(window._bkMode === 'trial'){
       var parentName = document.getElementById('bkParent').value.trim();
-      var studentName = document.getElementById('bkStudent').value.trim();
+      var studentName = document.getElementById('bkChild').value.trim();
       if(parentName && studentName){
         var adminData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
         var assessments = adminData.assessments || [];
         var bookings = adminData.bookingRegs || [];
-        // 比對：是否有這個學生的檢測預約紀錄（含 bkTest 勾選），或檢測系統有結果
-        var hasAssess = assessments.some(function(a){ return a.studentName && a.studentName.indexOf(studentName) >= 0; });
+        var matchedAssess = assessments.find(function(a){ return a.studentName && a.studentName.indexOf(studentName) >= 0; });
         var hasTestBooking = bookings.some(function(b){ return b.student && b.student.indexOf(studentName) >= 0 && b.type && b.type.indexOf('檢測') >= 0 && b.status !== '已取消'; });
-        if(!hasAssess && !hasTestBooking){
+        if(!matchedAssess && !hasTestBooking){
           alert('⚠️ 查無「' + studentName + '」的檢測紀錄。\n\n體驗課前需要先完成英文程度檢測喔！\n請先預約「參訪／程度檢測」。');
           return;
+        }
+        // 自動帶入分班結果到 bkClass
+        if(matchedAssess){
+          var bkCls = document.getElementById('bkClass');
+          if(bkCls) bkCls.value = matchedAssess.classType || matchedAssess.finalClass || '';
         }
       }
     }
