@@ -357,6 +357,10 @@ ul{list-style:none}
 .camp-price-note{font-size:0.78rem;color:var(--text-muted);margin-top:8px;line-height:1.6}
 .camp-price-early{display:inline-flex;align-items:center;gap:6px;background:var(--orange);color:#fff;font-size:0.78rem;font-weight:700;padding:4px 12px;border-radius:50px;margin-bottom:10px}
 /* Success */
+.reg-addon-label{display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600;font-size:0.88rem;background:var(--surface);border:1.5px solid var(--surface-dark);border-radius:8px;padding:12px 14px;transition:all 0.2s}
+.reg-addon-label:has(input:checked){background:#F0FDF4;border-color:var(--green);color:var(--green-dark)}
+.reg-addon-label input{width:16px;height:16px;accent-color:var(--green)}
+.register-section{background:linear-gradient(180deg,var(--bg) 0%,#F0FDF4 100%)}
 .camp-reg-success{text-align:center;padding:40px 20px;display:none}
 .camp-reg-success-icon{font-size:4rem;margin-bottom:16px}
 .camp-reg-success h3{font-size:1.4rem;font-weight:800;color:var(--green);margin-bottom:8px}
@@ -993,6 +997,7 @@ body {
       <a href="#seminar">說明會報名</a>
       <a href="#booking">預約參訪</a>
       <a href="#inquiry">問課諮詢</a>
+      <a href="#register">正式註冊</a>
       <a href="#contact">聯繫我們</a>
       <a href="#booking" class="nav-cta">立即報名</a>
     </div>
@@ -1006,6 +1011,7 @@ body {
   <a href="#seminar" onclick="closeMobile()">說明會報名</a>
   <a href="#booking" onclick="closeMobile()">預約參訪</a>
   <a href="#inquiry" onclick="closeMobile()">問課諮詢</a>
+  <a href="#register" onclick="closeMobile()">正式註冊</a>
   <a href="#contact" onclick="closeMobile()">聯繫我們</a>
   <a href="#booking" class="btn btn-primary" style="text-align:center;margin-top:8px" onclick="closeMobile()">立即報名</a>
 </div>
@@ -3232,8 +3238,11 @@ body {
                 <input type="checkbox" id="bkVisit" style="width:18px;height:18px;accent-color:var(--green)"> 參訪校區
               </label>
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600">
-                <input type="checkbox" id="bkTest" style="width:18px;height:18px;accent-color:var(--green)"> 英文程度檢測
+                <input type="checkbox" id="bkTest" onchange="toggleTestFeeNotice()" style="width:18px;height:18px;accent-color:var(--green)"> 英文程度檢測
               </label>
+              <div id="testFeeNotice" style="display:none;background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:8px;padding:10px 14px;margin-top:8px;font-size:0.82rem;color:#92400e;grid-column:1/-1">
+                💰 <strong>檢測費用 NTD 400</strong>（到校當天繳交）<br>含口說＋筆試完整分級檢測，約 40–60 分鐘
+              </div>
             </div>
             <span class="error-msg" id="bkPurposeErr">請至少勾選一項</span>
           </div>
@@ -4504,6 +4513,102 @@ body {
   </div>
 </section>
 
+<!-- ========== REGISTER 正式註冊 ========== -->
+<section class="register-section section-padding" id="register">
+  <div class="container" style="max-width:720px">
+    <h2 class="section-title reveal">正式註冊報名</h2>
+    <p class="section-subtitle reveal">完成分級檢測後，填寫以下表單即可進行正式註冊</p>
+
+    <div id="registerFormBody" class="reveal" style="background:var(--surface);border-radius:16px;padding:28px;border:1.5px solid var(--surface-dark)">
+
+      <!-- 流程提示 -->
+      <div style="background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border:1.5px solid var(--green);border-radius:10px;padding:14px 18px;margin-bottom:24px;font-size:0.82rem;line-height:1.7;color:#166534">
+        <strong>📋 註冊流程</strong><br>
+        ① 線上說明會 → ② 問課諮詢 → ③ 預約參訪／檢測（檢測費 NTD 400）→ ④ <strong>正式註冊（目前這步）</strong><br>
+        <span style="color:var(--orange);font-weight:700">⚠️ 尚未完成檢測的家長，請先預約「程度檢測」再回來填寫。</span>
+      </div>
+
+      <!-- 一、家長資料 -->
+      <div style="font-weight:800;font-size:0.95rem;color:var(--green-dark);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--green)">一、家長資料</div>
+      <div class="camp-reg-grid">
+        <div class="camp-reg-field"><label>家長姓名 <span class="req">*</span></label>
+          <input type="text" id="reg_pname" placeholder="請輸入姓名"></div>
+        <div class="camp-reg-field"><label>聯絡電話 <span class="req">*</span></label>
+          <input type="tel" id="reg_phone" placeholder="0912-345-678"></div>
+        <div class="camp-reg-field"><label>電子信箱 <span class="req">*</span></label>
+          <input type="email" id="reg_email" placeholder="example@email.com"></div>
+        <div class="camp-reg-field"><label>LINE ID</label>
+          <input type="text" id="reg_line" placeholder="選填"></div>
+      </div>
+
+      <!-- 二、學生資料 -->
+      <div style="font-weight:800;font-size:0.95rem;color:var(--green-dark);margin:24px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--green)">二、學生資料</div>
+      <div class="camp-reg-grid">
+        <div class="camp-reg-field"><label>學生姓名 <span class="req">*</span></label>
+          <input type="text" id="reg_sname" placeholder="請輸入姓名"></div>
+        <div class="camp-reg-field"><label>年級 <span class="req">*</span></label>
+          <select id="reg_grade">
+            <option value="">請選擇</option>
+            <option>幼幼班</option><option>小班</option><option>中班</option><option>大班</option>
+            <option>國小1年級</option><option>國小2年級</option><option>國小3年級</option>
+            <option>國小4年級</option><option>國小5年級</option><option>國小6年級</option>
+            <option>國中1年級</option><option>國中2年級</option><option>國中3年級</option>
+          </select></div>
+      </div>
+
+      <!-- 三、報名班型 -->
+      <div style="font-weight:800;font-size:0.95rem;color:var(--green-dark);margin:24px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--green)">三、報名班型</div>
+      <div class="camp-reg-grid">
+        <div class="camp-reg-field"><label>班型 <span class="req">*</span></label>
+          <select id="reg_classtype" onchange="toggleRegAddons()">
+            <option value="">請選擇</option>
+            <option>浸潤班</option><option>菁英班</option><option>標準班</option><option>全民英檢班</option>
+          </select></div>
+        <div class="camp-reg-field"><label>分班結果 <span class="req">*</span></label>
+          <input type="text" id="reg_assess" placeholder="如：1B、2A、ES（檢測後由分校告知）"></div>
+      </div>
+
+      <!-- 四、附加服務需求 -->
+      <div id="regAddonsSection" style="display:none">
+        <div style="font-weight:800;font-size:0.95rem;color:var(--green-dark);margin:24px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--green)">四、附加服務需求</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px">報名主要課程班型後，可同時勾選以下附加服務：</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <label class="reg-addon-label">
+            <input type="checkbox" id="reg_addon_shuttle"> 🚐 交通車接送
+          </label>
+          <label class="reg-addon-label">
+            <input type="checkbox" id="reg_addon_snack"> 🍪 課後點心
+          </label>
+          <label class="reg-addon-label">
+            <input type="checkbox" id="reg_addon_tutor"> 📖 安親課輔班
+          </label>
+          <label class="reg-addon-label">
+            <input type="checkbox" id="reg_addon_daycare"> 🏠 托育服務
+          </label>
+        </div>
+      </div>
+
+      <!-- 五、備註 -->
+      <div style="font-weight:800;font-size:0.95rem;color:var(--green-dark);margin:24px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--green)">五、其他需求</div>
+      <textarea id="reg_note" rows="3" placeholder="如有特殊需求或問題，請在此說明（選填）" style="width:100%;padding:10px 14px;border:1.5px solid var(--surface-dark);border-radius:8px;font-size:0.88rem;resize:vertical;font-family:inherit"></textarea>
+
+      <!-- 錯誤訊息 -->
+      <div id="regFormError" class="camp-form-error" style="display:none;margin-top:16px"></div>
+
+      <!-- 送出 -->
+      <button class="btn btn-green" style="width:100%;justify-content:center;margin-top:20px;font-size:1rem;padding:14px" onclick="submitRegister()">送出註冊報名 →</button>
+    </div>
+
+    <!-- 成功畫面 -->
+    <div id="registerSuccess" class="camp-reg-success" style="display:none">
+      <div class="camp-reg-success-icon">🎓</div>
+      <h3>註冊報名已送出</h3>
+      <p>太平新光分校會在 <strong>1–2 個工作日</strong>內與您聯繫確認。</p>
+      <p style="font-size:0.85rem;color:var(--text-muted)">如有緊急問題，歡迎直接來電：<a href="tel:04-23960585" style="color:var(--green);font-weight:700">04-23960585</a></p>
+    </div>
+  </div>
+</section>
+
 <!-- ========== SOCIAL ========== -->
 <section class="social-section section-padding" id="social">
   <div class="container">
@@ -4555,6 +4660,7 @@ body {
       <a href="#seminar">說明會報名</a>
       <a href="#booking">預約參訪</a>
       <a href="#inquiry">問課諮詢</a>
+          <a href="#register">正式註冊</a>
     </div>
     <div class="footer-links">
       <h4>社群連結</h4>
@@ -4807,6 +4913,12 @@ document.addEventListener('click',function(e){
 
 /* ===== BOOKING TYPE SWITCHER ===== */
 var _currentBkType = 'visitTest';
+function toggleTestFeeNotice(){
+  var n = document.getElementById('testFeeNotice');
+  var cb = document.getElementById('bkTest');
+  if(n && cb) n.style.display = cb.checked ? 'block' : 'none';
+}
+
 function switchBkType(type, btn) {
   _currentBkType = type;
   // Update tabs
@@ -5271,6 +5383,24 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
 
   window.submitBooking=function(){
     let valid=true;
+    // 體驗課模式：後台比對是否有檢測紀錄
+    if(window._bkMode === 'trial'){
+      var parentName = document.getElementById('bkParent').value.trim();
+      var studentName = document.getElementById('bkStudent').value.trim();
+      if(parentName && studentName){
+        var adminData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
+        var assessments = adminData.assessments || [];
+        var bookings = adminData.bookingRegs || [];
+        // 比對：是否有這個學生的檢測預約紀錄（含 bkTest 勾選），或檢測系統有結果
+        var hasAssess = assessments.some(function(a){ return a.studentName && a.studentName.indexOf(studentName) >= 0; });
+        var hasTestBooking = bookings.some(function(b){ return b.student && b.student.indexOf(studentName) >= 0 && b.type && b.type.indexOf('檢測') >= 0 && b.status !== '已取消'; });
+        if(!hasAssess && !hasTestBooking){
+          alert('⚠️ 查無「' + studentName + '」的檢測紀錄。\n\n體驗課前需要先完成英文程度檢測喔！\n請先預約「參訪／程度檢測」。');
+          return;
+        }
+      }
+    }
+
     // 參訪/檢測模式：必須先填過問課
     var bkTypeCheck = getBookingType();
     if(bkTypeCheck === 'visitTest' && (!window._adminData || !window._adminData.inquiries || window._adminData.inquiries.length === 0)){
@@ -6077,7 +6207,12 @@ function campAddChild(){
   html += '<div class="camp-reg-grid" style="margin-top:8px">' +
     '<div class="camp-reg-field"><label>是否在校生 <span class="req">*</span></label>' +
     '<select id="cr_enrolled_'+idx+'"><option value="">請選擇</option>' +
-    '<option value="yes">是</option><option value="no">否</option></select></div></div>';
+    '<option value="yes">是</option><option value="no">否</option></select></div>' +
+    '<div class="camp-reg-field"><label>身高（cm）<span class="req">*</span></label>' +
+    '<input type="number" id="cr_height_'+idx+'" placeholder="如 120" min="80" max="200" style="width:100%"></div>' +
+    '<div class="camp-reg-field"><label>體重（kg）<span class="req">*</span></label>' +
+    '<input type="number" id="cr_weight_'+idx+'" placeholder="如 25" min="10" max="100" style="width:100%"></div></div>' +
+    '<div style="margin-top:4px;font-size:0.75rem;color:var(--text-muted)">📏 身高體重用於營隊制服尺寸</div>';
 
   // 期別選擇（每位孩子獨立）
   html += '<div style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--surface-dark)">';
@@ -6273,6 +6408,8 @@ function submitCampReg() {
     var sname = (document.getElementById('cr_sname_'+id)||{}).value||'';
     var grade = (document.getElementById('cr_grade_'+id)||{}).value||'';
     var enrolled = (document.getElementById('cr_enrolled_'+id)||{}).value||'';
+    var height = (document.getElementById('cr_height_'+id)||{}).value||'';
+    var weight = (document.getElementById('cr_weight_'+id)||{}).value||'';
     var julyDates = [], augDates = [];
     var julyCb = document.getElementById('cr_july_'+id);
     var augCb  = document.getElementById('cr_aug_'+id);
@@ -6283,7 +6420,7 @@ function submitCampReg() {
       document.querySelectorAll('#cal_child_aug_'+id+' .camp-day-cell.selected').forEach(function(c){ augDates.push(c.dataset.date); });
     }
     // 只要有填姓名就收集（空欄位後面再驗證）
-    campChildren.push({id:id, sname:sname.trim(), grade:grade, enrolled:enrolled, julyDates:julyDates, augDates:augDates, totalDays:julyDates.length+augDates.length});
+    campChildren.push({id:id, sname:sname.trim(), grade:grade, enrolled:enrolled, height:height, weight:weight, julyDates:julyDates, augDates:augDates, totalDays:julyDates.length+augDates.length});
   });
 
   // 驗證
@@ -6294,6 +6431,8 @@ function submitCampReg() {
     if(!c.sname) errors.push('請填寫孩子姓名');
     if(!c.grade) errors.push((c.sname||'孩子')+' 請選擇年級');
     if(!c.enrolled) errors.push((c.sname||'孩子')+' 請選擇是否在校生');
+    if(!c.height) errors.push((c.sname||'孩子')+' 請填寫身高');
+    if(!c.weight) errors.push((c.sname||'孩子')+' 請填寫體重');
     if(c.totalDays === 0) errors.push((c.sname||'孩子')+' 尚未選擇任何上課日期');
     else if(c.totalDays < 5) errors.push((c.sname||'孩子')+' 至少需選 5 天（目前 '+c.totalDays+' 天）');
   });
@@ -6345,7 +6484,7 @@ function submitCampReg() {
     line: document.getElementById('cr_line').value.trim(),
     courses: coursesSummary,
     diet: diet || '無',
-    children: campChildren.map(function(c){ return {sname:c.sname, grade:c.grade, enrolled:c.enrolled, julyDates:c.julyDates, augDates:c.augDates}; })
+    children: campChildren.map(function(c){ return {sname:c.sname, grade:c.grade, enrolled:c.enrolled, height:c.height, weight:c.weight, julyDates:c.julyDates, augDates:c.augDates}; })
   };
   adminSaveCamp(campData);
 
@@ -6357,6 +6496,91 @@ function submitCampReg() {
 
 // Init price display on load
 document.addEventListener('DOMContentLoaded', function(){ calcPrice(); });
+
+// ====== REGISTER (正式註冊) ======
+function toggleRegAddons(){
+  var ct = document.getElementById('reg_classtype');
+  var sec = document.getElementById('regAddonsSection');
+  if(!ct || !sec) return;
+  var mainTypes = ['浸潤班','菁英班','標準班','全民英檢班'];
+  sec.style.display = mainTypes.indexOf(ct.value) >= 0 ? 'block' : 'none';
+}
+
+function submitRegister(){
+  var errEl = document.getElementById('regFormError');
+  errEl.style.display = 'none';
+  var errors = [];
+
+  var pname = document.getElementById('reg_pname').value.trim();
+  var phone = document.getElementById('reg_phone').value.trim();
+  var email = document.getElementById('reg_email').value.trim();
+  var line  = document.getElementById('reg_line').value.trim();
+  var sname = document.getElementById('reg_sname').value.trim();
+  var grade = document.getElementById('reg_grade').value;
+  var classtype = document.getElementById('reg_classtype').value;
+  var assess = document.getElementById('reg_assess').value.trim();
+  var note = document.getElementById('reg_note').value.trim();
+
+  if(!pname) errors.push('請填寫家長姓名');
+  if(!phone) errors.push('請填寫聯絡電話');
+  if(!email) errors.push('請填寫電子信箱');
+  if(!sname) errors.push('請填寫學生姓名');
+  if(!grade) errors.push('請選擇年級');
+  if(!classtype) errors.push('請選擇班型');
+  if(!assess) errors.push('請填寫分班結果（檢測後由分校告知）');
+
+  // 欄位高亮
+  ['reg_pname','reg_phone','reg_email','reg_sname'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('error', !el.value.trim());
+  });
+  ['reg_grade','reg_classtype'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('error', !el.value);
+  });
+  var assessEl = document.getElementById('reg_assess');
+  if(assessEl) assessEl.classList.toggle('error', !assess);
+
+  if(errors.length > 0){
+    errEl.innerHTML = '⚠️ ' + errors.join('、');
+    errEl.style.display = 'block';
+    errEl.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  // 收集附加服務
+  var addons = [];
+  if(document.getElementById('reg_addon_shuttle') && document.getElementById('reg_addon_shuttle').checked) addons.push('交通車接送');
+  if(document.getElementById('reg_addon_snack') && document.getElementById('reg_addon_snack').checked) addons.push('課後點心');
+  if(document.getElementById('reg_addon_tutor') && document.getElementById('reg_addon_tutor').checked) addons.push('安親課輔班');
+  if(document.getElementById('reg_addon_daycare') && document.getElementById('reg_addon_daycare').checked) addons.push('托育服務');
+
+  var regData = {
+    ts: new Date().toLocaleString('zh-TW'),
+    parent: pname,
+    phone: phone,
+    email: email,
+    line: line,
+    studentName: sname,
+    grade: grade,
+    classType: classtype,
+    assessResult: assess,
+    addons: addons.join('、') || '無',
+    note: note || '無',
+    status: '待處理'
+  };
+
+  // 存入 admin data
+  var adminData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
+  if(!adminData.registrations) adminData.registrations = [];
+  adminData.registrations.push(regData);
+  localStorage.setItem('xg_admin_data', JSON.stringify(adminData));
+
+  // Show success
+  document.getElementById('registerFormBody').style.display = 'none';
+  document.getElementById('registerSuccess').style.display = 'block';
+  document.getElementById('registerSuccess').scrollIntoView({behavior:'smooth', block:'center'});
+}
 
 /* ========== HERO CANVAS ANIMATION ========== */
 (function() {
