@@ -4573,6 +4573,69 @@ body {
   </div>
 </section>
 
+<!-- ========== ASSESSMENT RESULT 檢測成果 ========== -->
+<section class="register-section section-padding" id="result" style="display:none">
+  <div class="container" style="max-width:720px">
+    <h2 class="section-title reveal">📊 英文程度檢測結果</h2>
+
+    <div id="resultContent" style="background:var(--surface);border-radius:16px;padding:28px;border:1.5px solid var(--surface-dark)">
+
+      <!-- 學生基本資訊 -->
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="font-size:2.5rem;margin-bottom:8px">🎓</div>
+        <h3 id="resultStudentName" style="font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:4px">學生姓名</h3>
+        <div id="resultGrade" style="font-size:0.88rem;color:var(--text-muted)">年級</div>
+      </div>
+
+      <!-- 分班結果卡片 -->
+      <div style="background:linear-gradient(135deg,#2B7A4B,#1E5C37);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-bottom:24px">
+        <div style="font-size:0.8rem;opacity:0.8;margin-bottom:4px">建議分班</div>
+        <div id="resultClass" style="font-size:2.2rem;font-weight:900;letter-spacing:2px">—</div>
+        <div id="resultClassType" style="font-size:0.88rem;margin-top:4px;opacity:0.9">班型</div>
+      </div>
+
+      <!-- 檢測細項 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px">
+        <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:4px">口說程度</div>
+          <div id="resultOral" style="font-size:1.2rem;font-weight:800;color:var(--green)">—</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:4px">閱讀程度</div>
+          <div id="resultReading" style="font-size:1.2rem;font-weight:800;color:var(--green)">—</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:4px">筆試得分</div>
+          <div id="resultWritten" style="font-size:1.2rem;font-weight:800;color:var(--green)">—</div>
+        </div>
+      </div>
+
+      <!-- 程度說明 -->
+      <div style="background:#F0FDF4;border:1.5px solid var(--green);border-radius:10px;padding:16px 18px;margin-bottom:24px">
+        <div style="font-weight:800;color:var(--green-dark);margin-bottom:8px">📝 程度說明</div>
+        <div id="resultDescription" style="font-size:0.88rem;line-height:1.7;color:var(--text)">—</div>
+      </div>
+
+      <!-- 老師備註 -->
+      <div id="resultNoteBox" style="background:var(--bg);border-radius:10px;padding:14px 18px;margin-bottom:24px;display:none">
+        <div style="font-weight:700;font-size:0.82rem;color:var(--text-muted);margin-bottom:6px">🗒️ 檢測老師備註</div>
+        <div id="resultNote" style="font-size:0.88rem;line-height:1.7"></div>
+      </div>
+
+      <!-- 建議與 CTA -->
+      <div style="background:linear-gradient(135deg,#FEF3C7,#FFFBEB);border:1.5px solid #F59E0B;border-radius:10px;padding:16px 18px;margin-bottom:20px">
+        <div style="font-weight:800;color:#92400e;margin-bottom:8px">🎯 建議下一步</div>
+        <div id="resultSuggestion" style="font-size:0.85rem;line-height:1.7;color:#92400e">—</div>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <a href="#register" class="btn btn-green" style="font-size:1rem;padding:14px 32px" onclick="prefillRegisterFromResult()">立即註冊報名 →</a>
+        <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-secondary" style="background:var(--surface);color:var(--text);font-size:0.88rem;padding:12px 20px">有問題？LINE 諮詢</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ========== REGISTER 正式註冊 ========== -->
 <section class="register-section section-padding" id="register">
   <div class="container" style="max-width:720px">
@@ -6064,6 +6127,80 @@ function autoFillForms(){
   }
 }
 document.addEventListener('DOMContentLoaded', function(){ setTimeout(autoFillForms, 500); });
+
+// ====== 檢測成果頁：讀取 URL 參數 ======
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  if(!params.get('result')) return;
+
+  // 顯示成果頁 section
+  var sec = document.getElementById('result');
+  if(sec) sec.style.display = '';
+
+  var name = params.get('name') || '—';
+  var grade = params.get('grade') || '—';
+  var finalClass = params.get('class') || '—';
+  var oral = params.get('oral') || '—';
+  var reading = params.get('reading') || '—';
+  var written = params.get('written') || '—';
+  var note = params.get('note') || '';
+
+  document.getElementById('resultStudentName').textContent = name;
+  document.getElementById('resultGrade').textContent = grade;
+  document.getElementById('resultClass').textContent = finalClass;
+  document.getElementById('resultOral').textContent = oral;
+  document.getElementById('resultReading').textContent = reading;
+  document.getElementById('resultWritten').textContent = written;
+
+  if(note){
+    document.getElementById('resultNoteBox').style.display = '';
+    document.getElementById('resultNote').textContent = note;
+  }
+
+  // 程度對照表
+  var classDescriptions = {
+    'SA': {type:'標準班', desc:'英文啟蒙階段，從字母、基礎單字和簡單句型開始。適合零基礎或剛開始接觸英文的孩子。建議每週至少 4.5 小時，穩定建立基礎。', freq:'每週 2–3 次，共 4.5 小時'},
+    'SB': {type:'標準班', desc:'已認識字母和基本單字，正在建立拼讀能力和簡單會話。會繼續強化 phonics 和日常對話能力。', freq:'每週 2–3 次，共 4.5 小時'},
+    '1A': {type:'標準班', desc:'具備基礎拼讀和簡單句型能力，開始練習短文閱讀和基本寫作。', freq:'每週 2–3 次，共 4.5 小時'},
+    '1B': {type:'菁英班', desc:'字母拼讀穩定，能讀簡單短文。正在加強句子結構和閱讀理解。適合有一定基礎想穩定進步的孩子。', freq:'每週 3 次，共 6–7.5 小時'},
+    '1C': {type:'菁英班', desc:'閱讀理解能力不錯，能寫簡單段落。準備進入更深入的文法和寫作訓練。', freq:'每週 3 次，共 6–7.5 小時'},
+    '2A': {type:'菁英班', desc:'已有穩固的閱讀和寫作基礎，能理解較長的文章。開始接觸進階文法和學術英文。', freq:'每週 3–5 次，共 7.5–10 小時'},
+    '2B': {type:'菁英班', desc:'閱讀和寫作能力佳，能進行較流暢的英文對話。適合準備英檢初級的程度。', freq:'每週 3–5 次，共 7.5–10 小時'},
+    '2C': {type:'菁英班', desc:'程度優秀，具備中階閱讀策略和寫作能力。可同步準備英檢中級。', freq:'每週 3–5 次，共 7.5–10 小時'},
+    '3A': {type:'浸潤班', desc:'英文程度優異，具備獨立閱讀和寫作長文的能力。進入高階語言運用和批判思考訓練。', freq:'每週 5 次全天浸潤'},
+    '3B': {type:'浸潤班', desc:'接近母語程度的讀寫能力，能流暢進行英文簡報和辯論。', freq:'每週 5 次全天浸潤'},
+    '3C': {type:'浸潤班', desc:'達到母語級別的英文能力，可進行學術研究和高階寫作。', freq:'每週 5 次全天浸潤'}
+  };
+
+  var info = classDescriptions[finalClass] || {type:'請洽分校', desc:'分校老師會根據檢測結果為您詳細說明適合的班型和學習計畫。', freq:'請洽分校'};
+  document.getElementById('resultClassType').textContent = info.type;
+  document.getElementById('resultDescription').innerHTML = info.desc;
+  document.getElementById('resultSuggestion').innerHTML = 
+    '• 建議班型：<strong>' + info.type + ' ' + finalClass + '</strong><br>' +
+    '• 建議上課頻率：' + info.freq + '<br>' +
+    '• 點下方按鈕直接進行線上註冊，或 LINE 聯繫安排到校諮詢';
+
+  // 自動滑到成果頁
+  setTimeout(function(){ sec.scrollIntoView({behavior:'smooth', block:'start'}); }, 300);
+
+  // 儲存到 localStorage 供註冊表帶入
+  saveChildInfo(name, grade);
+  localStorage.setItem('xg_assess_result', JSON.stringify({name:name, grade:grade, finalClass:finalClass, classType:info.type, oral:oral, reading:reading, written:written, note:note}));
+})();
+
+// 從檢測結果預填註冊表
+function prefillRegisterFromResult(){
+  var result = null;
+  try { result = JSON.parse(localStorage.getItem('xg_assess_result')||'null'); } catch(e){}
+  if(!result) return;
+  setTimeout(function(){
+    var el;
+    el = document.getElementById('reg_sname'); if(el) el.value = result.name||'';
+    el = document.getElementById('reg_grade'); if(el) el.value = result.grade||'';
+    el = document.getElementById('reg_classtype'); if(el){ el.value = result.classType||''; toggleRegAddons(); }
+    el = document.getElementById('reg_assess'); if(el) el.value = result.finalClass||'';
+  }, 200);
+}
 
 function adminSaveInquiry(data) {
   _adminData.inquiries.push(data);
