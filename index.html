@@ -4676,7 +4676,7 @@ body {
       <div style="font-weight:800;font-size:0.95rem;color:var(--green-dark);margin:24px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--green)">二、學生資料</div>
       <div class="camp-reg-grid">
         <div class="camp-reg-field"><label>學生姓名 <span class="req">*</span></label>
-          <input type="text" id="reg_sname" placeholder="請輸入姓名"></div>
+          <input type="text" id="reg_sname" placeholder="請輸入姓名" onblur="lookupRegAssess()"></div>
         <div class="camp-reg-field"><label>年級 <span class="req">*</span></label>
           <select id="reg_grade">
             <option value="">請選擇</option>
@@ -4696,7 +4696,8 @@ body {
             <option>浸潤班</option><option>菁英班</option><option>標準班</option><option>全民英檢班</option>
           </select></div>
         <div class="camp-reg-field"><label>分班結果 <span class="req">*</span></label>
-          <input type="text" id="reg_assess" placeholder="如：1B、2A、ES（檢測後由分校告知）"></div>
+          <input type="text" id="reg_assess" placeholder="輸入學生姓名後自動帶入" readonly style="background:var(--surface)">
+          <div id="regAssessStatus" style="font-size:0.78rem;margin-top:2px;color:var(--text-muted)">輸入學生姓名後會自動查詢檢測紀錄</div></div>
       </div>
 
       <!-- 四、附加服務需求 -->
@@ -6195,10 +6196,11 @@ function prefillRegisterFromResult(){
   if(!result) return;
   setTimeout(function(){
     var el;
-    el = document.getElementById('reg_sname'); if(el) el.value = result.name||'';
+    el = document.getElementById('reg_sname'); if(el){ el.value = result.name||''; }
     el = document.getElementById('reg_grade'); if(el) el.value = result.grade||'';
     el = document.getElementById('reg_classtype'); if(el){ el.value = result.classType||''; toggleRegAddons(); }
     el = document.getElementById('reg_assess'); if(el) el.value = result.finalClass||'';
+    lookupRegAssess();
   }, 200);
 }
 
@@ -6859,6 +6861,58 @@ function submitCampReg() {
 document.addEventListener('DOMContentLoaded', function(){ calcPrice(); });
 
 // ====== REGISTER (正式註冊) ======
+function lookupRegAssess(){
+  var sname = (document.getElementById('reg_sname')||{}).value.trim();
+  var assessEl = document.getElementById('reg_assess');
+  var statusEl = document.getElementById('regAssessStatus');
+  var classTypeEl = document.getElementById('reg_classtype');
+  if(!sname || !assessEl || !statusEl) return;
+
+  var adminData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
+  var assessments = adminData.assessments || [];
+  var match = assessments.find(function(a){ return a.studentName && a.studentName.indexOf(sname) >= 0; });
+
+  // 也檢查 URL 參數帶入的結果
+  var urlResult = null;
+  try { urlResult = JSON.parse(localStorage.getItem('xg_assess_result')||'null'); } catch(e){}
+  if(!match && urlResult && urlResult.name && urlResult.name.indexOf(sname) >= 0){
+    match = {studentName: urlResult.name, finalClass: urlResult.finalClass, oralLevel: urlResult.oral, grade: urlResult.grade};
+  }
+
+  if(match){
+    var cls = match.finalClass || '—';
+    assessEl.value = cls;
+    statusEl.innerHTML = '✅ <strong style="color:var(--green)">' + (match.studentName||sname) + '</strong> 的檢測結果：<strong>' + cls + '</strong>（口說 ' + (match.oralLevel||'—') + '）';
+    statusEl.style.color = 'var(--green)';
+    assessEl.style.background = '#F0FDF4';
+    assessEl.style.borderColor = 'var(--green)';
+    // 自動選班型
+    var classTypeMap = {'SA':'標準班','SB':'標準班','1A':'標準班','1B':'菁英班','1C':'菁英班','2A':'菁英班','2B':'菁英班','2C':'菁英班','3A':'浸潤班','3B':'浸潤班','3C':'浸潤班'};
+    var autoType = classTypeMap[cls] || '';
+    if(autoType && classTypeEl){
+      classTypeEl.value = autoType;
+      toggleRegAddons();
+    }
+  } else {
+    // 檢查是否有檢測預約
+    var bookings = (adminData.bookingRegs || []);
+    var hasTestBooking = bookings.some(function(b){ return b.student && b.student.indexOf(sname) >= 0 && b.type && b.type.indexOf('檢測') >= 0; });
+    if(hasTestBooking){
+      assessEl.value = '';
+      statusEl.innerHTML = '⏳ <strong>' + sname + '</strong> 已預約檢測，分班結果待出爐。結果出來後再回來註冊。';
+      statusEl.style.color = '#92400e';
+      assessEl.style.background = '#FEF3C7';
+      assessEl.style.borderColor = '#F59E0B';
+    } else {
+      assessEl.value = '';
+      statusEl.innerHTML = '⚠️ <span style="color:#e74c3c">查無「' + sname + '」的檢測紀錄。正式註冊前需要先完成<a href="#booking" style="color:var(--green);font-weight:700">英文程度檢測</a>。</span>';
+      statusEl.style.color = '#e74c3c';
+      assessEl.style.background = '#FEF2F2';
+      assessEl.style.borderColor = '#e74c3c';
+    }
+  }
+}
+
 function toggleRegAddons(){
   var ct = document.getElementById('reg_classtype');
   var sec = document.getElementById('regAddonsSection');
@@ -6888,7 +6942,7 @@ function submitRegister(){
   if(!sname) errors.push('請填寫學生姓名');
   if(!grade) errors.push('請選擇年級');
   if(!classtype) errors.push('請選擇班型');
-  if(!assess) errors.push('請填寫分班結果（檢測後由分校告知）');
+  if(!assess) errors.push('缺少分班結果——請先完成英文程度檢測，檢測後系統會自動帶入分班結果');
 
   // 欄位高亮
   ['reg_pname','reg_phone','reg_email','reg_sname'].forEach(function(id){
