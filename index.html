@@ -357,6 +357,12 @@ ul{list-style:none}
 .camp-price-note{font-size:0.78rem;color:var(--text-muted);margin-top:8px;line-height:1.6}
 .camp-price-early{display:inline-flex;align-items:center;gap:6px;background:var(--orange);color:#fff;font-size:0.78rem;font-weight:700;padding:4px 12px;border-radius:50px;margin-bottom:10px}
 /* Success */
+.flow-breadcrumb{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;font-size:0.82rem}
+.flow-step{padding:6px 14px;border-radius:50px;background:var(--surface);color:var(--text-muted);font-weight:600;text-decoration:none;border:1.5px solid var(--surface-dark);transition:all 0.2s}
+.flow-step.active{background:var(--green);color:#fff;border-color:var(--green)}
+.flow-step.done{background:#F0FDF4;color:var(--green-dark);border-color:var(--green)}
+.flow-step.done:hover{background:var(--green);color:#fff}
+.flow-arrow{color:var(--text-muted);font-size:0.9rem}
 .reg-addon-label{display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600;font-size:0.88rem;background:var(--surface);border:1.5px solid var(--surface-dark);border-radius:8px;padding:12px 14px;transition:all 0.2s}
 .reg-addon-label:has(input:checked){background:#F0FDF4;border-color:var(--green);color:var(--green-dark)}
 .reg-addon-label input{width:16px;height:16px;accent-color:var(--green)}
@@ -1067,9 +1073,10 @@ body {
       <span class="hero-tag">劍橋英檢內建</span>
     </div>
     <div class="hero-school">🌲 太平新光分校 · Eagle American English Institute</div>
-    <div class="hero-buttons">
-      <a href="#booking" class="btn btn-primary" style="font-size:1rem;padding:14px 32px;box-shadow:0 6px 24px rgba(232,134,58,0.5)">免費預約體驗 →</a>
-      <a href="#courses" class="btn btn-secondary" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.25);backdrop-filter:blur(8px);font-size:1rem;padding:14px 28px">了解課程</a>
+    <div class="hero-buttons" style="flex-wrap:wrap;gap:12px">
+      <a href="#inquiry" class="btn btn-secondary" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.25);backdrop-filter:blur(8px);font-size:0.95rem;padding:13px 24px">📚 先了解課程</a>
+      <a href="#booking" class="btn btn-primary" style="font-size:0.95rem;padding:13px 24px;box-shadow:0 6px 24px rgba(232,134,58,0.5)">🏫 預約參訪體驗 →</a>
+      <a href="#camp" class="btn btn-secondary" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.25);backdrop-filter:blur(8px);font-size:0.95rem;padding:13px 24px">🏕️ 夏令營報名</a>
     </div>
   </div>
 
@@ -3076,7 +3083,15 @@ body {
           <div class="camp-reg-success" id="campRegSuccess">
             <div class="camp-reg-success-icon">🎉</div>
             <h3>報名資訊已送出！</h3>
-            <p>感謝您報名 2026 太平新光夏令營。<br>我們將在 <strong>24 小時內</strong>以電話或 LINE 與您確認報名細節及繳費方式。<br><br>如有緊急問題，歡迎直接 LINE 我們：<a href="https://lin.ee/o1wzF7a" target="_blank" style="color:var(--green);font-weight:700">@太平新光分校</a></p>
+            <p>感謝您報名 2026 太平新光夏令營。<br>我們將在 <strong>24 小時內</strong>以電話或 LINE 與您確認報名細節及繳費方式。</p>
+            <div style="background:#F0FDF4;border:1.5px solid var(--green);border-radius:10px;padding:14px 18px;margin-top:16px;font-size:0.85rem;color:#166534;line-height:1.7;text-align:left">
+              <strong>📋 您可能也想了解</strong><br>
+              • 對正式班課程有興趣？→ <a href="#inquiry" style="color:var(--green);font-weight:700">填寫問課諮詢</a>，了解浸潤班/菁英班/標準班<br>
+              • 想預約到校參觀？→ <a href="#booking" style="color:var(--green);font-weight:700">預約參訪</a>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px">
+              <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text);font-size:0.88rem">加 LINE 收通知 →</a>
+            </div>
           </div>
 
           <!-- Form (visible by default) -->
@@ -3170,6 +3185,14 @@ body {
 <!-- ========== BOOKING SYSTEM ========== -->
 <section class="booking-section section-padding" id="booking">
   <div class="container">
+    <!-- 流程進度提示 -->
+    <div class="flow-breadcrumb reveal">
+      <a href="#inquiry" class="flow-step done">① 問課諮詢</a>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step active">② 預約參訪／檢測</span>
+      <span class="flow-arrow">→</span>
+      <a href="#register" class="flow-step">③ 正式註冊</a>
+    </div>
     <h2 class="section-title reveal">預約參訪與體驗</h2>
     <p class="section-subtitle reveal">參訪校區、英文程度檢測、體驗課——三種方式，選一個最適合孩子的</p>
     <div class="booking-rules-bar reveal">
@@ -3290,6 +3313,15 @@ body {
         <div class="booking-confirm-icon">✓</div>
         <h3>預約成功！</h3>
         <p id="confirmDetails"></p>
+        <div id="bookingNextSteps" style="background:#F0FDF4;border:1.5px solid var(--green);border-radius:10px;padding:14px 18px;margin-top:20px;font-size:0.85rem;color:#166534;line-height:1.7;text-align:left">
+          <strong>📋 到校當天提醒</strong><br>
+          • 參訪：歡迎家長一起來，約 30 分鐘了解教學環境與師資<br>
+          • 檢測：費用 NTD 400（現場繳交），含口說＋筆試，約 40–60 分鐘<br>
+          • 檢測完成後，老師會告知分班結果，即可進行<a href="#register" style="color:var(--green);font-weight:700">正式註冊</a>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
+          <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text)">加 LINE 收提醒 →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -4511,8 +4543,15 @@ body {
         <h3>諮詢資料已送出！</h3>
         <div id="iqConfirmDetails"></div>
         <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;margin-top:16px">我們將在 <strong>24 小時內</strong>透過 LINE 或電話與您聯繫確認。<br>招生老師會依您填寫的資訊，<strong>安排最適合孩子的程度檢測與試聽</strong>。</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px">
-          <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-primary" style="display:inline-flex">或立即 LINE 我們 →</a>
+        <div style="background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:10px;padding:14px 18px;margin-top:20px;font-size:0.85rem;color:#92400e;line-height:1.7;text-align:left">
+          <strong>📋 建議下一步</strong><br>
+          ① 如果想先到分校看看環境 → <a href="#booking" style="color:var(--green);font-weight:700" onclick="switchBkType('visitTest')">預約參訪</a><br>
+          ② 如果想讓孩子做免費程度檢測 → <a href="#booking" style="color:var(--green);font-weight:700" onclick="switchBkType('visitTest')">預約檢測</a>（費用 NTD 400）<br>
+          ③ 如果想直接報名夏令營 → <a href="#camp" style="color:var(--green);font-weight:700">夏令營報名</a>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
+          <a href="#booking" class="btn btn-green" style="display:inline-flex" onclick="switchBkType('visitTest')">預約參訪／檢測 →</a>
+          <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text)">或 LINE 我們</a>
         </div>
       </div>
     </div>
@@ -4522,6 +4561,14 @@ body {
 <!-- ========== REGISTER 正式註冊 ========== -->
 <section class="register-section section-padding" id="register">
   <div class="container" style="max-width:720px">
+    <!-- 流程進度提示 -->
+    <div class="flow-breadcrumb reveal">
+      <a href="#inquiry" class="flow-step done">① 問課諮詢</a>
+      <span class="flow-arrow">→</span>
+      <a href="#booking" class="flow-step done">② 參訪／檢測</a>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step active">③ 正式註冊</span>
+    </div>
     <h2 class="section-title reveal">正式註冊報名</h2>
     <p class="section-subtitle reveal">完成分級檢測後，填寫以下表單即可進行正式註冊</p>
 
@@ -4610,7 +4657,18 @@ body {
       <div class="camp-reg-success-icon">🎓</div>
       <h3>註冊報名已送出</h3>
       <p>太平新光分校會在 <strong>1–2 個工作日</strong>內與您聯繫確認。</p>
-      <p style="font-size:0.85rem;color:var(--text-muted)">如有緊急問題，歡迎直接來電：<a href="tel:04-23960585" style="color:var(--green);font-weight:700">04-23960585</a></p>
+      <div id="regSuccessDetail" style="background:var(--surface);border:1.5px solid var(--surface-dark);border-radius:10px;padding:16px 18px;margin-top:16px;font-size:0.85rem;line-height:1.7;text-align:left;color:var(--text)"></div>
+      <div style="background:#F0FDF4;border:1.5px solid var(--green);border-radius:10px;padding:14px 18px;margin-top:16px;font-size:0.85rem;color:#166534;line-height:1.7;text-align:left">
+        <strong>📋 接下來會發生什麼？</strong><br>
+        ① 老師會在 1–2 個工作日內電話或 LINE 聯繫您<br>
+        ② 確認班級時段、教材費用、接送安排等細節<br>
+        ③ 完成繳費後即正式入學<br>
+        <span style="color:var(--orange)">💡 開學前會收到入學通知，包含上課時間、教材清單、接送時刻表</span>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
+        <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-green" style="display:inline-flex">加 LINE 追蹤進度 →</a>
+        <a href="tel:04-23960585" class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text)">📞 04-23960585</a>
+      </div>
     </div>
   </div>
 </section>
@@ -5493,6 +5551,13 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     setSlot(selectedDate,selectedSlot,bkType,info);
     // Also save to adminData
     if(window._adminData) window._adminData.bookings.push({date:selectedDate,slot:selectedSlot,bkType,...info});
+    saveParentInfo(parent.value, phone.value, '', '');
+    if(child.value) saveChildInfo(child.value, '');
+    // 同步到 localStorage 供獨立後台
+    var xgData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
+    if(!xgData.bookingRegs) xgData.bookingRegs = [];
+    xgData.bookingRegs.push({ts:info.ts, parent:info.parent, phone:info.phone, student:info.child, type:info.type, date:selectedDate, slot:selectedSlot, bkType:bkType, source:'預約表單', stage:bkType==='trial'?'已預約體驗':'已預約參訪', status:'待確認'});
+    localStorage.setItem('xg_admin_data', JSON.stringify(xgData));
 
     const bkDateParts=selectedDate.split('-');
     const bkDeadline3=new Date(parseInt(bkDateParts[0]),parseInt(bkDateParts[1])-1,parseInt(bkDateParts[2])-2,12,0,0);
@@ -5763,7 +5828,18 @@ function submitInquiry(e){
     question: question,
   };
   data.callScript = generateCallScript(data);
+  // 存共用資料供其他表單自動帶入
+  saveParentInfo(data.parent, data.phone, data.line, data.email);
+  if(childrenData.length > 0) saveChildInfo(childrenData[0].name, childrenData[0].grade);
   adminSaveInquiry(data);
+
+  // 同步到 localStorage 供獨立後台使用
+  var xgData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
+  if(!xgData.inquiries) xgData.inquiries = [];
+  data.source = '問課表單';
+  data.stage = '已問課';
+  xgData.inquiries.push(data);
+  localStorage.setItem('xg_admin_data', JSON.stringify(xgData));
 
   // 建立帶參數的檢測系統連結
   var assessUrl = 'https://www.perplexity.ai/computer/a/tai-ping-xin-guang-fen-xiao-yi-kBa4UJQySPOV2y45Plyz0w';
@@ -5892,6 +5968,67 @@ function sendToAdminPanel(data) {
     alert('資料已複製到剪貼簿，請貼到後台的「匯入資料」功能');
   }
 }
+
+// ====== 表單資料共用：自動帶入 ======
+function saveParentInfo(pname, phone, line, email){
+  var info = {pname:pname, phone:phone, line:line||'', email:email||'', ts:Date.now()};
+  localStorage.setItem('xg_parent_info', JSON.stringify(info));
+}
+function loadParentInfo(){
+  try { return JSON.parse(localStorage.getItem('xg_parent_info')||'{}'); } catch(e){ return {}; }
+}
+function saveChildInfo(sname, grade){
+  var info = {sname:sname, grade:grade||'', ts:Date.now()};
+  localStorage.setItem('xg_child_info', JSON.stringify(info));
+}
+function loadChildInfo(){
+  try { return JSON.parse(localStorage.getItem('xg_child_info')||'{}'); } catch(e){ return {}; }
+}
+// 頁面載入時，自動帶入已存的家長/孩子資料
+function autoFillForms(){
+  var p = loadParentInfo();
+  var c = loadChildInfo();
+  // 問課表單
+  if(p.pname){
+    var el = document.getElementById('iq_pname'); if(el && !el.value) el.value = p.pname;
+    el = document.getElementById('iq_phone'); if(el && !el.value) el.value = p.phone||'';
+    el = document.getElementById('iq_line'); if(el && !el.value) el.value = p.line||'';
+  }
+  if(c.sname){
+    var el = document.getElementById('iq_sname'); if(el && !el.value) el.value = c.sname;
+    if(c.grade){ el = document.getElementById('iq_grade'); if(el && !el.value) el.value = c.grade; }
+  }
+  // 預約表單
+  if(p.pname){
+    var el = document.getElementById('bkParent'); if(el && !el.value) el.value = p.pname;
+    el = document.getElementById('bkPhone'); if(el && !el.value) el.value = p.phone||'';
+  }
+  if(c.sname){
+    var el = document.getElementById('bkChild'); if(el && !el.value) el.value = c.sname;
+  }
+  // 夏令營（第一個孩子）
+  if(p.pname){
+    var el = document.getElementById('cr_pname'); if(el && !el.value) el.value = p.pname;
+    el = document.getElementById('cr_phone'); if(el && !el.value) el.value = p.phone||'';
+    el = document.getElementById('cr_line'); if(el && !el.value) el.value = p.line||'';
+  }
+  if(c.sname){
+    var el = document.getElementById('cr_sname_1'); if(el && !el.value) el.value = c.sname;
+    if(c.grade){ el = document.getElementById('cr_grade_1'); if(el && !el.value) el.value = c.grade; }
+  }
+  // 正式註冊
+  if(p.pname){
+    var el = document.getElementById('reg_pname'); if(el && !el.value) el.value = p.pname;
+    el = document.getElementById('reg_phone'); if(el && !el.value) el.value = p.phone||'';
+    el = document.getElementById('reg_email'); if(el && !el.value) el.value = p.email||'';
+    el = document.getElementById('reg_line'); if(el && !el.value) el.value = p.line||'';
+  }
+  if(c.sname){
+    var el = document.getElementById('reg_sname'); if(el && !el.value) el.value = c.sname;
+    if(c.grade){ el = document.getElementById('reg_grade'); if(el && !el.value) el.value = c.grade; }
+  }
+}
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(autoFillForms, 500); });
 
 function adminSaveInquiry(data) {
   _adminData.inquiries.push(data);
@@ -6528,6 +6665,8 @@ function submitCampReg() {
     diet: diet || '無',
     children: campChildren.map(function(c){ return {sname:c.sname, grade:c.grade, enrolled:c.enrolled, height:c.height, weight:c.weight, julyDates:c.julyDates, augDates:c.augDates}; })
   };
+  saveParentInfo(pname, phone, document.getElementById('cr_line').value.trim(), '');
+  if(campChildren.length > 0) saveChildInfo(campChildren[0].sname, campChildren[0].grade);
   adminSaveCamp(campData);
 
   // Show success
@@ -6612,11 +6751,25 @@ function submitRegister(){
     status: '待處理'
   };
 
+  saveParentInfo(pname, phone, line, email);
+  saveChildInfo(sname, grade);
+
   // 存入 admin data
   var adminData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
   if(!adminData.registrations) adminData.registrations = [];
   adminData.registrations.push(regData);
   localStorage.setItem('xg_admin_data', JSON.stringify(adminData));
+
+  // 顯示摘要在成功頁
+  var detailEl = document.getElementById('regSuccessDetail');
+  if(detailEl){
+    var addonsTxt = addons.length > 0 ? addons.join('、') : '無';
+    detailEl.innerHTML = '<strong>📝 報名摘要</strong><br>' +
+      '學生：' + sname + '（' + grade + '）<br>' +
+      '班型：' + classtype + '　分班：' + assess + '<br>' +
+      '附加服務：' + addonsTxt + '<br>' +
+      '家長：' + pname + '　電話：' + phone;
+  }
 
   // Show success
   document.getElementById('registerFormBody').style.display = 'none';
