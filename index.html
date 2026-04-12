@@ -6051,6 +6051,13 @@ function adminSaveInquiry(data) {
 }
 function adminSaveCamp(data) {
   _adminData.campRegs.push(data);
+  // 同步到 localStorage 供獨立後台使用
+  var xgData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
+  if(!xgData.camp) xgData.camp = [];
+  data.source = '夏令營報名';
+  data.stage = '已報名夏令營';
+  xgData.camp.push(data);
+  localStorage.setItem('xg_admin_data', JSON.stringify(xgData));
   if(window._adminRefresh) window._adminRefresh();
 }
 
