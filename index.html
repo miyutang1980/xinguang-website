@@ -5568,6 +5568,7 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     if(window._adminData) window._adminData.bookings.push({date:selectedDate,slot:selectedSlot,bkType,...info});
     saveParentInfo(parent.value, phone.value, '', '');
     if(child.value) saveChildInfo(child.value, '');
+    sendWebhook('booking', {ts:info.ts, parent:info.parent, phone:info.phone, student:info.child, type:info.type, date:selectedDate, slot:selectedSlot, cls:info.cls, bkType:bkType});
     // 同步到 localStorage 供獨立後台
     var xgData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
     if(!xgData.bookingRegs) xgData.bookingRegs = [];
@@ -5847,6 +5848,7 @@ function submitInquiry(e){
   saveParentInfo(data.parent, data.phone, data.line, data.email);
   if(childrenData.length > 0) saveChildInfo(childrenData[0].name, childrenData[0].grade);
   adminSaveInquiry(data);
+  sendWebhook('inquiry', data);
 
   // 同步到 localStorage 供獨立後台使用
   var xgData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
@@ -5964,6 +5966,24 @@ function generateCallScript(data) {
 
 
 /* ========== ADMIN PANEL ========== */
+// ====== 通知 Webhook（Google Apps Script）======
+// 部署 Apps Script 後，把網址貼在這裡
+var WEBHOOK_URL = '';  // ← 貼上 Apps Script 部署網址
+
+function sendWebhook(type, data) {
+  if(!WEBHOOK_URL) return;
+  var payload = JSON.parse(JSON.stringify(data));
+  payload._type = type;
+  try {
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+  } catch(e) { console.log('Webhook error:', e); }
+}
+
 var _adminData = { inquiries: [], campRegs: [], bookings: [] };
 window._trialOverrides = {};
 
@@ -6690,6 +6710,7 @@ function submitCampReg() {
   saveParentInfo(pname, phone, document.getElementById('cr_line').value.trim(), '');
   if(campChildren.length > 0) saveChildInfo(campChildren[0].sname, campChildren[0].grade);
   adminSaveCamp(campData);
+  sendWebhook('camp', campData);
 
   // Show success
   document.getElementById('campFormBody').style.display = 'none';
@@ -6792,6 +6813,8 @@ function submitRegister(){
       '附加服務：' + addonsTxt + '<br>' +
       '家長：' + pname + '　電話：' + phone;
   }
+
+  sendWebhook('register', regData);
 
   // Show success
   document.getElementById('registerFormBody').style.display = 'none';
