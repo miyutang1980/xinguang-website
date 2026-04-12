@@ -2784,6 +2784,13 @@ body {
         <div class="camp-time-pill">🎮 下午：沉浸式體驗活動</div>
       </div>
 
+      <!-- 快速分流按鈕 -->
+      <div class="reveal" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:24px">
+        <a href="#camp-form-anchor" class="btn" style="background:#fff;color:var(--green-dark);font-weight:700;font-size:0.88rem;padding:10px 22px;border-radius:50px" onclick="document.getElementById('campFormBody').scrollIntoView({behavior:'smooth',block:'start'})">✍️ 我要報名</a>
+        <a href="#booking" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1.5px solid rgba(255,255,255,0.3);font-size:0.88rem;padding:10px 22px;border-radius:50px">🏠 先預約參訪</a>
+        <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1.5px solid rgba(255,255,255,0.3);font-size:0.88rem;padding:10px 22px;border-radius:50px">💬 LINE 諮詢</a>
+      </div>
+
       <div class="camp-month-tabs reveal">
         <button class="camp-month-tab active" onclick="switchCampMonth(this,'july')">🔬 七月 Science Through Discovery</button>
         <button class="camp-month-tab" onclick="switchCampMonth(this,'aug')">🕵️ 八月 Mystery Hunters</button>
@@ -3098,6 +3105,14 @@ body {
           <div id="campFormBody">
             <div class="camp-reg-title">夏令營報名表</div>
             <p class="camp-reg-sub">帶 <span style="color:#e53e3e">*</span> 為必填欄位。請確實填寫，以利後續聯繫確認。</p>
+
+            <!-- 快速分流引導 -->
+            <div style="background:linear-gradient(135deg,#FEF3C7,#FFFBEB);border:1.5px solid #F59E0B;border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:0.82rem;line-height:1.7;color:#92400e">
+              <strong>💡 不確定要不要報名？可以先…</strong><br>
+              ① <a href="#seminar" style="color:var(--green);font-weight:700">聯繫 LINE 諮詢</a>，聊聊夏令營的內容和安排<br>
+              ② <a href="#booking" style="color:var(--green);font-weight:700">預約參訪</a>，帶孩子先來看看環境和教室<br>
+              ③ 準備好了？直接往下填寫報名表 ↓
+            </div>
 
             <!-- 一、家長聯繫資料 -->
             <div class="camp-reg-section">一、家長聯繫資料</div>
