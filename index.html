@@ -6733,9 +6733,8 @@ function calcPrice() {
   var beforeDeadline = now <= deadline;
   var normalDay = 1760, discDay = 1496;
 
-  // 遍歷所有孩子，合計七月＆八月天數（每位孩子獨立計算）
-  var totalJulyDays = 0, totalAugDays = 0;
-  var childDetails = []; // [{name, julyDays, augDays}]
+  // 遍歷所有孩子（每位孩子獨立計算折扣）
+  var childDetails = []; // [{name, julyDays, augDays, totalDays, hasDiscount}]
   var childBlocks = document.querySelectorAll('.camp-child-block');
   childBlocks.forEach(function(block){
     var id = block.id.replace('campChild_','');
@@ -6744,59 +6743,73 @@ function calcPrice() {
     var aCb = document.getElementById('cr_aug_'+id);
     var jDays = (jCb && jCb.checked) ? document.querySelectorAll('#cal_child_july_'+id+' .camp-day-cell.selected').length : 0;
     var aDays = (aCb && aCb.checked) ? document.querySelectorAll('#cal_child_aug_'+id+' .camp-day-cell.selected').length : 0;
-    totalJulyDays += jDays;
-    totalAugDays += aDays;
-    if(jDays > 0 || aDays > 0) childDetails.push({name: sname.trim() || ('孩子 #'+id), julyDays: jDays, augDays: aDays});
+    var cTotal = jDays + aDays;
+    if(cTotal > 0){
+      // 85折條件：此孩子個人的（七月+八月合計>=20天）或（七月>=20天且八月>=20天），且5/31前
+      var cQualify = beforeDeadline && ((cTotal >= 20) || (jDays >= 20 && aDays >= 20));
+      childDetails.push({name: sname.trim() || ('孩子 #'+id), julyDays: jDays, augDays: aDays, totalDays: cTotal, hasDiscount: cQualify});
+    }
   });
 
-  var days = totalJulyDays + totalAugDays;
-  if(days === 0) {
+  var allDays = childDetails.reduce(function(sum,c){ return sum + c.totalDays; }, 0);
+  if(allDays === 0) {
     detail.innerHTML = '<span style="color:var(--text-muted)">請先在上方選擇上課期別與日期</span>';
     if (earlyBird) earlyBird.style.display = 'none';
     return;
   }
 
-  // 85折條件：5/31前 且（七月+八月合計>=20天 或 七月>=20天且八月>=20天）
-  var totalDays = totalJulyDays + totalAugDays;
-  var qualifyCombined = (totalDays >= 20);
-  var qualifyEach = (totalJulyDays >= 20 && totalAugDays >= 20);
-  var isEarlyBird = beforeDeadline && (qualifyCombined || qualifyEach);
+  // 有任何一位孩子符合 85 折就顯示 badge
+  var anyDiscount = childDetails.some(function(c){ return c.hasDiscount; });
+  if (earlyBird) earlyBird.style.display = anyDiscount ? 'flex' : 'none';
 
-  if (earlyBird) earlyBird.style.display = isEarlyBird ? 'flex' : 'none';
-
-  var dayRate = isEarlyBird ? discDay : normalDay;
-  var price = dayRate * days;
-  var origPrice = normalDay * days;
-  var saving = origPrice - price;
-
+  // 每位孩子分別用自己的費率計算
+  var totalPrice = 0;
+  var totalOrig = 0;
   var rows = '';
-  // 若只有一位孩子，簡化顯示
-  if(childDetails.length <= 1){
-    if(totalJulyDays > 0) rows += '<div class="camp-price-row"><span>🔬 七月｜超能科學派 ('+totalJulyDays+'天)</span><span>'+dayRate.toLocaleString()+' × '+totalJulyDays+' = <strong>'+(dayRate*totalJulyDays).toLocaleString()+'</strong> 元</span></div>';
-    if(totalAugDays > 0) rows += '<div class="camp-price-row"><span>🕵️ 八月｜謎案追查隊 ('+totalAugDays+'天)</span><span>'+dayRate.toLocaleString()+' × '+totalAugDays+' = <strong>'+(dayRate*totalAugDays).toLocaleString()+'</strong> 元</span></div>';
-  } else {
-    childDetails.forEach(function(c){
-      var cTotal = c.julyDays + c.augDays;
+
+  childDetails.forEach(function(c){
+    var cRate = c.hasDiscount ? discDay : normalDay;
+    var cPrice = cRate * c.totalDays;
+    var cOrig = normalDay * c.totalDays;
+    totalPrice += cPrice;
+    totalOrig += cOrig;
+
+    if(childDetails.length <= 1){
+      // 單一孩子：分七月/八月列
+      if(c.julyDays > 0) rows += '<div class="camp-price-row"><span>🔬 七月｜超能科學派 ('+c.julyDays+'天)</span><span>'+cRate.toLocaleString()+' × '+c.julyDays+' = <strong>'+(cRate*c.julyDays).toLocaleString()+'</strong> 元</span></div>';
+      if(c.augDays > 0) rows += '<div class="camp-price-row"><span>🕵️ 八月｜謎案追查隊 ('+c.augDays+'天)</span><span>'+cRate.toLocaleString()+' × '+c.augDays+' = <strong>'+(cRate*c.augDays).toLocaleString()+'</strong> 元</span></div>';
+      if(c.hasDiscount) rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🎉 85 折早鳥優惠（滿 20 天）</span><span>-' + (cOrig - cPrice).toLocaleString() + ' 元</span></div>';
+      else if(beforeDeadline){
+        var needed = 20 - c.totalDays;
+        if(needed > 0) rows += '<div class="camp-price-row" style="color:var(--text-muted);font-size:0.8rem"><span>💡 再選 '+needed+' 天即享 85 折早鳥（單人合計滿 20 天）</span></div>';
+      }
+    } else {
+      // 多位孩子：每人一行，標示是否有折扣
       var label = c.name + '（';
       var parts = [];
       if(c.julyDays > 0) parts.push('七月 '+c.julyDays+'天');
       if(c.augDays > 0) parts.push('八月 '+c.augDays+'天');
       label += parts.join('＋') + '）';
-      rows += '<div class="camp-price-row"><span>'+label+'</span><span>'+dayRate.toLocaleString()+' × '+cTotal+' = <strong>'+(dayRate*cTotal).toLocaleString()+'</strong> 元</span></div>';
-    });
+      var discLabel = c.hasDiscount ? ' <span style="color:var(--orange);font-size:0.75rem">85折✓</span>' : '';
+      rows += '<div class="camp-price-row"><span>'+label+discLabel+'</span><span>'+cRate.toLocaleString()+' × '+c.totalDays+' = <strong>'+(cPrice).toLocaleString()+'</strong> 元</span></div>';
+      if(!c.hasDiscount && beforeDeadline){
+        var needed = 20 - c.totalDays;
+        if(needed > 0) rows += '<div class="camp-price-row" style="color:var(--text-muted);font-size:0.75rem;padding-left:8px"><span>↳ '+c.name+' 再選 '+needed+' 天即享 85 折</span></div>';
+      }
+    }
+  });
+
+  // 多位孩子時顯示合計折扣
+  var totalSaving = totalOrig - totalPrice;
+  if(childDetails.length > 1 && totalSaving > 0){
+    rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🎉 85 折早鳥合計折扣</span><span>-' + totalSaving.toLocaleString() + ' 元</span></div>';
   }
 
-  // 折扣說明
-  if(isEarlyBird && saving > 0){
-    rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🎉 85 折早鳥優惠</span><span>-' + saving.toLocaleString() + ' 元</span></div>';
-  } else if(beforeDeadline && !isEarlyBird && days > 0){
-    var needed = 20 - totalDays;
-    if(needed > 0) rows += '<div class="camp-price-row" style="color:var(--text-muted);font-size:0.8rem"><span>💡 再選 '+needed+' 天即可享 85 折早鳥（七月＋八月合計滿 20 天）</span></div>';
-  } else if(!beforeDeadline){
+  if(!beforeDeadline && allDays > 0){
     rows += '<div class="camp-price-row" style="color:var(--text-muted);font-size:0.8rem"><span>早鳥優惠已於 5/31 截止</span></div>';
   }
 
-  rows += '<div class="camp-price-row total"><span>課程費用合計（不含教材費）</span><span>NTD ' + price.toLocaleString() + ' 元</span></div>';
+  rows += '<div class="camp-price-row total"><span>課程費用合計（不含教材費）</span><span>NTD ' + totalPrice.toLocaleString() + ' 元</span></div>';
 
   detail.innerHTML = rows;
 }
