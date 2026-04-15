@@ -5582,7 +5582,7 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
   window.submitBooking=function(){
     let valid=true;
     // 體驗課模式：後台比對是否有檢測紀錄，有則自動帶入分班結果
-    if(window._bkMode === 'trial'){
+    if(_currentBkType === 'trial'){
       var parentName = document.getElementById('bkParent').value.trim();
       var studentName = document.getElementById('bkChild').value.trim();
       if(parentName && studentName){
