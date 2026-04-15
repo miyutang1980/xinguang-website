@@ -4701,13 +4701,23 @@ body {
         <div class="camp-reg-field"><label>學生姓名 <span class="req">*</span></label>
           <input type="text" id="reg_sname" placeholder="請輸入姓名" onblur="lookupRegAssess()"></div>
         <div class="camp-reg-field"><label>年級 <span class="req">*</span></label>
-          <select id="reg_grade">
+          <select id="reg_grade" onchange="regToggleNextSchool()">
             <option value="">請選擇</option>
             <option>幼幼班</option><option>小班</option><option>中班</option><option>大班</option>
             <option>國小1年級</option><option>國小2年級</option><option>國小3年級</option>
             <option>國小4年級</option><option>國小5年級</option><option>國小6年級</option>
             <option>國中1年級</option><option>國中2年級</option><option>國中3年級</option>
           </select></div>
+        <div class="camp-reg-field"><label>就讀學校 <span class="req">*</span></label>
+          <input type="text" id="reg_school" placeholder="如：太平國小、育才幼兒園"></div>
+        <div class="camp-reg-field"><label>班級</label>
+          <input type="text" id="reg_classname" placeholder="如：三年二班、大象班"></div>
+      </div>
+      <div id="regNextSchoolBox" style="display:none;margin-bottom:12px">
+        <div class="camp-reg-grid">
+          <div class="camp-reg-field"><label>預計升小一就讀學校</label>
+            <input type="text" id="reg_next_school" placeholder="如：太平國小（幼稚園升小一請填）"></div>
+        </div>
       </div>
 
       <!-- 三、報名班型 -->
@@ -5772,13 +5782,24 @@ function iqAddChild(){
     '<div class="form-group"><label>孩子姓名 <span class="req">*</span></label>'+
     '<input type="text" id="iqChildName_'+idx+'" placeholder="請輸入孩子姓名"></div>' +
     '<div class="form-group"><label>目前年級 <span class="req">*</span></label>'+
-    '<select id="iqGrade_'+idx+'" onchange="iqAutoSuggestChild('+idx+')">' +
+    '<select id="iqGrade_'+idx+'" onchange="iqAutoSuggestChild('+idx+');iqToggleSchoolFields('+idx+')">' +
     '<option value="">請選擇</option>' +
     '<option>幼幼班</option><option>小班</option><option>中班</option><option>大班</option>' +
     '<option>國小1年級</option><option>國小2年級</option><option>國小3年級</option>' +
     '<option>國小4年級</option><option>國小5年級</option><option>國小6年級</option>' +
     '<option>國中1年級</option><option>國中2年級</option><option>國中3年級</option>' +
     '</select></div>' +
+    '<div class="form-group"><label>就讀學校 <span class="req">*</span></label>'+
+    '<input type="text" id="iqSchool_'+idx+'" placeholder="如：太平國小、育才幼兒園"></div>' +
+    '<div class="form-group"><label>班級</label>'+
+    '<input type="text" id="iqClass_'+idx+'" placeholder="如：三年二班、大象班"></div>' +
+    '</div>' +
+    '<div id="iqNextSchool_'+idx+'" style="display:none;margin-bottom:12px">' +
+    '<div class="form-grid" style="grid-template-columns:1fr">' +
+    '<div class="form-group"><label>預計升小一就讀學校</label>'+
+    '<input type="text" id="iqNextSchoolName_'+idx+'" placeholder="如：太平國小（大班/幼幼班升小一請填）"></div>' +
+    '</div></div>' +
+    '<div class="form-grid" style="grid-template-columns:1fr 1fr;margin-bottom:12px">' +
     '<div class="form-group"><label>上課主要目標 <span class="req">*</span></label>'+
     '<select id="iqGoal_'+idx+'" onchange="iqAutoSuggestChild('+idx+')">' +
     '<option value="">請選擇</option>' +
@@ -5823,6 +5844,15 @@ function iqAddChild(){
 function iqRemoveChild(idx){
   var el = document.getElementById('iqChild_'+idx);
   if(el) el.remove();
+}
+
+function iqToggleSchoolFields(idx){
+  var grade = (document.getElementById('iqGrade_'+idx)||{}).value||'';
+  var nextBox = document.getElementById('iqNextSchool_'+idx);
+  if(!nextBox) return;
+  // 幼幼班/小班/中班/大班 → 顯示「預計升小一就讀學校」
+  var isKinder = ['幼幼班','小班','中班','大班'].indexOf(grade) >= 0;
+  nextBox.style.display = isKinder ? '' : 'none';
 }
 
 function iqAutoSuggestChild(idx){
@@ -5900,14 +5930,20 @@ function submitInquiry(e){
     var id = block.id.replace('iqChild_','');
     var name  = (document.getElementById('iqChildName_'+id)||{}).value||'';
     var grade = (document.getElementById('iqGrade_'+id)||{}).value||'';
+    var school = (document.getElementById('iqSchool_'+id)||{}).value||'';
+    var classN = (document.getElementById('iqClass_'+id)||{}).value||'';
+    var nextSchool = (document.getElementById('iqNextSchoolName_'+id)||{}).value||'';
     var goal  = (document.getElementById('iqGoal_'+id)||{}).value||'';
     var days  = (document.getElementById('iqDays_'+id)||{}).value||'';
     var oral  = iqGetOralData(id);
     if(!name||!grade||!goal){ block.style.borderColor='#e74c3c'; valid=false; }
     else {
       block.style.borderColor='';
-      childrenData.push({name:name, grade:grade, goal:goal, days:days, oral:oral});
+      childrenData.push({name:name, grade:grade, school:school, classN:classN, nextSchool:nextSchool, goal:goal, days:days, oral:oral});
     }
+  });
+  childrenData.forEach(function(c){
+    if(!c.school) valid=false;
   });
   if(childrenData.length===0) valid=false;
 
@@ -6974,6 +7010,14 @@ function lookupRegAssess(){
   }
 }
 
+function regToggleNextSchool(){
+  var grade = (document.getElementById('reg_grade')||{}).value||'';
+  var box = document.getElementById('regNextSchoolBox');
+  if(!box) return;
+  var isKinder = ['幼幼班','小班','中班','大班'].indexOf(grade) >= 0;
+  box.style.display = isKinder ? '' : 'none';
+}
+
 function toggleRegAddons(){
   var ct = document.getElementById('reg_classtype');
   var sec = document.getElementById('regAddonsSection');
@@ -6993,6 +7037,9 @@ function submitRegister(){
   var line  = document.getElementById('reg_line').value.trim();
   var sname = document.getElementById('reg_sname').value.trim();
   var grade = document.getElementById('reg_grade').value;
+  var school = (document.getElementById('reg_school')||{}).value.trim();
+  var classname = (document.getElementById('reg_classname')||{}).value.trim();
+  var nextSchool = (document.getElementById('reg_next_school')||{}).value.trim();
   var classtype = document.getElementById('reg_classtype').value;
   var assess = document.getElementById('reg_assess').value.trim();
   var note = document.getElementById('reg_note').value.trim();
@@ -7002,6 +7049,7 @@ function submitRegister(){
   if(!email) errors.push('請填寫電子信箱');
   if(!sname) errors.push('請填寫學生姓名');
   if(!grade) errors.push('請選擇年級');
+  if(!school) errors.push('請填寫就讀學校');
   if(!classtype) errors.push('請選擇班型');
   if(!assess) errors.push('缺少分班結果——請先完成英文程度檢測，檢測後系統會自動帶入分班結果');
 
@@ -7039,6 +7087,9 @@ function submitRegister(){
     line: line,
     studentName: sname,
     grade: grade,
+    school: school,
+    classname: classname,
+    nextSchool: nextSchool,
     classType: classtype,
     assessResult: assess,
     addons: addons.join('、') || '無',
