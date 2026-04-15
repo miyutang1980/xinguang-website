@@ -6091,7 +6091,7 @@ function generateCallScript(data) {
 /* ========== ADMIN PANEL ========== */
 // ====== 通知 Webhook（Google Apps Script）======
 // 部署 Apps Script 後，把網址貼在這裡
-var WEBHOOK_URL = '';  // ← 貼上 Apps Script 部署網址
+var WEBHOOK_URL = 'https://miyutang.app.n8n.cloud/webhook/xinguang-form';
 
 function sendWebhook(type, data) {
   if(!WEBHOOK_URL) return;
