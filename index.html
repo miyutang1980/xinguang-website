@@ -3359,6 +3359,7 @@ body {
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
           <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text)">加 LINE 收提醒 →</a>
+          <button class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text)" onclick="showBookingChange()">改期 / 取消預約</button>
         </div>
       </div>
     </div>
@@ -7650,5 +7651,125 @@ function updateResult(key) {
     }
   });
 })();
-</script></body>
+</script>
+<!-- ========== BOOKING CHANGE/CANCEL MODAL ========== -->
+<div id="bookingChangeModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);overflow-y:auto">
+  <div style="max-width:480px;margin:60px auto;background:var(--bg,#fff);border-radius:16px;padding:28px 24px;position:relative">
+    <button onclick="closeBookingChange()" style="position:absolute;right:16px;top:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted)">✕</button>
+    <h3 style="margin:0 0 20px;font-size:1.2rem">📅 預約異動 / 取消</h3>
+    
+    <div class="form-group" style="margin-bottom:16px">
+      <label style="font-weight:600;font-size:0.9rem">您的姓名 *</label>
+      <input type="text" id="chgParent" placeholder="家長姓名" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+    </div>
+    <div class="form-group" style="margin-bottom:16px">
+      <label style="font-weight:600;font-size:0.9rem">聯絡電話 *</label>
+      <input type="tel" id="chgPhone" placeholder="0912345678" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+    </div>
+    <div class="form-group" style="margin-bottom:16px">
+      <label style="font-weight:600;font-size:0.9rem">孩子姓名</label>
+      <input type="text" id="chgChild" placeholder="孩子姓名" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+    </div>
+    <div class="form-group" style="margin-bottom:16px">
+      <label style="font-weight:600;font-size:0.9rem">原預約日期</label>
+      <input type="text" id="chgOrigDate" placeholder="例：2026/4/20" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+    </div>
+    <div class="form-group" style="margin-bottom:16px">
+      <label style="font-weight:600;font-size:0.9rem">原預約時段</label>
+      <input type="text" id="chgOrigSlot" placeholder="例：14:00-15:00" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+    </div>
+    <div class="form-group" style="margin-bottom:16px">
+      <label style="font-weight:600;font-size:0.9rem">預約類型</label>
+      <input type="text" id="chgType" placeholder="參訪 / 檢測 / 體驗課" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+    </div>
+    <div class="form-group" style="margin-bottom:16px">
+      <label style="font-weight:600;font-size:0.9rem">我要 *</label>
+      <div style="display:flex;gap:10px">
+        <label style="flex:1;padding:12px;border:1.5px solid #ddd;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s" id="chgOptReschedule" onclick="selectChgAction('reschedule')">🔄 改期</label>
+        <label style="flex:1;padding:12px;border:1.5px solid #ddd;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s" id="chgOptCancel" onclick="selectChgAction('cancel')">❌ 取消預約</label>
+      </div>
+    </div>
+    <div id="chgRescheduleFields" style="display:none">
+      <div class="form-group" style="margin-bottom:16px">
+        <label style="font-weight:600;font-size:0.9rem">希望改到哪天</label>
+        <input type="text" id="chgNewDate" placeholder="例：2026/4/25" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+      </div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label style="font-weight:600;font-size:0.9rem">希望的時段</label>
+        <input type="text" id="chgNewSlot" placeholder="例：14:00-15:00" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+      </div>
+    </div>
+    <div id="chgCancelFields" style="display:none">
+      <div class="form-group" style="margin-bottom:16px">
+        <label style="font-weight:600;font-size:0.9rem">取消原因</label>
+        <textarea id="chgReason" rows="2" placeholder="方便讓我們知道原因嗎？" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem;resize:vertical"></textarea>
+      </div>
+    </div>
+    <button id="chgSubmitBtn" onclick="submitBookingChange()" style="width:100%;padding:14px;background:var(--green,#2B7A4B);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px" disabled>請先選擇改期或取消</button>
+    <div id="chgResult" style="display:none;margin-top:16px;padding:16px;background:#F0FDF4;border-radius:10px;text-align:center">
+      <div style="font-size:2rem">✓</div>
+      <p style="font-weight:700;margin:8px 0">已收到您的申請</p>
+      <p style="color:#555;font-size:0.9rem">老師會盡快與您確認</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var _chgAction = '';
+function showBookingChange() {
+  document.getElementById('bookingChangeModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closeBookingChange() {
+  document.getElementById('bookingChangeModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function selectChgAction(action) {
+  _chgAction = action;
+  var r = document.getElementById('chgOptReschedule');
+  var c = document.getElementById('chgOptCancel');
+  r.style.borderColor = action === 'reschedule' ? 'var(--green,#2B7A4B)' : '#ddd';
+  r.style.background = action === 'reschedule' ? '#F0FDF4' : '';
+  c.style.borderColor = action === 'cancel' ? '#C0392B' : '#ddd';
+  c.style.background = action === 'cancel' ? '#FEF2F2' : '';
+  document.getElementById('chgRescheduleFields').style.display = action === 'reschedule' ? 'block' : 'none';
+  document.getElementById('chgCancelFields').style.display = action === 'cancel' ? 'block' : 'none';
+  var btn = document.getElementById('chgSubmitBtn');
+  btn.disabled = false;
+  btn.textContent = action === 'reschedule' ? '🔄 送出改期申請' : '❌ 確認取消預約';
+  btn.style.background = action === 'cancel' ? '#C0392B' : 'var(--green,#2B7A4B)';
+}
+function submitBookingChange() {
+  var parent = document.getElementById('chgParent').value.trim();
+  var phone = document.getElementById('chgPhone').value.trim();
+  if (!parent || !phone) { alert('請填寫姓名和電話'); return; }
+  var data = {
+    action: _chgAction,
+    parent: parent,
+    phone: phone,
+    child: document.getElementById('chgChild').value.trim(),
+    originalDate: document.getElementById('chgOrigDate').value.trim(),
+    originalSlot: document.getElementById('chgOrigSlot').value.trim(),
+    bookingType: document.getElementById('chgType').value.trim()
+  };
+  if (_chgAction === 'reschedule') {
+    data.newDate = document.getElementById('chgNewDate').value.trim();
+    data.newSlot = document.getElementById('chgNewSlot').value.trim();
+  }
+  if (_chgAction === 'cancel') {
+    data.reason = document.getElementById('chgReason').value.trim();
+  }
+  try {
+    fetch(WEBHOOK_URL.replace('xinguang-form','booking-change'), {
+      method: 'POST', mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+  } catch(e) {}
+  document.getElementById('chgSubmitBtn').style.display = 'none';
+  document.getElementById('chgResult').style.display = 'block';
+}
+</script>
+
+</body>
 </html>
