@@ -7689,16 +7689,329 @@ function updateResult(key) {
         <label style="flex:1;padding:12px;border:1.5px solid #ddd;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s" id="chgOptCancel" onclick="selectChgAction('cancel')">❌ 取消預約</label>
       </div>
     </div>
-    <div id="chgRescheduleFields" style="display:none">
-      <div class="form-group" style="margin-bottom:16px">
-        <label style="font-weight:600;font-size:0.9rem">希望改到哪天</label>
-        <input type="text" id="chgNewDate" placeholder="例：2026/4/25" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
-      </div>
-      <div class="form-group" style="margin-bottom:16px">
-        <label style="font-weight:600;font-size:0.9rem">希望的時段</label>
-        <input type="text" id="chgNewSlot" placeholder="例：14:00-15:00" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
-      </div>
+    <div id="chgRescheduleFieldsWrap" style="display:none">
+<!-- =====================================================================
+     太平新光分校 — 改期欄位片段 (Reschedule Date/Time Picker Snippet)
+     替換現有的改期文字輸入欄位，放入 id="chgRescheduleFields" 的 div 內
+     依照網站樣式：Noto Sans TC、綠色主題 #2B7A4B、border-radius: 8px
+     ===================================================================== -->
+
+<div id="chgRescheduleFields" style="
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #E8EFF4;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+">
+
+  <!-- ── 區塊標題 ── -->
+  <div style="
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #2B7A4B;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #E8F5EE;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  ">
+    📅 選擇新的預約時間
+  </div>
+
+  <!-- ── 1. 新日期選擇器 ── -->
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <label
+      for="chgNewDate"
+      style="
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #2D3436;
+        font-family: 'Noto Sans TC', sans-serif;
+      "
+    >
+      新日期 <span style="color: #e53e3e; margin-left: 2px;">*</span>
+    </label>
+    <input
+      type="date"
+      id="chgNewDate"
+      name="chgNewDate"
+      required
+      style="
+        padding: 10px 14px;
+        border: 1.5px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif;
+        color: #2D3436;
+        background: #F8F6F3;
+        transition: border-color 0.2s, background 0.2s;
+        width: 100%;
+        cursor: pointer;
+      "
+      onfocus="this.style.borderColor='#2B7A4B'; this.style.background='#fff';"
+      onblur="this.style.borderColor='#ddd'; this.style.background='#F8F6F3';"
+    />
+    <span style="font-size: 0.75rem; color: #7B8794; margin-top: 2px;">
+      最早可選明日起算的可預約日期
+    </span>
+  </div>
+
+  <!-- ── 2. 時段選擇器 ── -->
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <label
+      style="
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #2D3436;
+        font-family: 'Noto Sans TC', sans-serif;
+        display: block;
+        margin-bottom: 2px;
+      "
+    >
+      新時段 <span style="color: #e53e3e; margin-left: 2px;">*</span>
+    </label>
+
+    <!-- 時段：以 radio button 列表呈現，風格與 .slot-btn 相符 -->
+    <div
+      id="chgNewSlot"
+      role="radiogroup"
+      aria-label="選擇時段"
+      style="display: flex; flex-wrap: wrap; gap: 10px;"
+    >
+      <!-- 14:00-15:00 -->
+      <label style="
+        display: inline-flex;
+        align-items: center;
+        gap: 0;
+        cursor: pointer;
+      ">
+        <input
+          type="radio"
+          name="chgNewSlot"
+          value="14:00-15:00"
+          style="display: none;"
+          onchange="
+            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#2B7A4B'; });
+            this.closest('label').querySelector('.chg-slot-btn').style.background='#2B7A4B';
+            this.closest('label').querySelector('.chg-slot-btn').style.color='#fff';
+          "
+        />
+        <span class="chg-slot-btn" style="
+          display: inline-block;
+          padding: 10px 20px;
+          border-radius: 8px;
+          border: 2px solid #2B7A4B;
+          color: #2B7A4B;
+          font-weight: 600;
+          font-size: 0.9rem;
+          font-family: 'Noto Sans TC', sans-serif;
+          background: #fff;
+          transition: background 0.15s, color 0.15s;
+          user-select: none;
+        ">14:00–15:00</span>
+      </label>
+
+      <!-- 15:00-16:00 -->
+      <label style="display: inline-flex; align-items: center; gap: 0; cursor: pointer;">
+        <input
+          type="radio"
+          name="chgNewSlot"
+          value="15:00-16:00"
+          style="display: none;"
+          onchange="
+            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#2B7A4B'; });
+            this.closest('label').querySelector('.chg-slot-btn').style.background='#2B7A4B';
+            this.closest('label').querySelector('.chg-slot-btn').style.color='#fff';
+          "
+        />
+        <span class="chg-slot-btn" style="
+          display: inline-block;
+          padding: 10px 20px;
+          border-radius: 8px;
+          border: 2px solid #2B7A4B;
+          color: #2B7A4B;
+          font-weight: 600;
+          font-size: 0.9rem;
+          font-family: 'Noto Sans TC', sans-serif;
+          background: #fff;
+          transition: background 0.15s, color 0.15s;
+          user-select: none;
+        ">15:00–16:00</span>
+      </label>
+
+      <!-- 16:30-17:30 -->
+      <label style="display: inline-flex; align-items: center; gap: 0; cursor: pointer;">
+        <input
+          type="radio"
+          name="chgNewSlot"
+          value="16:30-17:30"
+          style="display: none;"
+          onchange="
+            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#2B7A4B'; });
+            this.closest('label').querySelector('.chg-slot-btn').style.background='#2B7A4B';
+            this.closest('label').querySelector('.chg-slot-btn').style.color='#fff';
+          "
+        />
+        <span class="chg-slot-btn" style="
+          display: inline-block;
+          padding: 10px 20px;
+          border-radius: 8px;
+          border: 2px solid #2B7A4B;
+          color: #2B7A4B;
+          font-weight: 600;
+          font-size: 0.9rem;
+          font-family: 'Noto Sans TC', sans-serif;
+          background: #fff;
+          transition: background 0.15s, color 0.15s;
+          user-select: none;
+        ">16:30–17:30</span>
+      </label>
+
+      <!-- 19:00-20:00 -->
+      <label style="display: inline-flex; align-items: center; gap: 0; cursor: pointer;">
+        <input
+          type="radio"
+          name="chgNewSlot"
+          value="19:00-20:00"
+          style="display: none;"
+          onchange="
+            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#2B7A4B'; });
+            this.closest('label').querySelector('.chg-slot-btn').style.background='#2B7A4B';
+            this.closest('label').querySelector('.chg-slot-btn').style.color='#fff';
+          "
+        />
+        <span class="chg-slot-btn" style="
+          display: inline-block;
+          padding: 10px 20px;
+          border-radius: 8px;
+          border: 2px solid #2B7A4B;
+          color: #2B7A4B;
+          font-weight: 600;
+          font-size: 0.9rem;
+          font-family: 'Noto Sans TC', sans-serif;
+          background: #fff;
+          transition: background 0.15s, color 0.15s;
+          user-select: none;
+        ">19:00–20:00</span>
+      </label>
     </div>
+  </div>
+
+  <!-- ── 3. 預約類型選擇器 ── -->
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <label
+      for="chgNewType"
+      style="
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #2D3436;
+        font-family: 'Noto Sans TC', sans-serif;
+      "
+    >
+      預約類型 <span style="color: #e53e3e; margin-left: 2px;">*</span>
+    </label>
+    <select
+      id="chgNewType"
+      name="chgNewType"
+      required
+      style="
+        padding: 10px 14px;
+        border: 1.5px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif;
+        color: #2D3436;
+        background: #F8F6F3;
+        transition: border-color 0.2s, background 0.2s;
+        width: 100%;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232B7A4B' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 38px;
+      "
+      onfocus="this.style.borderColor='#2B7A4B'; this.style.background='#fff';"
+      onblur="this.style.borderColor='#ddd'; this.style.background='#F8F6F3';"
+    >
+      <option value="" disabled selected>— 請選擇類型 —</option>
+      <option value="參訪校區">🏫 參訪校區</option>
+      <option value="英文程度檢測">📝 英文程度檢測</option>
+      <option value="課程體驗">⭐ 課程體驗</option>
+    </select>
+  </div>
+
+  <!-- ── 提示說明 ── -->
+  <div style="
+    background: #E8F5EE;
+    border-left: 4px solid #2B7A4B;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 0.83rem;
+    color: #2D3436;
+    line-height: 1.65;
+  ">
+    ⚠️ 改期須於原預約日期 <strong>24 小時前</strong>提出，逾時恕無法受理。
+    如有疑問請聯繫 <a href="https://line.me" style="color: #2B7A4B; font-weight: 600; text-decoration: underline;">LINE 官方帳號</a>。
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     初始化腳本：設定 min 日期為明日，並維護 radio 按鈕視覺狀態
+     ══════════════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  // 設定日期選擇器的最小值為明天
+  var dateInput = document.getElementById('chgNewDate');
+  if (dateInput) {
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    // 格式化為 YYYY-MM-DD
+    var yyyy = tomorrow.getFullYear();
+    var mm   = String(tomorrow.getMonth() + 1).padStart(2, '0');
+    var dd   = String(tomorrow.getDate()).padStart(2, '0');
+    dateInput.min = yyyy + '-' + mm + '-' + dd;
+  }
+
+  // 讓整個 label 區塊可點擊（slot button 點擊觸發 radio）
+  var slotContainer = document.getElementById('chgNewSlot');
+  if (slotContainer) {
+    slotContainer.querySelectorAll('label').forEach(function(lbl) {
+      lbl.addEventListener('click', function() {
+        // 重置所有按鈕
+        slotContainer.querySelectorAll('.chg-slot-btn').forEach(function(btn) {
+          btn.style.background = '#fff';
+          btn.style.color      = '#2B7A4B';
+        });
+        // 啟用被點擊的按鈕
+        var btn = lbl.querySelector('.chg-slot-btn');
+        if (btn) {
+          btn.style.background = '#2B7A4B';
+          btn.style.color      = '#fff';
+        }
+      });
+    });
+  }
+
+  // 提供讀取目前選取值的輔助函式（供外部表單邏輯呼叫）
+  window.getChgRescheduleValues = function() {
+    var date     = document.getElementById('chgNewDate')  ? document.getElementById('chgNewDate').value   : '';
+    var type     = document.getElementById('chgNewType')  ? document.getElementById('chgNewType').value   : '';
+    var slotEl   = document.querySelector('input[name="chgNewSlot"]:checked');
+    var slot     = slotEl ? slotEl.value : '';
+    return { date: date, slot: slot, bookingType: type };
+  };
+})();
+</script>
+
+</div>
     <div id="chgCancelFields" style="display:none">
       <div class="form-group" style="margin-bottom:16px">
         <label style="font-weight:600;font-size:0.9rem">取消原因</label>
@@ -7740,7 +8053,7 @@ function selectChgAction(action) {
   r.style.background = action === 'reschedule' ? '#F0FDF4' : '';
   c.style.borderColor = action === 'cancel' ? '#C0392B' : '#ddd';
   c.style.background = action === 'cancel' ? '#FEF2F2' : '';
-  document.getElementById('chgRescheduleFields').style.display = action === 'reschedule' ? 'block' : 'none';
+  document.getElementById('chgRescheduleFieldsWrap').style.display = action === 'reschedule' ? 'block' : 'none';
   document.getElementById('chgCancelFields').style.display = action === 'cancel' ? 'block' : 'none';
   var btn = document.getElementById('chgSubmitBtn');
   btn.disabled = false;
@@ -7761,8 +8074,11 @@ function submitBookingChange() {
     bookingType: document.getElementById('chgType').value.trim()
   };
   if (_chgAction === 'reschedule') {
-    data.newDate = document.getElementById('chgNewDate').value.trim();
-    data.newSlot = document.getElementById('chgNewSlot').value.trim();
+    var rv = window.getChgRescheduleValues ? window.getChgRescheduleValues() : {};
+    data.newDate = rv.date || document.getElementById('chgNewDate').value.trim();
+    var slotRadio = document.querySelector('input[name="chgNewSlot"]:checked');
+    data.newSlot = slotRadio ? slotRadio.value : '';
+    data.newType = rv.bookingType || '';
   }
   if (_chgAction === 'cancel') {
     data.reason = document.getElementById('chgReason').value.trim();
