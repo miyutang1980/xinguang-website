@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://taipingxinguang.org/sitemap.xml
