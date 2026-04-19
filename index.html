@@ -1045,6 +1045,7 @@ body {
     </a>
     <div class="nav-links">
       <a href="#courses">課程介紹</a>
+      <a href="#reverse-engineering">路線計算</a>
       <a href="#seminar">說明會報名</a>
       <a href="#booking">預約參訪</a>
       <a href="#inquiry">問課諮詢</a>
@@ -1059,6 +1060,7 @@ body {
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#courses" onclick="closeMobile()">課程介紹</a>
+  <a href="#reverse-engineering" onclick="closeMobile()">路線計算</a>
   <a href="#seminar" onclick="closeMobile()">說明會報名</a>
   <a href="#booking" onclick="closeMobile()">預約參訪</a>
   <a href="#inquiry" onclick="closeMobile()">問課諮詢</a>
@@ -3107,6 +3109,735 @@ body {
 </div>
   </div>
 </section>
+
+<!-- ========== REVERSE ENGINEERING CALCULATOR ========== -->
+<!-- ============================================================
+     太平新光分校 — 逆向工程互動計算器
+     Section ID: reverse-engineering
+     Insert this <section> block into the existing page body.
+     ============================================================ -->
+
+<style>
+/* ── Calculator Section Styles ── */
+#reverse-engineering {
+  --re-dark:    #1a2744;
+  --re-orange:  #e8863a;
+  --re-orange-h:#d4722a;
+  --re-light:   #f4f7fc;
+  --re-white:   #ffffff;
+  --re-card:    #1e2f55;
+  --re-card2:   #243362;
+  --re-text:    #e8edf8;
+  --re-muted:   #8fa3cc;
+  --re-ok:      #4caf82;
+  --re-warn:    #f0b429;
+  --re-err:     #e85050;
+  --re-radius:  14px;
+  --re-shadow:  0 8px 32px rgba(0,0,0,0.28);
+  --re-trans:   0.4s cubic-bezier(0.34,1.1,0.64,1);
+
+  background: var(--re-dark);
+  padding: clamp(56px, 8vw, 100px) clamp(20px, 5vw, 40px);
+  font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+  color: var(--re-text);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Decorative background blobs */
+#reverse-engineering::before,
+#reverse-engineering::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+  opacity: 0.12;
+}
+#reverse-engineering::before {
+  width: 500px; height: 500px;
+  background: var(--re-orange);
+  top: -120px; right: -100px;
+}
+#reverse-engineering::after {
+  width: 400px; height: 400px;
+  background: #3a6fd4;
+  bottom: -80px; left: -80px;
+}
+
+.re-container {
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Section Header ── */
+.re-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.re-label {
+  display: inline-block;
+  background: rgba(232,134,58,0.15);
+  border: 1px solid rgba(232,134,58,0.4);
+  color: var(--re-orange);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 6px 16px;
+  border-radius: 99px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.re-title {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 900;
+  color: var(--re-white);
+  line-height: 1.3;
+  margin: 0 0 14px;
+}
+.re-title span {
+  color: var(--re-orange);
+}
+.re-subtitle {
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  color: var(--re-muted);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ── Calculator Card ── */
+.re-card {
+  background: var(--re-card);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--re-radius);
+  padding: clamp(24px, 5vw, 44px);
+  box-shadow: var(--re-shadow);
+}
+
+/* ── Form Grid ── */
+.re-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.re-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.re-field label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--re-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.re-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--re-card2);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--re-white);
+  font-size: 0.97rem;
+  font-family: inherit;
+  padding: 12px 40px 12px 16px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%238fa3cc' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+.re-field select:focus {
+  border-color: var(--re-orange);
+  box-shadow: 0 0 0 3px rgba(232,134,58,0.18);
+}
+.re-field select option {
+  background: #1a2744;
+  color: #e8edf8;
+}
+
+/* ── Calculate Button ── */
+.re-btn-calc {
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--re-orange);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px rgba(232,134,58,0.35);
+}
+.re-btn-calc:hover {
+  background: var(--re-orange-h);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(232,134,58,0.45);
+}
+.re-btn-calc:active {
+  transform: translateY(0);
+}
+
+/* ── Results Panel ── */
+.re-results {
+  margin-top: 32px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+}
+.re-results.visible {
+  max-height: 2000px;
+  opacity: 1;
+}
+
+/* ── Result Summary Card ── */
+.re-result-main {
+  border-radius: var(--re-radius);
+  padding: 28px 28px 24px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid rgba(255,255,255,0.08);
+}
+.re-result-main.status-ok   { background: linear-gradient(135deg, #1b3a2e 0%, #1d3547 100%); border-color: rgba(76,175,130,0.3); }
+.re-result-main.status-warn { background: linear-gradient(135deg, #3a2e14 0%, #2a2f1d 100%); border-color: rgba(240,180,41,0.3); }
+.re-result-main.status-err  { background: linear-gradient(135deg, #3a1b1b 0%, #2a1d2d 100%); border-color: rgba(232,80,80,0.3); }
+
+.re-result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.re-stat {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.re-stat-icon { font-size: 1.4rem; margin-bottom: 4px; }
+.re-stat-label {
+  font-size: 0.72rem;
+  color: var(--re-muted);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.re-stat-value {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--re-white);
+}
+
+/* ── Status Banner ── */
+.re-status-banner {
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 0.97rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.re-status-banner.ok   { background: rgba(76,175,130,0.15); color: #5dd4a0; border: 1px solid rgba(76,175,130,0.25); }
+.re-status-banner.warn { background: rgba(240,180,41,0.15); color: #f5c842; border: 1px solid rgba(240,180,41,0.25); }
+.re-status-banner.err  { background: rgba(232,80,80,0.15);  color: #f07070; border: 1px solid rgba(232,80,80,0.25); }
+
+/* ── Timeline Visual ── */
+.re-timeline {
+  margin: 28px 0;
+}
+.re-timeline-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--re-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.re-timeline-bar {
+  position: relative;
+  height: 10px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.re-timeline-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--re-orange) 0%, #f5b56a 100%);
+  width: 0;
+  transition: width 0.9s cubic-bezier(0.34,1.1,0.64,1) 0.2s;
+}
+.re-timeline-ages {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--re-muted);
+  margin-top: 6px;
+}
+.re-timeline-marker {
+  position: absolute;
+  top: -4px;
+  width: 18px;
+  height: 18px;
+  background: var(--re-orange);
+  border-radius: 50%;
+  border: 2.5px solid var(--re-dark);
+  transform: translateX(-50%);
+  transition: left 0.9s cubic-bezier(0.34,1.1,0.64,1) 0.2s;
+}
+
+/* ── Comparison Table ── */
+.re-compare-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--re-white);
+  margin: 0 0 14px;
+}
+.re-table-wrap {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.re-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.re-table th {
+  background: var(--re-card2);
+  color: var(--re-muted);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.re-table td {
+  padding: 13px 14px;
+  color: var(--re-text);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+}
+.re-table tr:last-child td { border-bottom: none; }
+.re-table tr.re-row-highlight td {
+  background: rgba(232,134,58,0.1);
+  color: var(--re-white);
+  font-weight: 700;
+}
+.re-table tr.re-row-highlight td:first-child {
+  border-left: 3px solid var(--re-orange);
+}
+.re-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 99px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.re-badge-rec  { background: rgba(232,134,58,0.25); color: var(--re-orange); }
+.re-badge-ok   { background: rgba(76,175,130,0.2); color: #5dd4a0; }
+.re-badge-warn { background: rgba(240,180,41,0.2); color: #f5c842; }
+.re-badge-err  { background: rgba(232,80,80,0.2); color: #f07070; }
+
+/* ── CTA Button ── */
+.re-cta-wrap {
+  text-align: center;
+  margin-top: 28px;
+}
+.re-cta-note {
+  font-size: 0.8rem;
+  color: var(--re-muted);
+  margin: 0 0 14px;
+}
+.re-btn-cta {
+  display: inline-block;
+  padding: 16px 36px;
+  background: linear-gradient(135deg, var(--re-orange) 0%, #f5a355 100%);
+  color: #fff;
+  border: none;
+  border-radius: 99px;
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 24px rgba(232,134,58,0.4);
+}
+.re-btn-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(232,134,58,0.52);
+}
+.re-btn-cta:active { transform: translateY(-1px); }
+
+/* ── Tip line ── */
+.re-tip {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--re-muted);
+  margin-top: 24px;
+  line-height: 1.6;
+}
+.re-tip strong { color: var(--re-orange); }
+
+/* ── Pulse animation on highlight row ── */
+@keyframes re-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(232,134,58,0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(232,134,58,0); }
+  100% { box-shadow: 0 0 0 0 rgba(232,134,58,0); }
+}
+.re-table tr.re-row-highlight { animation: re-pulse 1.2s ease 0.5s 2; }
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .re-form { grid-template-columns: 1fr; }
+  .re-result-grid { grid-template-columns: repeat(2, 1fr); }
+  .re-table th:nth-child(3),
+  .re-table td:nth-child(3) { display: none; }
+}
+</style>
+
+<section id="reverse-engineering">
+  <div class="re-container">
+
+    <!-- Header -->
+    <div class="re-header">
+      <div class="re-label">學習路線計算器</div>
+      <h2 class="re-title">從目標<span>倒推</span>，幫孩子算出最佳學習路線</h2>
+      <p class="re-subtitle">不是選最貴的班，而是選最適合的路</p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="re-card">
+
+      <!-- Inputs -->
+      <div class="re-form">
+        <div class="re-field">
+          <label for="re-age">孩子目前年齡</label>
+          <select id="re-age">
+            <option value="">請選擇年齡</option>
+            <option value="4">4 歲</option>
+            <option value="5">5 歲</option>
+            <option value="6">6 歲</option>
+            <option value="7">7 歲</option>
+            <option value="8">8 歲</option>
+            <option value="9">9 歲</option>
+            <option value="10">10 歲</option>
+            <option value="11">11 歲</option>
+            <option value="12">12 歲</option>
+          </select>
+        </div>
+
+        <div class="re-field">
+          <label for="re-goal">您的目標</label>
+          <select id="re-goal">
+            <option value="">請選擇目標</option>
+            <option value="g1">國小畢業前有英文基礎（劍橋 Movers A1）</option>
+            <option value="g3a">國中會考英文精熟（CEFR A2-B1）</option>
+            <option value="g3b">通過全民英檢初級（GEPT Elementary）</option>
+            <option value="g5">通過全民英檢中級（GEPT Intermediate）</option>
+          </select>
+        </div>
+
+        <div class="re-field">
+          <label for="re-days">每週可投入天數</label>
+          <select id="re-days">
+            <option value="">請選擇天數</option>
+            <option value="low">1–2 天</option>
+            <option value="mid">3–4 天</option>
+            <option value="high">每天（5 天）</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="re-btn-calc" onclick="reCalculate()">幫我算出學習路線 →</button>
+
+      <!-- Results Panel -->
+      <div class="re-results" id="re-results">
+
+        <!-- Main result card -->
+        <div class="re-result-main" id="re-result-card">
+          <div class="re-result-grid" id="re-stats"></div>
+          <div class="re-status-banner" id="re-status-banner"></div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="re-timeline">
+          <div class="re-timeline-title">學習時間軸（現在 → 目標）</div>
+          <div class="re-timeline-bar">
+            <div class="re-timeline-fill" id="re-tl-fill"></div>
+            <div class="re-timeline-marker" id="re-tl-marker" style="left:0;display:none;"></div>
+          </div>
+          <div class="re-timeline-ages" id="re-tl-ages"></div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="re-compare-title">📊 三種班型完整比較</div>
+        <div class="re-table-wrap">
+          <table class="re-table">
+            <thead>
+              <tr>
+                <th>班型</th>
+                <th>每週上課</th>
+                <th>起始程度</th>
+                <th>達成目標</th>
+                <th>狀態</th>
+              </tr>
+            </thead>
+            <tbody id="re-table-body"></tbody>
+          </table>
+        </div>
+
+        <!-- CTA -->
+        <div class="re-cta-wrap">
+          <p class="re-cta-note">計算結果是參考基準，每個孩子學習速度不同。<br>免費檢測後由老師提供更精準的建議！</p>
+          <a href="#booking" class="re-btn-cta">免費英語程度檢測，精確規劃學習路線</a>
+        </div>
+
+      </div><!-- /re-results -->
+
+      <p class="re-tip">太平新光分校依據孩子程度量身分班，<br><strong>先測再排，不讓孩子走冤枉路</strong>。</p>
+    </div><!-- /re-card -->
+
+  </div><!-- /re-container -->
+</section>
+
+<script>
+(function() {
+  /* ── Data Tables ── */
+
+  // goal → { label, deadline, targetGrade }
+  // deadline: age at which they should have completed the goal
+  const GOALS = {
+    g1:  { label: '國小畢業前有英文基礎（A1）', deadline: 12, targetGrade: 'G1' },
+    g3a: { label: '國中會考英文精熟（A2-B1）',  deadline: 13, targetGrade: 'G3' },
+    g3b: { label: '通過全民英檢初級（GEPT）',    deadline: 13, targetGrade: 'G3' },
+    g5:  { label: '通過全民英檢中級（GEPT中級）', deadline: 13, targetGrade: 'G5' },
+  };
+
+  // class info: name, weeklyLabel, startLevel, years to each target grade
+  const CLASSES = [
+    {
+      id: 'immersive',
+      name: '浸潤班',
+      daysKey: 'high',
+      weeklyLabel: '每天（~10小時）',
+      startLevel: 'GK 幼兒英語',
+      years: { G1: 1, G3: 3, G5: 5 },
+      upgradeOrder: 0,
+    },
+    {
+      id: 'elite',
+      name: '菁英班',
+      daysKey: 'mid',
+      weeklyLabel: '3–4天（~7.5小時）',
+      startLevel: 'SA 初學銜接',
+      years: { G1: 3, G3: 4.5, G5: 7 },
+      upgradeOrder: 1,
+    },
+    {
+      id: 'standard',
+      name: '標準班',
+      daysKey: 'low',
+      weeklyLabel: '1–2天（~4.5小時）',
+      startLevel: 'SA 初學銜接',
+      years: { G1: 4, G3: 6, G5: 10 },
+      upgradeOrder: 2,
+    },
+  ];
+
+  // days selection → class id
+  const DAYS_TO_CLASS = { high: 'immersive', mid: 'elite', low: 'standard' };
+
+  /* ── Helpers ── */
+  function getClass(id) { return CLASSES.find(c => c.id === id); }
+
+  function formatYears(y) {
+    if (y === Math.floor(y)) return y + ' 年';
+    return y + ' 年（約 ' + Math.round(y * 12) + ' 個月）';
+  }
+
+  function latestStart(deadline, years) {
+    return deadline - years;
+  }
+
+  /* ── Main calculation ── */
+  window.reCalculate = function() {
+    const ageVal  = document.getElementById('re-age').value;
+    const goalVal = document.getElementById('re-goal').value;
+    const daysVal = document.getElementById('re-days').value;
+
+    if (!ageVal || !goalVal || !daysVal) {
+      alert('請先填寫所有選項喔！');
+      return;
+    }
+
+    const age      = parseInt(ageVal);
+    const goal     = GOALS[goalVal];
+    const classId  = DAYS_TO_CLASS[daysVal];
+    const cls      = getClass(classId);
+    const targetGrade = goal.targetGrade;
+    const deadline = goal.deadline;
+    const yearsNeeded = cls.years[targetGrade];
+    const latestAge = latestStart(deadline, yearsNeeded);
+    const yearsLeft = deadline - age;
+    const canDo    = latestAge >= age;
+
+    // Determine status
+    let status, statusClass, statusIcon, statusText;
+    if (latestAge > age + 1) {
+      status = 'ok'; statusIcon = '✅';
+      statusText = `還來得及！孩子現在 ${age} 歲，最晚 ${latestAge} 歲前開始就行。不過早點開始，壓力更小、效果更好！`;
+    } else if (latestAge >= age) {
+      status = 'warn'; statusIcon = '⚠️';
+      statusText = `時間有點緊迫！孩子現在 ${age} 歲，必須立即開始，一天都不能等。建議盡快預約免費程度測驗！`;
+    } else {
+      status = 'err'; statusIcon = '❌';
+      const higherClass = findUpgradeClass(classId, targetGrade, age, deadline);
+      if (higherClass) {
+        statusText = `以目前${cls.name}的進度，時間來不及了！建議升級到「${higherClass.name}」（每週${higherClass.weeklyLabel}），可在 ${deadline - higherClass.years[targetGrade]} 歲前完成目標。`;
+      } else {
+        statusText = `以目前進度時間略不夠，建議調整目標或來校做完整評估，讓老師提供個人化方案。`;
+      }
+    }
+
+    /* ── Build result card ── */
+    const card = document.getElementById('re-result-card');
+    card.className = 're-result-main status-' + status;
+
+    document.getElementById('re-stats').innerHTML = `
+      <div class="re-stat">
+        <div class="re-stat-icon">🎯</div>
+        <div class="re-stat-label">推薦班型</div>
+        <div class="re-stat-value">${cls.name}</div>
+      </div>
+      <div class="re-stat">
+        <div class="re-stat-icon">⏰</div>
+        <div class="re-stat-label">需要時間</div>
+        <div class="re-stat-value">${formatYears(yearsNeeded)}</div>
+      </div>
+      <div class="re-stat">
+        <div class="re-stat-icon">📅</div>
+        <div class="re-stat-label">最晚開始年齡</div>
+        <div class="re-stat-value">${latestAge > 0 ? latestAge + ' 歲' : '越早越好'}</div>
+      </div>
+      <div class="re-stat">
+        <div class="re-stat-icon">🏁</div>
+        <div class="re-stat-label">目標達成年齡</div>
+        <div class="re-stat-value">${Math.min(age + yearsNeeded, 18)} 歲</div>
+      </div>
+    `;
+
+    const banner = document.getElementById('re-status-banner');
+    banner.className = 're-status-banner ' + status;
+    banner.innerHTML = `<span style="font-size:1.3rem;">${statusIcon}</span> ${statusText}`;
+
+    /* ── Timeline ── */
+    const minAge = 4, maxAge = 18;
+    const ageRange = maxAge - minAge;
+    const startPct = ((age - minAge) / ageRange) * 100;
+    const endPct   = Math.min(((age + yearsNeeded - minAge) / ageRange) * 100, 100);
+
+    document.getElementById('re-tl-ages').innerHTML =
+      `<span>${minAge} 歲</span><span>9 歲</span><span>12 歲</span><span>15 歲</span><span>${maxAge} 歲</span>`;
+
+    const fill = document.getElementById('re-tl-fill');
+    fill.style.width = '0';
+    fill.style.marginLeft = startPct + '%';
+
+    const marker = document.getElementById('re-tl-marker');
+    marker.style.display = 'block';
+    marker.style.left = startPct + '%';
+
+    // Trigger transition after tiny delay
+    setTimeout(() => {
+      fill.style.width = (endPct - startPct) + '%';
+    }, 80);
+
+    /* ── Comparison Table ── */
+    let rows = '';
+    CLASSES.forEach(c => {
+      const yrs = c.years[targetGrade];
+      const late = latestStart(deadline, yrs);
+      const isRec = c.id === classId;
+      const feasible = late >= age;
+      const rowClass = isRec ? ' re-row-highlight' : '';
+
+      let badgeHtml = '';
+      if (isRec) badgeHtml += '<span class="re-badge re-badge-rec">推薦</span>';
+
+      let statusBadge;
+      if (late > age + 1) {
+        statusBadge = `<span class="re-badge re-badge-ok">✓ 來得及</span>`;
+      } else if (late >= age) {
+        statusBadge = `<span class="re-badge re-badge-warn">⚡ 剛好來得及</span>`;
+      } else {
+        const shortfall = age - late;
+        statusBadge = `<span class="re-badge re-badge-err">✗ 晚了 ${shortfall} 年</span>`;
+      }
+
+      rows += `<tr class="${rowClass}">
+        <td>${c.name}${badgeHtml}</td>
+        <td>${c.weeklyLabel}</td>
+        <td>${c.startLevel}</td>
+        <td>${formatYears(yrs)}（最晚 ${late > 0 ? late + '歲' : '越早越好'}開始）</td>
+        <td>${statusBadge}</td>
+      </tr>`;
+    });
+    document.getElementById('re-table-body').innerHTML = rows;
+
+    /* ── Show results ── */
+    const panel = document.getElementById('re-results');
+    panel.classList.add('visible');
+    setTimeout(() => {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  };
+
+  /* Find a faster class that could still achieve the goal */
+  function findUpgradeClass(currentClassId, targetGrade, age, deadline) {
+    // Classes ordered fastest first: immersive, elite, standard
+    const order = ['immersive', 'elite', 'standard'];
+    const currentIdx = order.indexOf(currentClassId);
+    for (let i = 0; i < currentIdx; i++) {
+      const c = getClass(order[i]);
+      if (c && (deadline - c.years[targetGrade]) >= age) return c;
+    }
+    return null;
+  }
+
+  /* Smooth scroll polyfill for CTA */
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('a[href="#booking"]');
+    if (!btn) return;
+    e.preventDefault();
+    const target = document.getElementById('booking');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+
+})();
+</script>
+
 
 <!-- ========== CAMP ========== -->
 <section id="camp" style="padding:0">
