@@ -2863,6 +2863,105 @@ body {
         </div>
       </div>
 
+<!-- ===================================================
+     安親課輔班 — 科目介紹 4 accordions
+     Insert BEFORE the 費用與報名資訊 accordion inside #panel-afterschool
+     =================================================== -->
+
+<!-- 科目標題 -->
+<div class="im-subjects-title" style="color:#10B981;margin-top:28px">📚 各科怎麼教？點開看看</div>
+
+<!-- ① 國語 -->
+<div class="im-subject-accordion">
+  <button class="im-subject-btn" onclick="toggleSubject(this)">
+    <div class="im-subject-icon" style="background:#ECFDF5">📖</div>
+    <div class="im-subject-label">
+      <strong>國語 Chinese Language</strong>
+      <span>不只寫完功課——閱讀理解、作文、注音，每個弱點都有對策</span>
+    </div>
+    <span class="im-subject-chevron">▼</span>
+  </button>
+  <div class="im-subject-body">
+    <p class="im-subject-desc">很多爸媽以為「功課寫完就好」，但國語真正的地雷是藏在後面的：注音到二年級還在出錯、閱讀測驗看不懂在問什麼、作文寫到第一段就卡住……這些都是老師看得到、能針對補強的地方。國語不是死背，是要搞懂每個卡點在哪。</p>
+    <div class="im-highlights">
+      <div class="im-highlight-item">低年級注音加強：很多孩子到二年級注音還有漏洞，老師找出個別卡點一一修掉，不讓它拖累後面的學習</div>
+      <div class="im-highlight-item">閱讀理解訓練：從「念得出來」進化到「讀懂在說什麼」——這個能力是所有科目的基礎，從中年級就要開始培養</div>
+      <div class="im-highlight-item">中高年級作文指導：段落怎麼拆、觀點怎麼表達、題材怎麼選——不是只叫孩子「多寫幾次」，是有方法的練</div>
+      <div class="im-highlight-item">對應學校教材版本：翰林、康軒、南一都有，老師確認孩子現在用哪個版本，課輔跟學校課堂同步進行</div>
+      <div class="im-highlight-item">考前重點整理：期中期末前做系統性複習，不是最後一週才臨時抱佛腳</div>
+      <div class="im-highlight-item">錯題針對複習：考完找出哪些題型一直錯、背後的概念在哪裡沒搞清楚，下次不再錯第二次</div>
+    </div>
+  </div>
+</div>
+
+<!-- ② 數學 -->
+<div class="im-subject-accordion">
+  <button class="im-subject-btn" onclick="toggleSubject(this)">
+    <div class="im-subject-icon" style="background:#EFF6FF">🔢</div>
+    <div class="im-subject-label">
+      <strong>數學 Mathematics</strong>
+      <span>數學不是背公式——搞懂「為什麼」，題目怎麼變都不怕</span>
+    </div>
+    <span class="im-subject-chevron">▼</span>
+  </button>
+  <div class="im-subject-body">
+    <p class="im-subject-desc">數學學不好，很多時候不是孩子不夠聰明，而是某一個基礎概念沒紮穩，後面才一路搖。最常見的狀況是：應用題讀不懂在問什麼、分數和小數的概念混在一起、公式背了但碰到變化題型就垮掉。老師的任務是找到那個「最初沒搞懂的地方」，從那裡重新蓋。</p>
+    <div class="im-highlights">
+      <div class="im-highlight-item">應用題閱讀理解：很多孩子不是不會算，是看不懂題目在問什麼——老師專門練習怎麼拆解題目語言</div>
+      <div class="im-highlight-item">低年級基礎概念紮實：加減法概念、圖形認知、時間和錢幣——這些沒打穩，上去就會搖</div>
+      <div class="im-highlight-item">中年級銜接期加強：分數、小數、面積——這裡是最多孩子開始出現落差的時期，老師特別留意</div>
+      <div class="im-highlight-item">高年級國中預備：比例、速率、幾何推理——提前熟悉國中思維，升上去不會突然跟不上節奏</div>
+      <div class="im-highlight-item">個別弱點追蹤：錯題不是「改對就好」，是找出背後哪個概念沒搞清楚，把那個洞填起來</div>
+      <div class="im-highlight-item">不硬背公式：先搞懂「這個公式是怎麼來的」，題目換個包裝也不會不認識</div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 自然科學 -->
+<div class="im-subject-accordion">
+  <button class="im-subject-btn" onclick="toggleSubject(this)">
+    <div class="im-subject-icon" style="background:#F0FDF4">🔬</div>
+    <div class="im-subject-label">
+      <strong>自然科學 Science</strong>
+      <span>不只考前翻課本——觀察、推理、做實驗，自然科學本來就很好玩</span>
+    </div>
+    <span class="im-subject-chevron">▼</span>
+  </button>
+  <div class="im-subject-body">
+    <p class="im-subject-desc">很多孩子小三第一次碰到自然科學就卡關——不是不感興趣，是因為第一次接觸就是硬背答案，完全沒有機會「真的去理解」。其實自然科學是所有科目裡最適合用生活舉例的，老師會把抽象概念翻譯成孩子聽得懂、記得住的語言。</p>
+    <div class="im-highlights">
+      <div class="im-highlight-item">中年級自然科學啟蒙：小三開始有自然課，老師在這個階段幫孩子建立正確的科學思考方式，不是死背答案</div>
+      <div class="im-highlight-item">用生活實例解釋抽象概念：光和聲、植物結構、天氣變化——都能在生活中找到對應的例子，理解了自然就記住了</div>
+      <div class="im-highlight-item">實驗觀察記錄：理解「為什麼」比背「標準答案」重要，老師引導孩子從觀察出發，推導出結論</div>
+      <div class="im-highlight-item">高年級進階概念：力學、電路、天文——這些概念需要邏輯推理，老師幫孩子建立系統性的理解架構</div>
+      <div class="im-highlight-item">考前重點統整：圖表判讀、實驗結論推理，這些都是考題最愛考的，專門針對練習</div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ 社會 -->
+<div class="im-subject-accordion">
+  <button class="im-subject-btn" onclick="toggleSubject(this)">
+    <div class="im-subject-icon" style="background:#FFF7ED">🌏</div>
+    <div class="im-subject-label">
+      <strong>社會 Social Studies</strong>
+      <span>地理歷史公民不是死背——用故事、地圖、新聞理解這個世界</span>
+    </div>
+    <span class="im-subject-chevron">▼</span>
+  </button>
+  <div class="im-subject-body">
+    <p class="im-subject-desc">到了高年級，社會科是最容易讓孩子崩潰的一科——內容量暴增，地理、歷史、公民三科同時來，很多孩子的策略就是一條一條硬背，考完全忘。這樣很累，而且沒有用。老師的做法是幫孩子把零散的知識點串成有脈絡的故事，理解了才記得住。</p>
+    <div class="im-highlights">
+      <div class="im-highlight-item">高年級社會科整理術：內容量大、跨冊又跨主題，老師幫孩子建立自己的整理架構，不再對著一堆零散筆記發呆</div>
+      <div class="im-highlight-item">地理：用地圖、圖表建立空間概念——看得見的東西記得住，不只死背縣市名稱和地形</div>
+      <div class="im-highlight-item">歷史：用故事線串起事件脈絡——知道「為什麼會發生」，比背「哪一年發生什麼」有意義多了</div>
+      <div class="im-highlight-item">公民：用生活案例理解法律和經濟概念——這些東西本來就是從生活來的，用真實情境學最容易懂</div>
+      <div class="im-highlight-item">統整思考訓練：跨冊、跨主題串聯，國中社會的基礎在這裡打——提前有這個能力，升上去才不會一頭霧水</div>
+    </div>
+  </div>
+</div>
+
+
       <!-- 費用資訊 -->
       <div class="im-subject-accordion">
         <button class="im-subject-btn" onclick="toggleSubject(this)">
@@ -2938,6 +3037,12 @@ body {
     <!-- Accordions -->
     <div class="im-subjects">
       <div class="im-subjects-title" style="color:#F59E0B">🏫 托育班四大服務項目</div>
+
+<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+  <div class="el-highlight" style="background:#F59E0B">💡 不需要額外輔導？孩子可以自己寫功課？那你要的不是安親，是托育班</div>
+  <div class="el-highlight" style="background:#D97706">💰 學期 $12,500，比安親課輔便宜近一半——把預算留給真正需要的地方</div>
+  <div class="el-highlight" style="background:#B45309">🔄 學期中如果覺得孩子需要更多幫助，隨時可以升級到安親課輔班</div>
+</div>
 
       <!-- 自習環境 -->
       <div class="im-subject-accordion">
@@ -3016,6 +3121,27 @@ body {
       </div>
 
       <!-- 費用 -->
+      <!-- 托育班一天的流程 -->
+      <div class="im-subject-accordion">
+        <button class="im-subject-btn" onclick="toggleSubject(this)">
+          <div class="im-subject-icon" style="background:#FEF9EE">📋</div>
+          <div class="im-subject-label">
+            <strong>托育班一天的流程</strong>
+            <span>放學到家長接走，每個時段都有安排，孩子不會無聊亂晃</span>
+          </div>
+          <span class="im-subject-chevron">▼</span>
+        </button>
+        <div class="im-subject-body">
+          <p class="im-subject-desc">托育班不是「把孩子丟在那邊等」，而是有結構的陪伴。從放學到家長接走，每個時段都有對應的安排，讓孩子知道自己現在該做什麼。</p>
+          <div class="im-highlights">
+            <div class="im-highlight-item"><strong style="color:#B45309;white-space:nowrap;margin-right:4px">放學到校 → 點名確認</strong> 孩子一到就點名，老師確認每個孩子都安全到達、聯絡簿和功課都帶齊了</div>
+            <div class="im-highlight-item"><strong style="color:#B45309;white-space:nowrap;margin-right:4px">功課時間 → 自主完成，老師在場</strong> 孩子自己寫功課，老師在旁邊陪著——不是逐題教，是確認孩子專心、有問題可以問</div>
+            <div class="im-highlight-item"><strong style="color:#B45309;white-space:nowrap;margin-right:4px">閱讀休息 → 課外書或安靜活動</strong> 功課寫完之後有閱讀時間，孩子可以看自己帶來的書，也可以安靜休息——有品質的自由時間</div>
+            <div class="im-highlight-item"><strong style="color:#B45309;white-space:nowrap;margin-right:4px">家長接送 → 彈性配合下班時間</strong> 接送時間彈性配合，孩子在裡面有人照顧，家長工作中不用分心擔心</div>
+          </div>
+        </div>
+      </div>
+
       <div class="im-subject-accordion">
         <button class="im-subject-btn" onclick="toggleSubject(this)">
           <div class="im-subject-icon" style="background:#FEF9EE">💰</div>
@@ -3872,6 +3998,106 @@ body {
   <!-- Body -->
   <div class="camp-body">
     <div class="camp-body-inner">
+
+<!-- ===================================================
+     夏令營 — 亮點統整 stat cards
+     Insert right after the .camp-hero block (after the camp-month-tabs),
+     at the TOP of the .camp-body section
+     =================================================== -->
+
+<div style="
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center;
+  padding:28px 24px 20px;
+  background:var(--green-50);
+  border-bottom:1px solid rgba(43,122,75,0.12);
+  margin-bottom:24px;
+">
+
+  <!-- Stat card: 全英語沉浸 -->
+  <div style="
+    flex:1 1 140px;
+    max-width:180px;
+    background:#fff;
+    border:1.5px solid rgba(43,122,75,0.18);
+    border-radius:14px;
+    padding:18px 14px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(43,122,75,0.08);
+  ">
+    <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🌏</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">100%</div>
+    <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">全英語沉浸<br>上課、活動、互動全英文</div>
+  </div>
+
+  <!-- Stat card: 8週主題冒險 -->
+  <div style="
+    flex:1 1 140px;
+    max-width:180px;
+    background:#fff;
+    border:1.5px solid rgba(43,122,75,0.18);
+    border-radius:14px;
+    padding:18px 14px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(43,122,75,0.08);
+  ">
+    <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🏕️</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">8 週</div>
+    <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">主題冒險<br>每週一個全新身份任務</div>
+  </div>
+
+  <!-- Stat card: 每週戶外教學 -->
+  <div style="
+    flex:1 1 140px;
+    max-width:180px;
+    background:#fff;
+    border:1.5px solid rgba(43,122,75,0.18);
+    border-radius:14px;
+    padding:18px 14px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(43,122,75,0.08);
+  ">
+    <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🚌</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">每週</div>
+    <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">戶外教學<br>主題配套，不只在教室裡玩</div>
+  </div>
+
+  <!-- Stat card: 每日午餐+點心 -->
+  <div style="
+    flex:1 1 140px;
+    max-width:180px;
+    background:#fff;
+    border:1.5px solid rgba(43,122,75,0.18);
+    border-radius:14px;
+    padding:18px 14px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(43,122,75,0.08);
+  ">
+    <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🍱</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">每天</div>
+    <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">午餐＋點心<br>吃飽了才有力氣玩</div>
+  </div>
+
+  <!-- Stat card: 贈品大禮包 -->
+  <div style="
+    flex:1 1 140px;
+    max-width:180px;
+    background:#fff;
+    border:1.5px solid rgba(43,122,75,0.18);
+    border-radius:14px;
+    padding:18px 14px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(43,122,75,0.08);
+  ">
+    <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🎁</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">贈品</div>
+    <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">大禮包<br>每週主題限定周邊帶回家</div>
+  </div>
+
+</div>
+
 
       <!-- ══ 七月 ══ -->
       <div class="camp-month-panel active" id="camp-july">
