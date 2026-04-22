@@ -1047,6 +1047,7 @@ body {
       <a href="#courses">課程介紹</a>
       <a href="#reverse-engineering">路線計算</a>
       <a href="#cambridge-pathway">國際認證</a>
+      <a href="#cert-comparison">證照對照</a>
       <a href="#seminar">說明會報名</a>
       <a href="#booking">預約參訪</a>
       <a href="#inquiry">問課諮詢</a>
@@ -1063,6 +1064,7 @@ body {
   <a href="#courses" onclick="closeMobile()">課程介紹</a>
   <a href="#reverse-engineering" onclick="closeMobile()">路線計算</a>
   <a href="#cambridge-pathway" onclick="closeMobile()">國際認證</a>
+  <a href="#cert-comparison" onclick="closeMobile()">證照對照</a>
   <a href="#seminar" onclick="closeMobile()">說明會報名</a>
   <a href="#booking" onclick="closeMobile()">預約參訪</a>
   <a href="#inquiry" onclick="closeMobile()">問課諮詢</a>
@@ -5183,6 +5185,1268 @@ body {
 </script>
 
 
+
+<!-- ========== CERT COMPARISON ========== -->
+<!-- ==========================================
+     劍橋 × 全民英檢 級距對照區塊
+     太平新光分校 | Section ID: cert-comparison
+     ========================================== -->
+
+<style>
+  /* ── Reset & Base ── */
+  #cert-comparison *,
+  #cert-comparison *::before,
+  #cert-comparison *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── Section Shell ── */
+  #cert-comparison {
+    background: #1a2744;
+    color: #f0f4ff;
+    font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    padding: 80px 24px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle background pattern */
+  #cert-comparison::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 900px 600px at 10% 20%, rgba(232,134,58,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 700px 500px at 85% 80%, rgba(232,134,58,0.05) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .cert-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Section Header ── */
+  .cert-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .cert-eyebrow {
+    display: inline-block;
+    background: rgba(232,134,58,0.18);
+    color: #e8863a;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .cert-title {
+    font-size: clamp(1.7rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.2;
+    color: #ffffff;
+    margin-bottom: 16px;
+  }
+
+  .cert-title span {
+    color: #e8863a;
+  }
+
+  .cert-subtitle {
+    font-size: clamp(0.92rem, 2vw, 1.05rem);
+    color: rgba(240,244,255,0.72);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.75;
+  }
+
+  /* ── Block Title ── */
+  .cert-block-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #e8863a;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cert-block-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.2em;
+    background: #e8863a;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── Section Block Spacing ── */
+  .cert-block {
+    margin-bottom: 64px;
+  }
+
+  /* ══════════════════════════════════════
+     1. MAIN MAPPING TABLE
+  ══════════════════════════════════════ */
+
+  .cert-table-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(232,134,58,0.25);
+    background: rgba(255,255,255,0.03);
+  }
+
+  /* Sticky header container for scroll */
+  .cert-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cert-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 720px;
+    font-size: 0.9rem;
+  }
+
+  .cert-table thead th {
+    background: rgba(232,134,58,0.18);
+    color: #e8863a;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    text-align: left;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    border-bottom: 1px solid rgba(232,134,58,0.3);
+    white-space: nowrap;
+  }
+
+  .cert-table thead th:first-child {
+    border-radius: 0;
+  }
+
+  .cert-table tbody tr {
+    transition: background 0.2s ease, transform 0.15s ease;
+    cursor: default;
+  }
+
+  .cert-table tbody tr:not(:last-child) {
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .cert-table tbody tr:hover {
+    background: rgba(232,134,58,0.08) !important;
+    transform: translateX(3px);
+  }
+
+  .cert-table td {
+    padding: 16px 16px;
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+
+  /* Level color swatch column */
+  .cert-level-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .cert-level-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .cert-level-name {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #fff;
+  }
+
+  .cert-level-full {
+    font-size: 0.72rem;
+    color: rgba(240,244,255,0.55);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  /* CEFR badge */
+  .cert-cefr-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: rgba(255,255,255,0.1);
+    color: #e8f4ff;
+    border: 1px solid rgba(255,255,255,0.15);
+    white-space: nowrap;
+  }
+
+  /* GEPT cell */
+  .cert-gept-cell {
+    font-size: 0.88rem;
+    color: rgba(240,244,255,0.8);
+  }
+
+  .cert-gept-cell.has-cert {
+    color: #86efac;
+    font-weight: 700;
+  }
+
+  .cert-gept-cell.approx {
+    color: rgba(240,244,255,0.55);
+    font-style: italic;
+  }
+
+  /* Grade badge */
+  .cert-grade-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    background: rgba(232,134,58,0.2);
+    color: #e8863a;
+    border: 1px solid rgba(232,134,58,0.4);
+    white-space: nowrap;
+  }
+
+  .cert-age {
+    color: rgba(240,244,255,0.7);
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .cert-skill-text {
+    font-size: 0.83rem;
+    color: rgba(240,244,255,0.65);
+    line-height: 1.5;
+  }
+
+  /* Row color left-border indicator */
+  .cert-table tbody tr td:first-child {
+    border-left: 4px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  /* ── Mobile Cards (mapping table) ── */
+  .cert-mobile-cards {
+    display: none;
+  }
+
+  .cert-card {
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 14px;
+    border-left: 5px solid;
+    background: rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    border-right: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .cert-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  }
+
+  .cert-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    gap: 10px;
+  }
+
+  .cert-card-level {
+    font-weight: 900;
+    font-size: 1.05rem;
+    color: #fff;
+  }
+
+  .cert-card-full-name {
+    font-size: 0.75rem;
+    color: rgba(240,244,255,0.5);
+    margin-top: 2px;
+  }
+
+  .cert-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .cert-card-field {
+    font-size: 0.8rem;
+  }
+
+  .cert-card-label {
+    color: rgba(240,244,255,0.45);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+  }
+
+  .cert-card-value {
+    color: rgba(240,244,255,0.88);
+    font-weight: 600;
+  }
+
+  .cert-card-skill {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.82rem;
+    color: rgba(240,244,255,0.6);
+    font-style: italic;
+  }
+
+  @media (max-width: 740px) {
+    .cert-table-wrapper {
+      display: none;
+    }
+    .cert-mobile-cards {
+      display: block;
+    }
+  }
+
+  /* ══════════════════════════════════════
+     2. COMPARISON CARDS (差異對比)
+  ══════════════════════════════════════ */
+
+  .cert-comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(232,134,58,0.25);
+  }
+
+  .cert-compare-col {
+    padding: 28px 28px 20px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .cert-compare-col:first-child {
+    border-right: 1px solid rgba(232,134,58,0.2);
+  }
+
+  .cert-compare-col-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(232,134,58,0.2);
+  }
+
+  .cert-compare-col-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .cert-compare-col-icon.cambridge {
+    background: rgba(59,130,246,0.2);
+    border: 1px solid rgba(59,130,246,0.3);
+  }
+
+  .cert-compare-col-icon.gept {
+    background: rgba(34,197,94,0.15);
+    border: 1px solid rgba(34,197,94,0.25);
+  }
+
+  .cert-compare-col-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .cert-compare-col-sub {
+    font-size: 0.72rem;
+    color: rgba(240,244,255,0.5);
+    margin-top: 2px;
+  }
+
+  .cert-compare-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 18px;
+  }
+
+  .cert-compare-dim {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(232,134,58,0.8);
+  }
+
+  .cert-compare-val {
+    font-size: 0.88rem;
+    color: rgba(240,244,255,0.82);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 620px) {
+    .cert-comparison-grid {
+      grid-template-columns: 1fr;
+    }
+    .cert-compare-col:first-child {
+      border-right: none;
+      border-bottom: 1px solid rgba(232,134,58,0.2);
+    }
+  }
+
+  /* ══════════════════════════════════════
+     3. PARENT CALLOUT CARDS
+  ══════════════════════════════════════ */
+
+  .cert-callout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 620px) {
+    .cert-callout-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cert-callout-card {
+    background: linear-gradient(135deg, rgba(232,134,58,0.14) 0%, rgba(232,134,58,0.06) 100%);
+    border: 1px solid rgba(232,134,58,0.35);
+    border-left: 4px solid #e8863a;
+    border-radius: 14px;
+    padding: 22px 24px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    cursor: default;
+  }
+
+  .cert-callout-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(232,134,58,0.18);
+    background: linear-gradient(135deg, rgba(232,134,58,0.22) 0%, rgba(232,134,58,0.1) 100%);
+  }
+
+  .cert-callout-age {
+    display: inline-block;
+    background: #e8863a;
+    color: #1a2744;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+  }
+
+  .cert-callout-headline {
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .cert-callout-body {
+    font-size: 0.83rem;
+    color: rgba(240,244,255,0.68);
+    line-height: 1.65;
+  }
+
+  /* ══════════════════════════════════════
+     4. VISUAL PROGRESS LADDER
+  ══════════════════════════════════════ */
+
+  .cert-ladder-wrapper {
+    padding: 32px 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(232,134,58,0.2);
+    border-radius: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cert-ladder {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    min-width: 620px;
+    position: relative;
+    padding-bottom: 12px;
+  }
+
+  /* Connecting line */
+  .cert-ladder::after {
+    content: '';
+    position: absolute;
+    bottom: 54px;
+    left: 24px;
+    right: 24px;
+    height: 3px;
+    background: linear-gradient(to right, #FEF3C7, #FED7AA, #FDBA74, #F97316, #EA580C, #C2410C);
+    border-radius: 3px;
+    opacity: 0.5;
+    z-index: 0;
+  }
+
+  .cert-ladder-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    padding: 0 6px;
+    cursor: default;
+    transition: transform 0.2s ease;
+  }
+
+  .cert-ladder-step:hover {
+    transform: translateY(-4px);
+  }
+
+  .cert-ladder-bar-wrap {
+    width: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .cert-ladder-bar {
+    width: 44px;
+    border-radius: 8px 8px 4px 4px;
+    position: relative;
+    transition: filter 0.2s ease;
+  }
+
+  .cert-ladder-step:hover .cert-ladder-bar {
+    filter: brightness(1.15);
+  }
+
+  .cert-ladder-node {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #1a2744;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  }
+
+  .cert-ladder-label {
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  .cert-ladder-exam {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .cert-ladder-grade {
+    font-size: 0.65rem;
+    color: rgba(240,244,255,0.5);
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+
+  .cert-ladder-cefr {
+    font-size: 0.6rem;
+    color: rgba(240,244,255,0.4);
+    margin-top: 1px;
+  }
+
+  @media (max-width: 480px) {
+    .cert-ladder-wrapper {
+      padding: 20px 16px;
+    }
+  }
+
+  /* ══════════════════════════════════════
+     5. CTA
+  ══════════════════════════════════════ */
+
+  .cert-cta-block {
+    text-align: center;
+    padding: 52px 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(232,134,58,0.25);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cert-cta-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 600px 300px at 50% 120%, rgba(232,134,58,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cert-cta-question {
+    font-size: clamp(1.15rem, 3vw, 1.55rem);
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cert-cta-sub {
+    font-size: 0.92rem;
+    color: rgba(240,244,255,0.6);
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cert-cta-btn {
+    display: inline-block;
+    background: #e8863a;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+    padding: 16px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 20px rgba(232,134,58,0.35);
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.03em;
+  }
+
+  .cert-cta-btn:hover {
+    background: #d4762b;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 30px rgba(232,134,58,0.5);
+  }
+
+  .cert-cta-btn:active {
+    transform: translateY(0) scale(1);
+  }
+
+  /* ── Divider between sections ── */
+  .cert-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    margin: 0 0 64px;
+  }
+
+  /* ── Scroll-reveal animation ── */
+  .cert-reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .cert-reveal.cert-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<section id="cert-comparison" aria-labelledby="cert-comparison-title">
+  <div class="cert-container">
+
+    <!-- ── Header ── -->
+    <header class="cert-header cert-reveal">
+      <span class="cert-eyebrow">國際認證指南</span>
+      <h2 class="cert-title" id="cert-comparison-title">
+        劍橋 × 全民英檢｜<span>孩子的進步路徑</span>
+      </h2>
+      <p class="cert-subtitle">
+        從 5 歲的劍橋入門，一路走到 15 歲的大考英文精熟，<br>
+        每一步都有國際認證見證
+      </p>
+    </header>
+
+    <!-- ══════════════════════════════════
+         1. MAIN MAPPING TABLE
+    ══════════════════════════════════ -->
+    <div class="cert-block cert-reveal">
+      <p class="cert-block-title">六大級距完整對照表</p>
+
+      <!-- Desktop Table -->
+      <div class="cert-table-wrapper">
+        <div class="cert-table-scroll">
+          <table class="cert-table" aria-label="劍橋英檢與全民英檢級距對照表">
+            <thead>
+              <tr>
+                <th scope="col">劍橋英檢</th>
+                <th scope="col">CEFR</th>
+                <th scope="col">對應 GEPT</th>
+                <th scope="col">對應課程</th>
+                <th scope="col">對應年紀</th>
+                <th scope="col">學到這裡，能做什麼</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Starters -->
+              <tr style="background: rgba(254,243,199,0.06);">
+                <td style="border-left-color: #FEF3C7;">
+                  <div class="cert-level-cell">
+                    <span class="cert-level-dot" style="background:#FEF3C7; color:#FEF3C7;"></span>
+                    <div>
+                      <div class="cert-level-name">Pre A1 Starters</div>
+                      <div class="cert-level-full">Cambridge English: Starters</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cert-cefr-badge" style="background:rgba(254,243,199,0.15); border-color:rgba(254,243,199,0.3); color:#FEF3C7;">Pre-A1</span></td>
+                <td><span class="cert-gept-cell approx">尚無對應</span></td>
+                <td><span class="cert-grade-badge">GK</span></td>
+                <td><span class="cert-age">5–7 歲</span></td>
+                <td><span class="cert-skill-text">認字、聽指令、說單字</span></td>
+              </tr>
+              <!-- Movers -->
+              <tr style="background: rgba(254,215,170,0.06);">
+                <td style="border-left-color: #FED7AA;">
+                  <div class="cert-level-cell">
+                    <span class="cert-level-dot" style="background:#FED7AA; color:#FED7AA;"></span>
+                    <div>
+                      <div class="cert-level-name">A1 Movers</div>
+                      <div class="cert-level-full">Cambridge English: Movers</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cert-cefr-badge" style="background:rgba(254,215,170,0.15); border-color:rgba(254,215,170,0.3); color:#FED7AA;">A1</span></td>
+                <td><span class="cert-gept-cell approx">尚無對應</span></td>
+                <td><span class="cert-grade-badge">G1</span></td>
+                <td><span class="cert-age">7–9 歲</span></td>
+                <td><span class="cert-skill-text">讀短文、說完整句、過去式</span></td>
+              </tr>
+              <!-- Flyers -->
+              <tr style="background: rgba(253,186,116,0.06);">
+                <td style="border-left-color: #FDBA74;">
+                  <div class="cert-level-cell">
+                    <span class="cert-level-dot" style="background:#FDBA74; color:#FDBA74;"></span>
+                    <div>
+                      <div class="cert-level-name">A2 Flyers</div>
+                      <div class="cert-level-full">Cambridge English: Flyers</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cert-cefr-badge" style="background:rgba(253,186,116,0.15); border-color:rgba(253,186,116,0.3); color:#FDBA74;">A2</span></td>
+                <td><span class="cert-gept-cell approx">初級（接近）</span></td>
+                <td><span class="cert-grade-badge">G2</span></td>
+                <td><span class="cert-age">8–11 歲</span></td>
+                <td><span class="cert-skill-text">讀故事、推論、表達意見</span></td>
+              </tr>
+              <!-- KET -->
+              <tr style="background: rgba(249,115,22,0.07);">
+                <td style="border-left-color: #F97316;">
+                  <div class="cert-level-cell">
+                    <span class="cert-level-dot" style="background:#F97316; color:#F97316;"></span>
+                    <div>
+                      <div class="cert-level-name">A2 Key (KET)</div>
+                      <div class="cert-level-full">Cambridge English: Key</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cert-cefr-badge" style="background:rgba(249,115,22,0.2); border-color:rgba(249,115,22,0.4); color:#F97316;">A2</span></td>
+                <td><span class="cert-gept-cell has-cert">✓ GEPT 初級</span></td>
+                <td><span class="cert-grade-badge">G3</span></td>
+                <td><span class="cert-age">9–12 歲</span></td>
+                <td><span class="cert-skill-text">國中會考精熟、真實閱讀</span></td>
+              </tr>
+              <!-- PET -->
+              <tr style="background: rgba(234,88,12,0.07);">
+                <td style="border-left-color: #EA580C;">
+                  <div class="cert-level-cell">
+                    <span class="cert-level-dot" style="background:#EA580C; color:#EA580C;"></span>
+                    <div>
+                      <div class="cert-level-name">B1 Preliminary (PET)</div>
+                      <div class="cert-level-full">Cambridge English: Preliminary</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cert-cefr-badge" style="background:rgba(234,88,12,0.2); border-color:rgba(234,88,12,0.4); color:#EA580C;">B1</span></td>
+                <td><span class="cert-gept-cell approx">中級（接近）</span></td>
+                <td><span class="cert-grade-badge">G4–G5</span></td>
+                <td><span class="cert-age">11–14 歲</span></td>
+                <td><span class="cert-skill-text">讀報導、寫短論文</span></td>
+              </tr>
+              <!-- FCE -->
+              <tr style="background: rgba(194,65,12,0.08);">
+                <td style="border-left-color: #C2410C;">
+                  <div class="cert-level-cell">
+                    <span class="cert-level-dot" style="background:#C2410C; color:#C2410C;"></span>
+                    <div>
+                      <div class="cert-level-name">B2 First (FCE)</div>
+                      <div class="cert-level-full">Cambridge English: First</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cert-cefr-badge" style="background:rgba(194,65,12,0.2); border-color:rgba(194,65,12,0.45); color:#e07040;">B2</span></td>
+                <td><span class="cert-gept-cell has-cert">✓ GEPT 中高級</span></td>
+                <td><span class="cert-grade-badge">G6+</span></td>
+                <td><span class="cert-age">13+ 歲</span></td>
+                <td><span class="cert-skill-text">大考英文精熟、高中會話</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mobile Cards -->
+      <div class="cert-mobile-cards" role="list" aria-label="劍橋英檢與全民英檢級距對照">
+
+        <!-- Starters -->
+        <div class="cert-card" style="border-left-color: #FEF3C7;" role="listitem">
+          <div class="cert-card-header">
+            <div>
+              <div class="cert-card-level">Pre A1 Starters</div>
+              <div class="cert-card-full-name">Cambridge English: Starters</div>
+            </div>
+            <span class="cert-cefr-badge" style="background:rgba(254,243,199,0.15); border-color:rgba(254,243,199,0.35); color:#FEF3C7;">Pre-A1</span>
+          </div>
+          <div class="cert-card-grid">
+            <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="color:rgba(240,244,255,0.5);font-style:italic;">尚無對應</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">GK</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">5–7 歲</div></div>
+          </div>
+          <div class="cert-card-skill">✦ 認字、聽指令、說單字</div>
+        </div>
+
+        <!-- Movers -->
+        <div class="cert-card" style="border-left-color: #FED7AA;" role="listitem">
+          <div class="cert-card-header">
+            <div>
+              <div class="cert-card-level">A1 Movers</div>
+              <div class="cert-card-full-name">Cambridge English: Movers</div>
+            </div>
+            <span class="cert-cefr-badge" style="background:rgba(254,215,170,0.15); border-color:rgba(254,215,170,0.35); color:#FED7AA;">A1</span>
+          </div>
+          <div class="cert-card-grid">
+            <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="color:rgba(240,244,255,0.5);font-style:italic;">尚無對應</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G1</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">7–9 歲</div></div>
+          </div>
+          <div class="cert-card-skill">✦ 讀短文、說完整句、過去式</div>
+        </div>
+
+        <!-- Flyers -->
+        <div class="cert-card" style="border-left-color: #FDBA74;" role="listitem">
+          <div class="cert-card-header">
+            <div>
+              <div class="cert-card-level">A2 Flyers</div>
+              <div class="cert-card-full-name">Cambridge English: Flyers</div>
+            </div>
+            <span class="cert-cefr-badge" style="background:rgba(253,186,116,0.15); border-color:rgba(253,186,116,0.35); color:#FDBA74;">A2</span>
+          </div>
+          <div class="cert-card-grid">
+            <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="font-style:italic;color:rgba(240,244,255,0.55);">初級（接近）</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G2</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">8–11 歲</div></div>
+          </div>
+          <div class="cert-card-skill">✦ 讀故事、推論、表達意見</div>
+        </div>
+
+        <!-- KET -->
+        <div class="cert-card" style="border-left-color: #F97316;" role="listitem">
+          <div class="cert-card-header">
+            <div>
+              <div class="cert-card-level">A2 Key (KET)</div>
+              <div class="cert-card-full-name">Cambridge English: Key</div>
+            </div>
+            <span class="cert-cefr-badge" style="background:rgba(249,115,22,0.2); border-color:rgba(249,115,22,0.4); color:#F97316;">A2</span>
+          </div>
+          <div class="cert-card-grid">
+            <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="color:#86efac;">✓ GEPT 初級</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G3</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">9–12 歲</div></div>
+          </div>
+          <div class="cert-card-skill">✦ 國中會考精熟、真實閱讀</div>
+        </div>
+
+        <!-- PET -->
+        <div class="cert-card" style="border-left-color: #EA580C;" role="listitem">
+          <div class="cert-card-header">
+            <div>
+              <div class="cert-card-level">B1 Preliminary (PET)</div>
+              <div class="cert-card-full-name">Cambridge English: Preliminary</div>
+            </div>
+            <span class="cert-cefr-badge" style="background:rgba(234,88,12,0.2); border-color:rgba(234,88,12,0.4); color:#EA580C;">B1</span>
+          </div>
+          <div class="cert-card-grid">
+            <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="font-style:italic;color:rgba(240,244,255,0.55);">中級（接近）</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G4–G5</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">11–14 歲</div></div>
+          </div>
+          <div class="cert-card-skill">✦ 讀報導、寫短論文</div>
+        </div>
+
+        <!-- FCE -->
+        <div class="cert-card" style="border-left-color: #C2410C;" role="listitem">
+          <div class="cert-card-header">
+            <div>
+              <div class="cert-card-level">B2 First (FCE)</div>
+              <div class="cert-card-full-name">Cambridge English: First</div>
+            </div>
+            <span class="cert-cefr-badge" style="background:rgba(194,65,12,0.2); border-color:rgba(194,65,12,0.45); color:#e07040;">B2</span>
+          </div>
+          <div class="cert-card-grid">
+            <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="color:#86efac;">✓ GEPT 中高級</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G6+</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">13+ 歲</div></div>
+          </div>
+          <div class="cert-card-skill">✦ 大考英文精熟、高中會話</div>
+        </div>
+
+      </div>
+    </div><!-- /.cert-block -->
+
+    <hr class="cert-divider">
+
+    <!-- ══════════════════════════════════
+         4. VISUAL PROGRESS LADDER
+    ══════════════════════════════════ -->
+    <div class="cert-block cert-reveal">
+      <p class="cert-block-title">進步階梯一目了然</p>
+      <div class="cert-ladder-wrapper">
+        <div class="cert-ladder" role="img" aria-label="從 Starters 到 FCE 的六步進步階梯">
+
+          <!-- Starters -->
+          <div class="cert-ladder-step">
+            <div class="cert-ladder-bar-wrap">
+              <div class="cert-ladder-node" style="background:#FEF3C7;">GK</div>
+              <div class="cert-ladder-bar" style="background:linear-gradient(to top, #FEF3C7, #fdf8e1); height:42px;"></div>
+            </div>
+            <div class="cert-ladder-label">
+              <div class="cert-ladder-exam">Starters</div>
+              <div class="cert-ladder-grade">幼兒 K5-K6</div>
+              <div class="cert-ladder-cefr">Pre-A1</div>
+            </div>
+          </div>
+
+          <!-- Movers -->
+          <div class="cert-ladder-step">
+            <div class="cert-ladder-bar-wrap">
+              <div class="cert-ladder-node" style="background:#FED7AA;">G1</div>
+              <div class="cert-ladder-bar" style="background:linear-gradient(to top, #FED7AA, #fee4c4); height:64px;"></div>
+            </div>
+            <div class="cert-ladder-label">
+              <div class="cert-ladder-exam">Movers</div>
+              <div class="cert-ladder-grade">7–9 歲</div>
+              <div class="cert-ladder-cefr">A1</div>
+            </div>
+          </div>
+
+          <!-- Flyers -->
+          <div class="cert-ladder-step">
+            <div class="cert-ladder-bar-wrap">
+              <div class="cert-ladder-node" style="background:#FDBA74;">G2</div>
+              <div class="cert-ladder-bar" style="background:linear-gradient(to top, #FDBA74, #fecfa0); height:88px;"></div>
+            </div>
+            <div class="cert-ladder-label">
+              <div class="cert-ladder-exam">Flyers</div>
+              <div class="cert-ladder-grade">8–11 歲</div>
+              <div class="cert-ladder-cefr">A2</div>
+            </div>
+          </div>
+
+          <!-- KET -->
+          <div class="cert-ladder-step">
+            <div class="cert-ladder-bar-wrap">
+              <div class="cert-ladder-node" style="background:#F97316;">G3</div>
+              <div class="cert-ladder-bar" style="background:linear-gradient(to top, #F97316, #fb9548); height:112px;"></div>
+            </div>
+            <div class="cert-ladder-label">
+              <div class="cert-ladder-exam">KET</div>
+              <div class="cert-ladder-grade">9–12 歲</div>
+              <div class="cert-ladder-cefr">A2</div>
+            </div>
+          </div>
+
+          <!-- PET -->
+          <div class="cert-ladder-step">
+            <div class="cert-ladder-bar-wrap">
+              <div class="cert-ladder-node" style="background:#EA580C; color:#fff;">G4-5</div>
+              <div class="cert-ladder-bar" style="background:linear-gradient(to top, #EA580C, #f07232); height:138px;"></div>
+            </div>
+            <div class="cert-ladder-label">
+              <div class="cert-ladder-exam">PET</div>
+              <div class="cert-ladder-grade">11–14 歲</div>
+              <div class="cert-ladder-cefr">B1</div>
+            </div>
+          </div>
+
+          <!-- FCE -->
+          <div class="cert-ladder-step">
+            <div class="cert-ladder-bar-wrap">
+              <div class="cert-ladder-node" style="background:#C2410C; color:#fff;">G6</div>
+              <div class="cert-ladder-bar" style="background:linear-gradient(to top, #C2410C, #d9561c); height:164px;"></div>
+            </div>
+            <div class="cert-ladder-label">
+              <div class="cert-ladder-exam">FCE 🏆</div>
+              <div class="cert-ladder-grade">13+ 歲</div>
+              <div class="cert-ladder-cefr">B2</div>
+            </div>
+          </div>
+
+        </div><!-- /.cert-ladder -->
+      </div>
+    </div><!-- /.cert-block -->
+
+    <hr class="cert-divider">
+
+    <!-- ══════════════════════════════════
+         2. DIFFERENCE COMPARISON CARDS
+    ══════════════════════════════════ -->
+    <div class="cert-block cert-reveal">
+      <p class="cert-block-title">兩大檢定的差異</p>
+
+      <div class="cert-comparison-grid" role="table" aria-label="劍橋英檢與全民英檢差異比較">
+
+        <!-- Cambridge Column -->
+        <div class="cert-compare-col" role="columnheader">
+          <div class="cert-compare-col-header">
+            <div class="cert-compare-col-icon cambridge" aria-hidden="true">🎓</div>
+            <div>
+              <div class="cert-compare-col-name">劍橋英檢</div>
+              <div class="cert-compare-col-sub">Cambridge English</div>
+            </div>
+          </div>
+
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">起源</div>
+            <div class="cert-compare-val" role="cell">英國劍橋大學，全球最具公信力的英語認證之一</div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">級數</div>
+            <div class="cert-compare-val" role="cell">6 級（Pre A1 Starters → B2 First）</div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">認證有效性</div>
+            <div class="cert-compare-val" role="cell"><strong style="color:#86efac;">全球認可，終身有效</strong>，不需重考更新</div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">適合年紀</div>
+            <div class="cert-compare-val" role="cell">幼兒到青少年全涵蓋，5 歲就可以報考</div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">評分方式</div>
+            <div class="cert-compare-val" role="cell">Pass / Fail，通過即得認證，壓力較小</div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">考試頻率</div>
+            <div class="cert-compare-val" role="cell">一年多場，彈性選擇最適合的時間</div>
+          </div>
+        </div>
+
+        <!-- GEPT Column -->
+        <div class="cert-compare-col" role="columnheader">
+          <div class="cert-compare-col-header">
+            <div class="cert-compare-col-icon gept" aria-hidden="true">🇹🇼</div>
+            <div>
+              <div class="cert-compare-col-name">全民英檢 GEPT</div>
+              <div class="cert-compare-col-sub">General English Proficiency Test</div>
+            </div>
+          </div>
+
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">起源</div>
+            <div class="cert-compare-val" role="cell">台灣 LTTC 語言訓練測驗中心，專為台灣學習者設計</div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">級數</div>
+            <div class="cert-compare-val" role="cell">5 級（初級 → 優級）</div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">認證有效性</div>
+            <div class="cert-compare-val" role="cell">台灣升學主流認可，<strong style="color:#fbbf24;">有效期 2 年</strong></div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">適合年紀</div>
+            <div class="cert-compare-val" role="cell">國中以上為主，初級約 10–12 歲起</div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">評分方式</div>
+            <div class="cert-compare-val" role="cell">分初試 &amp; 複試，有分數等級，較講究細節成績</div>
+          </div>
+          <div class="cert-compare-row" role="row">
+            <div class="cert-compare-dim" role="rowheader">考試頻率</div>
+            <div class="cert-compare-val" role="cell">一年 2 場，時間固定，需提前規劃</div>
+          </div>
+        </div>
+
+      </div><!-- /.cert-comparison-grid -->
+    </div><!-- /.cert-block -->
+
+    <hr class="cert-divider">
+
+    <!-- ══════════════════════════════════
+         3. PARENT CALLOUT CARDS
+    ══════════════════════════════════ -->
+    <div class="cert-block cert-reveal">
+      <p class="cert-block-title">給家長的白話版</p>
+
+      <div class="cert-callout-grid">
+
+        <div class="cert-callout-card">
+          <span class="cert-callout-age">3–8 歲</span>
+          <div class="cert-callout-headline">以劍橋為主，打好紮實基礎</div>
+          <div class="cert-callout-body">
+            全民英檢沒有幼兒級，這個階段的孩子最適合用劍橋系統，
+            從聽、說、讀一步步建立自信。
+            Pre A1 Starters 就是為這個年紀量身打造的。
+          </div>
+        </div>
+
+        <div class="cert-callout-card">
+          <span class="cert-callout-age">9 歲以上</span>
+          <div class="cert-callout-headline">兩個都有意義，同步推進</div>
+          <div class="cert-callout-body">
+            劍橋看世界能力，全民英檢看台灣升學。
+            G3 的孩子可以同時準備 KET 和 GEPT 初級，
+            兩張證照互相印證，成就感加倍！
+          </div>
+        </div>
+
+        <div class="cert-callout-card">
+          <span class="cert-callout-age">12 歲以上</span>
+          <div class="cert-callout-headline">全民英檢直接加分升學</div>
+          <div class="cert-callout-body">
+            初級、中級對應台灣各校升學積分，
+            拿到證書後別忘了在有效期 2 年內善加利用。
+            G4–G5 時程剛好最適合衝刺中級。
+          </div>
+        </div>
+
+        <div class="cert-callout-card">
+          <span class="cert-callout-age">15 歲以上</span>
+          <div class="cert-callout-headline">目標 B2 × 中高級，站上頂端</div>
+          <div class="cert-callout-body">
+            B2 First（FCE）加上 GEPT 中高級，
+            是台灣頂尖高中生的標配組合。
+            大考英文精熟、備戰國際視野，從太平新光出發。
+          </div>
+        </div>
+
+      </div><!-- /.cert-callout-grid -->
+    </div><!-- /.cert-block -->
+
+    <!-- ══════════════════════════════════
+         5. CTA
+    ══════════════════════════════════ -->
+    <div class="cert-cta-block cert-reveal">
+      <div class="cert-cta-question">想知道孩子現在適合考哪張證照？</div>
+      <p class="cert-cta-sub">老師幫你分析，5 分鐘找到最適合的學習起點</p>
+      <a href="#booking" class="cert-cta-btn" aria-label="立即預約諮詢，了解適合孩子的英語認證">立即免費諮詢 →</a>
+    </div>
+
+  </div><!-- /.cert-container -->
+</section>
+
+<script>
+  (function () {
+    // ── Scroll Reveal ──
+    var reveals = document.querySelectorAll('#cert-comparison .cert-reveal');
+
+    function checkReveals() {
+      var trigger = window.innerHeight * 0.9;
+      reveals.forEach(function (el) {
+        var top = el.getBoundingClientRect().top;
+        if (top < trigger) {
+          el.classList.add('cert-visible');
+        }
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('cert-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      reveals.forEach(function (el) { observer.observe(el); });
+    } else {
+      // Fallback: just show everything
+      reveals.forEach(function (el) { el.classList.add('cert-visible'); });
+    }
+
+    // ── Stagger ladder steps on hover/load ──
+    var ladderSteps = document.querySelectorAll('#cert-comparison .cert-ladder-step');
+    ladderSteps.forEach(function (step, i) {
+      step.style.transitionDelay = (i * 0.06) + 's';
+    });
+
+    // ── Table row stagger-in on section visible ──
+    var tableRows = document.querySelectorAll('#cert-comparison .cert-table tbody tr');
+    var tableObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          tableRows.forEach(function (row, i) {
+            setTimeout(function () {
+              row.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              row.style.opacity = '1';
+              row.style.transform = 'translateX(0)';
+            }, i * 80);
+          });
+          tableObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    tableRows.forEach(function (row) {
+      row.style.opacity = '0';
+      row.style.transform = 'translateX(-12px)';
+    });
+
+    var tableEl = document.querySelector('#cert-comparison .cert-table-wrapper');
+    if (tableEl) tableObserver.observe(tableEl);
+
+  })();
+</script>
+
+
 <!-- ========== CAMP ========== -->
 <section id="camp" style="padding:0">
   <!-- Hero bar -->
@@ -6663,6 +7927,27 @@ body {
       </div>
       <div id="gv2-diff-area"></div>
       <div class="gv2-detail-grid" id="gv2-detail-grid"></div>
+
+      <!-- 費用不含項目說明 -->
+      <div style="margin-top:24px;padding:16px 20px;background:rgba(201,169,110,0.08);border-left:3px solid #C9A96E;border-radius:8px;font-size:0.86rem;line-height:1.75;color:#A8C4D9;">
+        <div style="color:#E8D5A8;font-weight:700;margin-bottom:8px;font-size:0.92rem;">⚠️ 以上計算均為「首期費用」，不含以下項目：</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <strong style="color:#E8D5A8;">浸潤班：</strong><br>
+            • 月費（2.5hr 版 $10,300 ／ 2hr 版 $8,000）<br>
+            • 學期教材費（依級數約 $3,000～$11,000）<br>
+            • 劇橋英檢教材費（備考用，結業前學期發放）
+          </div>
+          <div>
+            <strong style="color:#E8D5A8;">菁英班 ／ 標準班：</strong><br>
+            • 學期教材費（依級數約 $3,000～$11,000）<br>
+            • 劇橋英檢教材費（備考用，結業前學期發放）
+          </div>
+        </div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(201,169,110,0.2);color:#7B9DB7;font-size:0.82rem;">
+          💡 劇橋英檢報名費不另外收取，學校會依學生能力評估安排檢定時程。
+        </div>
+      </div>
     </div>
   </div>
 
