@@ -3744,8 +3744,8 @@ body {
 
         <!-- CTA -->
         <div class="re-cta-wrap">
-          <p class="re-cta-note">計算結果是參考基準，每個孩子學習速度不同。<br>免費檢測後由老師提供更精準的建議！</p>
-          <a href="#booking" class="re-btn-cta">免費英語程度檢測，精確規劃學習路線</a>
+          <p class="re-cta-note">計算結果是參考基準，每個孩子學習速度不同。<br>檢測後由老師提供更精準的建議（檢測費 $400 可折抵註冊費）！</p>
+          <a href="#booking" class="re-btn-cta">英語程度檢測（$400 可折抵註冊費），精確規劃學習路線</a>
         </div>
 
       </div><!-- /re-results -->
@@ -3844,7 +3844,7 @@ body {
       statusText = `還來得及！孩子現在 ${age} 歲，最晚 ${latestAge} 歲前開始就行。不過早點開始，壓力更小、效果更好！`;
     } else if (latestAge >= age) {
       status = 'warn'; statusIcon = '⚠️';
-      statusText = `時間有點緊迫！孩子現在 ${age} 歲，必須立即開始，一天都不能等。建議盡快預約免費程度測驗！`;
+      statusText = `時間有點緊迫！孩子現在 ${age} 歲，必須立即開始，一天都不能等。建議盡快預約程度測驗（$400 可折抵註冊費）！`;
     } else {
       status = 'err'; statusIcon = '❌';
       const higherClass = findUpgradeClass(classId, targetGrade, age, deadline);
@@ -5084,13 +5084,13 @@ body {
     <div class="cp-cta-block">
       <div class="cp-cta-card">
         <div class="cp-cta-icon" aria-hidden="true">🔍</div>
-        <p class="cp-cta-text">想知道孩子目前在哪一級？免費英語程度檢測幫你確認</p>
+        <p class="cp-cta-text">想知道孩子目前在哪一級？英語程度檢測（$400 可折抵註冊費）幫你確認</p>
         <p class="cp-cta-sub">檢測完直接告訴你：孩子現在哪裡、下一步要練什麼</p>
         <a href="#booking" class="cp-cta-btn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
           </svg>
-          免費預約程度檢測
+          預約程度檢測（$400 可折抵）
         </a>
       </div>
     </div>
@@ -7058,7 +7058,7 @@ body {
                 <input type="checkbox" id="bkTest" onchange="toggleTestFeeNotice()" style="width:18px;height:18px;accent-color:var(--green)"> 英文程度檢測
               </label>
               <div id="testFeeNotice" style="display:none;background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:8px;padding:10px 14px;margin-top:8px;font-size:0.82rem;color:#92400e;grid-column:1/-1">
-                💰 <strong>檢測費用 NTD 400</strong>（到校當天繳交）<br>含口說＋筆試完整分級檢測，約 40–60 分鐘
+                💰 <strong>檢測費用 NTD 400</strong>（到校當天繳交）<br>含口說＋筆試完整分級檢測，約 50 分鐘
               </div>
             </div>
             <span class="error-msg" id="bkPurposeErr">請至少勾選一項</span>
@@ -7110,7 +7110,7 @@ body {
         <div id="bookingNextSteps" style="background:#F0FDF4;border:1.5px solid var(--green);border-radius:10px;padding:14px 18px;margin-top:20px;font-size:0.85rem;color:#166534;line-height:1.7;text-align:left">
           <strong>📋 到校當天提醒</strong><br>
           • 參訪：歡迎家長一起來，約 30 分鐘了解教學環境與師資<br>
-          • 檢測：費用 NTD 400（現場繳交），含口說＋筆試，約 40–60 分鐘<br>
+          • 檢測：費用 NTD 400（現場繳交），含口說＋筆試，約 50 分鐘<br>
           • 檢測完成後，老師會告知分班結果，即可進行<a href="#register" style="color:var(--green);font-weight:700">正式註冊</a>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
@@ -8362,7 +8362,7 @@ body {
         <div style="background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:10px;padding:14px 18px;margin-top:20px;font-size:0.85rem;color:#92400e;line-height:1.7;text-align:left">
           <strong>📋 建議下一步</strong><br>
           ① 如果想先到分校看看環境 → <a href="#booking" style="color:var(--green);font-weight:700" onclick="switchBkType('visitTest')">預約參訪</a><br>
-          ② 如果想讓孩子做免費程度檢測 → <a href="#booking" style="color:var(--green);font-weight:700" onclick="switchBkType('visitTest')">預約檢測</a>（費用 NTD 400）<br>
+          ② 如果想讓孩子做程度檢測 → <a href="#booking" style="color:var(--green);font-weight:700" onclick="switchBkType('visitTest')">預約檢測</a>（費用 NTD 400）<br>
           ③ 如果想直接報名夏令營 → <a href="#camp" style="color:var(--green);font-weight:700">夏令營報名</a>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
@@ -9645,7 +9645,7 @@ function iqAutoSuggestChild(idx){
   else if(goal==='cert') suggestions.push('全民英檢班');
   else if(goal==='hw') suggestions.push('安親課輔班');
   else if(goal==='stable') suggestions.push('標準班');
-  suggestions.push('建議安排免費程度檢測，更精確分班');
+  suggestions.push('建議安排程度檢測（$400 可折抵註冊費），更精確分班');
   box.style.display = 'block';
   box.innerHTML = '🎯 初步建議：<strong>' + suggestions.join('、') + '</strong>';
 }
@@ -9793,9 +9793,9 @@ function submitInquiry(e){
       cHtml +
       '</div>' +
       '<div style="margin-top:16px;background:#FFF7ED;border-radius:10px;padding:14px 16px;text-align:left">' +
-      '<div style="font-weight:700;color:#92400E;margin-bottom:8px">🎯 建議下一步：免費英語程度檢測</div>' +
+      '<div style="font-weight:700;color:#92400E;margin-bottom:8px">🎯 建議下一步：英語程度檢測（$400 可折抵註冊費）</div>' +
       '<p style="font-size:0.85rem;color:var(--text);line-height:1.7;margin-bottom:12px">'+
-      '我們會在 24 小時內電話確認，並安排老師為孩子進行<strong>口說+閱讀+筆試</strong>三階段免費檢測（約 60 分鐘），'+
+      '我們會在 24 小時內電話確認，並安排老師為孩子進行<strong>口說+閱讀+筆試</strong>三階段檢測（約 50 分鐘），'+
       '精準找出最適合的班級和級數。</p>' +
       '<a href="'+assessUrlFull+'" target="_blank" class="btn btn-primary" style="display:inline-flex;justify-content:center;text-decoration:none;padding:12px 28px;font-size:0.9rem">'+
       '📝 預填資料至檢測系統 →</a>' +
@@ -9858,7 +9858,7 @@ function generateCallScript(data) {
   }
 
   lines.push('三、安排下一步');
-  lines.push('  → 為孩子安排免費程度檢測（口說+閱讀+筆試，約 60 分鐘）');
+  lines.push('  → 為孩子安排程度檢測（口說+閱讀+筆試，約 50 分鐘，$400 可折抵註冊費）');
   lines.push('  → 請問哪天下午（14:00）或晚上（19:00）方便來校？');
   if(data.classes) lines.push('  → 有興趣班型：' + data.classes);
   if(data.question) { lines.push(''); lines.push('家長備註：' + data.question); }
