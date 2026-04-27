@@ -9887,22 +9887,97 @@ function generateCallScript(data) {
 
 
 /* ========== ADMIN PANEL ========== */
-// ====== 通知 Webhook（Google Apps Script）======
-// 部署 Apps Script 後，把網址貼在這裡
+// ====== 通知 Webhook（n8n Cloud）======
 var WEBHOOK_URL = 'https://miyutang.app.n8n.cloud/webhook/xinguang-form';
+var WEBHOOK_PENDING_KEY = 'xg_webhook_pending';
 
-function sendWebhook(type, data) {
+// 取出未送達的資料
+function _getPendingWebhooks(){
+  try { return JSON.parse(localStorage.getItem(WEBHOOK_PENDING_KEY)||'[]'); } catch(e){ return []; }
+}
+function _setPendingWebhooks(arr){
+  try { localStorage.setItem(WEBHOOK_PENDING_KEY, JSON.stringify(arr)); } catch(e){}
+}
+function _addPending(payload){
+  var arr = _getPendingWebhooks();
+  arr.push({ payload: payload, ts: new Date().toISOString() });
+  if (arr.length > 20) arr = arr.slice(-20);
+  _setPendingWebhooks(arr);
+}
+
+// 送達失敗時警告使用者
+function _showWebhookError(type){
+  var typeLabel = { camp:'夏令營報名', inquiry:'問課諮詢', booking:'預約／說明會', register:'正式註冊' }[type] || '表單';
+  alert('⚠️ ' + typeLabel + '送出遇到網路問題，資料已暫存。\n\n請你：\n1. 重新整理這個頁面再試一次\n2. 或撥電話到太平新光分校 04-23937515 詢問\n\n謝謝。');
+}
+
+// 送達 webhook，包含 2 次重試、失敗警告、失敗暫存
+async function _postWebhookOnce(payload){
+  var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 12000) : null;
+  try {
+    var resp = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: ctrl ? ctrl.signal : undefined
+    });
+    if (timer) clearTimeout(timer);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    // 成功
+    return true;
+  } catch(e){
+    if (timer) clearTimeout(timer);
+    throw e;
+  }
+}
+
+async function sendWebhook(type, data) {
   if(!WEBHOOK_URL) return;
   var payload = JSON.parse(JSON.stringify(data));
   payload._type = type;
-  try {
-    fetch(WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(payload)
-    });
-  } catch(e) { console.log('Webhook error:', e); }
+  // 重試最多 3 次（1 + 2 重試）
+  var attempts = 0;
+  var lastErr = null;
+  while (attempts < 3) {
+    try {
+      await _postWebhookOnce(payload);
+      console.log('[webhook] 送出成功', type, attempts ? '（重試 ' + attempts + ' 次後成功）' : '');
+      return true;
+    } catch(e){
+      attempts++;
+      lastErr = e;
+      console.warn('[webhook] 第 ' + attempts + ' 次失敗：' + e.message);
+      if (attempts < 3) await new Promise(function(r){ setTimeout(r, 1000 * attempts); });
+    }
+  }
+  // 3 次都失敗 → 暫存 + 警告使用者
+  console.error('[webhook] 全部重試失敗', lastErr);
+  _addPending(payload);
+  _showWebhookError(type);
+  return false;
+}
+
+// 頁面載入時 → 如果有未送達的資料，重新試送
+function _retryPendingWebhooks(){
+  var pending = _getPendingWebhooks();
+  if (pending.length === 0) return;
+  console.log('[webhook] 發現 ' + pending.length + ' 筆未送達，重試中');
+  var stillPending = [];
+  (async function(){
+    for (var i = 0; i < pending.length; i++){
+      try {
+        await _postWebhookOnce(pending[i].payload);
+        console.log('[webhook] 補送成功', pending[i].payload._type);
+      } catch(e){
+        stillPending.push(pending[i]);
+      }
+    }
+    _setPendingWebhooks(stillPending);
+  })();
+}
+if (typeof window !== 'undefined') {
+  window.addEventListener('load', function(){ setTimeout(_retryPendingWebhooks, 2000); });
 }
 
 var _adminData = { inquiries: [], campRegs: [], bookings: [] };
