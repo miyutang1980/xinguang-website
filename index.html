@@ -10809,7 +10809,9 @@ function submitCampReg() {
 
   var campData = {
     ts: new Date().toLocaleString('zh-TW'),
-    pname: pname, sname: sname, grade: grade,
+    pname: pname,
+    parent: pname,  // n8n LINE Flex 讀取 parent 欄位，跟 pname 一致
+    sname: sname, grade: grade,
     enrolled: enrolled, phone: phone,
     line: document.getElementById('cr_line').value.trim(),
     courses: coursesSummary,
