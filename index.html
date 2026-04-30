@@ -6877,6 +6877,7 @@ body {
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px">
               <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text);font-size:0.88rem">加 LINE 收通知 →</a>
+              <button onclick="showCampChange()" class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text);font-size:0.88rem;border:1.5px solid var(--green);cursor:pointer">📝 改課程 / 取消報名</button>
             </div>
           </div>
 
@@ -6884,6 +6885,9 @@ body {
           <div id="campFormBody">
             <div class="camp-reg-title">夏令營報名表</div>
             <p class="camp-reg-sub">帶 <span style="color:#e53e3e">*</span> 為必填欄位。請確實填寫，以利後續聯繫確認。</p>
+            <div style="text-align:center;margin:8px 0 16px">
+              <button onclick="showCampChange()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#fff;color:#2B7A4B;border:1.5px solid #2B7A4B;border-radius:20px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='#F0FDF4'" onmouseout="this.style.background='#fff'">已報名過？點這裡改課程 / 取消 →</button>
+            </div>
 
             <!-- 快速分流引導 -->
             <div style="background:linear-gradient(135deg,#FEF3C7,#FFFBEB);border:1.5px solid #F59E0B;border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:0.82rem;line-height:1.7;color:#92400e">
@@ -8471,6 +8475,10 @@ body {
     <h2 class="section-title reveal">正式註冊報名</h2>
     <p class="section-subtitle reveal">完成分級檢測後，填寫以下表單即可進行正式註冊</p>
 
+    <div class="reveal" style="text-align:center;margin-bottom:18px">
+      <button onclick="showRegisterChange()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#fff;color:#2563EB;border:1.5px solid #2563EB;border-radius:20px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='#EFF6FF'" onmouseout="this.style.background='#fff'">已註冊過？點這裡改班型 / 取消 →</button>
+    </div>
+
     <div id="registerFormBody" class="reveal" style="background:var(--surface);border-radius:16px;padding:28px;border:1.5px solid var(--surface-dark)">
 
       <!-- 流程提示 -->
@@ -8578,6 +8586,7 @@ body {
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
         <a href="https://lin.ee/o1wzF7a" target="_blank" class="btn btn-green" style="display:inline-flex">加 LINE 追蹤進度 →</a>
         <a href="tel:04-23960585" class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text)">📞 04-23960585</a>
+        <button onclick="showRegisterChange()" class="btn btn-secondary" style="display:inline-flex;background:var(--surface);color:var(--text);border:1.5px solid var(--green);cursor:pointer">📝 改班型 / 取消註冊</button>
       </div>
     </div>
   </div>
@@ -11978,6 +11987,289 @@ function submitBookingChange() {
 }
 </script>
 
+<!-- ========== CAMP CHANGE/CANCEL MODAL ========== -->
+<div id="campChangeModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);overflow-y:auto">
+  <div style="max-width:480px;margin:60px auto;background:var(--bg,#fff);border-radius:16px;padding:28px 24px;position:relative">
+    <button onclick="closeCampChange()" style="position:absolute;right:16px;top:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted)">✕</button>
+    <h3 style="margin:0 0 6px;font-size:1.2rem">🏕️ 夏令營報名異動 / 取消</h3>
+    <p style="margin:0 0 18px;font-size:0.85rem;color:var(--text-muted);line-height:1.6">請填入您報名時使用的電話與變更內容，老師收到後會 24 小時內以 LINE 或電話確認。</p>
+
+    <div class="form-group" style="margin-bottom:14px">
+      <label style="font-weight:600;font-size:0.9rem">聯絡電話 <span style="color:#e53e3e">*</span></label>
+      <input type="tel" id="campChgPhone" placeholder="0912345678" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+      <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">以這支電話為查詢依據，需與報名表上的電話一致</div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:16px">
+      <label style="font-weight:600;font-size:0.9rem">我要 <span style="color:#e53e3e">*</span></label>
+      <div style="display:flex;gap:10px">
+        <label style="flex:1;padding:12px;border:1.5px solid #ddd;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s" id="campChgOptUpdate" onclick="selectCampChgAction('update')">🔄 變更內容</label>
+        <label style="flex:1;padding:12px;border:1.5px solid #ddd;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s" id="campChgOptCancel" onclick="selectCampChgAction('cancel')">❌ 取消報名</label>
+      </div>
+    </div>
+
+    <div id="campChgUpdateFields" style="display:none">
+      <div style="font-size:0.78rem;font-weight:800;color:var(--green,#2B7A4B);text-transform:uppercase;letter-spacing:0.06em;padding:10px 0 8px;border-bottom:2px solid #E8F5EE;margin-bottom:14px">📝 只填要改的那一項即可</div>
+
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="font-weight:600;font-size:0.9rem">課程選擇（選填）</label>
+        <textarea id="campChgCourses" rows="3" placeholder="例：七月 7/15-7/28 + 八月 8/12-8/25" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;font-family:inherit;resize:vertical"></textarea>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">如需改報名週數或月份，請填寫。不改留空即可</div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="font-weight:600;font-size:0.9rem">飲食需求（選填）</label>
+        <input type="text" id="campChgDiet" placeholder="例：素食 / 不吃牡蠣" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+      </div>
+    </div>
+
+    <div id="campChgCancelFields" style="display:none">
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="font-weight:600;font-size:0.9rem">取消原因（選填）</label>
+        <textarea id="campChgReason" rows="3" placeholder="例：全家出國 / 改參加其他活動..." style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;font-family:inherit;resize:vertical"></textarea>
+      </div>
+      <div style="background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:8px;padding:12px 14px;font-size:0.83rem;color:#78350F;line-height:1.6;margin-bottom:14px">
+        ⚠️ 如已繳費，退費規則依照夏令營報名須知。有疑問請與老師聯絡。
+      </div>
+    </div>
+
+    <button id="campChgSubmitBtn" onclick="submitCampChange()" style="width:100%;padding:14px;background:#999;color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px" disabled>請先選擇變更或取消</button>
+
+    <div id="campChgResult" style="display:none;padding:24px 0;text-align:center">
+      <div style="font-size:3rem;margin-bottom:12px">✅</div>
+      <h3 id="campChgResultTitle" style="font-size:1.15rem;font-weight:800;color:var(--green,#2B7A4B);margin-bottom:8px">已收到變更申請</h3>
+      <p id="campChgResultDesc" style="font-size:0.9rem;color:var(--text-muted);line-height:1.6">老師確認後會以 LINE 或電話與您聯繫</p>
+      <button onclick="closeCampChange()" style="margin-top:18px;padding:10px 24px;background:var(--green,#2B7A4B);color:#fff;border:none;border-radius:8px;font-size:0.9rem;cursor:pointer">關閉</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== REGISTER CHANGE/CANCEL MODAL ========== -->
+<div id="registerChangeModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);overflow-y:auto">
+  <div style="max-width:480px;margin:60px auto;background:var(--bg,#fff);border-radius:16px;padding:28px 24px;position:relative">
+    <button onclick="closeRegisterChange()" style="position:absolute;right:16px;top:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted)">✕</button>
+    <h3 style="margin:0 0 6px;font-size:1.2rem">🎓 正式註冊異動 / 取消</h3>
+    <p style="margin:0 0 18px;font-size:0.85rem;color:var(--text-muted);line-height:1.6">請填入您註冊時的電話與變更內容，老師收到後會 1–2 個工作日內與您聯繫確認。</p>
+
+    <div class="form-group" style="margin-bottom:14px">
+      <label style="font-weight:600;font-size:0.9rem">聯絡電話 <span style="color:#e53e3e">*</span></label>
+      <input type="tel" id="regChgPhone" placeholder="0912345678" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+      <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">以這支電話為查詢依據，需與註冊表上的電話一致</div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:16px">
+      <label style="font-weight:600;font-size:0.9rem">我要 <span style="color:#e53e3e">*</span></label>
+      <div style="display:flex;gap:10px">
+        <label style="flex:1;padding:12px;border:1.5px solid #ddd;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s" id="regChgOptUpdate" onclick="selectRegChgAction('update')">🔄 變更內容</label>
+        <label style="flex:1;padding:12px;border:1.5px solid #ddd;border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s" id="regChgOptCancel" onclick="selectRegChgAction('cancel')">❌ 取消註冊</label>
+      </div>
+    </div>
+
+    <div id="regChgUpdateFields" style="display:none">
+      <div style="font-size:0.78rem;font-weight:800;color:#2563EB;text-transform:uppercase;letter-spacing:0.06em;padding:10px 0 8px;border-bottom:2px solid #DBEAFE;margin-bottom:14px">📝 只填要改的項目即可</div>
+
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="font-weight:600;font-size:0.9rem">班型（選填）</label>
+        <select id="regChgClassType" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem;background:#fff">
+          <option value="">不改班型</option>
+          <option value="浸潤班">浸潤班</option>
+          <option value="菁英班">菁英班</option>
+          <option value="標準班">標準班</option>
+          <option value="普通班">普通班</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="font-weight:600;font-size:0.9rem">年級（選填）</label>
+        <input type="text" id="regChgGrade" placeholder="例：小五 / 國一" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+      </div>
+
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="font-weight:600;font-size:0.9rem">分班 / 期望班級（選填）</label>
+        <input type="text" id="regChgAssess" placeholder="例：5A / 5B / 6C" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem">
+      </div>
+
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="font-weight:600;font-size:0.9rem">附加服務（選填）</label>
+        <textarea id="regChgAddons" rows="2" placeholder="例：課後安親 + 美語家教" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;font-family:inherit;resize:vertical"></textarea>
+      </div>
+    </div>
+
+    <div id="regChgCancelFields" style="display:none">
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="font-weight:600;font-size:0.9rem">取消原因（選填）</label>
+        <textarea id="regChgReason" rows="3" placeholder="例：搬家 / 改選其他課程..." style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;font-family:inherit;resize:vertical"></textarea>
+      </div>
+      <div style="background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:8px;padding:12px 14px;font-size:0.83rem;color:#78350F;line-height:1.6;margin-bottom:14px">
+        ⚠️ 如已繳費或預付訂金，退費規則依照註冊須知。有疑問請與老師聯絡。
+      </div>
+    </div>
+
+    <button id="regChgSubmitBtn" onclick="submitRegisterChange()" style="width:100%;padding:14px;background:#999;color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px" disabled>請先選擇變更或取消</button>
+
+    <div id="regChgResult" style="display:none;padding:24px 0;text-align:center">
+      <div style="font-size:3rem;margin-bottom:12px">✅</div>
+      <h3 id="regChgResultTitle" style="font-size:1.15rem;font-weight:800;color:#2563EB;margin-bottom:8px">已收到變更申請</h3>
+      <p id="regChgResultDesc" style="font-size:0.9rem;color:var(--text-muted);line-height:1.6">老師確認後會以 LINE 或電話與您聯繫</p>
+      <button onclick="closeRegisterChange()" style="margin-top:18px;padding:10px 24px;background:#2563EB;color:#fff;border:none;border-radius:8px;font-size:0.9rem;cursor:pointer">關閉</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========== CAMP CHANGE ========== */
+var _campChgAction = '';
+function showCampChange() {
+  document.getElementById('campChangeModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  // 帶入之前填寫表單的電話（如果有）
+  try {
+    var prevPhone = document.getElementById('camp_phone');
+    if (prevPhone && prevPhone.value && !document.getElementById('campChgPhone').value) {
+      document.getElementById('campChgPhone').value = prevPhone.value;
+    }
+  } catch(e) {}
+}
+function closeCampChange() {
+  document.getElementById('campChangeModal').style.display = 'none';
+  document.body.style.overflow = '';
+  // reset
+  document.getElementById('campChgResult').style.display = 'none';
+  document.getElementById('campChgSubmitBtn').style.display = 'block';
+}
+function selectCampChgAction(action) {
+  _campChgAction = action;
+  var u = document.getElementById('campChgOptUpdate');
+  var c = document.getElementById('campChgOptCancel');
+  u.style.borderColor = action === 'update' ? '#2B7A4B' : '#ddd';
+  u.style.background  = action === 'update' ? '#F0FDF4' : '';
+  c.style.borderColor = action === 'cancel' ? '#C0392B' : '#ddd';
+  c.style.background  = action === 'cancel' ? '#FEF2F2' : '';
+  document.getElementById('campChgUpdateFields').style.display = action === 'update' ? 'block' : 'none';
+  document.getElementById('campChgCancelFields').style.display = action === 'cancel' ? 'block' : 'none';
+  var btn = document.getElementById('campChgSubmitBtn');
+  btn.disabled = false;
+  btn.textContent = action === 'update' ? '🔄 送出變更申請' : '❌ 確認取消報名';
+  btn.style.background = action === 'cancel' ? '#C0392B' : '#2B7A4B';
+}
+function submitCampChange() {
+  var phone = document.getElementById('campChgPhone').value.trim();
+  if (!phone) { alert('請填寫聯絡電話'); return; }
+  if (!_campChgAction) { alert('請選擇變更或取消'); return; }
+
+  var data = { action: _campChgAction, phone: phone, source: 'parent' };
+  if (_campChgAction === 'update') {
+    var courses = document.getElementById('campChgCourses').value.trim();
+    var diet    = document.getElementById('campChgDiet').value.trim();
+    if (!courses && !diet) {
+      alert('變更請至少填寫一項（課程或飲食）');
+      return;
+    }
+    if (courses) data.newCourses = courses;
+    if (diet)    data.newDiet = diet;
+  } else {
+    data.reason = document.getElementById('campChgReason').value.trim();
+  }
+
+  // 送出（針對 webhook 失效作容錯處理）
+  var url = (typeof WEBHOOK_URL !== 'undefined' ? WEBHOOK_URL : 'https://miyutang.app.n8n.cloud/webhook/xinguang-form').replace('xinguang-form','camp-change');
+  fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  }).catch(function(){
+    // 快取備援：使用 no-cors 重試一次
+    fetch(url, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)});
+  });
+
+  // 即時顯示成功畫面（家長體驗優先）
+  document.getElementById('campChgSubmitBtn').style.display = 'none';
+  document.getElementById('campChgResult').style.display = 'block';
+  if (_campChgAction === 'cancel') {
+    document.getElementById('campChgResultTitle').textContent = '已收到取消申請';
+    document.getElementById('campChgResultDesc').textContent  = '老師會盡快與您確認退費事宜';
+  } else {
+    document.getElementById('campChgResultTitle').textContent = '已收到變更申請';
+    document.getElementById('campChgResultDesc').textContent  = '老師確認後會以 LINE 或電話與您聯繫';
+  }
+}
+
+/* ========== REGISTER CHANGE ========== */
+var _regChgAction = '';
+function showRegisterChange() {
+  document.getElementById('registerChangeModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  try {
+    var prevPhone = document.getElementById('reg_phone');
+    if (prevPhone && prevPhone.value && !document.getElementById('regChgPhone').value) {
+      document.getElementById('regChgPhone').value = prevPhone.value;
+    }
+  } catch(e) {}
+}
+function closeRegisterChange() {
+  document.getElementById('registerChangeModal').style.display = 'none';
+  document.body.style.overflow = '';
+  document.getElementById('regChgResult').style.display = 'none';
+  document.getElementById('regChgSubmitBtn').style.display = 'block';
+}
+function selectRegChgAction(action) {
+  _regChgAction = action;
+  var u = document.getElementById('regChgOptUpdate');
+  var c = document.getElementById('regChgOptCancel');
+  u.style.borderColor = action === 'update' ? '#2563EB' : '#ddd';
+  u.style.background  = action === 'update' ? '#EFF6FF' : '';
+  c.style.borderColor = action === 'cancel' ? '#C0392B' : '#ddd';
+  c.style.background  = action === 'cancel' ? '#FEF2F2' : '';
+  document.getElementById('regChgUpdateFields').style.display = action === 'update' ? 'block' : 'none';
+  document.getElementById('regChgCancelFields').style.display = action === 'cancel' ? 'block' : 'none';
+  var btn = document.getElementById('regChgSubmitBtn');
+  btn.disabled = false;
+  btn.textContent = action === 'update' ? '🔄 送出變更申請' : '❌ 確認取消註冊';
+  btn.style.background = action === 'cancel' ? '#C0392B' : '#2563EB';
+}
+function submitRegisterChange() {
+  var phone = document.getElementById('regChgPhone').value.trim();
+  if (!phone) { alert('請填寫聯絡電話'); return; }
+  if (!_regChgAction) { alert('請選擇變更或取消'); return; }
+
+  var data = { action: _regChgAction, phone: phone, source: 'parent' };
+  if (_regChgAction === 'update') {
+    var classType = document.getElementById('regChgClassType').value.trim();
+    var grade     = document.getElementById('regChgGrade').value.trim();
+    var assess    = document.getElementById('regChgAssess').value.trim();
+    var addons    = document.getElementById('regChgAddons').value.trim();
+    if (!classType && !grade && !assess && !addons) {
+      alert('變更請至少填寫一項');
+      return;
+    }
+    if (classType) data.newClassType    = classType;
+    if (grade)     data.newGrade        = grade;
+    if (assess)    data.newAssessResult = assess;
+    if (addons)    data.newAddons       = addons;
+  } else {
+    data.reason = document.getElementById('regChgReason').value.trim();
+  }
+
+  var url = (typeof WEBHOOK_URL !== 'undefined' ? WEBHOOK_URL : 'https://miyutang.app.n8n.cloud/webhook/xinguang-form').replace('xinguang-form','register-change');
+  fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  }).catch(function(){
+    fetch(url, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)});
+  });
+
+  document.getElementById('regChgSubmitBtn').style.display = 'none';
+  document.getElementById('regChgResult').style.display = 'block';
+  if (_regChgAction === 'cancel') {
+    document.getElementById('regChgResultTitle').textContent = '已收到取消申請';
+    document.getElementById('regChgResultDesc').textContent  = '老師會盡快與您確認退費事宜';
+  } else {
+    document.getElementById('regChgResultTitle').textContent = '已收到變更申請';
+    document.getElementById('regChgResultDesc').textContent  = '老師確認後會以 LINE 或電話與您聯繫';
+  }
+}
+</script>
 
 <!-- LINE 好友引導橫幅 -->
 <div id="lineFloatBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:linear-gradient(135deg,#2B7A4B,#1A4731);padding:12px 20px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.15)">
