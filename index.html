@@ -1045,6 +1045,7 @@ body {
     </a>
     <div class="nav-links">
       <a href="#courses">課程介紹</a>
+      <a href="#classes">📅 開班資訊</a>
       <a href="#reverse-engineering">路線計算</a>
       <a href="#cambridge-pathway">國際認證</a>
       <a href="#cert-comparison">證照對照</a>
@@ -1062,6 +1063,7 @@ body {
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#courses" onclick="closeMobile()">課程介紹</a>
+  <a href="#classes" onclick="closeMobile()">📅 開班資訊</a>
   <a href="#reverse-engineering" onclick="closeMobile()">路線計算</a>
   <a href="#cambridge-pathway" onclick="closeMobile()">國際認證</a>
   <a href="#cert-comparison" onclick="closeMobile()">證照對照</a>
@@ -3650,6 +3652,117 @@ body {
   .re-table td:nth-child(3) { display: none; }
 }
 </style>
+
+<!-- ========== 學期班別調整公告 ========== -->
+<style>
+.cls-section{padding:80px 0;background:linear-gradient(180deg,#FBFAF7 0%,#F5F2EA 100%)}
+.cls-container{max-width:1100px;margin:0 auto;padding:0 20px}
+.cls-header{text-align:center;margin-bottom:36px}
+.cls-eyebrow{display:inline-block;font-size:0.78rem;font-weight:800;letter-spacing:0.16em;color:#2B7A4B;background:#E8F5EE;padding:6px 14px;border-radius:20px;margin-bottom:14px}
+.cls-title{font-family:var(--font-display);font-size:clamp(1.75rem,4vw,2.4rem);font-weight:800;color:#0D1B2A;margin:0 0 8px;letter-spacing:-0.02em}
+.cls-subtitle{font-size:0.95rem;color:#52606D;line-height:1.7;max-width:640px;margin:0 auto}
+.cls-summary-card{background:linear-gradient(135deg,#0D1B2A 0%,#1A2B40 100%);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:30px;box-shadow:0 12px 40px rgba(13,27,42,0.18)}
+.cls-summary-title{font-size:1rem;font-weight:700;color:#7DFFB3;margin:0 0 8px;letter-spacing:0.04em}
+.cls-summary-body{font-size:0.92rem;line-height:1.75;color:rgba(255,255,255,0.88)}
+.cls-summary-body strong{color:#FFD86B}
+.cls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+@media(max-width:900px){.cls-grid{grid-template-columns:1fr}}
+.cls-slot{background:#fff;border-radius:14px;padding:22px;border:1.5px solid #E5E0D5;display:flex;flex-direction:column;transition:all 0.3s ease;box-shadow:0 4px 14px rgba(0,0,0,0.04)}
+.cls-slot:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.10);border-color:#2B7A4B}
+.cls-slot-time{font-family:var(--font-display);font-size:1.15rem;font-weight:800;color:#0D1B2A;margin:0 0 4px;letter-spacing:-0.01em}
+.cls-slot-tagline{font-size:0.78rem;color:#52606D;margin:0 0 18px;font-weight:500}
+.cls-slot-1 .cls-slot-time::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;margin-right:8px;vertical-align:middle}
+.cls-slot-2 .cls-slot-time::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;margin-right:8px;vertical-align:middle}
+.cls-slot-3 .cls-slot-time::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:#3b82f6;margin-right:8px;vertical-align:middle}
+.cls-table{width:100%;border-collapse:separate;border-spacing:0;font-size:0.86rem}
+.cls-table thead th{background:#F5F2EA;color:#52606D;padding:9px 10px;font-size:0.74rem;font-weight:700;text-align:left;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1.5px solid #E5E0D5}
+.cls-table thead th:first-child{border-radius:6px 0 0 0}
+.cls-table thead th:last-child{border-radius:0 6px 0 0;text-align:left}
+.cls-table tbody td{padding:10px 10px;border-bottom:1px solid #F0EBE0;color:#0D1B2A;line-height:1.5}
+.cls-table tbody tr:last-child td{border-bottom:none}
+.cls-class-name{font-weight:700;color:#0D1B2A;font-size:0.95rem}
+.cls-class-name.highlight{color:#2B7A4B}
+.cls-note{font-size:0.74rem;color:#92400E;background:#FEF3C7;padding:2px 6px;border-radius:4px;font-weight:600;display:inline-block}
+.cls-note-blue{font-size:0.74rem;color:#1E40AF;background:#DBEAFE;padding:2px 6px;border-radius:4px;font-weight:600;display:inline-block}
+.cls-cta{margin-top:34px;text-align:center;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+</style>
+
+<section class="cls-section" id="classes">
+  <div class="cls-container">
+    <div class="cls-header reveal">
+      <span class="cls-eyebrow">學期公告</span>
+      <h2 class="cls-title">本學期開班資訊</h2>
+      <p class="cls-subtitle">太平新光分校本學期班別、上課時段與上課日如下。謹供各位家長參考。</p>
+    </div>
+
+    <div class="cls-summary-card reveal">
+      <h3 class="cls-summary-title">⚡ 學期班別調整 · 週時數 7.5 小時不變</h3>
+      <p class="cls-summary-body">謹告知各位家長：學期本校班別、上課時段與上課日如下。<strong>時段二（16:30–19:00）</strong>中高年級以 <strong>3 天班</strong> 為主（G2 為浸潤班），每次 2.5 小時 × 3 天，每週維持 7.5 小時的扎實學習，同教材、同進度、同師資。</p>
+    </div>
+
+    <div class="cls-grid">
+      <!-- 時段一 -->
+      <div class="cls-slot cls-slot-1 reveal">
+        <h4 class="cls-slot-time">時段一 · 14:00–16:00</h4>
+        <p class="cls-slot-tagline">國小低年級／銜接班</p>
+        <table class="cls-table">
+          <thead>
+            <tr><th>班別</th><th>上課時間</th><th>上課日</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="cls-class-name">SA</span></td><td>14:00–16:00</td><td>週一、三、四、五</td></tr>
+            <tr><td><span class="cls-class-name">1A</span></td><td>14:00–16:00</td><td>週一、三、四、五</td></tr>
+            <tr><td><span class="cls-class-name">G1</span></td><td>13:30–16:15</td><td>週一、三、四、五</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 時段二 -->
+      <div class="cls-slot cls-slot-2 reveal">
+        <h4 class="cls-slot-time">時段二 · 16:30–19:00</h4>
+        <p class="cls-slot-tagline">★ 中高年級 3 天班 · 每次 2.5h × 3 天</p>
+        <table class="cls-table">
+          <thead>
+            <tr><th>班別</th><th>上課日</th><th>備註</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="cls-class-name">1A</span></td><td>週二、三、四</td><td>—</td></tr>
+            <tr><td><span class="cls-class-name">3A</span></td><td>週一、三、五</td><td><span class="cls-note">週三改 R102</span></td></tr>
+            <tr><td><span class="cls-class-name">1C</span></td><td>週一、三、四</td><td>—</td></tr>
+            <tr><td><span class="cls-class-name">4A</span></td><td>週二、四、五</td><td><span class="cls-note">週四改 R102</span></td></tr>
+            <tr><td><span class="cls-class-name highlight">G2</span></td><td>週一至週五</td><td><span class="cls-note-blue">浸潤班 · 16:30–18:45</span></td></tr>
+            <tr><td><span class="cls-class-name">2B</span></td><td>週一、二、四</td><td>—</td></tr>
+            <tr><td><span class="cls-class-name">3C</span></td><td>週一、三、五</td><td><span class="cls-note">週一改 R102</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 時段三 -->
+      <div class="cls-slot cls-slot-3 reveal">
+        <h4 class="cls-slot-time">時段三 · 19:00–21:00</h4>
+        <p class="cls-slot-tagline">全民英檢備考／幼兒美語</p>
+        <table class="cls-table">
+          <thead>
+            <tr><th>班別</th><th>時間</th><th>上課日</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="cls-class-name">4B 中級初試</span></td><td>19:00–21:00</td><td>週一、四</td></tr>
+            <tr><td><span class="cls-class-name">中級複試</span></td><td>19:00–21:00</td><td>週二、五</td></tr>
+            <tr><td><span class="cls-class-name">3B 初級初試</span></td><td>19:00–21:00</td><td>週二、五</td></tr>
+            <tr><td><span class="cls-class-name">初級複試</span></td><td>19:00–21:00</td><td>週一、三</td></tr>
+            <tr><td><span class="cls-class-name highlight">ES 幼兒美語</span></td><td>19:00–20:30</td><td>週一、二、五</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cls-cta">
+      <a href="#booking" class="btn btn-primary" style="font-size:0.92rem;padding:11px 22px">🏫 帶孩子試說看看</a>
+      <a href="#inquiry" class="btn btn-secondary" style="font-size:0.92rem;padding:11px 22px;background:#fff;color:#2B7A4B;border:1.5px solid #2B7A4B">✉️ 詢問班別</a>
+      <a href="tel:04-23960585" class="btn btn-secondary" style="font-size:0.92rem;padding:11px 22px;background:#fff;color:#0D1B2A;border:1.5px solid #C7C0AE">📞 04-2396-0585</a>
+    </div>
+  </div>
+</section>
 
 <section id="reverse-engineering">
   <div class="re-container">
