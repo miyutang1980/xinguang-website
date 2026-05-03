@@ -12424,8 +12424,8 @@ window.addEventListener('scroll', function() {
 <script>
 (function(){
   // 拆字串避免被 lint 擋
-  // ⚠️ 部署完 LINE_Click_Tracker Apps Script 後、請將下方 URL 改為那個新 Web App URL
-  var TRACK_BASE = 'h'+'ttps'+':'+'/'+'/'+'script.google.com/macros/s/REPLACE_WITH_LINE_TRACKER_DEPLOY_ID/exec';
+  // 追蹤到現有 marketing_dashboard 的 doGet、以 ?lct=1 區分
+  var TRACK_BASE = 'h'+'ttps'+':'+'/'+'/'+'script.google.com/macros/s/AKfycbw_xFWnKLYm3xtNTGd8lFpDzFk1PU1Qolyyyis8NXfsNV_m4ca5s0gOD-BBr_SK8XrYqA/exec';
 
   // 自動推算 src：依按鈕所在 section / class
   function inferSrc(el){
@@ -12447,6 +12447,7 @@ window.addEventListener('scroll', function() {
 
   function buildTrackUrl(src){
     var u = new URL(TRACK_BASE);
+    u.searchParams.set('lct', '1');
     u.searchParams.set('src', src);
     // 帶上 utm（如果網址有）
     var qs = new URLSearchParams(location.search);
