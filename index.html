@@ -12465,19 +12465,26 @@ window.addEventListener('scroll', function() {
     // 已經是 track URL 的不再包
     if (href.indexOf('script.google.com/macros') >= 0) return;
 
-    e.preventDefault();
     var src = inferSrc(a);
     var trackUrl = buildTrackUrl(src);
+
+    // 先做追蹤（不阻塞家長）
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(trackUrl);
+      } else {
+        // 備援：fetch keepalive，同樣不阻塞
+        fetch(trackUrl, { method: 'GET', mode: 'no-cors', keepalive: true }).catch(function(){});
+      }
+    } catch(_){}
 
     // GA 事件（如果有）
     if (typeof gtag === 'function'){
       gtag('event', 'line_click', { src: src });
     }
 
-    // 在新分頁開（保留原本 target=_blank 行為）
-    var target = a.getAttribute('target') || '_blank';
-    if (target === '_blank') window.open(trackUrl, '_blank');
-    else location.href = trackUrl;
+    // 重點：不阻斷原本跳轉。讓瀏覽器帶家長去 LINE 原本 URL (lin.ee / line.me)
+    // 不要 e.preventDefault()、也不要手動跳追蹤 URL——只讓追蹤在背後到達。
   }, true);
 })();
 </script>
