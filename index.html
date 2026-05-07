@@ -9108,7 +9108,9 @@ function _loadTrialClasses(){
     .then(function(d){
       if(d && d.ok && d.classes){
         _trialClassesCache = d.classes;
+        window._trialClassesCache = d.classes;  // 曝出給主連結讀
         _renderTrialClasses(d.classes);
+        if (typeof window._syncTrialClassesFromGateway === 'function') window._syncTrialClassesFromGateway();
       } else {
         listEl.innerHTML = '<div style="color:#DC2626;text-align:center;padding:20px;grid-column:1/-1">班表載入失敗，請重新整理頁面</div>';
       }
@@ -9327,13 +9329,12 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     4:['14:00-15:00'],               // 週四（只有下午）
     5:['14:00-15:00','19:00-20:00']  // 週五
   };
-  // 體驗課時段：只列有排班的時段
-  const trialSlots={
+  // 體驗課時段：主動同步 Gateway 8 班 (下面 _syncTrialSlotsFromGateway 會更新)
+  let trialSlots={
     1:['14:00-15:00'],                                     // 週一 SB
     2:['16:30-17:30','18:30-19:30'],                       // 週二 2C, ES
     3:['14:00-15:00','16:30-17:30','18:30-19:30'],         // 週三 1B, 2A, 4B
-    4:['14:00-15:00','16:30-17:30','18:30-19:30']          // 週四 G1, G3/3A, 3B
-    // 週五暫無排班
+    4:['16:30-17:30','18:30-19:30']                        // 週四 3A, 3B
   };
   // 依目前 tab 回傳對應時段表
   function getWeeklySlots(){ return (_currentBkType==='trial') ? trialSlots : visitSlots; }
@@ -9416,12 +9417,36 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
   // 體驗課：每個時段最多 4 個班級，由後台設定
   // _trialOverrides[date][slot] = ['1B','2A','G1','SB'] 或舊格式字串
   function getWeekNum(ds){ return ''; }
-  // 每週固定排班（直接寫在程式碼裡，最穩定）
+  // 預設班表（個月初載入、之後被 Gateway 讀到的資料覆蓋）
   var _fixedTrialByDow = {
     1: { '14:00-15:00': ['SB'] },
     2: { '16:30-17:30': ['2C'], '18:30-19:30': ['ES'] },
     3: { '14:00-15:00': ['1B'], '16:30-17:30': ['2A'], '18:30-19:30': ['4B'] },
-    4: { '14:00-15:00': ['G1'], '16:30-17:30': ['G3','3A'], '18:30-19:30': ['3B'] }
+    4: { '16:30-17:30': ['3A'], '18:30-19:30': ['3B'] }  // 週四只有 3A/3B、沒有 14:00 課
+  };
+  // 動態從 Gateway 同步 8 班、覆蓋上面寫死的班表與時段
+  window._syncTrialClassesFromGateway = function(){
+    if (!window._trialClassesCache) return;
+    var byDow = {1:{},2:{},3:{},4:{},5:{}};
+    var slotsByDow = {1:[],2:[],3:[],4:[],5:[]};
+    var DOW_ZH = {'一':1,'二':2,'三':3,'四':4,'五':5};
+    window._trialClassesCache.forEach(function(c){
+      var d = DOW_ZH[c.day]; if(!d) return;
+      if (!byDow[d][c.time]) byDow[d][c.time] = [];
+      byDow[d][c.time].push(c.level);
+      if (slotsByDow[d].indexOf(c.time) < 0) slotsByDow[d].push(c.time);
+    });
+    _fixedTrialByDow = byDow;
+    // 更新時段表 (只讓 Gateway 有班的那幾個時段出現)
+    Object.keys(slotsByDow).forEach(function(d){
+      if (slotsByDow[d].length > 0) {
+        slotsByDow[d].sort();
+        trialSlots[d] = slotsByDow[d];
+      } else {
+        delete trialSlots[d];  // 這天沒班 = 完全內不可預約
+      }
+    });
+    if (window._reRenderCalendar) window._reRenderCalendar();
   };
   window.getTrialClasses = function(ds, slot){
     // 後台自訂覆蓋優先
