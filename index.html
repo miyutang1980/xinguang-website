@@ -7143,6 +7143,20 @@ body {
           ✨ 體驗課週一到週五都開放，三個時段：<strong>14:00–15:00</strong>、<strong>16:30–17:30</strong>、<strong>18:30–19:30</strong>。本學期至 <strong>6/30</strong>，灰色為假日或學校活動日。
         </div>
       </div>
+      <!-- 體驗課班表（0513 加：體驗期 5/8–6/18） -->
+      <div id="trialClassPanel" style="display:none;background:#F0FDF4;border:1.5px solid #BBF7D0;border-radius:14px;padding:18px;margin-bottom:18px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+          <div>
+            <h4 style="margin:0;color:#166534;font-size:1.05rem">🏫 體驗課班表 · 5/8 – 6/18</h4>
+            <p style="margin:4px 0 0;font-size:0.82rem;color:#15803D">點選下方班、再上點選體驗日期；班資料會自動帶入預約表單</p>
+          </div>
+          <button type="button" onclick="_toggleTrialClasses()" style="background:#fff;border:1px solid #BBF7D0;border-radius:6px;padding:6px 12px;font-size:0.78rem;color:#166534;cursor:pointer" id="_tcToggleBtn">隱藏</button>
+        </div>
+        <div id="trialClassList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
+          <div style="text-align:center;color:#9CA3AF;padding:20px;grid-column:1/-1">載入班表中...</div>
+        </div>
+        <div id="selectedTrialClass" style="display:none;margin-top:14px;padding:12px 14px;background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:8px;font-size:0.85rem"></div>
+      </div>
       <div id="bkDeadlineInfo" class="bk-deadline-badge" style="display:none"></div>
       <div class="calendar-header">
         <h3 id="calendarTitle"></h3>
@@ -7193,6 +7207,10 @@ body {
               <option>托育班</option>
             </select>
           </div>
+          <input type="hidden" id="bkTrialClassId">
+          <input type="hidden" id="bkTrialClassLabel">
+          <input type="hidden" id="bkTrialTeacher">
+          <input type="hidden" id="bkTrialRoom">
           <div class="form-group" id="bkTrialAssessInfo" style="display:none;grid-column:1/-1">
             <div style="background:#F0FDF4;border:1.5px solid var(--green);border-radius:10px;padding:12px 16px;font-size:0.85rem;line-height:1.7">
               <strong style="color:var(--green-dark)">📊 檢測分班結果</strong>
@@ -9073,6 +9091,105 @@ function switchBkType(type, btn) {
   if(sp) sp.classList.remove('active');
   if(bf) bf.classList.remove('active');
   if(window._reRenderCalendar) window._reRenderCalendar();
+  // 體驗課班表 (只在 trial 時顯示)
+  var tcp = document.getElementById('trialClassPanel');
+  if(tcp) tcp.style.display = (type === 'trial') ? '' : 'none';
+  if (type === 'trial') _loadTrialClasses();
+}
+
+// ─── 體驗課班表：從 Apps Script Gateway 讀 ───
+var _trialClassesCache = null;
+function _loadTrialClasses(){
+  var listEl = document.getElementById('trialClassList');
+  if(!listEl) return;
+  if(_trialClassesCache){ _renderTrialClasses(_trialClassesCache); return; }
+  fetch(WEBHOOK_URL + '?action=trialClasses', { method: 'GET' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(d && d.ok && d.classes){
+        _trialClassesCache = d.classes;
+        _renderTrialClasses(d.classes);
+      } else {
+        listEl.innerHTML = '<div style="color:#DC2626;text-align:center;padding:20px;grid-column:1/-1">班表載入失敗，請重新整理頁面</div>';
+      }
+    })
+    .catch(function(err){
+      console.error('[trial classes] load fail:', err);
+      listEl.innerHTML = '<div style="color:#DC2626;text-align:center;padding:20px;grid-column:1/-1">網路連線失敗，請重試</div>';
+    });
+}
+
+function _renderTrialClasses(classes){
+  var listEl = document.getElementById('trialClassList');
+  if(!listEl) return;
+  if(!classes || !classes.length){
+    listEl.innerHTML = '<div style="color:#9CA3AF;text-align:center;padding:20px;grid-column:1/-1">目前無體驗班</div>';
+    return;
+  }
+  var html = classes.map(function(c){
+    return '<div data-tc-id="' + c.id + '" onclick="_selectTrialClass(\''+ c.id +'\')" style="cursor:pointer;background:#fff;border:2px solid #E5E7EB;border-radius:10px;padding:12px 14px;transition:all 0.2s" '
+      + 'onmouseover="this.style.borderColor=\''+c.color+'\';this.style.transform=\'translateY(-2px)\';this.style.boxShadow=\'0 6px 16px rgba(0,0,0,0.08)\'" '
+      + 'onmouseout="if(!this.classList.contains(\'tc-selected\')){this.style.borderColor=\'#E5E7EB\';this.style.transform=\'\';this.style.boxShadow=\'\'}">'
+      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
+      +   '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+c.color+'"></span>'
+      +   '<strong style="color:#1F2937;font-size:0.95rem">'+c.cat_zh+' '+c.level+'</strong>'
+      + '</div>'
+      + '<div style="font-size:0.8rem;color:#6B7280;line-height:1.5">'
+      +   '🗓️ 週'+c.day+' · '+c.time+'<br>'
+      +   '👨‍🏫 '+c.tw+' / '+c.fr+'<br>'
+      +   '🚪 '+c.room
+      +   (c.remark ? '<br><span style="color:'+c.color+';font-weight:600">✍️ '+c.remark+'</span>' : '')
+      + '</div>'
+      + '</div>';
+  }).join('');
+  listEl.innerHTML = html;
+}
+
+function _selectTrialClass(id){
+  if(!_trialClassesCache) return;
+  var c = _trialClassesCache.find(function(x){ return x.id === id; });
+  if(!c) return;
+  // 更新卡片選取狀態
+  document.querySelectorAll('[data-tc-id]').forEach(function(el){
+    el.classList.remove('tc-selected');
+    el.style.borderColor = '#E5E7EB';
+    el.style.transform = '';
+    el.style.boxShadow = '';
+    el.style.background = '#fff';
+  });
+  var sel = document.querySelector('[data-tc-id="' + id + '"]');
+  if(sel){
+    sel.classList.add('tc-selected');
+    sel.style.borderColor = c.color;
+    sel.style.background = c.color + '15';
+    sel.style.boxShadow = '0 4px 14px ' + c.color + '40';
+  }
+  // 更新隱藏欄位
+  var setVal = function(id, v){ var el = document.getElementById(id); if(el) el.value = v; };
+  setVal('bkTrialClassId', c.id);
+  setVal('bkTrialClassLabel', c.label);
+  setVal('bkTrialTeacher', c.tw + ' / ' + c.fr);
+  setVal('bkTrialRoom', c.room);
+  // 顯示選取提示 + 全部可選日期
+  var sumEl = document.getElementById('selectedTrialClass');
+  if(sumEl){
+    sumEl.style.display = '';
+    sumEl.innerHTML = '✅ 已選「<strong>'+c.cat_zh+' '+c.level+' · 週'+c.day+' '+c.time+'</strong>」｜老師：'+c.tw+' / '+c.fr+'｜教室：'+c.room
+      + '<br><span style="color:#6B7280;font-size:0.78rem">📆 請在上方日曆選「週'+c.day+'」的任一日期 · '+c.dates.length+' 個可用日期：'+c.dates.join('、')+'</span>';
+  }
+}
+
+function _toggleTrialClasses(){
+  var listEl = document.getElementById('trialClassList');
+  var btn = document.getElementById('_tcToggleBtn');
+  if(!listEl || !btn) return;
+  if (listEl.style.display === 'none') {
+    listEl.style.display = 'grid';
+    btn.textContent = '隱藏';
+  } else {
+    listEl.style.display = 'none';
+    btn.textContent = '展開';
+  }
 }
 
 function switchCampMonth(btn, id) {
@@ -9585,7 +9702,11 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     if(window._adminData) window._adminData.bookings.push({date:selectedDate,slot:selectedSlot,bkType,...info});
     saveParentInfo(parent.value, phone.value, '', '');
     if(child.value) saveChildInfo(child.value, '');
-    sendWebhook('booking', {ts:info.ts, parent:info.parent, phone:info.phone, student:info.child, type:info.type, date:selectedDate, slot:selectedSlot, cls:info.cls, bkType:bkType});
+    var _trialClsId = (document.getElementById('bkTrialClassId')||{}).value || '';
+    var _trialClsLabel = (document.getElementById('bkTrialClassLabel')||{}).value || '';
+    var _trialTeacher = (document.getElementById('bkTrialTeacher')||{}).value || '';
+    var _trialRoom = (document.getElementById('bkTrialRoom')||{}).value || '';
+    sendWebhook('booking', {ts:info.ts, parent:info.parent, pname:info.parent, phone:info.phone, student:info.child, child:info.child, type:info.type, date:selectedDate, slot:selectedSlot, cls:info.cls, bkType:bkType, bookingType:bkType, trialClassId:_trialClsId, trialClassLabel:_trialClsLabel, trialTeacher:_trialTeacher, trialRoom:_trialRoom});
     // 同步到 localStorage 供獨立後台
     var xgData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
     if(!xgData.bookingRegs) xgData.bookingRegs = [];
