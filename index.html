@@ -9135,6 +9135,7 @@ function switchBkType(type, btn) {
 
 // ─── 體驗課班表：從 Apps Script Gateway 讀 ───
 var _trialClassesCache = null;
+window._trialBookedSlots = window._trialBookedSlots || {};  // {'2026-05-14|14:00-15:00': true}
 function _loadTrialClasses(){
   var listEl = document.getElementById('trialClassList');
   if(!listEl) return;
@@ -9155,6 +9156,25 @@ function _loadTrialClasses(){
       console.error('[trial classes] load fail:', err);
       listEl.innerHTML = '<div style="color:#DC2626;text-align:center;padding:20px;grid-column:1/-1">網路連線失敗，請重試</div>';
     });
+  // 同步讀取已被預約的「日期+時段」· 讓日曆能標灰已佔用
+  fetch(WEBHOOK_URL + '?action=trialBookings', { method: 'GET' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d && d.ok && Array.isArray(d.bookings)) {
+        var booked = {};
+        d.bookings.forEach(function(b){
+          if (!b.date || !b.slot) return;
+          var key = b.date + '|' + b.slot;
+          booked[key] = true;
+        });
+        window._trialBookedSlots = booked;
+        // 重繪日曆能個別格变灰
+        if (typeof renderCalendar === 'function') {
+          try { renderCalendar(); } catch(e){}
+        }
+      }
+    })
+    .catch(function(e){ console.warn('[trial bookings] load fail (忍受):', e); });
 }
 
 function _renderTrialClasses(classes){
@@ -9437,11 +9457,23 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     if(window._adminRefresh) window._adminRefresh();
   }
   function isSlotFull(date, slot, type){
-    return !!getSlot(date, slot, type);
+    if (getSlot(date, slot, type)) return true;
+    // 體驗課：加看 Gateway 已記錄預約
+    if (type === 'trial' && window._trialBookedSlots) {
+      var key = date + '|' + slot;
+      if (window._trialBookedSlots[key]) return true;
+    }
+    return false;
   }
   // 體驗課：某日某時段某班是否已滿
   function isTrialClassFull(date, slot, cls){
-    return !!getSlot(date, slot, 'trial_'+cls);
+    if (getSlot(date, slot, 'trial_'+cls)) return true;
+    // 加看 Gateway 已記錄預約
+    if (window._trialBookedSlots) {
+      var key = date + '|' + slot;
+      if (window._trialBookedSlots[key]) return true;
+    }
+    return false;
   }
   // 參訪和檢測共用同一個「visitTest」名額
   function getBookingType(){ return (_currentBkType==='trial') ? 'trial' : 'visitTest'; }
