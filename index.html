@@ -163,10 +163,10 @@ ul{list-style:none}
 .nav-cta:hover{background:var(--orange-dark)!important;transform:translateY(-1px)}
 .hamburger{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer}
 .hamburger span{display:block;width:22px;height:2px;background:rgba(255,255,255,0.85);border-radius:2px;transition:all 0.3s}
-.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(10,42,26,0.97);border-bottom:1px solid rgba(255,255,255,0.1);padding:16px 20px;z-index:999;box-shadow:var(--shadow-md)}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(10,42,26,0.98);border-bottom:1px solid rgba(255,255,255,0.15);padding:16px 20px;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
 .mobile-menu.active{display:flex;flex-direction:column;gap:4px}
-.mobile-menu a{display:block;padding:12px 16px;font-size:0.95rem;font-weight:500;color:var(--text);border-radius:var(--radius-sm);transition:all var(--transition)}
-.mobile-menu a:hover{background:var(--green-light);color:var(--green)}
+.mobile-menu a{display:block;padding:12px 16px;font-size:0.95rem;font-weight:600;color:#FFFFFF;border-radius:var(--radius-sm);transition:all var(--transition);border-left:3px solid transparent}
+.mobile-menu a:hover,.mobile-menu a:active{background:rgba(255,255,255,0.12);color:#FFE699;border-left-color:#FFC107}
 @media(max-width:900px){
   .nav-links{display:none}
   .hamburger{display:flex}
