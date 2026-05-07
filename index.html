@@ -9424,25 +9424,34 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     4: { '16:30-17:30': ['3A'], '18:30-19:30': ['3B'] }  // 週四只有 3A/3B、沒有 14:00 課
   };
   // 動態從 Gateway 同步 8 班、覆蓋上面寫死的班表與時段
+  // 並計算體驗期間結束日，之後的日子全部不可選
   window._syncTrialClassesFromGateway = function(){
     if (!window._trialClassesCache) return;
     var byDow = {1:{},2:{},3:{},4:{},5:{}};
     var slotsByDow = {1:[],2:[],3:[],4:[],5:[]};
     var DOW_ZH = {'一':1,'二':2,'三':3,'四':4,'五':5};
+    var maxDateStr = '';
     window._trialClassesCache.forEach(function(c){
       var d = DOW_ZH[c.day]; if(!d) return;
       if (!byDow[d][c.time]) byDow[d][c.time] = [];
       byDow[d][c.time].push(c.level);
       if (slotsByDow[d].indexOf(c.time) < 0) slotsByDow[d].push(c.time);
+      // 計算體驗期間最後一天
+      (c.dates || []).forEach(function(ds){
+        if (ds > maxDateStr) maxDateStr = ds;
+      });
     });
     _fixedTrialByDow = byDow;
-    // 更新時段表 (只讓 Gateway 有班的那幾個時段出現)
+    // 記錄體驗期間結束日，主表宇計算「這天是否超過體驗期」會用到
+    if (maxDateStr) {
+      window._trialEndDate = maxDateStr.replace(/\//g,'-');  // 'yyyy/mm/dd' -> 'yyyy-mm-dd'
+    }
     Object.keys(slotsByDow).forEach(function(d){
       if (slotsByDow[d].length > 0) {
         slotsByDow[d].sort();
         trialSlots[d] = slotsByDow[d];
       } else {
-        delete trialSlots[d];  // 這天沒班 = 完全內不可預約
+        delete trialSlots[d];
       }
     });
     if (window._reRenderCalendar) window._reRenderCalendar();
@@ -9538,7 +9547,12 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
       }
       const allFull=slotsForDay.length>0&&!anySlotAvailable;
 
-      if(isWeekend||isHol||isPast||!hasSlots||pastDeadline||afterCutoff){
+      // 體驗課專用：超過體驗期間的日子全部灰色不可選
+      var afterTrialEnd = false;
+      if (bkType === 'trial' && window._trialEndDate && ds > window._trialEndDate) {
+        afterTrialEnd = true;
+      }
+      if(isWeekend||isHol||isPast||!hasSlots||pastDeadline||afterCutoff||afterTrialEnd){
         el.classList.add('disabled');
         if(afterCutoff)el.title='本學期預約截止（6/30）';
         else if(isHol&&!isWeekend)el.title='假日或學校活動日';
