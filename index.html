@@ -5,10 +5,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>太平新光分校</title>
-<meta name="version" content="2026-05-07-1845">
+<meta name="version" content="2026-05-07-1900">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<script>
+// ⚡ 強制清除舊版快取（解決 iOS Safari/Chrome 快取拖死體驗課顯示）
+(function(){
+  var SITE_VERSION = '2026-05-07-1900';
+  try{
+    var stored = localStorage.getItem('site_version');
+    if (stored !== SITE_VERSION) {
+      // 1) 清空 Cache Storage API
+      if (window.caches && caches.keys) {
+        caches.keys().then(function(keys){
+          keys.forEach(function(k){ caches.delete(k); });
+        }).catch(function(){});
+      }
+      // 2) 註銷所有 Service Worker
+      if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+        navigator.serviceWorker.getRegistrations().then(function(regs){
+          regs.forEach(function(r){ r.unregister(); });
+        }).catch(function(){});
+      }
+      localStorage.setItem('site_version', SITE_VERSION);
+      // 3) 第一次拿到新版時、強制再 reload 一次（避免半舊半新）
+      if (stored && stored !== '' && stored !== null) {
+        var u = new URL(window.location.href);
+        if (u.searchParams.get('cb') !== SITE_VERSION) {
+          u.searchParams.set('cb', SITE_VERSION);
+          window.location.replace(u.toString());
+        }
+      }
+    }
+  } catch(e){}
+})();
+</script>
 <meta name="description" content="太平新光分校，全外師、全美語、美加學制，劍橋英檢內建。台中太平區最專業的兒童美語教育機構。">
 <meta property="og:title" content="太平新光分校">
 <meta property="og:description" content="太平新光分校 · 全外師｜全美語｜美加學制｜劍橋英檢內建。讓孩子的英文，成為真正的超能力。">
