@@ -10009,8 +10009,9 @@ function generateCallScript(data) {
 
 
 /* ========== ADMIN PANEL ========== */
-// ====== 通知 Webhook（n8n Cloud）======
-var WEBHOOK_URL = 'https://miyutang.app.n8n.cloud/webhook/xinguang-form';
+// ====== 通知 Webhook（Apps Script Gateway）======
+// Gateway: 安全寫入 Sheets + 可選推 LINE 卡。個人 Gmail 部署、不受 Workspace 組織政策限制
+var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyjXZExvejz1DAJX8boSyczq6ZH-qENJ_bFj0hkvkg7kwO6C17-GSYH-hiJgyC12y_Xpw/exec';
 var WEBHOOK_PENDING_KEY = 'xg_webhook_pending';
 
 // 取出未送達的資料
@@ -10033,20 +10034,25 @@ function _showWebhookError(type){
   alert('⚠️ ' + typeLabel + '送出遇到網路問題，資料已暫存。\n\n請你：\n1. 重新整理這個頁面再試一次\n2. 或撥電話到太平新光分校 04-23937515 詢問\n\n謝謝。');
 }
 
-// 送達 webhook，包含 2 次重試、失敗警告、失敗暫存
+// 送達 webhook 到 Apps Script Gateway
+// 重點：用 text/plain Content-Type 避免 CORS 預檢（preflight）。
+// Apps Script doPost(e) 可以讀 e.postData.contents 取出原始 JSON 字串、同樣能 JSON.parse。
+// CORS preflight 只在 application/json 時觸發、text/plain 不觸發、送不上去的問題一下子解決。
 async function _postWebhookOnce(payload){
   var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
-  var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 12000) : null;
+  var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 15000) : null;
   try {
     var resp = await fetch(WEBHOOK_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },  // 避開 CORS preflight
       body: JSON.stringify(payload),
-      signal: ctrl ? ctrl.signal : undefined
+      signal: ctrl ? ctrl.signal : undefined,
+      redirect: 'follow'
     });
     if (timer) clearTimeout(timer);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    // 成功
+    var data = await resp.json().catch(function(){ return {success:true}; });
+    if (data.success === false) throw new Error(data.error || 'Gateway rejected');
     return true;
   } catch(e){
     if (timer) clearTimeout(timer);
