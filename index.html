@@ -7140,8 +7140,8 @@ body {
       <span class="flow-arrow">→</span>
       <a href="#register" class="flow-step">③ 正式註冊</a>
     </div>
-    <h2 class="section-title reveal">預約參訪與體驗</h2>
-    <p class="section-subtitle reveal">參訪校區、英文程度檢測、體驗課——三種方式，選一個最適合孩子的</p>
+    <h2 class="section-title reveal">預約參訪與檢測</h2>
+    <p class="section-subtitle reveal">參訪校區、英文程度檢測——歡迎帶孩子來看看，老師當場安排適合的班</p>
     <div class="booking-rules-bar reveal">
       <div class="bkrule-item">
         <span class="bkrule-icon">⏰</span>
@@ -7157,30 +7157,15 @@ body {
       </div>
     </div>
     <div class="booking-wrap" id="bookingSystem">
-      <!-- 兩大功能 Tab -->
-      <div class="bk-type-tabs" id="bkTypeTabs" style="grid-template-columns:1fr 1fr">
-        <button class="bk-type-tab active" onclick="switchBkType('visitTest',this)">
-          <span class="bk-type-icon">🏫📝</span>
-          <strong>參訪校區 ／ 程度檢測</strong>
-          <small>週一～週五，每時段限 1 組</small>
-        </button>
-        <button class="bk-type-tab" onclick="switchBkType('trial',this)">
-          <span class="bk-type-icon">✨</span>
-          <strong>體驗課</strong>
-          <small>週一～週五，每時段最多4班</small>
-        </button>
-      </div>
-      <!-- Tab 說明 -->
-      <div class="bk-type-desc" id="bkTypeDesc">
+      <!-- 單一流程：參訪／檢測（體驗課改由後台老師人工排）-->
+      <div class="bk-type-desc" id="bkTypeDesc" style="margin-bottom:18px">
         <div id="bkDesc-visitTest" class="bk-desc-panel active">
-          🏫 週一到週五都開放，每時段限 1 組。選好時段後可勾選「參訪」、「檢測」或兩個都要。<br><strong style="color:var(--orange)">⚠️ 請先填寫下方「問課諮詢」表單，再回來預約。</strong>
-        </div>
-        <div id="bkDesc-trial" class="bk-desc-panel">
-          ✨ 體驗課週一到週五開放。本期間：<strong>5/8 – 6/18</strong>，限定班次、限定時段。在下方選班、再選體驗日期。灰色為假日或學校活動日。
+          🏫 週一到週五都開放，每時段限 1 組。選好時段後可勾選「參訪」、「檢測」或兩個都要。<br><strong style="color:var(--orange)">⚠️ 請先填寫下方「問課諮詢」表單，再回來預約。</strong><br>
+          <span style="display:inline-block;margin-top:8px;padding:6px 12px;background:#FEF3C7;border-radius:6px;color:#92400E;font-size:0.82rem">💡 體驗課由老師依檢測結果幫您安排專屬班次，檢測完當場告知時段。</span>
         </div>
       </div>
-      <!-- 體驗課班表（0513 加：體驗期 5/8–6/18） -->
-      <div id="trialClassPanel" style="display:none;background:#F0FDF4;border:1.5px solid #BBF7D0;border-radius:14px;padding:18px;margin-bottom:18px">
+      <!-- 體驗課班表面板（已移除，由後台人工排）-->
+      <div id="trialClassPanel" style="display:none">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:10px">
           <div>
             <h4 style="margin:0;color:#166534;font-size:1.05rem">🏫 體驗課班表 · 5/8 – 6/18</h4>
