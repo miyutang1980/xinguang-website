@@ -98,7 +98,14 @@ let _state = {
   leaveType: '',
   reason: '',
   makeup: false,
-  loading: false
+  loading: false,
+  tab: 'new', // 'new' | 'mine'
+  myLeaves: [],
+  loadingMine: false,
+  editingLeaveNo: '',
+  editingLeaveType: '',
+  editingReason: '',
+  editingMakeup: false
 };
 
 const LEAVE_TYPES = [
@@ -208,7 +215,203 @@ async function loadKids() {
   }
 }
 
+// 全局 Tab 主入口
 function render() {
+  const tabBar = `
+    <div style="display:flex;background:#fff;border-radius:10px;padding:4px;margin-bottom:14px;gap:4px;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+      <button onclick="switchTab('new')" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:700;font-size:0.95rem;cursor:pointer;font-family:inherit;${_state.tab==='new'?'background:#10B981;color:#fff':'background:transparent;color:#6B7280'}">✍️ 新增請假</button>
+      <button onclick="switchTab('mine')" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:700;font-size:0.95rem;cursor:pointer;font-family:inherit;${_state.tab==='mine'?'background:#10B981;color:#fff':'background:transparent;color:#6B7280'}">📋 我的請假</button>
+    </div>`;
+  if (_state.tab === 'mine') {
+    document.getElementById('app').innerHTML = tabBar + '<div id="tabBody"></div>';
+    renderMine();
+    return;
+  }
+  // 預設 new tab
+  document.getElementById('app').innerHTML = tabBar + '<div id="tabBody"></div>';
+  renderNew();
+}
+
+function switchTab(t) {
+  _state.tab = t;
+  if (t === 'mine' && _state.myLeaves.length === 0 && !_state.loadingMine) {
+    loadMyLeaves();
+  }
+  render();
+}
+
+async function loadMyLeaves() {
+  if (!_state.lineUserId) {
+    _state.myLeaves = [];
+    return;
+  }
+  _state.loadingMine = true;
+  const r = await gwCall('leave_list', { scope: 'mine', lineUserId: _state.lineUserId });
+  _state.loadingMine = false;
+  if (r.success) _state.myLeaves = r.list || [];
+  if (_state.tab === 'mine') renderMine();
+}
+
+// 「我的請假」 Tab
+function renderMine() {
+  const body = document.getElementById('tabBody');
+  if (!body) return;
+  if (_state.loadingMine) {
+    body.innerHTML = '<div class="empty"><div class="icon">⏳</div><div class="title">載入中...</div></div>';
+    return;
+  }
+  if (!_state.lineUserId) {
+    body.innerHTML = `
+      <div class="card">
+        <h2>⚠️ 未辨識身份</h2>
+        <p style="font-size:0.88rem;color:#6B7280;margin-bottom:14px">無法查看「我的請假」 · 請在 LINE 裡點「📝 點此填表」進來</p>
+      </div>`;
+    return;
+  }
+  const today = _getTodayStr();
+  // 近 30 天內(按日期逆序)
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 30);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+  const list = _state.myLeaves.filter(x => x.date >= cutoffStr).sort((a,b)=>b.date.localeCompare(a.date));
+  if (list.length === 0) {
+    body.innerHTML = `
+      <div class="card">
+        <div class="empty">
+          <div class="icon">📜</div>
+          <div class="title">還沒有請假紀錄</div>
+          <div style="font-size:0.85rem;color:#9CA3AF;margin-top:6px">切到「✍️ 新增請假」顯亜表單</div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  function _isLocked(l) {
+    // pushed_* 或 cancelled 都鎖
+    if (l.status === 'cancelled') return { locked: true, label: '已取消', color: '#9CA3AF' };
+    if ((l.status||'').indexOf('pushed') === 0) return { locked: true, label: '已通知學校', color: '#1E40AF' };
+    if (l.date < today) return { locked: true, label: '已過期', color: '#9CA3AF' };
+    if (l.date === today) {
+      // 今天 11:30 之後鎖
+      const now = new Date();
+      const tw = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
+      const hm = tw.getHours() * 100 + tw.getMinutes();
+      if (hm >= 1130) return { locked: true, label: '11:30 後鎖定', color: '#DC2626' };
+    }
+    return { locked: false };
+  }
+
+  const cards = list.map(l => {
+    const lockInfo = _isLocked(l);
+    const tl = LEAVE_TYPES.find(t => t.v === l.leaveType);
+    const typeLabel = tl ? tl.t : l.leaveType;
+    let actions = '';
+    if (lockInfo.locked) {
+      actions = `<div style="text-align:center;padding:10px;background:${lockInfo.color}15;color:${lockInfo.color};border-radius:8px;font-size:0.85rem;font-weight:600;margin-top:10px">🔒 ${lockInfo.label}</div>`;
+    } else {
+      actions = `
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn btn-outline" style="flex:1;margin-top:0;padding:10px" onclick="startEditLeave('${l.leaveNo}')">✏️ 修改</button>
+          <button class="btn btn-outline" style="flex:1;margin-top:0;padding:10px;color:#DC2626;border-color:#DC2626" onclick="cancelLeave('${l.leaveNo}')">❌ 取消</button>
+        </div>`;
+    }
+    return `
+      <div class="card" style="padding:14px;margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+          <div>
+            <div style="font-size:1rem;font-weight:700;color:#111827">${esc(l.name)}</div>
+            <div style="font-size:0.78rem;color:#9CA3AF;font-family:monospace;margin-top:2px">${esc(l.leaveNo)}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:0.92rem;font-weight:600;color:#10B981">${esc(l.date)}</div>
+            <div style="font-size:0.72rem;color:#6B7280">${l.makeup?'🔁 補課':''}</div>
+          </div>
+        </div>
+        <div style="font-size:0.85rem;color:#374151;margin:6px 0">${esc(typeLabel)}</div>
+        ${l.reason?`<div style="font-size:0.8rem;color:#6B7280;background:#F9FAFB;padding:6px 10px;border-radius:6px">${esc(l.reason)}</div>`:''}
+        ${actions}
+      </div>`;
+  }).join('');
+
+  body.innerHTML = `
+    <div style="font-size:0.78rem;color:#6B7280;text-align:center;margin-bottom:8px">一、你這個手機號近 30 天請假 (${list.length} 筆)</div>
+    ${cards}
+    <div class="school-info">⚠️ 請假當天 11:30 後不能修改,需電洽 <a href="tel:0423960585" style="color:#10B981">04-2396-0585</a></div>`;
+}
+
+async function cancelLeave(leaveNo) {
+  const l = _state.myLeaves.find(x => x.leaveNo === leaveNo);
+  if (!l) return;
+  if (!confirm('確定要取消這筆請假?\n\n' + l.name + ' · ' + l.date + '\n\n取消後不能重新啟用 · 要請假需重填。')) return;
+  const r = await gwCall('leave_cancel', { leaveNo, lineUserId: _state.lineUserId });
+  if (r.success) {
+    alert('✅ 已取消');
+    await loadMyLeaves();
+  } else {
+    alert('取消失敗:' + (r.error || ''));
+  }
+}
+
+function startEditLeave(leaveNo) {
+  const l = _state.myLeaves.find(x => x.leaveNo === leaveNo);
+  if (!l) return;
+  _state.editingLeaveNo = leaveNo;
+  _state.editingLeaveType = l.leaveType;
+  _state.editingReason = l.reason || '';
+  _state.editingMakeup = l.makeup;
+  // 顯示修改 modal(複用 success-modal 動畫、但變成表單)
+  const m = document.getElementById('successModal');
+  const typesHtml = LEAVE_TYPES.map(t => `
+    <div class="type-card ${_state.editingLeaveType===t.v?'selected':''}" onclick="_state.editingLeaveType='${t.v}';startEditLeave('${leaveNo}')">
+      <div class="radio"></div>
+      <div class="info"><div class="title" style="font-size:0.85rem">${t.t}</div></div>
+    </div>`).join('');
+  m.querySelector('.box').innerHTML = `
+    <div style="text-align:left">
+      <h3 style="color:#111827;margin-bottom:14px">✏️ 修改請假 · ${esc(l.name)}</h3>
+      <div style="font-size:0.82rem;color:#6B7280;margin-bottom:14px">只能改類型與原因,要改孩子/日期請取消重填</div>
+      <label class="label">請假類型</label>
+      <div style="max-height:200px;overflow-y:auto;margin-bottom:14px">${typesHtml}</div>
+      <label class="label">原因</label>
+      <textarea class="textarea" id="editReason" style="margin-bottom:14px;min-height:60px" placeholder="(選填)">${esc(_state.editingReason)}</textarea>
+      <button class="btn btn-primary" onclick="submitEditLeave()">✅ 儲存修改</button>
+      <button class="btn btn-outline" onclick="closeEditModal()">取消</button>
+    </div>`;
+  m.classList.add('open');
+  setTimeout(() => {
+    const r = document.getElementById('editReason');
+    if (r) r.addEventListener('input', e => _state.editingReason = e.target.value);
+  }, 50);
+}
+
+function closeEditModal() {
+  document.getElementById('successModal').classList.remove('open');
+  // 還原成功彈窗 HTML(在 success modal 可能被覆寫)
+  document.getElementById('successModal').querySelector('.box').innerHTML = `
+    <div class="icon">✅</div>
+    <h3>請假已送出</h3>
+    <p id="successDetail">--</p>
+    <button class="btn btn-primary" onclick="closeAndExit()">完成</button>
+    <button class="btn btn-outline" onclick="resetAndAddMore()">再請一次</button>`;
+}
+
+async function submitEditLeave() {
+  const reason = (document.getElementById('editReason') || {}).value || _state.editingReason;
+  const r = await gwCall('leave_update', {
+    leaveNo: _state.editingLeaveNo,
+    lineUserId: _state.lineUserId,
+    leaveType: _state.editingLeaveType,
+    reason: reason
+  });
+  if (r.success) {
+    alert('✅ 已修改');
+    closeEditModal();
+    await loadMyLeaves();
+  } else {
+    alert('修改失敗:' + (r.error || ''));
+  }
+}
+
+function renderNew() {
   const today = _getTodayStr();
   const minDate = today;
   // 預設請假日 = 今天
@@ -242,7 +445,7 @@ function render() {
 
   const canSubmit = _state.selectedKidIds.length > 0 && _state.leaveType && _state.dateFrom;
 
-  document.getElementById('app').innerHTML = `
+  document.getElementById('tabBody').innerHTML = `
     <div class="card">
       <h2><span class="num">1</span> 選擇孩子 ${_state.kids.length>1?'<span style="font-size:0.78rem;color:#6B7280;font-weight:400">(可複選)</span>':''}</h2>
       ${kidsHtml}
