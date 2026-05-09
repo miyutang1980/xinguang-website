@@ -8507,6 +8507,37 @@ function switchBkType(type, btn) {
 // ─── 體驗課班表：從 Apps Script Gateway 讀 ───
 var _trialClassesCache = null;
 window._trialBookedSlots = window._trialBookedSlots || {};  // {'2026-05-14|14:00-15:00': true}
+window._visitBookedSlots = window._visitBookedSlots || {};  // 參訪/檢測 鎖定名單
+
+// 載入所有「預約紀錄」來鎖定「每時段只能 1 組」
+function _loadAllBookings() {
+  fetch(WEBHOOK_URL + '?action=allBookings', { method: 'GET' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d && d.ok && Array.isArray(d.bookings)) {
+        var visitBooked = {};
+        var trialBooked = {};
+        d.bookings.forEach(function(b){
+          if (!b.date || !b.slot) return;
+          var key = b.date + '|' + b.slot;
+          var t = String(b.type || '');
+          if (t.indexOf('體驗') >= 0 || t === 'trial') {
+            trialBooked[key] = true;
+          } else {
+            visitBooked[key] = true;
+          }
+        });
+        window._visitBookedSlots = visitBooked;
+        window._trialBookedSlots = trialBooked;
+        if (typeof renderCalendar === 'function') {
+          try { renderCalendar(); } catch(e){}
+        }
+      }
+    })
+    .catch(function(e){ console.warn('[all bookings] load fail:', e); });
+}
+// 連絲為 root 上變成全域、讓 _loadTrialClasses 以外的地方也能呼叫
+window._loadAllBookings = _loadAllBookings;
 function _loadTrialClasses(){
   var listEl = document.getElementById('trialClassList');
   if(!listEl) return;
@@ -8792,6 +8823,8 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     ['2026-06-26','2026-06-26'],
     // 暑期結束兩日 — 開學前讓老師備課、不接預約
     ['2026-08-27','2026-08-28'],
+    // 開學首日 (8/31 週一) — 不接預約
+    ['2026-08-31','2026-08-31'],
     // 2027 國定假日（預留）
     ['2027-01-01','2027-01-01'], // 元旦
     ['2027-02-15','2027-02-21'], // 春節
@@ -8826,11 +8859,11 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
   }
   function isSlotFull(date, slot, type){
     if (getSlot(date, slot, type)) return true;
+    var key = date + '|' + slot;
     // 體驗課：加看 Gateway 已記錄預約
-    if (type === 'trial' && window._trialBookedSlots) {
-      var key = date + '|' + slot;
-      if (window._trialBookedSlots[key]) return true;
-    }
+    if (type === 'trial' && window._trialBookedSlots && window._trialBookedSlots[key]) return true;
+    // 參訪/檢測：加看 Gateway 已記錄預約 (跨裝置鎖定)
+    if (type === 'visitTest' && window._visitBookedSlots && window._visitBookedSlots[key]) return true;
     return false;
   }
   // 體驗課：某日某時段某班是否已滿
@@ -9197,7 +9230,7 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
       <strong>${parent.value}</strong> 您好，預約已完成！<br><br>
       <div style="background:var(--green-light);border-radius:10px;padding:12px 16px;margin:12px 0;text-align:left;font-size:0.9rem;line-height:1.8">
         📅 日期時段：<strong>${selectedDate} ${selectedSlot}</strong><br>
-        📋 預約類型：${type.value}${trialInfo}<br>
+        📋 預約類型：<strong style="color:var(--green-dark);background:#FEF3C7;padding:2px 8px;border-radius:4px">${type.value}</strong>${trialInfo}<br>
         👶 學生姓名：${child.value}
       </div>
       <div style="background:#FFF7ED;border-radius:10px;padding:12px 16px;margin:12px 0;text-align:left;font-size:0.85rem;color:#92400E;line-height:1.75">
@@ -9219,6 +9252,10 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
   window._reRenderCalendar=renderCalendar;
 
   renderCalendar();
+  // 頁面一載入就拉「預約紀錄」鎖定「每時段只能 1 組」規則
+  if (typeof _loadAllBookings === 'function') {
+    setTimeout(_loadAllBookings, 200);
+  }
 })();
 
 /* ========== INQUIRY FORM ========== */
