@@ -8727,14 +8727,31 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
 
 /* ========== BOOKING CALENDAR SYSTEM ========== */
 (function(){
-  // 參訪/檢測時段：週一~五（圖片附件所示）
-  const visitSlots={
+  // 參訪/檢測時段：學期中 vs 暑期 (7/1–8/26) 不同
+  // 學期中：14:00 與 19:00
+  const visitSlotsRegular={
     1:['14:00-15:00','19:00-20:00'], // 週一
     2:['14:00-15:00','19:00-20:00'], // 週二
     3:['14:00-15:00','19:00-20:00'], // 週三
     4:['14:00-15:00'],               // 週四（只有下午）
     5:['14:00-15:00','19:00-20:00']  // 週五
   };
+  // 暑期 (2026/7/1 – 2026/8/26)：17:00 與 19:00
+  const visitSlotsSummer={
+    1:['17:00-18:00','19:00-20:00'],
+    2:['17:00-18:00','19:00-20:00'],
+    3:['17:00-18:00','19:00-20:00'],
+    4:['17:00-18:00','19:00-20:00'],
+    5:['17:00-18:00','19:00-20:00']
+  };
+  function _isSummerDate(ds){
+    if(!ds) return false;
+    // ds 格式：'YYYY-MM-DD'
+    return ds >= '2026-07-01' && ds <= '2026-08-26';
+  }
+  function getVisitSlots(ds){
+    return _isSummerDate(ds) ? visitSlotsSummer : visitSlotsRegular;
+  }
   // 體驗課時段：主動同步 Gateway 8 班 (下面 _syncTrialSlotsFromGateway 會更新)
   let trialSlots={
     1:['14:00-15:00'],                                     // 週一 SB
@@ -8742,8 +8759,11 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     3:['14:00-15:00','16:30-17:30','18:30-19:30'],         // 週三 1B, 2A, 4B
     4:['16:30-17:30','18:30-19:30']                        // 週四 3A, 3B
   };
-  // 依目前 tab 回傳對應時段表
-  function getWeeklySlots(){ return (_currentBkType==='trial') ? trialSlots : visitSlots; }
+  // 依目前 tab 回傳對應時段表 (ds 為 'YYYY-MM-DD'，只在參訪/檢測模式影響暑期切換)
+  function getWeeklySlots(ds){
+    if(_currentBkType==='trial') return trialSlots;
+    return getVisitSlots(ds);
+  }
 
   // 後台自訂班次覆蓋：_trialOverrides[dateStr][slot] = '班級名稱'
   // 優先於 trialClassMap
@@ -8941,14 +8961,14 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
       const isWeekend=dayOfWeek===0||dayOfWeek===6;
       const isHol=isHoliday(ds);
       const isPast=new Date(currentYear,currentMonth,d)<new Date(today.getFullYear(),today.getMonth(),today.getDate());
-      const hasSlots=getWeeklySlots()[dayOfWeek];
+      const hasSlots=getWeeklySlots(ds)[dayOfWeek];
       const bkDeadline2=new Date(currentYear,currentMonth,d-2,12,0,0);
       const pastDeadline=now>bkDeadline2;
       const afterCutoff=new Date(currentYear,currentMonth,d)>bookingDeadline;
       const bkType=getBookingType();
 
       // 檢查當天是否所有時段都已滿
-      const slotsForDay=getWeeklySlots()[dayOfWeek]||[];
+      const slotsForDay=getWeeklySlots(ds)[dayOfWeek]||[];
       var anySlotAvailable=false;
       if(bkType==='trial'){
         // 體驗課：只要有任何一個時段有未滿的班就算可預約
@@ -9010,7 +9030,7 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     }
     slotsList.innerHTML='';
     const bkType=getBookingType();
-    const slots=getWeeklySlots()[dow]||[];
+    const slots=getWeeklySlots(ds)[dow]||[];
     slots.forEach(slot=>{
       if(bkType==='trial'){
         // 體驗課：每個時段顯示該時段的班級列表
@@ -9578,7 +9598,15 @@ function generateCallScript(data) {
 
   lines.push('三、安排下一步');
   lines.push('  → 為孩子安排程度檢測（口說+閱讀+筆試，約 50 分鐘，$400 可折抵註冊費）');
-  lines.push('  → 請問哪天下午（14:00）或晚上（19:00）方便來校？');
+  // 依參訪期對應時段：暑期 (7/1–8/26) 17:00 / 19:00、學期中 14:00 / 19:00
+  var _today = new Date();
+  var _todayStr = _today.getFullYear() + '-' + String(_today.getMonth()+1).padStart(2,'0') + '-' + String(_today.getDate()).padStart(2,'0');
+  var _isSummerNow = (_todayStr >= '2026-07-01' && _todayStr <= '2026-08-26');
+  if (_isSummerNow) {
+    lines.push('  → 請問哪天下午（17:00）或晚上（19:00）方便來校？（暑期週一至週五）');
+  } else {
+    lines.push('  → 請問哪天下午（14:00）或晚上（19:00）方便來校？（週一至週五）');
+  }
   if(data.classes) lines.push('  → 有興趣班型：' + data.classes);
   if(data.question) { lines.push(''); lines.push('家長備註：' + data.question); }
   return lines.join('\n');
