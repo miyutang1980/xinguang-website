@@ -7688,11 +7688,7 @@ body {
     'el8_ty': {name:'菁英班8h+托育',a_discount:7600,b_discount:0,diff:0,a_first:68200,b_first:0,
       detail_a:{supply:2200,material:3000,tutor:2400,cash:7600},noB:true,gift:4540},
     'el75_ty': {name:'菁英班7.5h+托育',a_discount:5450,b_discount:0,diff:0,a_first:58850,b_first:0,
-      detail_a:{supply:2200,material:2000,tutor:1250,cash:5450},noB:true,gift:4540},
-      detail_b:{supply:2200,material:1000,tutor:1200,cash:4400},
-      gift:4040},
-      detail_b:{supply:2200,material:1000,tutor:625,cash:3825},
-      gift:4040}
+      detail_a:{supply:2200,material:2000,tutor:1250,cash:5450},noB:true,gift:4540}
   };
 
   function fmt(n) {
@@ -8929,8 +8925,8 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
       const dow=getDowFromDateStr(scan.toISOString().slice(0,10));
       const ds=scan.toISOString().slice(0,10);
       const bkDl=new Date(Date.UTC(scan.getUTCFullYear(),scan.getUTCMonth(),scan.getUTCDate()-2,4,0,0));
-      // Use visitSlots (Mon-Fri) for initial month detection
-      if(dow>=1&&dow<=5&&visitSlots[dow]&&!holidays.has(ds)&&now<=bkDl&&scan<=bookingDeadline){
+      // Use visitSlots (Mon-Fri) for initial month detection (學期中表 足以代表周一~五有時段)
+      if(dow>=1&&dow<=5&&visitSlotsRegular[dow]&&!holidays.has(ds)&&now<=bkDl&&scan<=bookingDeadline){
         currentYear=scan.getFullYear(); currentMonth=scan.getMonth(); return;
       }
       scan.setTime(scan.getTime()+86400000);
@@ -11027,14 +11023,6 @@ const planData = {
     b: null,
     extraSaving: null,
     giftValue: 4540
-  },
-    b: { supply: 2200, material: 1000, tuition: '95折省$1,200', discount: 4400, first: '$49,900' },
-    extraSaving: 1200,
-    giftValue: 4040
-  },
-    b: { supply: 2200, material: 1000, tuition: '95折省$625', discount: 3825, first: '$38,975' },
-    extraSaving: 625,
-    giftValue: 4040
   }
 };
 
