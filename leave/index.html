@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>太平新光分校 · 孩子請假</title>
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",sans-serif;background:#F9FAFB;color:#111827;font-size:16px;line-height:1.6;padding:0;min-height:100vh}
+.header{background:linear-gradient(135deg,#10B981 0%,#059669 100%);color:#fff;padding:20px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.header h1{font-size:1.3rem;font-weight:700;margin-bottom:4px}
+.header p{font-size:0.85rem;opacity:0.92}
+.container{max-width:600px;margin:0 auto;padding:14px}
+.card{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.card h2{font-size:1.05rem;color:#111827;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card h2 .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:#10B981;color:#fff;border-radius:50%;font-size:0.82rem;font-weight:700}
+.label{display:block;font-size:0.85rem;color:#6B7280;font-weight:600;margin-bottom:6px}
+.input,.select,.textarea{width:100%;padding:11px 14px;border:1.5px solid #E5E7EB;border-radius:8px;font-size:1rem;background:#fff;color:#111827;font-family:inherit}
+.input:focus,.select:focus,.textarea:focus{outline:none;border-color:#10B981}
+.textarea{resize:vertical;min-height:80px}
+.kid-card{display:flex;align-items:center;gap:12px;padding:12px;border:2px solid #E5E7EB;border-radius:10px;margin-bottom:8px;cursor:pointer;background:#fff;transition:all 0.15s}
+.kid-card.selected{border-color:#10B981;background:#ECFDF5}
+.kid-card .check{width:24px;height:24px;border:2px solid #D1D5DB;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:transparent;font-weight:bold}
+.kid-card.selected .check{border-color:#10B981;background:#10B981;color:#fff}
+.kid-card .info{flex:1}
+.kid-card .name{font-weight:700;font-size:1rem;color:#111827}
+.kid-card .meta{font-size:0.82rem;color:#6B7280;margin-top:2px}
+.type-card{display:flex;align-items:flex-start;gap:12px;padding:14px;border:2px solid #E5E7EB;border-radius:10px;margin-bottom:8px;cursor:pointer;background:#fff;transition:all 0.15s}
+.type-card.selected{border-color:#10B981;background:#ECFDF5}
+.type-card .radio{width:22px;height:22px;border:2px solid #D1D5DB;border-radius:50%;flex-shrink:0;margin-top:2px;position:relative}
+.type-card.selected .radio{border-color:#10B981}
+.type-card.selected .radio::after{content:'';position:absolute;width:10px;height:10px;background:#10B981;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.type-card .info .title{font-weight:700;font-size:0.96rem}
+.type-card .info .desc{font-size:0.78rem;color:#6B7280;margin-top:3px}
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-primary{background:#10B981;color:#fff}
+.btn-primary:disabled{background:#D1D5DB;color:#6B7280;cursor:not-allowed}
+.btn-outline{background:#fff;color:#10B981;border:2px solid #10B981;margin-top:10px}
+.date-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.checkbox-row{display:flex;align-items:center;gap:10px;padding:10px;background:#F3F4F6;border-radius:8px;margin-top:8px}
+.checkbox-row input[type=checkbox]{width:20px;height:20px;accent-color:#10B981;cursor:pointer}
+.checkbox-row label{font-size:0.9rem;cursor:pointer;flex:1}
+.makeup-banner{background:#FEF3C7;border-left:4px solid #F59E0B;border-radius:8px;padding:12px;margin-top:10px;font-size:0.85rem;color:#92400E}
+.makeup-banner b{font-weight:700}
+.empty{text-align:center;padding:40px 20px;color:#6B7280}
+.empty .icon{font-size:3rem;margin-bottom:10px}
+.empty .title{font-weight:700;color:#111827;margin-bottom:6px}
+.spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,0.3);border-radius:50%;border-top-color:#fff;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.success-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.success-modal.open{display:flex}
+.success-modal .box{background:#fff;border-radius:14px;padding:28px;text-align:center;max-width:380px;width:100%}
+.success-modal .icon{font-size:4rem;margin-bottom:12px}
+.success-modal h3{font-size:1.3rem;color:#10B981;margin-bottom:8px}
+.success-modal p{font-size:0.92rem;color:#6B7280;margin-bottom:20px}
+.alert{background:#FEE2E2;color:#991B1B;border-left:4px solid #DC2626;padding:12px 14px;border-radius:8px;font-size:0.88rem;margin-bottom:14px}
+.school-info{font-size:0.78rem;color:#6B7280;text-align:center;padding:14px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📝 孩子請假</h1>
+  <p>太平新光分校</p>
+</div>
+
+<div class="container" id="app">
+  <div class="empty">
+    <div class="icon">⏳</div>
+    <div class="title">載入中...</div>
+  </div>
+</div>
+
+<!-- 成功彈窗 -->
+<div class="success-modal" id="successModal">
+  <div class="box">
+    <div class="icon">✅</div>
+    <h3>請假已送出</h3>
+    <p id="successDetail">--</p>
+    <button class="btn btn-primary" onclick="closeAndExit()">完成</button>
+    <button class="btn btn-outline" onclick="resetAndAddMore()">再請一次</button>
+  </div>
+</div>
+
+<script>
+const GW_URL = 'https://script.google.com/macros/s/AKfycbznzkq0WXktqReyqilxz1BoxUmPL2VoaZxhRak1B8g1ShvatiHjw_taeShh_qAbSeiHbg/exec';
+// LIFF App ID:沿用現有「新增請假」LIFF
+const LIFF_ID = '2009757754-paHJ5QJO';
+
+let _state = {
+  lineUserId: '',
+  lineProfile: null,
+  kids: [],
+  selectedKidIds: [],
+  dateFrom: '',
+  dateTo: '',
+  leaveType: '',
+  reason: '',
+  makeup: false,
+  loading: false
+};
+
+const LEAVE_TYPES = [
+  { v: 'pickup_only', t: '🚐 接車不接(改自己接)', d: '接車取消、美語/安親/托育照常' },
+  { v: 'pickup_eng', t: '📚 接車不接 + 美語請假', d: '接車取消 + 不上美語(其他照常)' },
+  { v: 'pickup_eng_daycare', t: '🏫 接車 + 美語 + 安親請假', d: '接車取消、美語請假、安親不留' },
+  { v: 'pickup_eng_nursery', t: '👶 接車 + 美語 + 托育請假', d: '接車取消、美語請假、托育不留' },
+  { v: 'all', t: '🛑 全部請假', d: '全部不來上課/不接車/不安親/不托育' }
+];
+
+function _getTodayStr() {
+  const d = new Date();
+  // 轉台北時區
+  const tw = new Date(d.getTime() + (d.getTimezoneOffset() + 480) * 60000);
+  return tw.toISOString().slice(0, 10);
+}
+
+function _getDateRange(from, to) {
+  if (!from) return [];
+  if (!to || from === to) return [from];
+  const dates = [];
+  const start = new Date(from);
+  const end = new Date(to);
+  if (end < start) return [from];
+  let cur = new Date(start);
+  let safety = 30;
+  while (cur <= end && safety > 0) {
+    dates.push(cur.toISOString().slice(0, 10));
+    cur.setDate(cur.getDate() + 1);
+    safety--;
+  }
+  return dates;
+}
+
+async function gwCall(action, payload) {
+  const body = Object.assign({ _action: action }, payload || {});
+  const res = await fetch(GW_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(body),
+    redirect: 'follow'
+  });
+  return await res.json();
+}
+
+async function init() {
+  try {
+    await liff.init({ liffId: LIFF_ID });
+    if (!liff.isLoggedIn()) {
+      liff.login();
+      return;
+    }
+    const profile = await liff.getProfile();
+    _state.lineUserId = profile.userId;
+    _state.lineProfile = profile;
+    // 撈孩子
+    await loadKids();
+  } catch (e) {
+    // 不在 LINE 內或 LIFF 出問題:fallback 到電話查詢
+    document.getElementById('app').innerHTML = `
+      <div class="card">
+        <h2>🔍 用手機號查詢</h2>
+        <div style="font-size:0.85rem;color:#6B7280;margin-bottom:14px">無法自動辨識身份,請輸入家長手機號(會用「在校學生」名冊比對)</div>
+        <input class="input" id="phoneInput" type="tel" placeholder="例如:0912-345-678" style="margin-bottom:12px">
+        <button class="btn btn-primary" onclick="lookupByPhone()">下一步</button>
+      </div>`;
+  }
+}
+
+async function lookupByPhone() {
+  const phone = (document.getElementById('phoneInput').value || '').trim();
+  if (!/\d{8,}/.test(phone.replace(/\D/g,''))) {
+    alert('請輸入有效的手機號');
+    return;
+  }
+  const r = await gwCall('leave_lookup_kids', { phone });
+  if (r.success && r.kids && r.kids.length > 0) {
+    _state.kids = r.kids;
+    render();
+  } else {
+    document.getElementById('app').innerHTML = `
+      <div class="alert">查無此手機號的學生資料</div>
+      <div class="card">
+        <h2>📞 請聯絡學校</h2>
+        <p style="margin-bottom:14px;color:#374151">這個手機號還沒在「在校學生」名冊裡。請致電學校先建檔:</p>
+        <a href="tel:0423960585" class="btn btn-primary" style="text-decoration:none;text-align:center">📞 撥打 04-2396-0585</a>
+      </div>`;
+  }
+}
+
+async function loadKids() {
+  const r = await gwCall('leave_lookup_kids', { lineUserId: _state.lineUserId });
+  if (r.success && r.kids && r.kids.length > 0) {
+    _state.kids = r.kids;
+    render();
+  } else {
+    document.getElementById('app').innerHTML = `
+      <div class="card">
+        <h2>👶 找不到孩子資料</h2>
+        <p style="margin-bottom:14px;color:#374151">系統還沒把您的 LINE 帳號跟孩子綁定。可以用手機號查詢:</p>
+        <input class="input" id="phoneInput" type="tel" placeholder="家長手機號" style="margin-bottom:12px">
+        <button class="btn btn-primary" onclick="lookupByPhone()">查詢</button>
+        <div style="text-align:center;margin-top:12px;font-size:0.85rem;color:#6B7280">
+          或致電 <a href="tel:0423960585" style="color:#10B981;font-weight:600">04-2396-0585</a>
+        </div>
+      </div>`;
+  }
+}
+
+function render() {
+  const today = _getTodayStr();
+  const minDate = today;
+  // 預設請假日 = 今天
+  if (!_state.dateFrom) _state.dateFrom = today;
+  if (!_state.dateTo) _state.dateTo = _state.dateFrom;
+  const dateRange = _getDateRange(_state.dateFrom, _state.dateTo);
+  const isMultiDay = dateRange.length > 1;
+
+  // 孩子卡片(支援多選)
+  const kidsHtml = _state.kids.map(k => {
+    const sel = _state.selectedKidIds.indexOf(k._row) >= 0;
+    return `
+      <div class="kid-card ${sel?'selected':''}" onclick="toggleKid(${k._row})">
+        <div class="check">${sel?'✓':''}</div>
+        <div class="info">
+          <div class="name">${esc(k.name)} ${k.englishName?'· '+esc(k.englishName):''}</div>
+          <div class="meta">${k.cls?esc(k.cls)+' · ':''}${k.teacherCh?'中籍 '+esc(k.teacherCh):''}${k.teacherEn?' / 外籍 '+esc(k.teacherEn):''}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // 類型卡片
+  const typesHtml = LEAVE_TYPES.map(t => `
+    <div class="type-card ${_state.leaveType===t.v?'selected':''}" onclick="selectType('${t.v}')">
+      <div class="radio"></div>
+      <div class="info">
+        <div class="title">${t.t}</div>
+        <div class="desc">${t.d}</div>
+      </div>
+    </div>`).join('');
+
+  const canSubmit = _state.selectedKidIds.length > 0 && _state.leaveType && _state.dateFrom;
+
+  document.getElementById('app').innerHTML = `
+    <div class="card">
+      <h2><span class="num">1</span> 選擇孩子 ${_state.kids.length>1?'<span style="font-size:0.78rem;color:#6B7280;font-weight:400">(可複選)</span>':''}</h2>
+      ${kidsHtml}
+    </div>
+
+    <div class="card">
+      <h2><span class="num">2</span> 請假日期</h2>
+      <div class="date-row">
+        <div>
+          <label class="label">起始日</label>
+          <input class="input" type="date" id="dateFrom" value="${_state.dateFrom}" min="${minDate}" onchange="changeDate('from', this.value)">
+        </div>
+        <div>
+          <label class="label">結束日(可選)</label>
+          <input class="input" type="date" id="dateTo" value="${_state.dateTo}" min="${_state.dateFrom}" onchange="changeDate('to', this.value)">
+        </div>
+      </div>
+      <div style="font-size:0.82rem;color:#6B7280;margin-top:10px">
+        ${dateRange.length>1?`📅 共 ${dateRange.length} 天:${dateRange[0]} 至 ${dateRange[dateRange.length-1]}`:'📅 1 天:'+_state.dateFrom}
+      </div>
+      ${isMultiDay?`
+        <div class="makeup-banner">
+          <b>連續請假 ${dateRange.length} 天</b> · 請選擇是否補課
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="makeup" ${_state.makeup?'checked':''} onchange="_state.makeup=this.checked">
+          <label for="makeup">📚 同意安排補課(由學校另行通知時間)</label>
+        </div>
+      `:''}
+    </div>
+
+    <div class="card">
+      <h2><span class="num">3</span> 請假類型</h2>
+      ${typesHtml}
+    </div>
+
+    <div class="card">
+      <h2><span class="num">4</span> 請假原因 <span style="font-size:0.78rem;color:#6B7280;font-weight:400">(選填)</span></h2>
+      <textarea class="textarea" id="reasonInput" placeholder="例如:身體不適、家庭因素、出國...">${esc(_state.reason)}</textarea>
+    </div>
+
+    <button class="btn btn-primary" id="submitBtn" ${canSubmit?'':'disabled'} onclick="submitLeave()">
+      ${_state.loading?'<span class="spinner"></span> 送出中...':'✅ 送出請假'}
+    </button>
+    <div class="school-info">
+      ⚠️ 請假當天 11:30 前可在 LINE 「我的請假」取消<br>
+      之後請電洽 <a href="tel:0423960585" style="color:#10B981">04-2396-0585</a>
+    </div>
+  `;
+
+  const ri = document.getElementById('reasonInput');
+  if (ri) ri.addEventListener('input', e => { _state.reason = e.target.value; });
+}
+
+function esc(s){if(s==null)return '';return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+function toggleKid(rowIndex) {
+  const i = _state.selectedKidIds.indexOf(rowIndex);
+  if (i >= 0) _state.selectedKidIds.splice(i, 1);
+  else _state.selectedKidIds.push(rowIndex);
+  render();
+}
+
+function changeDate(which, val) {
+  if (which === 'from') {
+    _state.dateFrom = val;
+    if (_state.dateTo < val) _state.dateTo = val;
+  } else {
+    _state.dateTo = val;
+  }
+  render();
+}
+
+function selectType(v) { _state.leaveType = v; render(); }
+
+async function submitLeave() {
+  if (_state.loading) return;
+  const dates = _getDateRange(_state.dateFrom, _state.dateTo);
+  const kids = _state.kids.filter(k => _state.selectedKidIds.indexOf(k._row) >= 0);
+  if (!kids.length || !dates.length || !_state.leaveType) {
+    alert('請完整填寫'); return;
+  }
+  _state.loading = true; render();
+  // 取 textarea 最新值
+  const ri = document.getElementById('reasonInput');
+  if (ri) _state.reason = ri.value;
+  const r = await gwCall('leave_create', {
+    kids: kids,
+    dates: dates,
+    leaveType: _state.leaveType,
+    reason: _state.reason,
+    makeup: _state.makeup,
+    lineUserId: _state.lineUserId,
+    source: 'liff'
+  });
+  _state.loading = false;
+  if (r.success) {
+    document.getElementById('successDetail').textContent =
+      '已送出 ' + r.count + ' 筆請假 · ' + kids.length + ' 個孩子 / ' + dates.length + ' 天';
+    document.getElementById('successModal').classList.add('open');
+  } else {
+    render();
+    alert('送出失敗:' + (r.error || '未知錯誤'));
+  }
+}
+
+function closeAndExit() {
+  document.getElementById('successModal').classList.remove('open');
+  if (typeof liff !== 'undefined' && liff.isInClient && liff.isInClient()) {
+    liff.closeWindow();
+  } else {
+    window.location.reload();
+  }
+}
+
+function resetAndAddMore() {
+  _state.selectedKidIds = [];
+  _state.dateFrom = _getTodayStr();
+  _state.dateTo = _state.dateFrom;
+  _state.leaveType = '';
+  _state.reason = '';
+  _state.makeup = false;
+  document.getElementById('successModal').classList.remove('open');
+  render();
+}
+
+init();
+</script>
+
+</body>
+</html>
