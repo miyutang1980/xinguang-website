@@ -367,12 +367,19 @@ function startEditLeave(leaveNo) {
     </div>`).join('');
   m.querySelector('.box').innerHTML = `
     <div style="text-align:left">
-      <h3 style="color:#111827;margin-bottom:14px">✏️ 修改請假 · ${esc(l.name)}</h3>
-      <div style="font-size:0.82rem;color:#6B7280;margin-bottom:14px">只能改類型與原因,要改孩子/日期請取消重填</div>
+      <h3 style="color:#111827;margin-bottom:8px">✏️ 修改請假 · ${esc(l.name)}</h3>
+      <div style="background:#FEF3C7;color:#92400E;padding:8px 12px;border-radius:8px;font-size:0.8rem;margin-bottom:14px">
+        📆 ${esc(l.date)} · ${esc(l.cls||'')} · 請假編號 ${esc(l.leaveNo)}<br>
+        要改日期或孩子請先取消這筆、再重新填一次
+      </div>
       <label class="label">請假類型</label>
-      <div style="max-height:200px;overflow-y:auto;margin-bottom:14px">${typesHtml}</div>
-      <label class="label">原因</label>
-      <textarea class="textarea" id="editReason" style="margin-bottom:14px;min-height:60px" placeholder="(選填)">${esc(_state.editingReason)}</textarea>
+      <div style="max-height:240px;overflow-y:auto;margin-bottom:14px">${typesHtml}</div>
+      <label class="label" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <input type="checkbox" id="editMakeup" ${_state.editingMakeup?'checked':''} style="width:18px;height:18px;cursor:pointer">
+        <span>需要補課 (不勾預設不補)</span>
+      </label>
+      <label class="label" style="margin-top:14px">原因說明</label>
+      <textarea class="textarea" id="editReason" style="margin-bottom:14px;min-height:60px" placeholder="(選填) 例：發燒的 / 外出訪友 / 家庭事">${esc(_state.editingReason)}</textarea>
       <button class="btn btn-primary" onclick="submitEditLeave()">✅ 儲存修改</button>
       <button class="btn btn-outline" onclick="closeEditModal()">取消</button>
     </div>`;
@@ -380,6 +387,8 @@ function startEditLeave(leaveNo) {
   setTimeout(() => {
     const r = document.getElementById('editReason');
     if (r) r.addEventListener('input', e => _state.editingReason = e.target.value);
+    const mk = document.getElementById('editMakeup');
+    if (mk) mk.addEventListener('change', e => _state.editingMakeup = e.target.checked);
   }, 50);
 }
 
@@ -396,11 +405,14 @@ function closeEditModal() {
 
 async function submitEditLeave() {
   const reason = (document.getElementById('editReason') || {}).value || _state.editingReason;
+  const mkEl = document.getElementById('editMakeup');
+  const makeup = mkEl ? mkEl.checked : _state.editingMakeup;
   const r = await gwCall('leave_update', {
     leaveNo: _state.editingLeaveNo,
     lineUserId: _state.lineUserId,
     leaveType: _state.editingLeaveType,
-    reason: reason
+    reason: reason,
+    makeup: makeup
   });
   if (r.success) {
     alert('✅ 已修改');
