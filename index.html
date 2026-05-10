@@ -9733,10 +9733,29 @@ async function _postWebhookOnce(payload){
   }
 }
 
+// v2.18: 從 URL ?lineUserId=Uxxx 或 sessionStorage 拿 lineUserId
+function _getLineUserIdForForm() {
+  try {
+    var sp = new URLSearchParams(location.search);
+    var fromUrl = sp.get('lineUserId') || sp.get('lineuserid') || '';
+    if (fromUrl) {
+      // 存 sessionStorage 讓之後跳表單也能帶到
+      try { sessionStorage.setItem('lineUserId', fromUrl); } catch(e) {}
+      return fromUrl;
+    }
+    return sessionStorage.getItem('lineUserId') || '';
+  } catch (e) { return ''; }
+}
+
 async function sendWebhook(type, data) {
   if(!WEBHOOK_URL) return;
   var payload = JSON.parse(JSON.stringify(data));
   payload._type = type;
+  // v2.18: 自動帶 lineUserId (如果家長從 LIFF welcome 連來 OR URL params)
+  if (!payload.lineUserId) {
+    var luid = _getLineUserIdForForm();
+    if (luid) payload.lineUserId = luid;
+  }
   // 重試最多 3 次（1 + 2 重試）
   var attempts = 0;
   var lastErr = null;
