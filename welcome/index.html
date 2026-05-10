@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>弋果美語 太平新光分校</title>
+<meta property="og:title" content="弋果美語 太平新光分校">
+<meta property="og:description" content="26 年品牌 · 劍橋認證 · 100% 全美語環境">
+<meta name="theme-color" content="#01696F">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0;font-family:'Noto Sans TC','PingFang TC',-apple-system,BlinkMacSystemFont,sans-serif;background:#F3F4F6;color:#111827;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;display:flex;flex-direction:column}
+  .hero{background:linear-gradient(135deg,#01696F 0%,#024A4F 100%);color:#fff;padding:28px 22px 22px;text-align:center;border-bottom-left-radius:24px;border-bottom-right-radius:24px;box-shadow:0 4px 18px rgba(1,105,111,.25)}
+  .hero .brand{font-size:.85rem;letter-spacing:.18em;color:#A7F3D0;font-weight:500;margin-bottom:6px}
+  .hero h1{font-size:1.75rem;font-weight:700;margin:0 0 10px;letter-spacing:.04em}
+  .hero .tag{font-size:.78rem;color:#D1FAE5;line-height:1.6}
+  .tabs{display:flex;background:#fff;padding:8px;gap:4px;margin:14px 14px 0;border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .tab{flex:1;padding:11px 4px;border:none;background:transparent;font-family:inherit;font-size:.86rem;font-weight:700;color:#6B7280;border-radius:10px;cursor:pointer;transition:all .15s}
+  .tab.active{background:#01696F;color:#fff;box-shadow:0 2px 6px rgba(1,105,111,.25)}
+  .tab .icon{font-size:1.15rem;display:block;margin-bottom:3px}
+  main{flex:1;padding:14px;max-width:480px;margin:0 auto;width:100%}
+  .panel{display:none}
+  .panel.active{display:block;animation:fadeIn .25s ease-out}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .greet{font-size:.92rem;color:#374151;margin:8px 0 14px;line-height:1.55}
+  .btn{display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;background:#fff;border:none;border-radius:14px;text-align:left;cursor:pointer;font-family:inherit;text-decoration:none;color:inherit;transition:transform .12s,box-shadow .15s;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:10px}
+  .btn:active{transform:scale(.98)}
+  .btn:hover{box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .btn-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;color:#fff}
+  .btn-text{flex:1;min-width:0}
+  .btn-title{font-size:1rem;font-weight:700;color:#111827;line-height:1.3}
+  .btn-desc{font-size:.76rem;color:#6B7280;margin-top:3px;line-height:1.45}
+  .btn-arrow{color:#9CA3AF;font-size:1.1rem;flex-shrink:0;margin-left:6px}
+  .section-title{font-size:.78rem;font-weight:700;color:#6B7280;letter-spacing:.05em;margin:18px 0 10px;padding-left:4px}
+  .badge{display:inline-block;padding:2px 8px;background:#FEF3C7;color:#92400E;border-radius:8px;font-size:.7rem;font-weight:700;margin-left:6px}
+  .info-row{display:flex;gap:12px;padding:14px 16px;background:#fff;border-radius:14px;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:10px}
+  .info-icon{font-size:1.5rem}
+  .info-text{flex:1}
+  .info-label{font-size:.73rem;color:#6B7280;margin-bottom:2px}
+  .info-value{font-size:.95rem;font-weight:700;color:#111827}
+  .info-value a{color:#01696F;text-decoration:none}
+  .map-frame{width:100%;height:200px;border-radius:14px;border:none;margin-top:10px;background:#E5E7EB}
+  footer{padding:18px 14px 24px;text-align:center;font-size:.7rem;color:#9CA3AF;line-height:1.6}
+  /* 按鈕色票 */
+  .c-blue{background:#0EA5E9}
+  .c-orange{background:#F59E0B}
+  .c-red{background:#EF4444}
+  .c-green{background:#10B981}
+  .c-purple{background:#7C3AED}
+  .c-teal{background:#14B8A6}
+  .c-rose{background:#F43F5E}
+  .c-indigo{background:#6366F1}
+  .c-gray{background:#6B7280}
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="brand">🦅 EAGLE ENGLISH</div>
+    <h1>弋果美語太平新光分校</h1>
+    <div class="tag">26 年品牌 · 劍橋認證 · 100% 全美語環境</div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="new" type="button">
+      <span class="icon">🆕</span>新家長
+    </button>
+    <button class="tab" data-tab="enrolled" type="button">
+      <span class="icon">👶</span>在讀家長
+    </button>
+    <button class="tab" data-tab="contact" type="button">
+      <span class="icon">📍</span>聯絡資訊
+    </button>
+  </div>
+
+  <main>
+    <!-- 新家長 -->
+    <section class="panel active" id="panel-new">
+      <p class="greet">👋 歡迎您加入！想了解更多請選擇下方任一服務，我們會儘速與您聯絡。</p>
+
+      <div class="section-title">📋 表單與報名</div>
+
+      <a class="btn" href="https://taipingxinguang.org/#inquiry">
+        <div class="btn-icon c-blue">💬</div>
+        <div class="btn-text">
+          <div class="btn-title">線上問課諮詢</div>
+          <div class="btn-desc">詢問課程內容、班型、費用</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+
+      <a class="btn" href="https://taipingxinguang.org/#booking">
+        <div class="btn-icon c-orange">🏫</div>
+        <div class="btn-text">
+          <div class="btn-title">預約參訪 + 英文檢測</div>
+          <div class="btn-desc">選時段參觀分校、做英文程度檢測</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+
+      <a class="btn" href="https://taipingxinguang.org/#camp">
+        <div class="btn-icon c-red">☀️</div>
+        <div class="btn-text">
+          <div class="btn-title">夏令營線上報名 <span class="badge">熱門</span></div>
+          <div class="btn-desc">暑期營隊·全美語浸潤</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+
+      <a class="btn" href="https://taipingxinguang.org/#register">
+        <div class="btn-icon c-green">📝</div>
+        <div class="btn-text">
+          <div class="btn-title">我要正式註冊</div>
+          <div class="btn-desc">確定入學·選班、安親、接送設定</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+
+      <div class="section-title">🌐 認識我們</div>
+
+      <a class="btn" href="https://taipingxinguang.org">
+        <div class="btn-icon c-teal">🌐</div>
+        <div class="btn-text">
+          <div class="btn-title">官方網站</div>
+          <div class="btn-desc">課程介紹、師資、開班資訊</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+    </section>
+
+    <!-- 在讀家長 -->
+    <section class="panel" id="panel-enrolled">
+      <p class="greet">👶 在讀家長您好！下方是常用功能。如有疑問可隨時電洽 04-23960585。</p>
+
+      <div class="section-title">⚡ 即時功能</div>
+
+      <a class="btn" href="https://liff.line.me/2009757754-paHJ5QJO">
+        <div class="btn-icon c-purple">📋</div>
+        <div class="btn-text">
+          <div class="btn-title">我要請假 / 查請假</div>
+          <div class="btn-desc">線上請假、修改、取消、查紀錄</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+
+      <a class="btn" href="https://taipingxinguang.org">
+        <div class="btn-icon c-indigo">📅</div>
+        <div class="btn-text">
+          <div class="btn-title">查看課表 / 開班資訊</div>
+          <div class="btn-desc">學期班表、新學期開班</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+
+      <div class="section-title">📞 找老師 / 行政</div>
+
+      <a class="btn" href="tel:04-23960585">
+        <div class="btn-icon c-rose">📞</div>
+        <div class="btn-text">
+          <div class="btn-title">直接電洽分校</div>
+          <div class="btn-desc">04-23960585 · 點即可撥</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+
+      <a class="btn" href="https://lin.ee/tdpTDdu">
+        <div class="btn-icon c-green">💬</div>
+        <div class="btn-text">
+          <div class="btn-title">LINE 訊息留言</div>
+          <div class="btn-desc">在這 LINE 對話框直接留言、行政會回覆</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+    </section>
+
+    <!-- 聯絡資訊 -->
+    <section class="panel" id="panel-contact">
+      <p class="greet">📍 期待您的蒞臨！</p>
+
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div class="info-text">
+          <div class="info-label">分校地址</div>
+          <div class="info-value">台中市太平區新光路<br>(新光國小旁)</div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div class="info-text">
+          <div class="info-label">分校電話</div>
+          <div class="info-value"><a href="tel:04-23960585">04-23960585</a></div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">🕘</div>
+        <div class="info-text">
+          <div class="info-label">上課時間</div>
+          <div class="info-value" style="font-size:.88rem;font-weight:500">週一至週五 14:00–20:00<br>週六 09:00–17:00</div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">💬</div>
+        <div class="info-text">
+          <div class="info-label">LINE 官方帳號</div>
+          <div class="info-value"><a href="https://lin.ee/tdpTDdu">@taipingxinguang</a></div>
+        </div>
+      </div>
+
+      <div class="section-title">🗺️ 來分校的路</div>
+      <iframe class="map-frame" src="https://www.google.com/maps?q=%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%A4%AA%E5%B9%B3%E5%8D%80%E6%96%B0%E5%85%89%E8%B7%AF&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </section>
+  </main>
+
+  <footer>
+    弋果美語 太平新光分校 · 26 年品牌 · 劍橋認證<br>
+    Powered by 弋果美語集團
+  </footer>
+
+<script>
+  // Tab 切換
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', e => {
+      const target = t.dataset.tab;
+      document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.tab === target));
+      document.querySelectorAll('.panel').forEach(x => x.classList.toggle('active', x.id === 'panel-' + target));
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) { window.scrollTo(0,0); }
+    });
+  });
+
+  // 從 URL 讀 tab=enrolled 直接切
+  const urlParams = new URLSearchParams(location.search);
+  const initTab = urlParams.get('tab');
+  if (initTab && ['new','enrolled','contact'].includes(initTab)) {
+    document.querySelector('.tab[data-tab="' + initTab + '"]').click();
+  }
+</script>
+</body>
+</html>
