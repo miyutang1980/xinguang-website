@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>已接回回報 · 太平新光分校</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', sans-serif;
+  background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.card {
+  background: #fff; border-radius: 18px; padding: 32px 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  width: 100%; max-width: 440px;
+  text-align: center;
+}
+.icon { font-size: 56px; margin-bottom: 12px; }
+.title { font-size: 22px; font-weight: 700; color: #065F46; margin-bottom: 24px; }
+.info {
+  background: #F0FDF4; border-radius: 12px; padding: 16px;
+  text-align: left; margin-bottom: 24px;
+  border: 1.5px solid #BBF7D0;
+}
+.info-row { display: flex; padding: 6px 0; font-size: 14px; }
+.info-label { color: #6B7280; flex: 0 0 70px; }
+.info-val { color: #1F2937; font-weight: 600; flex: 1; word-break: break-all; }
+.btn {
+  width: 100%; padding: 18px; border: none; border-radius: 12px;
+  font-size: 18px; font-weight: 700; cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  margin-bottom: 12px;
+}
+.btn-green {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+.btn-green:active { transform: translateY(1px); box-shadow: 0 2px 6px rgba(16, 185, 129, 0.35); }
+.btn-gray {
+  background: #F3F4F6; color: #6B7280;
+}
+.note { font-size: 12px; color: #9CA3AF; margin-top: 12px; line-height: 1.6; }
+.status {
+  display: none; margin-top: 20px;
+  padding: 16px; border-radius: 10px;
+  font-size: 14px; line-height: 1.5;
+}
+.status.ok { background: #DCFCE7; color: #166534; display: block; }
+.status.err { background: #FEE2E2; color: #991B1B; display: block; }
+.spinner {
+  display: inline-block; width: 18px; height: 18px;
+  border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff;
+  border-radius: 50%; animation: spin 0.8s linear infinite;
+  vertical-align: middle; margin-right: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn:disabled { opacity: 0.7; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="icon" id="icon">🚐</div>
+  <div class="title" id="title">已接回回報</div>
+
+  <div class="info" id="info">
+    <div class="info-row"><div class="info-label">路線</div><div class="info-val" id="r-route">—</div></div>
+    <div class="info-row"><div class="info-label">時段</div><div class="info-val" id="r-session">中午班</div></div>
+    <div class="info-row"><div class="info-label">日期</div><div class="info-val" id="r-date">—</div></div>
+  </div>
+
+  <button id="btn-confirm" class="btn btn-green">✅ 確認全部已接回</button>
+  <button id="btn-cancel" class="btn btn-gray" onclick="window.close()">取消</button>
+
+  <div class="note">
+    點下「確認全部已接回」會立即:<br>
+    1. 寫回今日接送 Sheet 標記時間<br>
+    2. 自動推訊息到接車群通知大家
+  </div>
+
+  <div id="status" class="status"></div>
+</div>
+
+<script>
+const GW_URL = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+
+// 從 URL 拿參數
+const params = new URLSearchParams(location.search);
+const rowIndex = parseInt(params.get('row'), 10);
+const session = params.get('session') || 'noon';
+const route = params.get('route') || '';
+
+// 顯示資訊
+document.getElementById('r-route').textContent = route || ('Row ' + rowIndex);
+document.getElementById('r-session').textContent = session === 'noon' ? '中午班' : '下午班';
+document.getElementById('r-date').textContent = new Date().toLocaleDateString('zh-TW', { year:'numeric', month:'2-digit', day:'2-digit', weekday:'short' });
+
+if (!rowIndex || rowIndex < 2) {
+  showStatus('err', '❌ 連結錯誤·缺少路線資訊');
+  document.getElementById('btn-confirm').disabled = true;
+}
+
+document.getElementById('btn-confirm').onclick = async () => {
+  const btn = document.getElementById('btn-confirm');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>處理中...';
+  document.getElementById('status').className = 'status';
+
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        _action: 'routes_mark_returned',
+        row_index: rowIndex,
+        session: session
+      }),
+      redirect: 'follow'
+    });
+    const r = await res.json();
+    if (r.success) {
+      document.getElementById('icon').textContent = '✅';
+      document.getElementById('title').textContent = '已接回回報完成';
+      btn.innerHTML = '✅ 已完成';
+      btn.style.background = '#9CA3AF';
+      showStatus('ok',
+        '✅ ' + (r.driver || '老師') + ' · ' + (r.route || route) + ' 已接回 ' + (r.studentCount || 0) + ' 人<br>' +
+        '接回時間: ' + (r.returnedAt || '剛剛') + '<br>' +
+        '訊息已發送到接車群'
+      );
+      // 5 秒後自動關閉
+      setTimeout(() => {
+        if (window.liff && window.liff.closeWindow) window.liff.closeWindow();
+        else window.close();
+      }, 5000);
+    } else {
+      btn.disabled = false;
+      btn.innerHTML = '✅ 確認全部已接回';
+      showStatus('err', '❌ 失敗:' + (r.error || '未知錯誤'));
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.innerHTML = '✅ 確認全部已接回';
+    showStatus('err', '❌ 網路錯誤:' + e.message);
+  }
+};
+
+function showStatus(type, html) {
+  const el = document.getElementById('status');
+  el.className = 'status ' + type;
+  el.innerHTML = html;
+}
+</script>
+</body>
+</html>
