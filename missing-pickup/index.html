@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>未接到通報 · 太平新光分校</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', sans-serif;
+  background: linear-gradient(135deg, #FEE2E2 0%, #FCA5A5 100%);
+  min-height: 100vh; padding: 20px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.card {
+  background: #fff; border-radius: 18px; padding: 24px 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  width: 100%; max-width: 440px;
+  margin-top: 20px;
+}
+.icon { font-size: 48px; margin-bottom: 4px; text-align: center; }
+.title { font-size: 20px; font-weight: 700; color: #991B1B; margin-bottom: 18px; text-align: center; }
+.info {
+  background: #FEF2F2; border-radius: 10px; padding: 12px;
+  margin-bottom: 18px; border: 1.5px solid #FCA5A5;
+}
+.info-row { display: flex; padding: 4px 0; font-size: 13px; }
+.info-label { color: #6B7280; flex: 0 0 60px; }
+.info-val { color: #1F2937; font-weight: 600; flex: 1; word-break: break-all; }
+.field-label { font-size: 14px; color: #6B7280; margin-bottom: 8px; font-weight: 600; margin-top: 14px; }
+.checkbox-list {
+  border: 1.5px solid #E5E7EB; border-radius: 10px; padding: 8px;
+  background: #fff; max-height: 280px; overflow-y: auto;
+}
+.checkbox-item {
+  display: flex; align-items: center; padding: 12px 10px;
+  border-bottom: 1px solid #F3F4F6; cursor: pointer;
+}
+.checkbox-item:last-child { border-bottom: none; }
+.checkbox-item input[type="checkbox"] {
+  width: 20px; height: 20px; margin-right: 12px; accent-color: #DC2626;
+}
+.checkbox-item label {
+  flex: 1; font-size: 15px; color: #1F2937; cursor: pointer;
+}
+.reasons {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 6px;
+}
+.reason-btn {
+  padding: 10px; border: 1.5px solid #E5E7EB; border-radius: 8px;
+  background: #fff; font-size: 13px; cursor: pointer; color: #374151;
+  text-align: center;
+}
+.reason-btn.selected {
+  background: #FEE2E2; border-color: #DC2626; color: #991B1B; font-weight: 700;
+}
+.reason-other-input {
+  width: 100%; padding: 10px; border: 1.5px solid #E5E7EB; border-radius: 8px;
+  font-size: 14px; margin-top: 6px; display: none;
+}
+.reason-other-input.show { display: block; }
+.btn {
+  width: 100%; padding: 16px; border: none; border-radius: 12px;
+  font-size: 17px; font-weight: 700; cursor: pointer;
+  margin-top: 16px;
+}
+.btn-red {
+  background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+}
+.btn-red:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-gray { background: #F3F4F6; color: #6B7280; }
+.note { font-size: 12px; color: #9CA3AF; margin-top: 8px; line-height: 1.5; text-align: center; }
+.status { display: none; margin-top: 14px; padding: 12px; border-radius: 8px; font-size: 14px; line-height: 1.5; }
+.status.ok { background: #DCFCE7; color: #166534; display: block; }
+.status.err { background: #FEE2E2; color: #991B1B; display: block; }
+.spinner { display:inline-block; width:18px; height:18px; border:3px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; vertical-align:middle; margin-right:8px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty-students { padding: 30px 14px; text-align: center; color: #9CA3AF; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="icon">⚠️</div>
+  <div class="title">通報未接到學生</div>
+
+  <div class="info">
+    <div class="info-row"><div class="info-label">路線</div><div class="info-val" id="r-route">—</div></div>
+    <div class="info-row"><div class="info-label">時段</div><div class="info-val">中午班</div></div>
+    <div class="info-row"><div class="info-label">日期</div><div class="info-val" id="r-date">—</div></div>
+  </div>
+
+  <div class="field-label">沒接到誰? (可複選)</div>
+  <div class="checkbox-list" id="students-list">
+    <div class="empty-students">⌛ 載入學生名單中...</div>
+  </div>
+
+  <div class="field-label">可能原因 (擇一)</div>
+  <div class="reasons" id="reasons">
+    <div class="reason-btn" data-reason="家長漏記請假">家長漏記請假</div>
+    <div class="reason-btn" data-reason="臨時請假沒登記">臨時請假沒登記</div>
+    <div class="reason-btn" data-reason="生病早退">生病早退</div>
+    <div class="reason-btn" data-reason="家長自己接走">家長自己接走</div>
+    <div class="reason-btn" data-reason="其他">其他</div>
+  </div>
+  <input id="reason-other" type="text" class="reason-other-input" placeholder="請描述其他原因">
+
+  <button id="btn-confirm" class="btn btn-red" disabled>⚠️ 確認通報</button>
+  <button class="btn btn-gray" onclick="window.close()">取消</button>
+
+  <div class="note">
+    確認後 · 同時推 LINE 給家長 + 通知接車群 + 招生群
+  </div>
+
+  <div id="status" class="status"></div>
+</div>
+
+<script>
+const GW_URL = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+
+const params = new URLSearchParams(location.search);
+const rowIndex = parseInt(params.get('row'), 10);
+const session = params.get('session') || 'noon';
+const route = params.get('route') || '';
+
+document.getElementById('r-route').textContent = route || ('Row ' + rowIndex);
+document.getElementById('r-date').textContent = new Date().toLocaleDateString('zh-TW', { year:'numeric', month:'2-digit', day:'2-digit', weekday:'short' });
+
+let selectedReason = '';
+
+async function loadStudents() {
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        _action: 'routes_get_students_simple',
+        row_index: rowIndex, session: session
+      }),
+      redirect: 'follow'
+    });
+    const r = await res.json();
+    const students = (r && r.students) || [];
+    const list = document.getElementById('students-list');
+    if (students.length === 0) {
+      list.innerHTML = '<div class="empty-students">這條路線沒有設定學生名單</div>';
+      return;
+    }
+    list.innerHTML = students.map((s, i) => `
+      <div class="checkbox-item">
+        <input type="checkbox" id="stu-${i}" value="${s.name}" data-school="${s.school || ''}">
+        <label for="stu-${i}">${s.name}${s.school ? ' <span style="color:#9CA3AF;font-size:12px">(' + s.school + ')</span>' : ''}</label>
+      </div>
+    `).join('');
+    list.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.onchange = updateButtonState;
+    });
+  } catch(e) {
+    document.getElementById('students-list').innerHTML = '<div class="empty-students" style="color:#DC2626">❌ 載入失敗</div>';
+  }
+}
+loadStudents();
+
+document.querySelectorAll('.reason-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.reason-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedReason = btn.dataset.reason;
+    const otherInput = document.getElementById('reason-other');
+    if (selectedReason === '其他') {
+      otherInput.classList.add('show');
+      otherInput.focus();
+    } else {
+      otherInput.classList.remove('show');
+      otherInput.value = '';
+    }
+    updateButtonState();
+  };
+});
+
+function updateButtonState() {
+  const checkedNames = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
+  const btn = document.getElementById('btn-confirm');
+  btn.disabled = checkedNames.length === 0 || !selectedReason;
+}
+
+document.getElementById('btn-confirm').onclick = async () => {
+  const checkedItems = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'));
+  const names = checkedItems.map(cb => cb.value);
+  let reason = selectedReason;
+  if (reason === '其他') {
+    const other = document.getElementById('reason-other').value.trim();
+    if (!other) { alert('請填寫其他原因'); return; }
+    reason = '其他: ' + other;
+  }
+
+  if (!confirm('確定通報「' + names.join('、') + '」未接到? \n\n會自動推 LINE 給家長 + 通知接車群')) return;
+
+  const btn = document.getElementById('btn-confirm');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>處理中...';
+
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        _action: 'routes_report_missing',
+        row_index: rowIndex, session: session,
+        missing_students: names, reason: reason
+      }),
+      redirect: 'follow'
+    });
+    const r = await res.json();
+    if (r.success) {
+      btn.innerHTML = '✅ 已通報';
+      btn.style.background = '#9CA3AF';
+      showStatus('ok',
+        '✅ 通報完成<br>' +
+        '未接到: ' + r.missingCount + ' 人<br>' +
+        '家長 LINE 已推: ' + r.parentPushed + ' 次<br>' +
+        '群組通知: ' + r.groupPushed + ' 個群'
+      );
+      setTimeout(() => {
+        if (window.liff && window.liff.closeWindow) window.liff.closeWindow();
+        else window.close();
+      }, 5000);
+    } else {
+      btn.disabled = false;
+      btn.innerHTML = '⚠️ 確認通報';
+      showStatus('err', '❌ ' + (r.error || '未知錯誤'));
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.innerHTML = '⚠️ 確認通報';
+    showStatus('err', '❌ 網路錯誤:' + e.message);
+  }
+};
+
+function showStatus(type, html) {
+  const el = document.getElementById('status');
+  el.className = 'status ' + type;
+  el.innerHTML = html;
+}
+</script>
+</body>
+</html>

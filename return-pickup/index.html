@@ -83,6 +83,12 @@ body {
     2. 自動推訊息到接車群通知大家
   </div>
 
+  <!-- v2.18.15: 未接到通報入口 -->
+  <div style="background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:10px;padding:14px;margin-top:18px;text-align:center">
+    <div style="font-size:14px;color:#92400E;font-weight:700;margin-bottom:8px">⚠️ 有人沒接到?</div>
+    <a id="link-missing" href="#" style="display:inline-block;padding:10px 20px;background:#DC2626;color:#fff;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none">👉 點這裡通報未接到學生</a>
+  </div>
+
   <div id="status" class="status"></div>
 </div>
 
@@ -94,6 +100,10 @@ const params = new URLSearchParams(location.search);
 const rowIndex = parseInt(params.get('row'), 10);
 const session = params.get('session') || 'noon';
 const route = params.get('route') || '';
+
+// v2.18.15: 設「未接到」連結帶同樣參數
+const missingUrl = '/missing-pickup/?row=' + rowIndex + '&session=' + encodeURIComponent(session) + '&route=' + encodeURIComponent(route);
+document.getElementById('link-missing').href = missingUrl;
 
 // 顯示資訊
 document.getElementById('r-route').textContent = route || ('Row ' + rowIndex);
