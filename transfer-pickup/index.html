@@ -120,7 +120,8 @@ async function loadStaff() {
       .forEach(s => {
         const opt = document.createElement('option');
         opt.value = s.name;
-        opt.textContent = s.name + (s.role ? ' (' + s.role + ')' : '');
+        // 顯示 name + title (頭銜) · 例: "黃洛穎 (中籍師)"
+        opt.textContent = s.name + (s.title ? ' (' + s.title + ')' : (s.role ? ' (' + s.role + ')' : ''));
         sel.appendChild(opt);
       });
     sel.onchange = () => {
