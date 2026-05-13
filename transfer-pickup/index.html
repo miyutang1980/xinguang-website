@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>路線轉交 · 太平新光分校</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', sans-serif;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.card {
+  background: #fff; border-radius: 18px; padding: 28px 22px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  width: 100%; max-width: 440px;
+}
+.icon { font-size: 48px; margin-bottom: 8px; text-align: center; }
+.title { font-size: 20px; font-weight: 700; color: #92400E; margin-bottom: 20px; text-align: center; }
+.info {
+  background: #FFFBEB; border-radius: 12px; padding: 14px;
+  margin-bottom: 20px;
+  border: 1.5px solid #FCD34D;
+}
+.info-row { display: flex; padding: 5px 0; font-size: 14px; }
+.info-label { color: #6B7280; flex: 0 0 70px; }
+.info-val { color: #1F2937; font-weight: 600; flex: 1; word-break: break-all; }
+.field-label { font-size: 14px; color: #6B7280; margin-bottom: 8px; font-weight: 600; }
+.select-driver {
+  width: 100%; padding: 16px; border: 2px solid #FCD34D; border-radius: 12px;
+  font-size: 16px; font-weight: 600; background: #fff; color: #1F2937;
+  margin-bottom: 20px; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F59E0B' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
+  padding-right: 40px;
+}
+.btn {
+  width: 100%; padding: 16px; border: none; border-radius: 12px;
+  font-size: 17px; font-weight: 700; cursor: pointer;
+  margin-bottom: 10px;
+}
+.btn-orange {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+}
+.btn-orange:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-gray { background: #F3F4F6; color: #6B7280; }
+.note { font-size: 12px; color: #9CA3AF; margin-top: 8px; line-height: 1.5; text-align: center; }
+.status { display: none; margin-top: 16px; padding: 14px; border-radius: 10px; font-size: 14px; line-height: 1.5; }
+.status.ok { background: #DCFCE7; color: #166534; display: block; }
+.status.err { background: #FEE2E2; color: #991B1B; display: block; }
+.spinner { display:inline-block; width:18px; height:18px; border:3px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; vertical-align:middle; margin-right:8px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="icon">🔄</div>
+  <div class="title">路線轉交</div>
+
+  <div class="info">
+    <div class="info-row"><div class="info-label">原老師</div><div class="info-val" id="r-driver" style="color:#991B1B;text-decoration:line-through">—</div></div>
+    <div class="info-row"><div class="info-label">路線</div><div class="info-val" id="r-route">—</div></div>
+    <div class="info-row"><div class="info-label">時段</div><div class="info-val">中午班</div></div>
+    <div class="info-row"><div class="info-label">日期</div><div class="info-val" id="r-date">—</div></div>
+  </div>
+
+  <div class="field-label">選接手老師</div>
+  <select id="sel-driver" class="select-driver">
+    <option value="">⌛ 載入中...</option>
+  </select>
+
+  <button id="btn-confirm" class="btn btn-orange" disabled>🔄 確認轉交</button>
+  <button class="btn btn-gray" onclick="window.close()">取消</button>
+
+  <div class="note">
+    轉交後接車群會收到通知,接手老師請按原時間到學校接小孩
+  </div>
+
+  <div id="status" class="status"></div>
+</div>
+
+<script>
+const GW_URL = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+
+const params = new URLSearchParams(location.search);
+const rowIndex = parseInt(params.get('row'), 10);
+const session = params.get('session') || 'noon';
+const route = params.get('route') || '';
+const currentDriver = params.get('driver') || '';
+
+document.getElementById('r-driver').textContent = currentDriver || '—';
+document.getElementById('r-route').textContent = route || ('Row ' + rowIndex);
+document.getElementById('r-date').textContent = new Date().toLocaleDateString('zh-TW', { year:'numeric', month:'2-digit', day:'2-digit', weekday:'short' });
+
+if (!rowIndex || rowIndex < 2) {
+  showStatus('err', '❌ 連結錯誤·缺少路線資訊');
+}
+
+// 載入老師清單
+async function loadStaff() {
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ _action: 'staff_list_active' }),
+      redirect: 'follow'
+    });
+    const r = await res.json();
+    const staff = (r && r.staff) || [];
+    const sel = document.getElementById('sel-driver');
+    sel.innerHTML = '<option value="">請選擇接手老師</option>';
+    staff
+      .filter(s => s.name !== currentDriver)
+      .forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.name;
+        opt.textContent = s.name + (s.role ? ' (' + s.role + ')' : '');
+        sel.appendChild(opt);
+      });
+    sel.onchange = () => {
+      document.getElementById('btn-confirm').disabled = !sel.value;
+    };
+  } catch (e) {
+    document.getElementById('sel-driver').innerHTML = '<option value="">❌ 載入失敗</option>';
+  }
+}
+loadStaff();
+
+document.getElementById('btn-confirm').onclick = async () => {
+  const newDriver = document.getElementById('sel-driver').value;
+  if (!newDriver) return;
+
+  if (!confirm('確定把「' + route + '」從「' + currentDriver + '」轉交給「' + newDriver + '」?')) return;
+
+  const btn = document.getElementById('btn-confirm');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>處理中...';
+
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        _action: 'routes_transfer',
+        row_index: rowIndex,
+        session: session,
+        new_driver: newDriver
+      }),
+      redirect: 'follow'
+    });
+    const r = await res.json();
+    if (r.success) {
+      btn.innerHTML = '✅ 轉交完成';
+      btn.style.background = '#9CA3AF';
+      showStatus('ok',
+        '✅ ' + (r.route || route) + '<br>' +
+        '原老師 ' + r.oldDriver + ' → 接手老師 ' + r.newDriver + '<br>' +
+        '學生 ' + r.studentCount + ' 人·通知已發到接車群'
+      );
+      setTimeout(() => {
+        if (window.liff && window.liff.closeWindow) window.liff.closeWindow();
+        else window.close();
+      }, 5000);
+    } else {
+      btn.disabled = false;
+      btn.innerHTML = '🔄 確認轉交';
+      showStatus('err', '❌ ' + (r.error || '未知錯誤'));
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.innerHTML = '🔄 確認轉交';
+    showStatus('err', '❌ 網路錯誤:' + e.message);
+  }
+};
+
+function showStatus(type, html) {
+  const el = document.getElementById('status');
+  el.className = 'status ' + type;
+  el.innerHTML = html;
+}
+</script>
+</body>
+</html>
