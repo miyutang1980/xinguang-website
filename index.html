@@ -8751,6 +8751,38 @@ function toggleSubject(btn){
 }
 
 /* ========== COURSE TABS ========== */
+// v2.18.16: 讀 URL ?course=xxx 自動切到該 tab + 滾到 #courses
+function _switchCourseTab(courseId) {
+  // 外部 redirect: 夏令營跳 #camp section
+  if (courseId === 'camp') {
+    const camp = document.getElementById('camp');
+    if (camp) camp.scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+  // 幼兒美語暫時對應 immersion (需求時再加獨立 tab)
+  if (courseId === 'preschool') courseId = 'immersion';
+  const tab = document.querySelector('.course-tab[data-course="'+courseId+'"]');
+  if (!tab) return;
+  document.querySelectorAll('.course-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.course-panel').forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  const panel = document.getElementById('panel-'+courseId);
+  if (panel) panel.classList.add('active');
+  // 滾動到課程介紹區
+  const sec = document.getElementById('courses');
+  if (sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// 啟動時讀 URL
+window.addEventListener('load', function() {
+  const params = new URLSearchParams(location.search);
+  const courseParam = params.get('course');
+  if (courseParam) {
+    // 延遲一點讓 reveal animation 跱完
+    setTimeout(() => _switchCourseTab(courseParam), 300);
+  }
+});
+
 document.querySelectorAll('.course-tab').forEach(tab=>{
   tab.addEventListener('click',()=>{
     document.querySelectorAll('.course-tab').forEach(t=>t.classList.remove('active'));
