@@ -1211,6 +1211,7 @@ body {
       <button class="course-tab active" data-course="immersion">浸潤班</button>
       <button class="course-tab" data-course="elite">菁英班</button>
       <button class="course-tab" data-course="gept">全民英檢班</button>
+      <button class="course-tab" data-course="preschool">幼兒美語</button>
       <button class="course-tab" data-course="afterschool">安親課輔班</button>
       <button class="course-tab" data-course="daycare">托育班</button>
     </div>
@@ -2704,6 +2705,147 @@ body {
 
   </div>
 </div>
+<!-- /panel-daycare -->
+
+<!-- ============================================================
+     幼兒美語 Early Starter — panel-preschool (v2.18.18)
+     ============================================================ -->
+<div class="course-panel" id="panel-preschool">
+  <div class="course-content">
+    <!-- Header -->
+    <div class="course-header">
+      <div class="course-badge" style="background:#E8863A">ES</div>
+      <h3>幼兒美語 Early Starter<small>3.5–6 歲孩子的第一口英文，全外師沉浸式環境</small></h3>
+    </div>
+
+    <!-- Intro Cards -->
+    <div class="im-intro">
+      <div class="im-intro-card orange">
+        <h4>最重要的是「不怕英文」</h4>
+        <p>幼稚園孩子第一次接觸英文最怕「被考」。我們是透過主題故事、歌曲、遊戲、畫畫，加上身體動作把英文演出來——不是背單字，是「用」英文一起玩。</p>
+      </div>
+      <div class="im-intro-card green">
+        <h4>有完整階梯·程度可銜接</h4>
+        <p>3.5–6 歲幼兒、幼稚園中大班都適合。完課之後可順勢升菁英班 Starter B、標準班 Starter B；對銜接幼稚園畢業後到浸潤班 Grade K 也接得上。</p>
+      </div>
+    </div>
+
+    <!-- Schedule -->
+    <div style="margin-top:32px;padding:24px;background:linear-gradient(135deg,#FFF7ED 0%,#FED7AA 100%);border-radius:16px;border:2px solid #FDBA74">
+      <h4 style="margin:0 0 16px;color:#9A3412;font-size:1.1rem;font-weight:800;display:flex;align-items:center;gap:8px">📅 上課資訊</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+        <div style="background:#fff;padding:14px;border-radius:10px"><strong style="color:#9A3412;font-size:0.85rem">每週次數</strong><p style="margin:6px 0 0;font-size:0.95rem;font-weight:700">一週 3 次</p></div>
+        <div style="background:#fff;padding:14px;border-radius:10px"><strong style="color:#9A3412;font-size:0.85rem">上課時段</strong><p style="margin:6px 0 0;font-size:0.95rem;font-weight:700">18:30 – 20:00</p></div>
+        <div style="background:#fff;padding:14px;border-radius:10px"><strong style="color:#9A3412;font-size:0.85rem">單次時長</strong><p style="margin:6px 0 0;font-size:0.95rem;font-weight:700">90 分鐘</p></div>
+        <div style="background:#fff;padding:14px;border-radius:10px"><strong style="color:#9A3412;font-size:0.85rem">課程週數</strong><p style="margin:6px 0 0;font-size:0.95rem;font-weight:700">共 20 週</p></div>
+        <div style="background:#fff;padding:14px;border-radius:10px"><strong style="color:#9A3412;font-size:0.85rem">週時數</strong><p style="margin:6px 0 0;font-size:0.95rem;font-weight:700">4.5 小時 / 週</p></div>
+        <div style="background:#fff;padding:14px;border-radius:10px"><strong style="color:#9A3412;font-size:0.85rem">師資</strong><p style="margin:6px 0 0;font-size:0.95rem;font-weight:700">全外師 + 中師協助</p></div>
+      </div>
+    </div>
+
+    <!-- Learning Method -->
+    <div style="margin-top:28px">
+      <div class="im-subjects-title">學生在幼兒美語課堂上在做什麼?</div>
+
+      <div class="im-subject-accordion">
+        <button class="im-subject-btn" onclick="toggleSubject(this)">
+          <div class="im-subject-icon" style="background:#FFEDD5">📚</div>
+          <div class="im-subject-label"><strong>主題繪本·單字·兒歌韻文</strong><span>用故事和歌曲讓孩子「聽懂」英文</span></div>
+          <span class="im-subject-chevron">▼</span>
+        </button>
+        <div class="im-subject-body">
+          <p class="im-subject-desc">每個單元都有一本主題繪本 (Look at Me! I Can Talk) 跟單字有聲書。外師帶讀、孩子跟讀、口說、手勢都一起來。搭配電子書 (e-book) 插圖可以「動」、「會說話」，整堂課孩子都不會覺得無聊。</p>
+          <div class="im-highlights">
+            <div class="im-highlight-item">主題跟生活接軌——食物、天氣、學校、動物、身體部位</div>
+            <div class="im-highlight-item">搭配 e-book + Flash Games 複習，孩子下課也能自己玩</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="im-subject-accordion">
+        <button class="im-subject-btn" onclick="toggleSubject(this)">
+          <div class="im-subject-icon" style="background:#FFEDD5">🗣️</div>
+          <div class="im-subject-label"><strong>主題會話與練習</strong><span>互動式對話·生活化使用英文</span></div>
+          <span class="im-subject-chevron">▼</span>
+        </button>
+        <div class="im-subject-body">
+          <p class="im-subject-desc">每堂都有互動時段讓孩子「用嘴巴說」，而不是默背。外師用遊戲帶疑問句，孩子回答、跟同學互動。這不是「考默寫」、是「真的用得出來」。</p>
+          <div class="im-highlights">
+            <div class="im-highlight-item">全外師·一名中師協助——孩子聽不懂也不會卡住</div>
+            <div class="im-highlight-item">以「能說出來」為目標，不是以「能寫出來」為目標</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="im-subject-accordion">
+        <button class="im-subject-btn" onclick="toggleSubject(this)">
+          <div class="im-subject-icon" style="background:#FFEDD5">🔤</div>
+          <div class="im-subject-label"><strong>字母與自然發音 (Phonics)</strong><span>26 個字母·自然發音·握筆書寫</span></div>
+          <span class="im-subject-chevron">▼</span>
+        </button>
+        <div class="im-subject-body">
+          <p class="im-subject-desc">學完 26 個字母大小寫的辨識、書寫、發音與基礎自然發音。教材 My ABC&rsquo;s Alphabet、Building Blocks、New Dimensions Phonics 三本互補，在「看到字能拼出來」這件事上底子打得紮實。</p>
+          <table class="im-grade-table">
+            <thead><tr><th>階段</th><th>學習重點</th></tr></thead>
+            <tbody>
+              <tr><td><strong>基礎</strong></td><td>26 字母大小寫·辨識·描寫·短母音·基礎子音</td></tr>
+              <tr><td><strong>進階</strong></td><td>字彙起始音 / 結尾音 (beginning/ending sound)·拼音·Sight Words·能說出 1–3 個字的短句</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Outcomes -->
+    <div style="margin-top:28px;padding:24px;background:#FFF7ED;border-radius:16px;border:2px solid #FED7AA">
+      <h4 style="margin:0 0 16px;color:#9A3412;font-size:1.1rem;font-weight:800">🎉 學生讀完能達到什麼?</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px">
+        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #E8863A">
+          <strong style="color:#9A3412;font-size:0.92rem">字彙量</strong>
+          <p style="margin:6px 0 0;font-size:0.85rem;color:#7C2D12;line-height:1.6">能聽能說超過 <strong>600 個</strong> 生活主題單字·包含食物、動物、天氣、學校、身體部位等</p>
+        </div>
+        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #E8863A">
+          <strong style="color:#9A3412;font-size:0.92rem">字母與發音</strong>
+          <p style="margin:6px 0 0;font-size:0.85rem;color:#7C2D12;line-height:1.6">能寫 26 字母大小寫·學會自然發音·能讀出沒教過的 CVC 短字如 cat / dog / bus</p>
+        </div>
+        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #E8863A">
+          <strong style="color:#9A3412;font-size:0.92rem">說與聽</strong>
+          <p style="margin:6px 0 0;font-size:0.85rem;color:#7C2D12;line-height:1.6">能懂簡單指令·能用英文打招呼·能圍繞主題簡單問答</p>
+        </div>
+        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #E8863A">
+          <strong style="color:#9A3412;font-size:0.92rem">學習態度</strong>
+          <p style="margin:6px 0 0;font-size:0.85rem;color:#7C2D12;line-height:1.6">不怕開口·不怕看到沒學過的字·不怕被老師問——這是最重要的能力</p>
+        </div>
+      </div>
+      <p style="margin:16px 0 0;font-size:0.82rem;color:#9A3412;font-style:italic">☆ 附「主題學習評量單」，師生 1:1 學習追蹤，家長每期都看得到孩子的進度。</p>
+    </div>
+
+    <!-- Pathway Up -->
+    <div style="margin-top:28px;padding:24px;background:linear-gradient(135deg,#EEF2FF 0%,#E0E7FF 100%);border-radius:16px">
+      <h4 style="margin:0 0 16px;color:#3730A3;font-size:1.1rem;font-weight:800">🚀 讀完之後可以走到哪裡?</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:0.92rem;color:#3730A3">
+        <div style="background:#fff;padding:12px 18px;border-radius:10px;font-weight:800">幼兒美語</div>
+        <span style="font-size:1.2rem;font-weight:800">→</span>
+        <div style="background:#fff;padding:12px 18px;border-radius:10px;font-weight:700">菁英班 Starter B</div>
+        <span style="font-size:1.2rem;font-weight:800">或</span>
+        <div style="background:#fff;padding:12px 18px;border-radius:10px;font-weight:700">浸潤班 Grade K</div>
+      </div>
+      <p style="margin:14px 0 0;font-size:0.85rem;color:#3730A3;line-height:1.6">讀完幼兒美語後可順勢銜接菁英班或浸潤班。無論走哪一條路，孩子都是「能說·能聽·能讀」的狀態，不是「只會考試」。</p>
+    </div>
+
+    <!-- Why Us -->
+    <div style="margin-top:28px">
+      <div class="im-summary">
+        <div class="im-summary-item"><strong>🏫 全外師沉浸</strong><p>外籍老師主教·中師全程協助，孩子不會聽不懂就卡住</p></div>
+        <div class="im-summary-item"><strong>📖 多元教材</strong><p>Look at Me!·Building Blocks·My ABC&rsquo;s·New Dimensions Phonics</p></div>
+        <div class="im-summary-item"><strong>📊 進度可追蹤</strong><p>主題學習評量單·家長看得到孩子到哪</p></div>
+        <div class="im-summary-item"><strong>🎉 互動課堂</strong><p>e-book·Flash Games·Interactive White Board</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- /panel-preschool -->
 
 </div>
   </div>
@@ -8759,8 +8901,7 @@ function _switchCourseTab(courseId) {
     if (camp) camp.scrollIntoView({behavior:'smooth', block:'start'});
     return;
   }
-  // 幼兒美語暫時對應 immersion (需求時再加獨立 tab)
-  if (courseId === 'preschool') courseId = 'immersion';
+  // v2.18.18: 幼兒美語已有獨立 tab · 不再映射 immersion
   const tab = document.querySelector('.course-tab[data-course="'+courseId+'"]');
   if (!tab) return;
   document.querySelectorAll('.course-tab').forEach(t=>t.classList.remove('active'));
