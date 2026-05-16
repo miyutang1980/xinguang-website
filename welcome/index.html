@@ -238,8 +238,12 @@
       const href = a.getAttribute('href') || '';
       if (!href.startsWith('http')) return;
       if (href.indexOf('lineUserId=') >= 0) return;
-      const sep = href.indexOf('?') >= 0 ? '&' : '?';
-      a.setAttribute('href', href + sep + 'lineUserId=' + encodeURIComponent(_lineUserId));
+      // v2.18.16: 抽 hash 出來 · query 加在 hash 之前
+      const hashIdx = href.indexOf('#');
+      const base = hashIdx >= 0 ? href.substring(0, hashIdx) : href;
+      const hash = hashIdx >= 0 ? href.substring(hashIdx) : '';
+      const sep = base.indexOf('?') >= 0 ? '&' : '?';
+      a.setAttribute('href', base + sep + 'lineUserId=' + encodeURIComponent(_lineUserId) + hash);
     });
   }
 
