@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>修改預約 · 太平新光分校</title>
+<style>
+* { box-sizing: border-box }
+body { margin:0; font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif; background:#FFFBEB; color:#1F2937; padding:20px; min-height:100vh }
+.card { background:#fff; border-radius:16px; padding:24px; max-width:480px; margin:0 auto; box-shadow:0 4px 20px rgba(0,0,0,.06) }
+.icon { text-align:center; font-size:48px; margin:8px 0 }
+.title { font-size:1.4rem; font-weight:700; text-align:center; color:#92400E; margin:8px 0 4px }
+.subtitle { text-align:center; color:#6B7280; font-size:.85rem; margin-bottom:20px }
+.field { margin:12px 0 }
+.field label { display:block; font-size:.85rem; color:#374151; margin-bottom:6px; font-weight:600 }
+.field input, .field select { width:100%; padding:10px 12px; border:1.5px solid #E5E7EB; border-radius:8px; font-size:.95rem; font-family:inherit; background:#fff }
+.field input:focus, .field select:focus { outline:none; border-color:#F59E0B }
+.btn { display:block; width:100%; padding:14px; border:none; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer; margin:8px 0 }
+.btn-save { background:#F59E0B; color:#fff }
+.btn-save:disabled { background:#9CA3AF; cursor:not-allowed }
+.btn-back { background:#F3F4F6; color:#1F2937; border:1.5px solid #D1D5DB }
+.status { padding:12px; border-radius:8px; margin:14px 0; font-size:.9rem }
+.status.ok { background:#D1FAE5; color:#065F46 }
+.status.err { background:#FEE2E2; color:#991B1B }
+.hidden { display:none }
+.loading { text-align:center; padding:30px; color:#6B7280 }
+.tip { background:#DBEAFE; border-left:4px solid #3B82F6; padding:10px 12px; border-radius:6px; font-size:.82rem; color:#1E40AF; margin:14px 0 }
+.cancelled { background:#FEE2E2; border-left:4px solid #DC2626; padding:12px; border-radius:6px; color:#991B1B; text-align:center; margin:14px 0 }
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="loading" class="loading">⏳ 載入預約資訊...</div>
+  <div id="main" class="hidden">
+    <div class="icon">✏️</div>
+    <div class="title">修改預約</div>
+    <div class="subtitle">修改後本校招生群會收到通知 · 您也會收到變更確認</div>
+
+    <div id="cancelled-warn" class="cancelled hidden">⚠️ 此預約狀態為「已取消」 · 如要重新預約請從官網重填</div>
+
+    <div class="field">
+      <label>學生姓名</label>
+      <input id="f-child" type="text" placeholder="例如:王小明">
+    </div>
+    <div class="field">
+      <label>類型</label>
+      <select id="f-type">
+        <option value="體驗課">體驗課</option>
+        <option value="參訪校區">參訪校區</option>
+        <option value="英文程度檢測">英文程度檢測</option>
+        <option value="參訪校區 + 英文程度檢測">參訪 + 檢測</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>日期</label>
+      <input id="f-date" type="date">
+    </div>
+    <div class="field">
+      <label>時段</label>
+      <select id="f-slot">
+        <option value="">(請選擇)</option>
+      </select>
+    </div>
+
+    <div class="tip">💡 如時段無您要的選項 · 請打電話 04-23960585 · 我們為您安排</div>
+
+    <div id="status" class="status hidden"></div>
+
+    <button id="btn-save" class="btn btn-save">✓ 確認儲存修改</button>
+    <button class="btn btn-back" onclick="window.close()">← 不修改 · 返回</button>
+  </div>
+</div>
+
+<script>
+const GW_URL = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+const params = new URLSearchParams(location.search);
+const rowIndex = parseInt(params.get('row'), 10);
+
+// 常見時段選項 (上下午)
+const SLOTS = [
+  '09:00-10:30', '10:30-12:00', '13:30-15:00', '15:00-16:30', '16:30-18:00', '18:30-20:00'
+];
+
+function $(id){ return document.getElementById(id); }
+function showStatus(kind, msg) {
+  var el = $('status'); el.className = 'status ' + kind; el.innerHTML = msg; el.classList.remove('hidden');
+}
+
+// 填時段 select
+(function fillSlots(){
+  const sel = $('f-slot');
+  SLOTS.forEach(s => {
+    const o = document.createElement('option');
+    o.value = s; o.textContent = s; sel.appendChild(o);
+  });
+})();
+
+async function loadBooking() {
+  if (!rowIndex || rowIndex < 2) {
+    $('loading').innerHTML = '❌ 連結錯誤·缺少預約編號'; return;
+  }
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ _action: 'booking_get', row_index: rowIndex })
+    });
+    const r = await res.json();
+    if (!r.success) { $('loading').innerHTML = '❌ ' + (r.error || '載入失敗'); return; }
+    const b = r.booking;
+    $('f-child').value = b.child || '';
+    $('f-type').value = b.type || '體驗課';
+    // 處理日期 (YYYY-MM-DD)
+    if (b.date && /^\d{4}-\d{2}-\d{2}$/.test(b.date)) $('f-date').value = b.date;
+    // 時段如果不在預設選項裡 · 加進去
+    if (b.slot && SLOTS.indexOf(b.slot) < 0) {
+      const o = document.createElement('option');
+      o.value = b.slot; o.textContent = b.slot + ' (原訂)';
+      $('f-slot').appendChild(o);
+    }
+    $('f-slot').value = b.slot || '';
+    if (b.status === '已取消') {
+      $('cancelled-warn').classList.remove('hidden');
+      $('btn-save').disabled = true;
+    }
+    $('loading').classList.add('hidden');
+    $('main').classList.remove('hidden');
+  } catch (e) {
+    $('loading').innerHTML = '❌ 連線錯誤: ' + e.message;
+  }
+}
+
+$('btn-save').onclick = async () => {
+  const fields = {
+    child: $('f-child').value.trim(),
+    type: $('f-type').value.trim(),
+    date: $('f-date').value.trim(),
+    slot: $('f-slot').value.trim()
+  };
+  if (!fields.date || !fields.slot) { showStatus('err', '❌ 請選擇日期和時段'); return; }
+  if (!confirm('確認儲存修改?\n\n日期:' + fields.date + '\n時段:' + fields.slot)) return;
+  const btn = $('btn-save'); btn.disabled = true; btn.textContent = '⏳ 儲存中...';
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        _action: 'booking_edit',
+        row_index: rowIndex,
+        edit_by: 'parent',
+        fields: fields
+      })
+    });
+    const r = await res.json();
+    if (r.success) {
+      showStatus('ok', '✅ <b>已成功修改預約</b><br>本校招生群已收到通知 · 您也會收到一張變更確認卡');
+      btn.textContent = '✓ 已儲存';
+      btn.style.background = '#10B981';
+    } else {
+      showStatus('err', '❌ 修改失敗: ' + (r.error || '未知錯誤'));
+      btn.disabled = false; btn.textContent = '✓ 確認儲存修改';
+    }
+  } catch (e) {
+    showStatus('err', '❌ 連線錯誤: ' + e.message);
+    btn.disabled = false; btn.textContent = '✓ 確認儲存修改';
+  }
+};
+
+loadBooking();
+</script>
+</body>
+</html>

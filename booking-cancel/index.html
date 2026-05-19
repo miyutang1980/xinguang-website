@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>取消預約 · 太平新光分校</title>
+<style>
+* { box-sizing: border-box }
+body { margin:0; font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif; background:#FEF2F2; color:#1F2937; padding:20px; min-height:100vh }
+.card { background:#fff; border-radius:16px; padding:24px; max-width:480px; margin:0 auto; box-shadow:0 4px 20px rgba(0,0,0,.06) }
+.icon { text-align:center; font-size:48px; margin:8px 0 }
+.title { font-size:1.4rem; font-weight:700; text-align:center; color:#991B1B; margin:8px 0 4px }
+.subtitle { text-align:center; color:#6B7280; font-size:.85rem; margin-bottom:20px }
+.kv { background:#F9FAFB; border-radius:8px; padding:14px; margin:14px 0; font-size:.92rem }
+.kv .row { display:flex; padding:6px 0 }
+.kv .k { color:#6B7280; flex:0 0 80px }
+.kv .v { color:#1F2937; font-weight:600; flex:1 }
+.tip { background:#FEF3C7; border-left:4px solid #F59E0B; padding:10px 12px; border-radius:6px; font-size:.82rem; color:#92400E; margin:14px 0 }
+.field { margin:14px 0 }
+.field label { display:block; font-size:.85rem; color:#374151; margin-bottom:6px; font-weight:600 }
+.field textarea { width:100%; padding:10px 12px; border:1.5px solid #E5E7EB; border-radius:8px; font-size:.95rem; resize:vertical; font-family:inherit }
+.btn { display:block; width:100%; padding:14px; border:none; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer; margin:8px 0 }
+.btn-cancel { background:#DC2626; color:#fff }
+.btn-cancel:disabled { background:#9CA3AF; cursor:not-allowed }
+.btn-keep { background:#F3F4F6; color:#1F2937; border:1.5px solid #D1D5DB }
+.status { padding:12px; border-radius:8px; margin:14px 0; font-size:.9rem }
+.status.ok { background:#D1FAE5; color:#065F46 }
+.status.err { background:#FEE2E2; color:#991B1B }
+.hidden { display:none }
+.loading { text-align:center; padding:30px; color:#6B7280 }
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="loading" class="loading">⏳ 載入預約資訊...</div>
+  <div id="main" class="hidden">
+    <div class="icon">❌</div>
+    <div class="title">確定要取消這筆預約嗎?</div>
+    <div class="subtitle">取消後將無法回復 · 如需重新預約請從官網重新填寫</div>
+
+    <div class="kv">
+      <div class="row"><div class="k">類型</div><div class="v" id="v-type">—</div></div>
+      <div class="row"><div class="k">學生</div><div class="v" id="v-child">—</div></div>
+      <div class="row"><div class="k">家長</div><div class="v" id="v-parent">—</div></div>
+      <div class="row"><div class="k">日期</div><div class="v" id="v-date">—</div></div>
+      <div class="row"><div class="k">時段</div><div class="v" id="v-slot">—</div></div>
+      <div class="row"><div class="k">狀態</div><div class="v" id="v-status">—</div></div>
+    </div>
+
+    <div class="tip">💡 取消後本校招生群會收到通知 · 同時段將釋放給其他家長預約</div>
+
+    <div class="field">
+      <label>取消原因 (選填,讓我們改進)</label>
+      <textarea id="reason" rows="2" placeholder="例如:時間衝突、孩子身體不適..."></textarea>
+    </div>
+
+    <div id="status" class="status hidden"></div>
+
+    <button id="btn-cancel" class="btn btn-cancel">❌ 確認取消預約</button>
+    <button id="btn-keep" class="btn btn-keep" onclick="window.close()">← 不取消 · 保留預約</button>
+  </div>
+</div>
+
+<script>
+const GW_URL = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+const params = new URLSearchParams(location.search);
+const rowIndex = parseInt(params.get('row'), 10);
+
+function $(id){ return document.getElementById(id); }
+function showStatus(kind, msg) {
+  var el = $('status');
+  el.className = 'status ' + kind;
+  el.innerHTML = msg;
+  el.classList.remove('hidden');
+}
+
+async function loadBooking() {
+  if (!rowIndex || rowIndex < 2) {
+    $('loading').innerHTML = '❌ 連結錯誤·缺少預約編號';
+    return;
+  }
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ _action: 'booking_get', row_index: rowIndex })
+    });
+    const r = await res.json();
+    if (!r.success) {
+      $('loading').innerHTML = '❌ ' + (r.error || '載入失敗');
+      return;
+    }
+    const b = r.booking;
+    $('v-type').textContent = b.type || '—';
+    $('v-child').textContent = b.child || '—';
+    $('v-parent').textContent = b.parent || '—';
+    $('v-date').textContent = b.date || '—';
+    $('v-slot').textContent = b.slot || '—';
+    $('v-status').textContent = b.status || '—';
+    if (b.status === '已取消') {
+      $('v-status').style.color = '#DC2626';
+      $('btn-cancel').disabled = true;
+      $('btn-cancel').textContent = '✓ 已取消過';
+      showStatus('ok', '此預約已於先前取消');
+    }
+    $('loading').classList.add('hidden');
+    $('main').classList.remove('hidden');
+  } catch (e) {
+    $('loading').innerHTML = '❌ 連線錯誤: ' + e.message;
+  }
+}
+
+$('btn-cancel').onclick = async () => {
+  if (!confirm('確認取消這筆預約? 取消後無法回復。')) return;
+  const reason = $('reason').value.trim();
+  const btn = $('btn-cancel');
+  btn.disabled = true;
+  btn.textContent = '⏳ 處理中...';
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        _action: 'booking_cancel',
+        row_index: rowIndex,
+        cancel_by: 'parent',
+        reason: reason
+      })
+    });
+    const r = await res.json();
+    if (r.success) {
+      showStatus('ok',
+        '✅ <b>已成功取消預約</b><br>本校已收到通知 · 您也會收到一張取消確認卡<br>若想重新預約請從 LINE 主選單再次預約'
+      );
+      btn.textContent = '✓ 已取消';
+      btn.style.background = '#9CA3AF';
+      $('btn-keep').textContent = '← 關閉視窗';
+    } else {
+      showStatus('err', '❌ 取消失敗: ' + (r.error || '未知錯誤'));
+      btn.disabled = false;
+      btn.textContent = '❌ 確認取消預約';
+    }
+  } catch (e) {
+    showStatus('err', '❌ 連線錯誤: ' + e.message);
+    btn.disabled = false;
+    btn.textContent = '❌ 確認取消預約';
+  }
+};
+
+loadBooking();
+</script>
+</body>
+</html>
