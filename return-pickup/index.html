@@ -113,6 +113,34 @@ document.getElementById('r-date').textContent = new Date().toLocaleDateString('z
 if (!rowIndex || rowIndex < 2) {
   showStatus('err', '❌ 連結錯誤·缺少路線資訊');
   document.getElementById('btn-confirm').disabled = true;
+} else {
+  // v2.18.21: 載入時查詢是否已回報
+  checkReturnStatus();
+}
+
+async function checkReturnStatus() {
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ _action: 'routes_return_status', row_index: rowIndex, session: session })
+    });
+    const r = await res.json();
+    if (r.success && r.alreadyReturned) {
+      // 已回報 · 顯示完成狀態不讓重點
+      document.getElementById('icon').textContent = '✅';
+      document.getElementById('title').textContent = '這條路線已回報';
+      var btn = document.getElementById('btn-confirm');
+      btn.disabled = true;
+      btn.innerHTML = '✓ 已於 ' + r.returnedAt + ' 完成';
+      btn.style.background = '#9CA3AF';
+      btn.style.cursor = 'not-allowed';
+      showStatus('ok',
+        '✅ <b>' + (r.route || route) + '</b> 已於 <b>' + r.returnedAt + '</b> 接回<br>' +
+        '不需重複点 · 接車群已收到通知'
+      );
+    }
+  } catch(e) { /* 静默 · 讓老師還是可以點 */ }
 }
 
 document.getElementById('btn-confirm').onclick = async () => {
