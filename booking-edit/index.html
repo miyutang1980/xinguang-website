@@ -86,43 +86,83 @@ function showStatus(kind, msg) {
   var el = $('status'); el.className = 'status ' + kind; el.innerHTML = msg; el.classList.remove('hidden');
 }
 
-// 填時段 select
-(function fillSlots(){
+// v2.18.29: 全所有被占住的時段 (date → [slots])
+let OCCUPIED = {};
+let ORIGINAL = { date: '', slot: '' };  // 本人原訂·不算被佔
+
+async function loadOccupied() {
+  try {
+    const res = await fetch(GW_URL + '?action=allbookings');
+    const r = await res.json();
+    if (r.ok && r.bookings) {
+      r.bookings.forEach(b => {
+        if (b.status === '已取消') return;
+        if (!OCCUPIED[b.date]) OCCUPIED[b.date] = [];
+        OCCUPIED[b.date].push(b.slot);
+      });
+    }
+  } catch(e) { console.warn('loadOccupied err', e); }
+}
+
+function renderSlots() {
+  const dateVal = $('f-date').value;
   const sel = $('f-slot');
+  const currentSel = sel.value;
+  sel.innerHTML = '';
+  const occupiedToday = OCCUPIED[dateVal] || [];
   SLOTS.forEach(s => {
+    const isOriginal = (dateVal === ORIGINAL.date && s === ORIGINAL.slot);
+    const isOccupied = occupiedToday.indexOf(s) >= 0 && !isOriginal;
     const o = document.createElement('option');
-    o.value = s; o.textContent = s; sel.appendChild(o);
+    o.value = s;
+    o.textContent = s + (isOriginal ? ' (原訂)' : (isOccupied ? ' · 已被預約' : ''));
+    if (isOccupied) o.disabled = true;
+    sel.appendChild(o);
   });
-})();
+  // 原訂時段不在 SLOTS 裡話該加 (例如 14:00-15:00)
+  if (ORIGINAL.slot && SLOTS.indexOf(ORIGINAL.slot) < 0 && dateVal === ORIGINAL.date) {
+    const o = document.createElement('option');
+    o.value = ORIGINAL.slot;
+    o.textContent = ORIGINAL.slot + ' (原訂)';
+    sel.insertBefore(o, sel.firstChild);
+  }
+  // 復原選中 (如果還能選)
+  if (currentSel && !sel.querySelector('option[value="' + currentSel + '"]:disabled')) {
+    sel.value = currentSel;
+  } else if (dateVal === ORIGINAL.date) {
+    sel.value = ORIGINAL.slot;
+  }
+}
 
 async function loadBooking() {
   if (!rowIndex || rowIndex < 2) {
     $('loading').innerHTML = '❌ 連結錯誤·缺少預約編號'; return;
   }
   try {
-    const res = await fetch(GW_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ _action: 'booking_get', row_index: rowIndex })
-    });
-    const r = await res.json();
-    if (!r.success) { $('loading').innerHTML = '❌ ' + (r.error || '載入失敗'); return; }
-    const b = r.booking;
+    // 並行讀某一筆預約 + 所有佔用時段
+    const [bookingRes, _] = await Promise.all([
+      fetch(GW_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ _action: 'booking_get', row_index: rowIndex })
+      }).then(r => r.json()),
+      loadOccupied()
+    ]);
+    if (!bookingRes.success) { $('loading').innerHTML = '❌ ' + (bookingRes.error || '載入失敗'); return; }
+    const b = bookingRes.booking;
+    ORIGINAL.date = b.date || '';
+    ORIGINAL.slot = b.slot || '';
     $('f-child').value = b.child || '';
     $('f-type').value = b.type || '體驗課';
-    // 處理日期 (YYYY-MM-DD)
     if (b.date && /^\d{4}-\d{2}-\d{2}$/.test(b.date)) $('f-date').value = b.date;
-    // 時段如果不在預設選項裡 · 加進去
-    if (b.slot && SLOTS.indexOf(b.slot) < 0) {
-      const o = document.createElement('option');
-      o.value = b.slot; o.textContent = b.slot + ' (原訂)';
-      $('f-slot').appendChild(o);
-    }
+    renderSlots();
     $('f-slot').value = b.slot || '';
     if (b.status === '已取消') {
       $('cancelled-warn').classList.remove('hidden');
       $('btn-save').disabled = true;
     }
+    // 日期改時 · 重新 render 時段下拉
+    $('f-date').addEventListener('change', renderSlots);
     $('loading').classList.add('hidden');
     $('main').classList.remove('hidden');
   } catch (e) {
