@@ -76,61 +76,60 @@ const GW_URL = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wsw
 const params = new URLSearchParams(location.search);
 const rowIndex = parseInt(params.get('row'), 10);
 
-// 常見時段選項 (上下午)
-const SLOTS = [
-  '09:00-10:30', '10:30-12:00', '13:30-15:00', '15:00-16:30', '16:30-18:00', '18:30-20:00'
-];
-
 function $(id){ return document.getElementById(id); }
 function showStatus(kind, msg) {
   var el = $('status'); el.className = 'status ' + kind; el.innerHTML = msg; el.classList.remove('hidden');
 }
 
-// v2.18.29: 全所有被占住的時段 (date → [slots])
-let OCCUPIED = {};
-let ORIGINAL = { date: '', slot: '' };  // 本人原訂·不算被佔
+// v2.18.29: 時段來源 · 正委 Gateway同主網頁同源 (weekday/holiday/曑期/佔用)
+let ORIGINAL = { date: '', slot: '', type: 'visitTest' };
 
-async function loadOccupied() {
-  try {
-    const res = await fetch(GW_URL + '?action=allbookings');
-    const r = await res.json();
-    if (r.ok && r.bookings) {
-      r.bookings.forEach(b => {
-        if (b.status === '已取消') return;
-        if (!OCCUPIED[b.date]) OCCUPIED[b.date] = [];
-        OCCUPIED[b.date].push(b.slot);
-      });
-    }
-  } catch(e) { console.warn('loadOccupied err', e); }
-}
-
-function renderSlots() {
-  const dateVal = $('f-date').value;
+async function loadSlotsForDate(dateVal) {
   const sel = $('f-slot');
   const currentSel = sel.value;
-  sel.innerHTML = '';
-  const occupiedToday = OCCUPIED[dateVal] || [];
-  SLOTS.forEach(s => {
-    const isOriginal = (dateVal === ORIGINAL.date && s === ORIGINAL.slot);
-    const isOccupied = occupiedToday.indexOf(s) >= 0 && !isOriginal;
-    const o = document.createElement('option');
-    o.value = s;
-    o.textContent = s + (isOriginal ? ' (原訂)' : (isOccupied ? ' · 已被預約' : ''));
-    if (isOccupied) o.disabled = true;
-    sel.appendChild(o);
-  });
-  // 原訂時段不在 SLOTS 裡話該加 (例如 14:00-15:00)
-  if (ORIGINAL.slot && SLOTS.indexOf(ORIGINAL.slot) < 0 && dateVal === ORIGINAL.date) {
-    const o = document.createElement('option');
-    o.value = ORIGINAL.slot;
-    o.textContent = ORIGINAL.slot + ' (原訂)';
-    sel.insertBefore(o, sel.firstChild);
-  }
-  // 復原選中 (如果還能選)
-  if (currentSel && !sel.querySelector('option[value="' + currentSel + '"]:disabled')) {
-    sel.value = currentSel;
-  } else if (dateVal === ORIGINAL.date) {
-    sel.value = ORIGINAL.slot;
+  sel.innerHTML = '<option value="">載入中...</option>';
+  try {
+    const bt = $('f-type').value === '體驗課' ? 'trial' : 'visitTest';
+    const res = await fetch(GW_URL + '?action=availableslots&date=' + encodeURIComponent(dateVal) + '&booking_type=' + bt);
+    const r = await res.json();
+    sel.innerHTML = '';
+    if (!r.success) {
+      sel.innerHTML = '<option value="">❌ 載入失敗</option>';
+      return;
+    }
+    if (r.isHoliday) {
+      sel.innerHTML = '<option value="">該日為假日 · 不接預約</option>';
+      return;
+    }
+    if (!r.slots || r.slots.length === 0) {
+      sel.innerHTML = '<option value="">這一天不接預約 (週末或不是開午日)</option>';
+      return;
+    }
+    // 原訂時段不在今日選項 (例如原訂是 14:00-15:00 但今日是曑期只有 17:00) · 仍加 「原訂」
+    if (dateVal === ORIGINAL.date && ORIGINAL.slot && !r.slots.some(s => s.slot === ORIGINAL.slot)) {
+      const o = document.createElement('option');
+      o.value = ORIGINAL.slot;
+      o.textContent = ORIGINAL.slot + ' (原訂 · 超出今日常見時段)';
+      sel.appendChild(o);
+    }
+    r.slots.forEach(s => {
+      const isOriginal = (dateVal === ORIGINAL.date && s.slot === ORIGINAL.slot);
+      const isOccupied = s.occupied && !isOriginal;
+      const o = document.createElement('option');
+      o.value = s.slot;
+      o.textContent = s.slot + (isOriginal ? ' (原訂)' : (isOccupied ? ' · 已被預約' : ''));
+      if (isOccupied) o.disabled = true;
+      sel.appendChild(o);
+    });
+    // 復原選中 (位置能選)
+    if (currentSel && !sel.querySelector('option[value="' + currentSel + '"]:disabled')) {
+      sel.value = currentSel;
+    } else if (dateVal === ORIGINAL.date) {
+      sel.value = ORIGINAL.slot;
+    }
+  } catch (e) {
+    sel.innerHTML = '<option value="">❌ 連線錯誤</option>';
+    console.error(e);
   }
 }
 
@@ -139,30 +138,29 @@ async function loadBooking() {
     $('loading').innerHTML = '❌ 連結錯誤·缺少預約編號'; return;
   }
   try {
-    // 並行讀某一筆預約 + 所有佔用時段
-    const [bookingRes, _] = await Promise.all([
-      fetch(GW_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ _action: 'booking_get', row_index: rowIndex })
-      }).then(r => r.json()),
-      loadOccupied()
-    ]);
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ _action: 'booking_get', row_index: rowIndex })
+    });
+    const bookingRes = await res.json();
     if (!bookingRes.success) { $('loading').innerHTML = '❌ ' + (bookingRes.error || '載入失敗'); return; }
     const b = bookingRes.booking;
     ORIGINAL.date = b.date || '';
     ORIGINAL.slot = b.slot || '';
+    ORIGINAL.type = b.type || 'visitTest';
     $('f-child').value = b.child || '';
     $('f-type').value = b.type || '體驗課';
     if (b.date && /^\d{4}-\d{2}-\d{2}$/.test(b.date)) $('f-date').value = b.date;
-    renderSlots();
-    $('f-slot').value = b.slot || '';
     if (b.status === '已取消') {
       $('cancelled-warn').classList.remove('hidden');
       $('btn-save').disabled = true;
     }
-    // 日期改時 · 重新 render 時段下拉
-    $('f-date').addEventListener('change', renderSlots);
+    // 載今日可選時段
+    await loadSlotsForDate($('f-date').value);
+    // 日期或類型改時 · 重新載時段
+    $('f-date').addEventListener('change', () => loadSlotsForDate($('f-date').value));
+    $('f-type').addEventListener('change', () => loadSlotsForDate($('f-date').value));
     $('loading').classList.add('hidden');
     $('main').classList.remove('hidden');
   } catch (e) {
