@@ -6581,7 +6581,7 @@ body {
             <p>感謝您報名 2026 太平新光夏令營。<br>我們將在 <strong>24 小時內</strong>以電話或 LINE 與您確認報名細節及繳費方式。</p>
             <div style="background:#F0FDF4;border:1.5px solid var(--green);border-radius:10px;padding:14px 18px;margin-top:16px;font-size:0.85rem;color:#166534;line-height:1.7;text-align:left">
               <strong>📋 您可能也想了解</strong><br>
-              • 對正式班課程有興趣？→ <a href="#inquiry" style="color:var(--green);font-weight:700">填寫問課諮詢</a>，了解浸潤班/菁英班<br>
+              • 對正式班課程有興趣？→ <a href="#booking" style="color:var(--green);font-weight:700">預約參訪/檢測</a>，讓老師為孩子推薦適合的班<br>
               • 想預約到校參觀？→ <a href="#booking" style="color:var(--green);font-weight:700">預約參訪</a>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px">
@@ -6692,13 +6692,13 @@ body {
 <!-- ========== BOOKING SYSTEM ========== -->
 <section class="booking-section section-padding" id="booking">
   <div class="container">
-    <!-- 流程進度提示 -->
+    <!-- v2.18.26: 移除「正式註冊」強制感 · 改成「可選」 -->
     <div class="flow-breadcrumb reveal">
       <a href="#inquiry" class="flow-step done">① 問課諮詢</a>
       <span class="flow-arrow">→</span>
       <span class="flow-step active">② 預約參訪／檢測</span>
-      <span class="flow-arrow">→</span>
-      <a href="#register" class="flow-step">③ 正式註冊</a>
+      <span class="flow-arrow" style="color:#9CA3AF">→</span>
+      <span class="flow-step" style="opacity:0.65" title="檢測完後再決定·不是必填">③ 註冊 (可選)</span>
     </div>
     <h2 class="section-title reveal">預約參訪與檢測</h2>
     <p class="section-subtitle reveal">參訪校區、英文程度檢測——歡迎帶孩子來看看，老師當場安排適合的班</p>
@@ -8175,13 +8175,13 @@ body {
 <!-- ========== REGISTER 正式註冊 ========== -->
 <section class="register-section section-padding" id="register">
   <div class="container" style="max-width:720px">
-    <!-- 流程進度提示 -->
+    <!-- v2.18.26: 註冊頁路徑提示 -->
     <div class="flow-breadcrumb reveal">
       <a href="#inquiry" class="flow-step done">① 問課諮詢</a>
       <span class="flow-arrow">→</span>
       <a href="#booking" class="flow-step done">② 參訪／檢測</a>
       <span class="flow-arrow">→</span>
-      <span class="flow-step active">③ 正式註冊</span>
+      <span class="flow-step active">③ 註冊 (檢測完同意才填)</span>
     </div>
     <h2 class="section-title reveal">正式註冊報名</h2>
     <p class="section-subtitle reveal">完成分級檢測後，填寫以下表單即可進行正式註冊</p>
@@ -8195,8 +8195,8 @@ body {
       <!-- 流程提示 -->
       <div style="background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border:1.5px solid var(--green);border-radius:10px;padding:14px 18px;margin-bottom:24px;font-size:0.82rem;line-height:1.7;color:#166534">
         <strong>📋 註冊流程</strong><br>
-        ① 線上說明會 → ② 問課諮詢 → ③ 預約參訪／檢測（檢測費 NTD 400）→ ④ <strong>正式註冊（目前這步）</strong><br>
-        <span style="color:var(--orange);font-weight:700">⚠️ 尚未完成檢測的家長，請先預約「程度檢測」再回來填寫。</span>
+        ① 問課諮詢 → ② 預約參訪／檢測（檢測費 NTD 400）→ 老師告知分班結果<br>→ 如果決定入學 → 填下方「正式註冊」表單<br><span style="color:#6B7280;font-size:0.78rem">💡 檢測是讓老師了解孩子·推薦適合的班·不滿意不勉強·並不強迫註冊</span><br>
+        
       </div>
 
       <!-- 一、家長資料 -->
