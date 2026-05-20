@@ -9355,12 +9355,20 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
     var main = document.getElementById('bkMainArea');
     if (gate) gate.style.display = 'none';
     if (main) main.style.display = 'block';
-    // 滾動到日曆
+    window._hasInquiry = true;
+  try { sessionStorage.setItem('xg_did_inquiry', '1'); } catch(e){}  // v2.18.25: 跳閘 = 視同已填問課 · 不再 alert 趕回去
+    try { sessionStorage.setItem('xg_skipped_gate', '1'); } catch(e){}
     setTimeout(function(){
       var cal = document.getElementById('calendarTitle');
       if (cal) cal.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
   };
+  // v2.18.25: 載入時恢復 _hasInquiry (這個 session 之前點過閘或填過問課)
+  try {
+    if (sessionStorage.getItem('xg_skipped_gate') === '1' || sessionStorage.getItem('xg_did_inquiry') === '1') {
+      window._hasInquiry = true;
+    }
+  } catch(e){}
   // v2.18.24: 從 LINE 來的 (?from=line) 自動跳過閘
   (function(){
     try {
@@ -9395,16 +9403,7 @@ document.querySelectorAll('.course-tab').forEach(tab=>{
       }
     }
 
-    // 參訪/檢測模式：必須先填過問課
-    var bkTypeCheck = getBookingType();
-    if(bkTypeCheck === 'visitTest' && (!window._adminData || !window._adminData.inquiries || window._adminData.inquiries.length === 0)){
-      if(!window._hasInquiry){
-        alert('請先填寫「問課諮詢」表單，我們才能為您安排參訪或檢測。\n\n請往下捲動到「問課諮詢」區塊填寫。');
-        var iqSection = document.getElementById('inquiry');
-        if(iqSection) iqSection.scrollIntoView({behavior:'smooth'});
-        return;
-      }
-    }
+    // v2.18.25: 移除 submitBooking 雙重強制 · 預約閘已是軟提示 · 不再 alert 趕回問課
     const parent=document.getElementById('bkParent');
     const phone=document.getElementById('bkPhone');
     const child=document.getElementById('bkChild');
