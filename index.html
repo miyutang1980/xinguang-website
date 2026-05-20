@@ -8052,8 +8052,9 @@ body {
             <div style="font-weight:700;font-size:0.85rem;color:var(--green);margin-bottom:8px">主要課程（至少選一）</div>
             <div class="checkbox-group" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
               <label class="checkbox-label" style="padding:10px 14px;border:1.5px solid var(--surface-dark);border-radius:8px;cursor:pointer;transition:all 0.15s"><input type="checkbox" name="iqClasses" value="浸潤班" onchange="iqCheckMainClass()"> 浸潤班（每週5天・全美語沉浸）</label>
-              <label class="checkbox-label" style="padding:10px 14px;border:1.5px solid var(--surface-dark);border-radius:8px;cursor:pointer;transition:all 0.15s"><input type="checkbox" name="iqClasses" value="菁英班" onchange="iqCheckMainClass()"> 菁英班（每週5天・密集進階）</label>
-                            <label class="checkbox-label" style="padding:10px 14px;border:1.5px solid var(--surface-dark);border-radius:8px;cursor:pointer;transition:all 0.15s"><input type="checkbox" name="iqClasses" value="全民英檢班" onchange="iqCheckMainClass()"> 全民英檢班（備考初級/中級）</label>
+              <label class="checkbox-label" style="padding:10px 14px;border:1.5px solid var(--surface-dark);border-radius:8px;cursor:pointer;transition:all 0.15s"><input type="checkbox" name="iqClasses" value="菁英五天班" onchange="iqCheckMainClass()"> 菁英五天班（每週5天·密集進階）</label>
+              <label class="checkbox-label" style="padding:10px 14px;border:1.5px solid var(--surface-dark);border-radius:8px;cursor:pointer;transition:all 0.15s"><input type="checkbox" name="iqClasses" value="菁英三天班" onchange="iqCheckMainClass()"> 菁英三天班（每週3天·彈性班型）</label>
+              <label class="checkbox-label" style="padding:10px 14px;border:1.5px solid var(--surface-dark);border-radius:8px;cursor:pointer;transition:all 0.15s"><input type="checkbox" name="iqClasses" value="全民英檢班" onchange="iqCheckMainClass()"> 全民英檢班（備考初級/中級）</label>
             </div>
             <span class="error-msg" id="iqClassesErr">請至少選擇一項主要課程</span>
 
@@ -8243,7 +8244,7 @@ body {
         <div class="camp-reg-field"><label>班型 <span class="req">*</span></label>
           <select id="reg_classtype" onchange="toggleRegAddons()">
             <option value="">請選擇</option>
-            <option>浸潤班</option><option>菁英班</option><option>全民英檢班</option>
+            <option>浸潤班</option><option>菁英五天班</option><option>菁英三天班</option><option>全民英檢班</option>
           </select></div>
         <div class="camp-reg-field"><label>分班結果 <span class="req">*</span></label>
           <input type="text" id="reg_assess" placeholder="輸入學生姓名後自動帶入" readonly style="background:var(--surface)">
@@ -12076,7 +12077,9 @@ function submitBookingChange() {
         <select id="regChgClassType" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem;background:#fff">
           <option value="">不改班型</option>
           <option value="浸潤班">浸潤班</option>
-          <option value="菁英班">菁英班</option>
+          <option value="菁英五天班">菁英五天班</option>
+          <option value="菁英三天班">菁英三天班</option>
+          <option value="全民英檢班">全民英檢班</option>
           <option value="普通班">普通班</option>
         </select>
       </div>
