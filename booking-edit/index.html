@@ -53,7 +53,7 @@ body { margin:0; font-family: -apple-system, "PingFang TC", "Microsoft JhengHei"
     </div>
     <div class="field">
       <label>日期</label>
-      <input id="f-date" type="date">
+      <select id="f-date"><option value="">載入中...</option></select>
     </div>
     <div class="field">
       <label>時段</label>
@@ -83,6 +83,49 @@ function showStatus(kind, msg) {
 
 // v2.18.29: 時段來源 · 正委 Gateway同主網頁同源 (weekday/holiday/曑期/佔用)
 let ORIGINAL = { date: '', slot: '', type: 'visitTest' };
+const WEEKDAY_TW = ['日','一','二','三','四','五','六'];
+
+async function loadAvailableDates() {
+  const sel = $('f-date');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">載入中...</option>';
+  try {
+    const bt = $('f-type').value === '體驗課' ? 'trial' : 'visitTest';
+    const res = await fetch(GW_URL + '?action=availabledates&booking_type=' + bt + '&days=60');
+    const r = await res.json();
+    sel.innerHTML = '';
+    if (!r.success || !r.dates) { sel.innerHTML = '<option value="">❌ 載入失敗</option>'; return; }
+    // 原訂日 · 如果不在清單 (例原訂那天被反、或原訂是過去)·仍留位置
+    let foundOriginal = false;
+    if (ORIGINAL.date) {
+      foundOriginal = r.dates.some(d => d.date === ORIGINAL.date);
+      if (!foundOriginal) {
+        const o = document.createElement('option');
+        o.value = ORIGINAL.date;
+        const dt = new Date(ORIGINAL.date + 'T00:00:00');
+        o.textContent = ORIGINAL.date + ' (週' + WEEKDAY_TW[dt.getDay()] + ') (原訂)';
+        sel.appendChild(o);
+      }
+    }
+    r.dates.forEach(d => {
+      const o = document.createElement('option');
+      o.value = d.date;
+      const isOriginal = d.date === ORIGINAL.date;
+      o.textContent = d.date + ' (週' + WEEKDAY_TW[d.weekday] + ')' 
+        + (isOriginal ? ' (原訂)' : ' · 還有 ' + d.freeSlots + '/' + d.totalSlots + ' 個空');
+      sel.appendChild(o);
+    });
+    // 復原選中 · 先用原訂 · 沒有才用之前選的
+    if (ORIGINAL.date && sel.querySelector('option[value="' + ORIGINAL.date + '"]')) {
+      sel.value = ORIGINAL.date;
+    } else if (cur && sel.querySelector('option[value="' + cur + '"]')) {
+      sel.value = cur;
+    }
+  } catch (e) {
+    sel.innerHTML = '<option value="">❌ 連線錯誤</option>';
+    console.error(e);
+  }
+}
 
 async function loadSlotsForDate(dateVal) {
   const sel = $('f-slot');
@@ -151,16 +194,19 @@ async function loadBooking() {
     ORIGINAL.type = b.type || 'visitTest';
     $('f-child').value = b.child || '';
     $('f-type').value = b.type || '體驗課';
-    if (b.date && /^\d{4}-\d{2}-\d{2}$/.test(b.date)) $('f-date').value = b.date;
     if (b.status === '已取消') {
       $('cancelled-warn').classList.remove('hidden');
       $('btn-save').disabled = true;
     }
-    // 載今日可選時段
+    // 載可選日期 · 載今日可選時段
+    await loadAvailableDates();
     await loadSlotsForDate($('f-date').value);
     // 日期或類型改時 · 重新載時段
     $('f-date').addEventListener('change', () => loadSlotsForDate($('f-date').value));
-    $('f-type').addEventListener('change', () => loadSlotsForDate($('f-date').value));
+    $('f-type').addEventListener('change', async () => {
+      await loadAvailableDates();
+      await loadSlotsForDate($('f-date').value);
+    });
     $('loading').classList.add('hidden');
     $('main').classList.remove('hidden');
   } catch (e) {
