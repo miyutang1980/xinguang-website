@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>預約詳情 · 弋果美語太平新光分校</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  background: #F3F4F6; color: #1F2937; padding: 16px; min-height: 100vh; font-size: 15px;
+}
+.container { max-width: 480px; margin: 0 auto; }
+.card {
+  background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 14px; overflow: hidden;
+}
+.card-header {
+  padding: 16px 18px; color: #fff; font-weight: 700; font-size: 1.05rem;
+}
+.card-header.test { background: linear-gradient(135deg, #7C3AED, #9333EA); }
+.card-header.trial { background: linear-gradient(135deg, #10B981, #059669); }
+.card-header.default { background: linear-gradient(135deg, #0F4A3E, #2B7A4B); }
+.card-header .sub { font-size: 0.78rem; opacity: 0.85; margin-top: 4px; font-weight: 400; }
+.card-body { padding: 18px; }
+.row { display: flex; padding: 10px 0; border-bottom: 1px solid #F3F4F6; }
+.row:last-child { border-bottom: none; }
+.row-label { width: 80px; color: #6B7280; font-size: 0.88rem; flex-shrink: 0; }
+.row-value { flex: 1; color: #1F2937; font-weight: 600; word-break: break-all; }
+.row-value.highlight { color: #DC2626; }
+.row-value.tel a { color: #2563EB; text-decoration: none; }
+.row-value.tel a:active { opacity: 0.6; }
+.btn {
+  display: block; width: 100%; padding: 14px;
+  border-radius: 10px; border: none; cursor: pointer;
+  font-size: 15px; font-weight: 700; margin-bottom: 10px;
+  font-family: inherit;
+}
+.btn-primary { background: #2563EB; color: #fff; }
+.btn-secondary { background: #fff; color: #0F4A3E; border: 2px solid #0F4A3E; }
+.btn-line { background: #06C755; color: #fff; }
+.btn:active { transform: scale(0.98); }
+.history-item {
+  padding: 12px 14px; background: #F9FAFB; border-radius: 8px;
+  margin-bottom: 8px; border-left: 3px solid #E5E7EB;
+}
+.history-item.recent { border-left-color: #10B981; }
+.history-item.cancel { border-left-color: #DC2626; opacity: 0.6; }
+.history-item .h-type { font-weight: 700; color: #0F4A3E; font-size: 0.9rem; }
+.history-item .h-meta { color: #6B7280; font-size: 0.82rem; margin-top: 4px; }
+.history-item .h-status { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 0.7rem; margin-left: 6px; }
+.h-status.ok { background: #D1FAE5; color: #065F46; }
+.h-status.cancel { background: #FEE2E2; color: #991B1B; }
+.empty { text-align: center; padding: 24px; color: #9CA3AF; }
+.loading { text-align: center; padding: 60px 20px; color: #6B7280; }
+.spinner {
+  width: 32px; height: 32px; border: 3px solid #E5E7EB;
+  border-top-color: #0F4A3E; border-radius: 50%;
+  animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.error-msg {
+  background: #FEE2E2; color: #991B1B; padding: 14px;
+  border-radius: 8px; text-align: center; margin: 16px 0;
+}
+.tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; }
+.tag.test { background: #EDE9FE; color: #6D28D9; }
+.tag.trial { background: #D1FAE5; color: #065F46; }
+.tag.visit { background: #DBEAFE; color: #1E40AF; }
+.privacy-note {
+  background: #FFFBEB; color: #92400E; padding: 10px 14px;
+  border-radius: 8px; font-size: 0.78rem; margin-bottom: 14px;
+  border-left: 3px solid #F59E0B;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="content">
+    <div class="loading">
+      <div class="spinner"></div>
+      <div>讀取預約詳情中...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const GW_URL = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+const params = new URLSearchParams(location.search);
+const phone = params.get('phone') || '';
+const date = params.get('date') || '';
+const slot = params.get('slot') || '';
+
+function esc(s) { return String(s||'').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+function typeTag(type) {
+  const t = String(type||'');
+  if (t.indexOf('檢測') >= 0) return '<span class="tag test">📝 ' + esc(t) + '</span>';
+  if (t.indexOf('體驗') >= 0) return '<span class="tag trial">🎓 ' + esc(t) + '</span>';
+  if (t.indexOf('參訪') >= 0) return '<span class="tag visit">🚶 ' + esc(t) + '</span>';
+  return '<span class="tag">' + esc(t) + '</span>';
+}
+function headerClass(type) {
+  const t = String(type||'');
+  if (t.indexOf('檢測') >= 0) return 'test';
+  if (t.indexOf('體驗') >= 0) return 'trial';
+  return 'default';
+}
+
+async function load() {
+  if (!phone) {
+    document.getElementById('content').innerHTML =
+      '<div class="error-msg">⚠️ 缺少電話參數,無法查詢</div>';
+    return;
+  }
+  try {
+    const res = await fetch(GW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ _action: 'booking_detail_lookup', phone, date, slot })
+    });
+    const r = await res.json();
+    if (!r.success) {
+      document.getElementById('content').innerHTML =
+        '<div class="error-msg">❌ ' + esc(r.error || '查無資料') + '</div>';
+      return;
+    }
+    render(r);
+  } catch (e) {
+    document.getElementById('content').innerHTML =
+      '<div class="error-msg">❌ 連線失敗: ' + esc(e.message) + '</div>';
+  }
+}
+
+function render(r) {
+  const cur = r.current;
+  const stu = r.student;
+  const history = r.history || [];
+
+  if (!cur) {
+    document.getElementById('content').innerHTML =
+      '<div class="error-msg">⚠️ 找不到指定預約,可能已被修改</div>';
+    return;
+  }
+
+  const hClass = headerClass(cur.type);
+  let html = '';
+
+  // 隱私提醒
+  html += '<div class="privacy-note">⚠️ 此頁含家長個資 · 僅限教學組查看 · 請勿截圖外傳</div>';
+
+  // 預約資訊卡
+  html += '<div class="card">';
+  html += '<div class="card-header ' + hClass + '">';
+  html += '📋 預約詳情';
+  html += '<div class="sub">' + esc(cur.type) + ' · ' + esc(cur.date) + '</div>';
+  html += '</div>';
+  html += '<div class="card-body">';
+  html += '<div class="row"><div class="row-label">學生</div><div class="row-value">' + esc(cur.child || '—') + '</div></div>';
+  if (stu && stu.grade) {
+    html += '<div class="row"><div class="row-label">年級</div><div class="row-value">' + esc(stu.grade) + (stu.classLabel ? ' · ' + esc(stu.classLabel) : '') + '</div></div>';
+  }
+  html += '<div class="row"><div class="row-label">類型</div><div class="row-value">' + typeTag(cur.type) + '</div></div>';
+  html += '<div class="row"><div class="row-label">日期</div><div class="row-value">' + esc(cur.date) + '</div></div>';
+  html += '<div class="row"><div class="row-label">時段</div><div class="row-value">' + esc(cur.slot) + '</div></div>';
+  html += '<div class="row"><div class="row-label">狀態</div><div class="row-value">' + esc(cur.status || '已預約') + '</div></div>';
+  html += '</div></div>';
+
+  // 家長聯絡卡
+  html += '<div class="card">';
+  html += '<div class="card-header default">👤 家長聯絡資訊</div>';
+  html += '<div class="card-body">';
+  html += '<div class="row"><div class="row-label">家長</div><div class="row-value">' + esc(cur.parent || '—') + '</div></div>';
+  html += '<div class="row"><div class="row-label">電話</div><div class="row-value tel"><a href="tel:' + esc(cur.phone) + '">📞 ' + esc(cur.phone) + '</a></div></div>';
+  if (cur.note) {
+    html += '<div class="row"><div class="row-label">備註</div><div class="row-value" style="font-weight:400;color:#6B7280;font-size:0.85rem">' + esc(cur.note) + '</div></div>';
+  }
+  html += '<a href="tel:' + esc(cur.phone) + '" class="btn btn-primary" style="margin-top:12px;text-decoration:none;text-align:center">📞 撥打電話</a>';
+  html += '</div></div>';
+
+  // 歷史紀錄
+  html += '<div class="card">';
+  html += '<div class="card-header default">📚 此家長歷史預約 (' + (r.historyCount || 0) + ')</div>';
+  html += '<div class="card-body">';
+  if (history.length === 0) {
+    html += '<div class="empty">此家長首次預約</div>';
+  } else {
+    history.forEach((h, idx) => {
+      const isCancel = String(h.status||'').indexOf('取消') >= 0;
+      html += '<div class="history-item' + (idx === 0 ? ' recent' : '') + (isCancel ? ' cancel' : '') + '">';
+      html += '<div class="h-type">' + esc(h.type || '預約') +
+        '<span class="h-status ' + (isCancel ? 'cancel' : 'ok') + '">' + esc(h.status || '已預約') + '</span></div>';
+      html += '<div class="h-meta">📅 ' + esc(h.date) + ' ' + esc(h.slot) + ' · 學生: ' + esc(h.child || '—') + '</div>';
+      html += '</div>';
+    });
+  }
+  html += '</div></div>';
+
+  // 後台按鈕
+  html += '<a href="https://admin.taipingxinguang.org" class="btn btn-secondary" style="text-decoration:none;text-align:center">📋 開後台管理</a>';
+
+  document.getElementById('content').innerHTML = html;
+}
+
+load();
+</script>
+</body>
+</html>
