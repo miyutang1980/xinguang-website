@@ -3332,7 +3332,7 @@ body {
       <p class="cls-summary-body">謹告知各位家長：學期本校班別、上課時段與上課日如下。<strong>時段二（16:30–19:00）</strong>中高年級以 <strong>3 天班</strong> 為主（G2 為浸潤班），每次 2.5 小時 × 3 天，每週維持 7.5 小時的扎實學習，同教材、同進度、同師資。</p>
     </div>
 
-    <div class="cls-grid">
+    <div class="cls-grid" id="cls-grid">
       <!-- 時段一 -->
       <div class="cls-slot cls-slot-1 reveal">
         <h4 class="cls-slot-time">時段一 · 14:00–16:00</h4>
@@ -12399,6 +12399,69 @@ window.addEventListener('scroll', function() {
 })();
 </script>
 
+<!-- v2.18.42: 班別設定動態讀取 -->
+<script>
+(function(){
+  var GW = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+  function escHtml(s){ return String(s||'').replace(/[<>&"]/g, function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];}); }
+  function renderClassesFromServer(data){
+    var grid = document.getElementById('cls-grid');
+    if (!grid) return;
+    var html = '';
+    var slots = [
+      { key: 'slot1', cls: 'cls-slot-1', cols: ['班別','上課時間','上課日'], showTime: true },
+      { key: 'slot2', cls: 'cls-slot-2', cols: ['班別','上課日','備註'], showTime: false },
+      { key: 'slot3', cls: 'cls-slot-3', cols: ['班別','時間','上課日'], showTime: true }
+    ];
+    slots.forEach(function(s){
+      var slot = data[s.key];
+      if (!slot) return;
+      html += '<div class="cls-slot ' + s.cls + ' reveal">';
+      html += '<h4 class="cls-slot-time">' + escHtml(slot.title) + '</h4>';
+      html += '<p class="cls-slot-tagline">' + escHtml(slot.tag) + '</p>';
+      html += '<table class="cls-table"><thead><tr><th>' + s.cols[0] + '</th><th>' + s.cols[1] + '</th><th>' + s.cols[2] + '</th></tr></thead><tbody>';
+      (slot.rows || []).forEach(function(row){
+        var isHi = /G2|ES 幼兒/.test(row[0]);
+        html += '<tr>';
+        html += '<td><span class="cls-class-name' + (isHi ? ' highlight' : '') + '">' + escHtml(row[0]) + '</span></td>';
+        if (s.key === 'slot2') {
+          // 時段二: 班別|上課日|備註
+          html += '<td>' + escHtml(row[2]) + '</td>';
+          var note = row[3];
+          if (note) {
+            var blue = /浸潤/.test(note);
+            html += '<td><span class="' + (blue ? 'cls-note-blue' : 'cls-note') + '">' + escHtml(note) + '</span></td>';
+          } else {
+            html += '<td>—</td>';
+          }
+        } else {
+          // 時段一、時段三: 班別|時間|上課日
+          html += '<td>' + escHtml(row[1]) + '</td>';
+          html += '<td>' + escHtml(row[2]) + '</td>';
+        }
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+    });
+    grid.innerHTML = html;
+  }
+  // 頁載入後 fetch (不阻塞頁面渲染)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadClasses);
+  } else {
+    loadClasses();
+  }
+  function loadClasses(){
+    fetch(GW + '?action=classes&_=' + Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(r){
+        if (r && r.success && r.data) renderClassesFromServer(r.data);
+        // 失敗 fallback: 保留預設 HTML (不覆蓋)
+      })
+      .catch(function(){ /* 連不上保留預設 */ });
+  }
+})();
+</script>
 </body>
 </html>
 <!-- redeploy trigger 1777290254 -->
