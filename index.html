@@ -12435,9 +12435,14 @@ window.addEventListener('scroll', function() {
             html += '<td>—</td>';
           }
         } else {
-          // 時段一、時段三: 班別|時間|上課日
+          // 時段一、時段三: 班別|時間|上課日 (備註追加在上課日下面)
           html += '<td>' + escHtml(row[1]) + '</td>';
-          html += '<td>' + escHtml(row[2]) + '</td>';
+          var note3 = row[3];
+          if (note3) {
+            html += '<td>' + escHtml(row[2]) + '<br><span class="cls-note">' + escHtml(note3) + '</span></td>';
+          } else {
+            html += '<td>' + escHtml(row[2]) + '</td>';
+          }
         }
         html += '</tr>';
       });
