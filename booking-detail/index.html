@@ -85,7 +85,39 @@ body {
 </div>
 
 <script>
-const GW_URL = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+const GW_URL = 'https://script.google.com/macros/s/AKfycbw-7_a_OfUVlgegcLxkux_9dr9UlYSVKhi3uQjV-0sr2X2TpRRmCXtSM7jbIqMHK4hNww/exec';
+// v2.18.47: 全域 fetch 拦截 · GW_URL POST 自動轉 GET-as-POST
+(function patchFetchForGwGet(){
+  if (window.__gwGetPatched) return;
+  window.__gwGetPatched = true;
+  var origFetch = window.fetch;
+  window.fetch = function(url, opts) {
+    try {
+      var u = (typeof url === 'string') ? url : '';
+      if (u && typeof GW_URL !== 'undefined' && u.indexOf(GW_URL) === 0 && opts && (opts.method === 'POST' || opts.method === 'post')) {
+        var bodyStr = opts.body;
+        if (typeof bodyStr === 'string' && bodyStr) {
+          var parsed = JSON.parse(bodyStr);
+          if (parsed && parsed._action) {
+            var action = parsed._action;
+            delete parsed._action;
+            var qs = new URLSearchParams();
+            qs.append('_action', action);
+            Object.keys(parsed).forEach(function(k){
+              var v = parsed[k];
+              if (v === null || v === undefined) return;
+              if (typeof v === 'object') qs.append(k + '_json', JSON.stringify(v));
+              else qs.append(k, String(v));
+            });
+            return origFetch.call(window, GW_URL + '?' + qs.toString());
+          }
+        }
+      }
+    } catch(e) {}
+    return origFetch.call(window, url, opts);
+  };
+})();
+
 const params = new URLSearchParams(location.search);
 const phone = params.get('phone') || '';
 const date = params.get('date') || '';

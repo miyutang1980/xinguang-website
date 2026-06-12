@@ -9911,7 +9911,7 @@ function generateCallScript(data) {
 /* ========== ADMIN PANEL ========== */
 // ====== 通知 Webhook（Apps Script Gateway）======
 // Gateway: 安全寫入 Sheets + 可選推 LINE 卡。個人 Gmail 部署、不受 Workspace 組織政策限制
-var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbw-7_a_OfUVlgegcLxkux_9dr9UlYSVKhi3uQjV-0sr2X2TpRRmCXtSM7jbIqMHK4hNww/exec';
 var WEBHOOK_PENDING_KEY = 'xg_webhook_pending';
 
 // 取出未送達的資料
@@ -12402,7 +12402,7 @@ window.addEventListener('scroll', function() {
 <!-- v2.18.42: 班別設定動態讀取 -->
 <script>
 (function(){
-  var GW = 'https://script.google.com/macros/s/AKfycbyvNnb5NR5spLWmgNzeG4wswzR_o5n0DISR3Ohj9qFK6RUaRhZ0E0jxV7ZVmmfPqblc3Q/exec';
+  var GW = 'https://script.google.com/macros/s/AKfycbw-7_a_OfUVlgegcLxkux_9dr9UlYSVKhi3uQjV-0sr2X2TpRRmCXtSM7jbIqMHK4hNww/exec';
   function escHtml(s){ return String(s||'').replace(/[<>&"]/g, function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];}); }
   function renderClassesFromServer(data){
     var grid = document.getElementById('cls-grid');
