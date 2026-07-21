@@ -153,14 +153,22 @@ ul{list-style:none}
 .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(3,15,43,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:box-shadow 0.3s ease}
 .nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1200px;margin:0 auto;padding:0 20px}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:#fff}
-.nav-logo svg{flex-shrink:0}
+/* v2.19.5 · nav-logo · 紋章白底小徐章、字體金黃強調 */
+.nav-logo{display:flex;align-items:center;gap:14px;font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:#fff;text-decoration:none}
+.nav-logo-badge{display:inline-flex;align-items:center;justify-content:center;
+  background:#fff;border-radius:50%;padding:6px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3),0 0 0 2px rgba(197,164,126,0.35);
+  flex-shrink:0;transition:transform 0.3s ease}
+.nav-logo:hover .nav-logo-badge{transform:scale(1.05);box-shadow:0 2px 12px rgba(0,0,0,0.4),0 0 0 2px rgba(197,164,126,0.6)}
+.nav-logo-badge img{display:block;height:44px;width:44px;object-fit:contain}
 .nav-logo-text{display:flex;flex-direction:column;line-height:1.2}
-.nav-logo-text span:first-child{font-size:1.05rem;letter-spacing:-0.02em}
+/* v2.19.5 · 分校名金色 · 地址白色低調 */
+.nav-logo-text span:first-child{font-size:1.05rem;letter-spacing:0.02em;color:#C5A47E;font-weight:800}
 .nav-logo-text span:last-child{font-size:0.68rem;color:rgba(255,255,255,0.65);font-weight:400}
 .nav-links{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap}
 .nav-links a{font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.85);padding:8px 10px;border-radius:var(--radius-sm);transition:all var(--transition);white-space:nowrap}
-.nav-links a:hover{color:#7DFFB3;background:rgba(125,255,179,0.1)}
+/* v2.19.5 · nav hover 換弋果暖金 */
+.nav-links a:hover{color:#C5A47E;background:rgba(197,164,126,0.1)}
 .nav-cta{background:var(--orange)!important;color:#fff!important;font-weight:700!important;padding:10px 20px!important;border-radius:var(--radius-md)!important}
 .nav-cta:hover{background:var(--orange-dark)!important;transform:translateY(-1px)}
 .hamburger{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer}
@@ -1144,8 +1152,10 @@ window.PROMOTION_CONFIG = {
 <nav class="nav" id="navbar">
   <div class="nav-inner">
     <a href="#" class="nav-logo">
-      <!-- v2.19.3 · 換成官方弋果紋章 logo -->
-      <img src="/logo-eagle-taiping.png" alt="弋果美語太平新光分校" style="height:52px;width:auto;display:block">
+      <!-- v2.19.5 · 弋果紋章白底小徐章 -->
+      <span class="nav-logo-badge">
+        <img src="/logo-eagle-taiping.png" alt="弋果美語太平新光分校">
+      </span>
       <div class="nav-logo-text">
         <span style="font-size:0.88rem;letter-spacing:0.02em">太平新光分校</span>
         <span style="font-size:0.65rem">台中市太平區新福路 880 號</span>
