@@ -1046,6 +1046,26 @@ body {
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<!-- ============================================================
+     v2.19.1 · 常態化招生檔期設定
+     每學期只要改這一區、全站檔期相關文案自動切換
+     ============================================================ -->
+<script>
+window.PROMOTION_CONFIG = {
+  // 早鳥優惠中斷點
+  earlyBirdDeadline: '2026-04-30T23:59:00+08:00',
+  earlyBirdTitle:   '早鳥手快優惠',       // 上方卡片標題
+  earlyBirdShort:   '早鳥手快',           // 對比區副標
+
+  // 一般報名中斷點
+  standardDeadline: '2026-05-31T23:59:00+08:00',
+  standardTitle:    '一般報名最後期',
+  standardShort:    '標準優惠',
+
+  // 檔期名 (可選 · 目前沒到處顯示)
+  seasonName:       '2026 春季入學'
+};
+</script>
 </head>
 <body>
 
@@ -7547,18 +7567,19 @@ body {
        B. Countdown Timers
        ============================================================ -->
   <div class="gv2-countdown-row">
-    <!-- Plan A -->
-    <div class="gv2-countdown-card gv2-cd-a">
-      <div class="gv2-cd-label">方案 A</div>
-      <div class="gv2-cd-title">4月底前報名優惠</div>
-      <div class="gv2-cd-deadline">截止時間：2026/04/30 23:59（台灣時間）</div>
+    <!-- v2.19.1 · 常態化模板：早鳥過期自動隱藏、只顯一般報名 -->
+    <!-- Plan A · 早鳥優惠 -->
+    <div class="gv2-countdown-card gv2-cd-a" id="gv2-cd-a-wrap">
+      <div class="gv2-cd-label">早鳥優惠</div>
+      <div class="gv2-cd-title" id="gv2-cd-a-title">早鳥手快優惠</div>
+      <div class="gv2-cd-deadline" id="gv2-cd-a-deadline">截止時間：—</div>
       <div id="gv2-cd-a-display" class="gv2-digits-row"></div>
     </div>
-    <!-- Plan B -->
-    <div class="gv2-countdown-card gv2-cd-b">
-      <div class="gv2-cd-label">方案 B</div>
-      <div class="gv2-cd-title">5月底前報名優惠</div>
-      <div class="gv2-cd-deadline">截止時間：2026/05/31 23:59（台灣時間）</div>
+    <!-- Plan B · 一般報名 -->
+    <div class="gv2-countdown-card gv2-cd-b" id="gv2-cd-b-wrap">
+      <div class="gv2-cd-label">一般報名</div>
+      <div class="gv2-cd-title" id="gv2-cd-b-title">一般報名最後期</div>
+      <div class="gv2-cd-deadline" id="gv2-cd-b-deadline">截止時間：—</div>
       <div id="gv2-cd-b-display" class="gv2-digits-row"></div>
     </div>
   </div>
@@ -7657,20 +7678,20 @@ body {
     </div>
 
     <!-- Step 2: Results -->
-    <div class="gv2-step-label" id="gv2-step2-label" style="display:none;">Step 2 ── 方案 A vs 方案 B 折扣比較</div>
+    <div class="gv2-step-label" id="gv2-step2-label" style="display:none;">Step 2 ── 早鳥優惠 vs 一般報名 折扣比較</div>
     <div class="gv2-calc-result" id="gv2-calc-result">
       <div class="gv2-compare-row">
         <div class="gv2-plan-box gv2-plan-box-a">
-          <div class="gv2-plan-box-label">方案 A</div>
-          <div class="gv2-plan-box-period">4月底前報名</div>
+          <div class="gv2-plan-box-label" id="gv2-plan-a-name">早鳥優惠</div>
+          <div class="gv2-plan-box-period" id="gv2-plan-a-period">早鳥手快</div>
           <div class="gv2-plan-box-discount" id="gv2-res-a-disc">$0</div>
           <div class="gv2-plan-box-sub">現金折扣</div>
           <div class="gv2-plan-box-sub" style="margin-top:6px;" id="gv2-res-a-first">首期費用 $0</div>
         </div>
         <div class="gv2-vs-badge">VS</div>
         <div class="gv2-plan-box gv2-plan-box-b" id="gv2-plan-b-box">
-          <div class="gv2-plan-box-label">方案 B</div>
-          <div class="gv2-plan-box-period">5月底前報名</div>
+          <div class="gv2-plan-box-label" id="gv2-plan-b-name">一般報名</div>
+          <div class="gv2-plan-box-period" id="gv2-plan-b-period">標準優惠</div>
           <div class="gv2-plan-box-discount" id="gv2-res-b-disc">$0</div>
           <div class="gv2-plan-box-sub">現金折扣</div>
           <div class="gv2-plan-box-sub" style="margin-top:6px;" id="gv2-res-b-first">首期費用 $0</div>
@@ -7828,7 +7849,7 @@ body {
        ============================================================ -->
   <div class="gv2-cta-section">
     <h3 class="gv2-cta-title">把握限時優惠，讓孩子贏在起跑點</h3>
-    <p class="gv2-cta-sub">名額有限，提前鎖定方案 A 享最大優惠</p>
+    <p class="gv2-cta-sub" id="gv2-cta-sub">名額有限，提前鎖定早鳥優惠享最大優惠</p>
     <div class="gv2-cta-btns">
       <a href="#inquiry" class="gv2-btn-primary">立即問課，鎖定最優方案 →</a>
       <a href="https://lin.ee/tdpTDdu" target="_blank" rel="noopener" class="gv2-btn-line">
@@ -7923,9 +7944,73 @@ body {
     setInterval(update, 1000);
   }
 
-  /* Taiwan is UTC+8 */
-  renderCountdown('2026-04-30T23:59:00+08:00', 'gv2-cd-a-display', 'gold');
-  renderCountdown('2026-05-31T23:59:00+08:00', 'gv2-cd-b-display', 'blue');
+  /* v2.19.1 · 依 PROMOTION_CONFIG 自動上日期/標題 + 過期自動隱藏 */
+  (function initPromoUI() {
+    var cfg = window.PROMOTION_CONFIG || {};
+    var now = new Date();
+    var earlyEnd = new Date(cfg.earlyBirdDeadline);
+    var stdEnd   = new Date(cfg.standardDeadline);
+
+    // 格式化日期顯示 (強制用台灣時間，避免瀏覽器在其他時區顯示錯)
+    function fmtDate(d) {
+      var opts = { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+      var parts = new Intl.DateTimeFormat('zh-TW', opts).formatToParts(d);
+      var o = {};
+      parts.forEach(function(p) { o[p.type] = p.value; });
+      return o.year + '/' + o.month + '/' + o.day + ' ' + o.hour + ':' + o.minute;
+    }
+
+    var aWrap = document.getElementById('gv2-cd-a-wrap');
+    var bWrap = document.getElementById('gv2-cd-b-wrap');
+    var aTitle = document.getElementById('gv2-cd-a-title');
+    var bTitle = document.getElementById('gv2-cd-b-title');
+    var aDeadline = document.getElementById('gv2-cd-a-deadline');
+    var bDeadline = document.getElementById('gv2-cd-b-deadline');
+
+    // 日期文案
+    if (aTitle) aTitle.textContent = cfg.earlyBirdTitle;
+    if (bTitle) bTitle.textContent = cfg.standardTitle;
+    if (aDeadline) aDeadline.textContent = '截止時間：' + fmtDate(earlyEnd) + '（台灣時間）';
+    if (bDeadline) bDeadline.textContent = '截止時間：' + fmtDate(stdEnd) + '（台灣時間）';
+
+    // 對比區名稱
+    var planANameEl = document.getElementById('gv2-plan-a-name');
+    var planAPeriodEl = document.getElementById('gv2-plan-a-period');
+    var planBNameEl = document.getElementById('gv2-plan-b-name');
+    var planBPeriodEl = document.getElementById('gv2-plan-b-period');
+    if (planANameEl)   planANameEl.textContent = '早鳥優惠';
+    if (planAPeriodEl) planAPeriodEl.textContent = cfg.earlyBirdShort;
+    if (planBNameEl)   planBNameEl.textContent = '一般報名';
+    if (planBPeriodEl) planBPeriodEl.textContent = cfg.standardShort;
+
+    // 過期自動隱藏邏輯
+    var earlyExpired = now > earlyEnd;
+    var stdExpired   = now > stdEnd;
+
+    if (earlyExpired && aWrap) {
+      aWrap.style.display = 'none';                                       // 隱藏早鳥倒數卡
+      var planA = document.querySelector('.gv2-plan-box-a');
+      if (planA) planA.style.display = 'none';                             // 隱藏對比區早鳥方案
+      var vs = document.querySelector('.gv2-vs-badge');
+      if (vs) vs.style.display = 'none';                                   // 隱藏 VS 徐章
+      var ctaSub = document.getElementById('gv2-cta-sub');
+      if (ctaSub) ctaSub.textContent = '名額有限，把握一般報名優惠名額';
+    }
+    if (stdExpired && bWrap) {
+      bWrap.style.display = 'none';
+      var planB = document.querySelector('.gv2-plan-box-b');
+      if (planB) planB.style.display = 'none';
+    }
+    if (earlyExpired && stdExpired) {
+      // 兩期都過 · 整個優惠區可以隱藏、或顯下期檔期即將公佈
+      var section = document.querySelector('.gv2-section, .gv2-container');
+      // 保守做法：不拆整區、只把兩張卡、對比區、VS、CTA 都隱了
+    }
+
+    // 只對未過期的倒數
+    if (!earlyExpired) renderCountdown(cfg.earlyBirdDeadline, 'gv2-cd-a-display', 'gold');
+    if (!stdExpired)   renderCountdown(cfg.standardDeadline,  'gv2-cd-b-display', 'blue');
+  })();
 
   /* ── Calculator ── */
   function renderResult(key) {
@@ -7949,13 +8034,13 @@ body {
       if (resB) resB.textContent = '—';
       if (resBF) resBF.textContent = '無方案B優惠';
       if (diffArea) {
-        diffArea.innerHTML = '<div class="gv2-nob-banner">⚠️ 此組合（' + d.name + '）僅限方案 A 優惠，5月底前不提供等額折扣</div>';
+        diffArea.innerHTML = '<div class="gv2-nob-banner">⚠️ 此組合（' + d.name + '）僅限早鳥優惠，一般報名期不提供等額折扣</div>';
       }
     } else {
       if (resB) resB.textContent = fmt(d.b_discount);
       if (resBF) resBF.textContent = '首期費用 ' + fmt(d.b_first);
       if (diffArea) {
-        diffArea.innerHTML = '<div class="gv2-diff-banner">🏆 選方案 A 比方案 B 多省 <span>' + fmt(d.diff) + '</span>！</div>';
+        diffArea.innerHTML = '<div class="gv2-diff-banner">🏆 選早鳥優惠比一般報名多省 <span>' + fmt(d.diff) + '</span>！</div>';
       }
     }
 
@@ -7963,7 +8048,7 @@ body {
     if (detailGrid) {
       var daA = d.detail_a;
       var colA = '<div class="gv2-detail-col gv2-detail-col-a">' +
-        '<div class="gv2-detail-col-title">方案 A 折扣明細</div>' +
+        '<div class="gv2-detail-col-title">早鳥優惠明細</div>' +
         '<div class="gv2-detail-row"><span>開學支援金</span><span class="gv2-det-val">' + fmt(daA.supply) + '</span></div>' +
         '<div class="gv2-detail-row"><span>學期支援金</span><span class="gv2-det-val">' + fmt(daA.material) + '</span></div>' +
         '<div class="gv2-detail-row"><span>安親/托育減免</span><span class="gv2-det-val">' + fmt(daA.tutor) + '</span></div>' +
@@ -7975,7 +8060,7 @@ body {
       if (!d.noB && d.detail_b) {
         var daB = d.detail_b;
         colB = '<div class="gv2-detail-col gv2-detail-col-b">' +
-          '<div class="gv2-detail-col-title">方案 B 折扣明細</div>' +
+          '<div class="gv2-detail-col-title">一般報名明細</div>' +
           '<div class="gv2-detail-row"><span>開學支援金</span><span class="gv2-det-val">' + fmt(daB.supply) + '</span></div>' +
           '<div class="gv2-detail-row"><span>學期支援金</span><span class="gv2-det-val">' + fmt(daB.material) + '</span></div>' +
           '<div class="gv2-detail-row"><span>安親/托育減免</span><span class="gv2-det-val">' + fmt(daB.tutor) + '</span></div>' +
@@ -7984,7 +8069,7 @@ body {
         '</div>';
       } else if (d.noB) {
         colB = '<div class="gv2-detail-col gv2-detail-col-b" style="display:flex;align-items:center;justify-content:center;min-height:120px;">' +
-          '<span style="color:#7B9DB7;font-size:0.88rem;text-align:center;">此組合不提供<br>方案 B 折扣</span>' +
+          '<span style="color:#7B9DB7;font-size:0.88rem;text-align:center;">此組合不提供<br>一般報名優惠</span>' +
         '</div>';
       }
 
@@ -10688,7 +10773,9 @@ function calcPrice() {
   if (!detail) return;
 
   var now = new Date();
-  var deadline = new Date('2026-05-31T23:59:59');
+  /* v2.19.1 · 營隊早鳥也對齊一般報名截止日 */
+  var _pc = window.PROMOTION_CONFIG || {};
+  var deadline = new Date(_pc.standardDeadline || '2026-05-31T23:59:59');
   var beforeDeadline = now <= deadline;
   var normalDay = 1760, discDay = 1496;
 
@@ -11196,9 +11283,11 @@ function submitRegister(){
    COUNTDOWN TIMERS
 ══════════════════════════════════ */
 (function() {
+  /* v2.19.1 · 讀 PROMOTION_CONFIG */
+  const _pc = window.PROMOTION_CONFIG || {};
   const deadlines = {
-    a: new Date('2026-04-30T23:59:59'),
-    b: new Date('2026-05-31T23:59:59')
+    a: new Date(_pc.earlyBirdDeadline || '2026-04-30T23:59:59'),
+    b: new Date(_pc.standardDeadline  || '2026-05-31T23:59:59')
   };
 
   const prevVals = { a: {}, b: {} };
@@ -11419,7 +11508,7 @@ function updateResult(key) {
       document.getElementById('res-b-supply').textContent   = '—';
       document.getElementById('res-b-material').textContent = '—';
       document.getElementById('res-b-tuition').textContent  = '—';
-      document.getElementById('res-b-sub').textContent      = '本方案 B 無對應資料';
+      document.getElementById('res-b-sub').textContent      = '本組合無一般報名優惠';
       document.getElementById('res-b-first').textContent    = '—';
 
       const discBEl = document.getElementById('res-b-discount');
