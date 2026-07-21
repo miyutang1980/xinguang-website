@@ -96,7 +96,7 @@
 /* ========== RESET & BASE ========== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;scroll-behavior:smooth;scroll-padding-top:80px}
-body{min-height:100dvh;line-height:1.6;font-family:'Noto Sans TC','Plus Jakarta Sans',sans-serif;color:#2D3436;background-color:#F8F6F3}
+body{min-height:100dvh;line-height:1.6;font-family:'Noto Sans TC','Plus Jakarta Sans',sans-serif;color:#2D3436;background-color:#F5EDE0}
 img,picture,video,canvas,svg{display:block;max-width:100%;height:auto}
 input,button,textarea,select{font:inherit;color:inherit}
 h1,h2,h3,h4,h5,h6{text-wrap:balance;line-height:1.2}
@@ -107,21 +107,22 @@ ul{list-style:none}
 
 /* ========== DESIGN TOKENS ========== */
 :root{
-  --green:#2B7A4B;
-  --green-dark:#1E5C37;
-  --green-light:#E8F5EE;
-  --green-50:#f0faf4;
-  --orange:#E8863A;
-  --orange-dark:#D06E25;
-  --orange-light:#FFF3EB;
+  /* v2.19.0: 對齊弋果總部 (eagletw.com) 品牌色系 · 深藍靛 + 暖金 */
+  --green:#192643;         /* 主色 · 弋果深藍靛 (花名保留避免大量重命名) */
+  --green-dark:#030F2B;    /* 更深 · hover、深區底 */
+  --green-light:#EEE7DB;   /* 暖米白 · 取代原淺綠 */
+  --green-50:#F5EDE0;      /* 最淺暖米 */
+  --orange:#C5A47E;        /* Accent · 弋果暖金 */
+  --orange-dark:#B08D5F;   /* Accent hover */
+  --orange-light:#F5EDE0;  /* 淺 accent 底 */
   --blue:#4A90D9;
   --blue-light:#EBF3FC;
-  --bg:#F8F6F3;
-  --bg-dark:#1E2A20;
+  --bg:#F5EDE0;            /* 頁面背景 · 暖米色 */
+  --bg-dark:#030F2B;       /* 深區底 · 弋果 primary dark */
   --text:#2D3436;
   --text-muted:#7B8794;
   --surface:#FFFFFF;
-  --surface-dark:#F0EDE8;
+  --surface-dark:#EEE7DB;  /* 暖米色 surface */
   --font-display:'Plus Jakarta Sans','Noto Sans TC',sans-serif;
   --font-body:'Noto Sans TC','Plus Jakarta Sans',sans-serif;
   --radius-sm:8px;
@@ -456,7 +457,7 @@ ul{list-style:none}
 
 
 /* ===== CAMP OVERHAUL ===== */
-.camp-hero{background:linear-gradient(160deg,#1E5C37 0%,#2B7A4B 100%);color:#fff;padding:60px 0 0}
+.camp-hero{background:linear-gradient(160deg,#030F2B 0%,#192643 100%);color:#fff;padding:60px 0 0}
 .camp-hero-inner{max-width:1100px;margin:0 auto;padding:0 2cm;text-align:center}
 .camp-hero h2{font-family:var(--font-display);font-size:clamp(1.8rem,1.2rem+2vw,2.6rem);font-weight:800;margin-bottom:12px}
 .camp-hero p{font-size:1rem;line-height:1.7;opacity:0.9;max-width:680px;margin:0 auto 28px}
@@ -520,7 +521,7 @@ ul{list-style:none}
 @media(max-width:480px){.el-subject-row{grid-template-columns:1fr}}
 
 /* ========== CAMP ========== */
-.camp-section{background:linear-gradient(160deg,var(--green) 0%,#1E5C37 100%);color:#fff;position:relative;overflow:hidden}
+.camp-section{background:linear-gradient(160deg,var(--green) 0%,#030F2B 100%);color:#fff;position:relative;overflow:hidden}
 .camp-section::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,0.05) 0%,transparent 70%);border-radius:50%}
 .camp-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
 .camp-text h2{font-family:var(--font-display);font-size:clamp(1.75rem,1.2rem+2vw,2.5rem);font-weight:800;margin-bottom:16px}
@@ -604,7 +605,7 @@ ul{list-style:none}
 .plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto}
 .plan-card{border-radius:var(--radius-lg);padding:36px;position:relative;overflow:hidden;transition:all var(--transition)}
 .plan-card:hover{transform:translateY(-4px)}
-.plan-a{background:linear-gradient(135deg,var(--green),#1E5C37);color:#fff;box-shadow:0 8px 30px rgba(43,122,75,0.3)}
+.plan-a{background:linear-gradient(135deg,var(--green),#030F2B);color:#fff;box-shadow:0 8px 30px rgba(43,122,75,0.3)}
 .plan-b{background:var(--bg);border:2px solid var(--surface-dark)}
 .plan-badge{display:inline-block;padding:4px 14px;border-radius:var(--radius-xl);font-size:0.75rem;font-weight:700;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em}
 .plan-a .plan-badge{background:rgba(255,255,255,0.2);color:#fff}
@@ -645,7 +646,7 @@ ul{list-style:none}
 .social-card.fb:hover{border-color:#1877F2}
 .social-card.line:hover{border-color:#06C755}
 .social-card-icon{width:64px;height:64px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.social-card.ig .social-card-icon{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+.social-card.ig .social-card-icon{background:linear-gradient(135deg,#C5A47E,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
 .social-card.fb .social-card-icon{background:#1877F2;color:#fff}
 .social-card.line .social-card-icon{background:#06C755;color:#fff}
 .social-card h4{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:6px;color:var(--text)}
@@ -693,15 +694,16 @@ ul{list-style:none}
 
 /* ── CSS Variables ── */
 :root {
-  --green: #2B7A4B;
-  --orange: #E8863A;
+  /* v2.19.0 · 同步弋果總部色系 */
+  --green: #192643;
+  --orange: #C5A47E;
   --blue: #4A90D9;
   --surface: #fff;
   --text: #1A202C;
   --text-muted: #718096;
-  --green-light: #E8F5EE;
-  --green-dark: #1a5c38;
-  --orange-light: #FEF3EA;
+  --green-light: #EEE7DB;
+  --green-dark: #030F2B;
+  --orange-light: #F5EDE0;
   --blue-light: #EBF4FF;
   --radius-md: 10px;
   --radius-lg: 16px;
@@ -715,14 +717,14 @@ ul{list-style:none}
 
 body {
   font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
-  background: #F8F6F3;
+  background: #F5EDE0;
   color: var(--text);
   line-height: 1.6;
 }
 
 /* ── Section ── */
 #gift {
-  background: #F8F6F3;
+  background: #F5EDE0;
   padding: 60px 20px 80px;
   max-width: 1100px;
   margin: 0 auto;
@@ -1036,7 +1038,7 @@ body {
 .gift-card-wrap:nth-child(6) .gift-card-front{background:linear-gradient(135deg,#2A1E2A,#352535)!important;border:1px solid rgba(201,169,110,0.2)}
 .gift-card-wrap:nth-child(2) .gift-card-front{background:linear-gradient(135deg,#EDE7FF,#DDD6FE)!important}
 .gift-card-wrap:nth-child(3) .gift-card-front{background:linear-gradient(135deg,#FFF3E0,#FFE0B2)!important}
-.gift-card-wrap:nth-child(4) .gift-card-front{background:linear-gradient(135deg,#E8F5EE,#D4EFDF)!important}
+.gift-card-wrap:nth-child(4) .gift-card-front{background:linear-gradient(135deg,#EEE7DB,#D4EFDF)!important}
 .gift-card-wrap:nth-child(5) .gift-card-front{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)!important}
 .gift-card-wrap:nth-child(6) .gift-card-front{background:linear-gradient(135deg,#FDEEF4,#FADCE8)!important}
 
@@ -1052,26 +1054,26 @@ body {
   <div class="nav-inner">
     <a href="#" class="nav-logo">
       <svg width="38" height="40" viewBox="0 0 100 108" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="太平新光分校">
-        <path d="M40 38 C35 32, 24 24, 12 20 C8 19, 4 19, 2 20" stroke="#2B7A4B" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <path d="M38 42 C32 37, 22 30, 10 27" stroke="#2B7A4B" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-        <path d="M36 44 C30 40, 20 34, 10 32" stroke="#2B7A4B" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <path d="M60 38 C65 32, 76 24, 88 20 C92 19, 96 19, 98 20" stroke="#2B7A4B" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <path d="M62 42 C68 37, 78 30, 90 27" stroke="#2B7A4B" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-        <path d="M64 44 C70 40, 80 34, 90 32" stroke="#2B7A4B" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <path d="M40 38 C35 32, 24 24, 12 20 C8 19, 4 19, 2 20" stroke="#192643" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M38 42 C32 37, 22 30, 10 27" stroke="#192643" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M36 44 C30 40, 20 34, 10 32" stroke="#192643" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <path d="M60 38 C65 32, 76 24, 88 20 C92 19, 96 19, 98 20" stroke="#192643" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M62 42 C68 37, 78 30, 90 27" stroke="#192643" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M64 44 C70 40, 80 34, 90 32" stroke="#192643" stroke-width="1.8" stroke-linecap="round" fill="none"/>
         <path d="M43 30 C43 22, 46 14, 50 10 C54 14, 57 22, 57 30 C57 33, 55 35, 50 36 C45 35, 43 33, 43 30 Z" fill="#e8e8e0"/>
-        <path d="M47 14 C48 10, 49 7, 50 4" stroke="#2B7A4B" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M50 4 C51 7, 52 10, 53 14" stroke="#2B7A4B" stroke-width="1.5" stroke-linecap="round"/>
-        <ellipse cx="47" cy="25" rx="2" ry="1.8" fill="#E8863A"/>
+        <path d="M47 14 C48 10, 49 7, 50 4" stroke="#192643" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M50 4 C51 7, 52 10, 53 14" stroke="#192643" stroke-width="1.5" stroke-linecap="round"/>
+        <ellipse cx="47" cy="25" rx="2" ry="1.8" fill="#C5A47E"/>
         <circle cx="47.4" cy="24.7" r="0.7" fill="#1a1a2e"/>
-        <ellipse cx="53" cy="25" rx="2" ry="1.8" fill="#E8863A"/>
+        <ellipse cx="53" cy="25" rx="2" ry="1.8" fill="#C5A47E"/>
         <circle cx="52.6" cy="24.7" r="0.7" fill="#1a1a2e"/>
-        <path d="M44 23.5 C45.5 22, 47 22, 48.5 23" stroke="#2B7A4B" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M56 23.5 C54.5 22, 53 22, 51.5 23" stroke="#2B7A4B" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M48 31 L50 38 L52 31 Z" fill="#E8863A"/>
-        <path d="M34 42 L66 42 L66 68 C66 76, 58 84, 50 87 C42 84, 34 76, 34 68 Z" fill="#2B7A4B"/>
-        <path d="M28 39 L34 42 L34 47 L28 44 Z" fill="#E8863A"/>
-        <path d="M72 39 L66 42 L66 47 L72 44 Z" fill="#E8863A"/>
-        <rect x="34" y="38" width="32" height="8" rx="1" fill="#E8863A"/>
+        <path d="M44 23.5 C45.5 22, 47 22, 48.5 23" stroke="#192643" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M56 23.5 C54.5 22, 53 22, 51.5 23" stroke="#192643" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M48 31 L50 38 L52 31 Z" fill="#C5A47E"/>
+        <path d="M34 42 L66 42 L66 68 C66 76, 58 84, 50 87 C42 84, 34 76, 34 68 Z" fill="#192643"/>
+        <path d="M28 39 L34 42 L34 47 L28 44 Z" fill="#C5A47E"/>
+        <path d="M72 39 L66 42 L66 47 L72 44 Z" fill="#C5A47E"/>
+        <rect x="34" y="38" width="32" height="8" rx="1" fill="#C5A47E"/>
         <text x="50" y="44" text-anchor="middle" fill="#fff" font-family="Georgia,serif" font-size="5.5" font-weight="700" letter-spacing="2">EAGLE</text>
       </svg>
       <div class="nav-logo-text">
@@ -1259,7 +1261,7 @@ body {
     </div>
 <div class="im-subject-accordion">
             <button class="im-subject-btn" onclick="toggleSubject(this)">
-              <div class="im-subject-icon" style="background:#E8F5EE">🔤</div>
+              <div class="im-subject-icon" style="background:#EEE7DB">🔤</div>
               <div class="im-subject-label"><strong>自然拼讀 Phonics</strong><span>看到沒學過的字也能拼！不是靠死背，是明白規則</span></div>
               <span class="im-subject-chevron">▼</span>
             </button>
@@ -1317,7 +1319,7 @@ body {
           <!-- GRAMMAR -->
           <div class="im-subject-accordion">
             <button class="im-subject-btn" onclick="toggleSubject(this)">
-              <div class="im-subject-icon" style="background:#FFF3EB">📝</div>
+              <div class="im-subject-icon" style="background:#F5EDE0">📝</div>
               <div class="im-subject-label"><strong>文法 Grammar / Language Arts</strong><span>文法不是用來考試的，是用來說話的</span></div>
               <span class="im-subject-chevron">▼</span>
             </button>
@@ -1638,7 +1640,7 @@ body {
   </div>
 </div>
 <div class="el-level-panel" id="el-panel-1C">
-  <div class="el-level-header" style="background:#FFF3EB">
+  <div class="el-level-header" style="background:#F5EDE0">
     <span class="el-level-emoji">🔥</span>
     <div>
       <strong>Grade 1C</strong>
@@ -1719,7 +1721,7 @@ body {
   </div>
 </div>
 <div class="el-level-panel" id="el-panel-2C">
-  <div class="el-level-header" style="background:#FFF3EB">
+  <div class="el-level-header" style="background:#F5EDE0">
     <span class="el-level-emoji">📙</span>
     <div>
       <strong>Grade 2C</strong>
@@ -2741,7 +2743,7 @@ body {
   <div class="course-content">
     <!-- Header -->
     <div class="course-header">
-      <div class="course-badge" style="background:#E8863A">ES</div>
+      <div class="course-badge" style="background:#C5A47E">ES</div>
       <h3>幼兒美語 Early Starter<small>3.5–6 歲孩子的第一口英文，全外師沉浸式環境</small></h3>
     </div>
 
@@ -2827,19 +2829,19 @@ body {
     <div style="margin-top:28px;padding:24px;background:#FFF7ED;border-radius:16px;border:2px solid #FED7AA">
       <h4 style="margin:0 0 16px;color:#9A3412;font-size:1.1rem;font-weight:800">🎉 學生讀完能達到什麼?</h4>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px">
-        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #E8863A">
+        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #C5A47E">
           <strong style="color:#9A3412;font-size:0.92rem">字彙量</strong>
           <p style="margin:6px 0 0;font-size:0.85rem;color:#7C2D12;line-height:1.6">能聽能說超過 <strong>600 個</strong> 生活主題單字·包含食物、動物、天氣、學校、身體部位等</p>
         </div>
-        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #E8863A">
+        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #C5A47E">
           <strong style="color:#9A3412;font-size:0.92rem">字母與發音</strong>
           <p style="margin:6px 0 0;font-size:0.85rem;color:#7C2D12;line-height:1.6">能寫 26 字母大小寫·學會自然發音·能讀出沒教過的 CVC 短字如 cat / dog / bus</p>
         </div>
-        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #E8863A">
+        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #C5A47E">
           <strong style="color:#9A3412;font-size:0.92rem">說與聽</strong>
           <p style="margin:6px 0 0;font-size:0.85rem;color:#7C2D12;line-height:1.6">能懂簡單指令·能用英文打招呼·能圍繞主題簡單問答</p>
         </div>
-        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #E8863A">
+        <div style="background:#fff;padding:16px;border-radius:10px;border-left:4px solid #C5A47E">
           <strong style="color:#9A3412;font-size:0.92rem">學習態度</strong>
           <p style="margin:6px 0 0;font-size:0.85rem;color:#7C2D12;line-height:1.6">不怕開口·不怕看到沒學過的字·不怕被老師問——這是最重要的能力</p>
         </div>
@@ -2888,15 +2890,16 @@ body {
 <style>
 /* ── Calculator Section Styles ── */
 #reverse-engineering {
-  --re-dark:    #1a2744;
-  --re-orange:  #e8863a;
-  --re-orange-h:#d4722a;
-  --re-light:   #f4f7fc;
+  /* v2.19.0 · 學費計算器對齊弋果深藍靛色系 */
+  --re-dark:    #030F2B;   /* 弋果 primary dark */
+  --re-orange:  #C5A47E;   /* 弋果暖金 */
+  --re-orange-h:#B08D5F;
+  --re-light:   #EEE7DB;   /* 弋果暖米白 */
   --re-white:   #ffffff;
-  --re-card:    #1e2f55;
-  --re-card2:   #243362;
-  --re-text:    #e8edf8;
-  --re-muted:   #8fa3cc;
+  --re-card:    #192643;   /* 弋果 primary · 卡背景 */
+  --re-card2:   #4B5877;   /* 弋果中間藍 · 副卡 */
+  --re-text:    #ffffff;
+  --re-muted:   #A6B4D4;   /* 弋果低對比周邊色 */
   --re-ok:      #4caf82;
   --re-warn:    #f0b429;
   --re-err:     #e85050;
@@ -3025,8 +3028,8 @@ body {
   box-shadow: 0 0 0 3px rgba(232,134,58,0.18);
 }
 .re-field select option {
-  background: #1a2744;
-  color: #e8edf8;
+  background: #030F2B;
+  color: #ffffff;
 }
 
 /* ── Calculate Button ── */
@@ -3290,7 +3293,7 @@ body {
 .cls-section{padding:80px 0;background:linear-gradient(180deg,#FBFAF7 0%,#F5F2EA 100%)}
 .cls-container{max-width:1100px;margin:0 auto;padding:0 20px}
 .cls-header{text-align:center;margin-bottom:36px}
-.cls-eyebrow{display:inline-block;font-size:0.78rem;font-weight:800;letter-spacing:0.16em;color:#2B7A4B;background:#E8F5EE;padding:6px 14px;border-radius:20px;margin-bottom:14px}
+.cls-eyebrow{display:inline-block;font-size:0.78rem;font-weight:800;letter-spacing:0.16em;color:#192643;background:#EEE7DB;padding:6px 14px;border-radius:20px;margin-bottom:14px}
 .cls-title{font-family:var(--font-display);font-size:clamp(1.75rem,4vw,2.4rem);font-weight:800;color:#0D1B2A;margin:0 0 8px;letter-spacing:-0.02em}
 .cls-subtitle{font-size:0.95rem;color:#52606D;line-height:1.7;max-width:640px;margin:0 auto}
 .cls-summary-card{background:linear-gradient(135deg,#0D1B2A 0%,#1A2B40 100%);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:30px;box-shadow:0 12px 40px rgba(13,27,42,0.18)}
@@ -3300,7 +3303,7 @@ body {
 .cls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
 @media(max-width:900px){.cls-grid{grid-template-columns:1fr}}
 .cls-slot{background:#fff;border-radius:14px;padding:22px;border:1.5px solid #E5E0D5;display:flex;flex-direction:column;transition:all 0.3s ease;box-shadow:0 4px 14px rgba(0,0,0,0.04)}
-.cls-slot:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.10);border-color:#2B7A4B}
+.cls-slot:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.10);border-color:#192643}
 .cls-slot-time{font-family:var(--font-display);font-size:1.15rem;font-weight:800;color:#0D1B2A;margin:0 0 4px;letter-spacing:-0.01em}
 .cls-slot-tagline{font-size:0.78rem;color:#52606D;margin:0 0 18px;font-weight:500}
 .cls-slot-1 .cls-slot-time::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;margin-right:8px;vertical-align:middle}
@@ -3313,7 +3316,7 @@ body {
 .cls-table tbody td{padding:10px 10px;border-bottom:1px solid #F0EBE0;color:#0D1B2A;line-height:1.5}
 .cls-table tbody tr:last-child td{border-bottom:none}
 .cls-class-name{font-weight:700;color:#0D1B2A;font-size:0.95rem}
-.cls-class-name.highlight{color:#2B7A4B}
+.cls-class-name.highlight{color:#192643}
 .cls-note{font-size:0.74rem;color:#92400E;background:#FEF3C7;padding:2px 6px;border-radius:4px;font-weight:600;display:inline-block}
 .cls-note-blue{font-size:0.74rem;color:#1E40AF;background:#DBEAFE;padding:2px 6px;border-radius:4px;font-weight:600;display:inline-block}
 .cls-cta{margin-top:34px;text-align:center;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -3390,7 +3393,7 @@ body {
 
     <div class="cls-cta">
       <a href="#booking" class="btn btn-primary" style="font-size:0.92rem;padding:11px 22px">🏫 帶孩子試說看看</a>
-      <a href="#inquiry" class="btn btn-secondary" style="font-size:0.92rem;padding:11px 22px;background:#fff;color:#2B7A4B;border:1.5px solid #2B7A4B">✉️ 詢問班別</a>
+      <a href="#inquiry" class="btn btn-secondary" style="font-size:0.92rem;padding:11px 22px;background:#fff;color:#192643;border:1.5px solid #192643">✉️ 詢問班別</a>
       <a href="tel:04-23960585" class="btn btn-secondary" style="font-size:0.92rem;padding:11px 22px;background:#fff;color:#0D1B2A;border:1.5px solid #C7C0AE">📞 04-2396-0585</a>
     </div>
   </div>
@@ -3717,11 +3720,11 @@ body {
   /* ===== DESIGN TOKENS (scoped to #cambridge-pathway) ===== */
   #cambridge-pathway {
     /* Brand palette */
-    --brand-navy: #1a2744;
+    --brand-navy: #030F2B;
     --brand-navy-deep: #111b33;
     --brand-navy-light: #243157;
-    --brand-orange: #e8863a;
-    --brand-orange-hover: #d4722a;
+    --brand-orange: #C5A47E;
+    --brand-orange-hover: #B08D5F;
     --brand-orange-glow: rgba(232,134,58,0.18);
 
     /* Level accent colors */
@@ -3731,7 +3734,7 @@ body {
     --g1-bg: rgba(74,158,221,0.12);
     --g2-color: #4cc986;
     --g2-bg: rgba(76,201,134,0.12);
-    --g3-color: #e8863a;
+    --g3-color: #C5A47E;
     --g3-bg: rgba(232,134,58,0.12);
 
     /* Type */
@@ -4940,7 +4943,7 @@ body {
 
   /* ── Section Shell ── */
   #cert-comparison {
-    background: #1a2744;
+    background: #030F2B;
     color: #f0f4ff;
     font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
     padding: 80px 24px;
@@ -4975,7 +4978,7 @@ body {
   .cert-eyebrow {
     display: inline-block;
     background: rgba(232,134,58,0.18);
-    color: #e8863a;
+    color: #C5A47E;
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.15em;
@@ -4994,7 +4997,7 @@ body {
   }
 
   .cert-title span {
-    color: #e8863a;
+    color: #C5A47E;
   }
 
   .cert-subtitle {
@@ -5009,7 +5012,7 @@ body {
   .cert-block-title {
     font-size: 1.15rem;
     font-weight: 800;
-    color: #e8863a;
+    color: #C5A47E;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -5021,7 +5024,7 @@ body {
     display: inline-block;
     width: 4px;
     height: 1.2em;
-    background: #e8863a;
+    background: #C5A47E;
     border-radius: 2px;
     flex-shrink: 0;
   }
@@ -5057,7 +5060,7 @@ body {
 
   .cert-table thead th {
     background: rgba(232,134,58,0.18);
-    color: #e8863a;
+    color: #C5A47E;
     font-weight: 700;
     font-size: 0.8rem;
     letter-spacing: 0.06em;
@@ -5162,7 +5165,7 @@ body {
     font-size: 0.8rem;
     font-weight: 800;
     background: rgba(232,134,58,0.2);
-    color: #e8863a;
+    color: #C5A47E;
     border: 1px solid rgba(232,134,58,0.4);
     white-space: nowrap;
   }
@@ -5382,7 +5385,7 @@ body {
   .cert-callout-card {
     background: linear-gradient(135deg, rgba(232,134,58,0.14) 0%, rgba(232,134,58,0.06) 100%);
     border: 1px solid rgba(232,134,58,0.35);
-    border-left: 4px solid #e8863a;
+    border-left: 4px solid #C5A47E;
     border-radius: 14px;
     padding: 22px 24px;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
@@ -5397,8 +5400,8 @@ body {
 
   .cert-callout-age {
     display: inline-block;
-    background: #e8863a;
-    color: #1a2744;
+    background: #C5A47E;
+    color: #030F2B;
     font-size: 0.75rem;
     font-weight: 800;
     padding: 3px 12px;
@@ -5502,7 +5505,7 @@ body {
     justify-content: center;
     font-size: 0.65rem;
     font-weight: 800;
-    color: #1a2744;
+    color: #030F2B;
     position: relative;
     z-index: 2;
     box-shadow: 0 2px 8px rgba(0,0,0,0.35);
@@ -5580,7 +5583,7 @@ body {
 
   .cert-cta-btn {
     display: inline-block;
-    background: #e8863a;
+    background: #C5A47E;
     color: #fff;
     font-size: 1rem;
     font-weight: 800;
@@ -5781,7 +5784,7 @@ body {
           </div>
           <div class="cert-card-grid">
             <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="color:rgba(240,244,255,0.5);font-style:italic;">尚無對應</div></div>
-            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">GK</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#C5A47E;">GK</div></div>
             <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">5–7 歲</div></div>
           </div>
           <div class="cert-card-skill">✦ 認字、聽指令、說單字</div>
@@ -5798,7 +5801,7 @@ body {
           </div>
           <div class="cert-card-grid">
             <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="color:rgba(240,244,255,0.5);font-style:italic;">尚無對應</div></div>
-            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G1</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#C5A47E;">G1</div></div>
             <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">7–9 歲</div></div>
           </div>
           <div class="cert-card-skill">✦ 讀短文、說完整句、過去式</div>
@@ -5815,7 +5818,7 @@ body {
           </div>
           <div class="cert-card-grid">
             <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="font-style:italic;color:rgba(240,244,255,0.55);">初級（接近）</div></div>
-            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G2</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#C5A47E;">G2</div></div>
             <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">8–11 歲</div></div>
           </div>
           <div class="cert-card-skill">✦ 讀故事、推論、表達意見</div>
@@ -5832,7 +5835,7 @@ body {
           </div>
           <div class="cert-card-grid">
             <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="color:#86efac;">✓ GEPT 初級</div></div>
-            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G3</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#C5A47E;">G3</div></div>
             <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">9–12 歲</div></div>
           </div>
           <div class="cert-card-skill">✦ 國中會考精熟、真實閱讀</div>
@@ -5849,7 +5852,7 @@ body {
           </div>
           <div class="cert-card-grid">
             <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="font-style:italic;color:rgba(240,244,255,0.55);">中級（接近）</div></div>
-            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G4–G5</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#C5A47E;">G4–G5</div></div>
             <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">11–14 歲</div></div>
           </div>
           <div class="cert-card-skill">✦ 讀報導、寫短論文</div>
@@ -5866,7 +5869,7 @@ body {
           </div>
           <div class="cert-card-grid">
             <div class="cert-card-field"><div class="cert-card-label">對應 GEPT</div><div class="cert-card-value" style="color:#86efac;">✓ GEPT 中高級</div></div>
-            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#e8863a;">G6+</div></div>
+            <div class="cert-card-field"><div class="cert-card-label">課程</div><div class="cert-card-value" style="color:#C5A47E;">G6+</div></div>
             <div class="cert-card-field"><div class="cert-card-label">年紀</div><div class="cert-card-value">13+ 歲</div></div>
           </div>
           <div class="cert-card-skill">✦ 大考英文精熟、高中會話</div>
@@ -5941,7 +5944,7 @@ body {
           <div class="cert-ladder-step">
             <div class="cert-ladder-bar-wrap">
               <div class="cert-ladder-node" style="background:#EA580C; color:#fff;">G4-5</div>
-              <div class="cert-ladder-bar" style="background:linear-gradient(to top, #EA580C, #f07232); height:138px;"></div>
+              <div class="cert-ladder-bar" style="background:linear-gradient(to top, #EA580C, #C5A47E); height:138px;"></div>
             </div>
             <div class="cert-ladder-label">
               <div class="cert-ladder-exam">PET</div>
@@ -6246,7 +6249,7 @@ body {
     box-shadow:0 2px 8px rgba(43,122,75,0.08);
   ">
     <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🌏</div>
-    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">100%</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#030F2B;line-height:1;margin-bottom:6px">100%</div>
     <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">全英語沉浸<br>上課、活動、互動全英文</div>
   </div>
 
@@ -6262,7 +6265,7 @@ body {
     box-shadow:0 2px 8px rgba(43,122,75,0.08);
   ">
     <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🏕️</div>
-    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">8 週</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#030F2B;line-height:1;margin-bottom:6px">8 週</div>
     <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">主題冒險<br>每週一個全新身份任務</div>
   </div>
 
@@ -6278,7 +6281,7 @@ body {
     box-shadow:0 2px 8px rgba(43,122,75,0.08);
   ">
     <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🚌</div>
-    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">每週</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#030F2B;line-height:1;margin-bottom:6px">每週</div>
     <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">戶外教學<br>主題配套，不只在教室裡玩</div>
   </div>
 
@@ -6294,7 +6297,7 @@ body {
     box-shadow:0 2px 8px rgba(43,122,75,0.08);
   ">
     <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🍱</div>
-    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">每天</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#030F2B;line-height:1;margin-bottom:6px">每天</div>
     <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">午餐＋點心<br>吃飽了才有力氣玩</div>
   </div>
 
@@ -6310,7 +6313,7 @@ body {
     box-shadow:0 2px 8px rgba(43,122,75,0.08);
   ">
     <div style="font-size:1.8rem;line-height:1;margin-bottom:8px">🎁</div>
-    <div style="font-size:1.25rem;font-weight:800;color:#1E5C37;line-height:1;margin-bottom:6px">贈品</div>
+    <div style="font-size:1.25rem;font-weight:800;color:#030F2B;line-height:1;margin-bottom:6px">贈品</div>
     <div style="font-size:0.8rem;color:#4B5563;font-weight:600;line-height:1.4">大禮包<br>每週主題限定周邊帶回家</div>
   </div>
 
@@ -6622,7 +6625,7 @@ body {
             <div class="camp-reg-title">夏令營報名表</div>
             <p class="camp-reg-sub">帶 <span style="color:#e53e3e">*</span> 為必填欄位。請確實填寫，以利後續聯繫確認。</p>
             <div style="text-align:center;margin:8px 0 16px">
-              <button onclick="showCampChange()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#fff;color:#2B7A4B;border:1.5px solid #2B7A4B;border-radius:20px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='#F0FDF4'" onmouseout="this.style.background='#fff'">已報名過？點這裡改課程 / 取消 →</button>
+              <button onclick="showCampChange()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#fff;color:#192643;border:1.5px solid #192643;border-radius:20px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='#F0FDF4'" onmouseout="this.style.background='#fff'">已報名過？點這裡改課程 / 取消 →</button>
             </div>
 
             <!-- 快速分流引導 -->
@@ -7802,16 +7805,16 @@ body {
 
   <!-- 學習資源費與早鳥優惠說明 -->
   <div style="max-width:900px;margin:24px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:16px">
-    <div style="background:rgba(232,134,58,0.08);border-left:3px solid #E8863A;border-radius:10px;padding:16px 20px">
-      <div style="color:#E8863A;font-weight:700;font-size:0.95rem;margin-bottom:8px">📘 學習資源費說明</div>
+    <div style="background:rgba(232,134,58,0.08);border-left:3px solid #C5A47E;border-radius:10px;padding:16px 20px">
+      <div style="color:#C5A47E;font-weight:700;font-size:0.95rem;margin-bottom:8px">📘 學習資源費說明</div>
       <p style="margin:0;font-size:0.85rem;color:#A8C4D9;line-height:1.7">
         • 初級資源包 <strong style="color:#E8D5A8">$900</strong>（共 3 本）<br>
         • 中級資源包 <strong style="color:#E8D5A8">$3,640</strong>（聽力 4 本 $1,440 + 閱寫 5 本 $2,200）<br>
         • <strong style="color:#E8D5A8">單報或同報皆另計</strong>，整期一次購入
       </p>
     </div>
-    <div style="background:rgba(232,134,58,0.08);border-left:3px solid #E8863A;border-radius:10px;padding:16px 20px">
-      <div style="color:#E8863A;font-weight:700;font-size:0.95rem;margin-bottom:8px">🐥 早鳥優惠</div>
+    <div style="background:rgba(232,134,58,0.08);border-left:3px solid #C5A47E;border-radius:10px;padding:16px 20px">
+      <div style="color:#C5A47E;font-weight:700;font-size:0.95rem;margin-bottom:8px">🐥 早鳥優惠</div>
       <p style="margin:0;font-size:0.85rem;color:#A8C4D9;line-height:1.7">
         • 同報初複試：4 月份 <strong style="color:#E8D5A8">9 折</strong> / 5 月份 <strong style="color:#E8D5A8">95 折</strong><br>
         • 單報：4 月份 <strong style="color:#E8D5A8">95 折</strong> / 5 月份原價<br>
@@ -8149,7 +8152,7 @@ body {
       </div>
 
       <!-- 分班結果卡片 -->
-      <div style="background:linear-gradient(135deg,#2B7A4B,#1E5C37);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-bottom:24px">
+      <div style="background:linear-gradient(135deg,#192643,#030F2B);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-bottom:24px">
         <div style="font-size:0.8rem;opacity:0.8;margin-bottom:4px">建議分班</div>
         <div id="resultClass" style="font-size:2.2rem;font-weight:900;letter-spacing:2px">—</div>
         <div id="resultClassType" style="font-size:0.88rem;margin-top:4px;opacity:0.9">班型</div>
@@ -8514,7 +8517,7 @@ document.addEventListener('DOMContentLoaded', function(){
         setTimeout(function(){
           var t=document.createElement('div');
           t.textContent='✅ 體驗課班次已從後台同步完成';
-          t.style.cssText='position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#2B7A4B;color:#fff;padding:12px 24px;border-radius:8px;font-size:0.9rem;font-weight:700;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.3)';
+          t.style.cssText='position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#192643;color:#fff;padding:12px 24px;border-radius:8px;font-size:0.9rem;font-weight:700;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.3)';
           document.body.appendChild(t);
           setTimeout(function(){t.remove();},3000);
         },800);
@@ -10218,7 +10221,7 @@ window.toggleArranged = function(idx){
     setTimeout(function(){
       var panel=document.createElement('div');
       panel.id='adminPanel';
-      panel.style.cssText='position:fixed;bottom:16px;right:16px;z-index:9999;background:#1E2A20;color:#fff;border-radius:12px;padding:16px;max-width:440px;max-height:82vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.5);font-size:0.8rem';
+      panel.style.cssText='position:fixed;bottom:16px;right:16px;z-index:9999;background:#030F2B;color:#fff;border-radius:12px;padding:16px;max-width:440px;max-height:82vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.5);font-size:0.8rem';
       window._adminRefresh=refresh;
       function refresh(){
         var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">';
@@ -10237,7 +10240,7 @@ window.toggleArranged = function(idx){
             h+='<div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:9px;margin-bottom:5px">';
             h+='<div style="display:flex;justify-content:space-between;align-items:flex-start">';
             h+='<span style="font-weight:700;color:#7DFFB3">'+d.date+' '+d.slot+'</span>';
-            h+='<button onclick="toggleArranged('+i+')" style="background:'+(d.arranged?'#2B7A4B':'rgba(255,255,255,0.15)')+';color:#fff;border:none;border-radius:5px;padding:3px 8px;font-size:0.7rem;cursor:pointer">'+(d.arranged?'✓已安排':'排班')+'</button>';
+            h+='<button onclick="toggleArranged('+i+')" style="background:'+(d.arranged?'#192643':'rgba(255,255,255,0.15)')+';color:#fff;border:none;border-radius:5px;padding:3px 8px;font-size:0.7rem;cursor:pointer">'+(d.arranged?'✓已安排':'排班')+'</button>';
             h+='</div>';
             h+='<div style="font-size:0.75rem;color:#aaa;margin-top:3px">'+d.type+cls+' ｜ '+d.parent+' ｜ '+d.child+' ｜ '+d.phone+'</div>';
             h+='<div style="color:rgba(255,255,255,0.35);font-size:0.68rem">'+d.ts+'</div></div>';
@@ -10339,7 +10342,7 @@ window.toggleArranged = function(idx){
           '<div><strong style="font-size:0.95rem">✏️ 體驗課班次管理</strong>'+
           '<span style="margin-left:8px;background:rgba(255,215,0,0.2);color:#FFD700;border-radius:50px;padding:2px 8px;font-size:0.72rem">已自訂 '+customCount+' 格</span></div>'+
           '<div style="display:flex;gap:6px">'+
-          '<button onclick="syncTrialToCalendar()" style="background:#2B7A4B;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:0.75rem;cursor:pointer;font-weight:700">✅ 發布到日曆</button>'+
+          '<button onclick="syncTrialToCalendar()" style="background:#192643;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:0.75rem;cursor:pointer;font-weight:700">✅ 發布到日曆</button>'+
           '<button onclick="document.getElementById(\'trialMgmtPanel\').remove()" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:6px;padding:5px 10px;cursor:pointer">關閉</button>'+
           '</div></div>';
 
@@ -10421,7 +10424,7 @@ window.toggleArranged = function(idx){
             '<input id="tAdd_cls" type="text" placeholder="如：SB、1B、2A、G1、G3/3A" '+
             'style="width:100%;background:#2A3040;color:#fff;border:1px solid #444;border-radius:5px;padding:5px 7px;font-size:0.8rem;font-family:inherit" '+
             'onkeydown="if(event.key===\'Enter\')addTrialOverride()"></div>'+
-            '<button onclick="addTrialOverride()" style="width:100%;background:#2B7A4B;color:#fff;border:none;border-radius:6px;padding:8px;font-size:0.82rem;font-weight:700;cursor:pointer">儲存</button>'+
+            '<button onclick="addTrialOverride()" style="width:100%;background:#192643;color:#fff;border:none;border-radius:6px;padding:8px;font-size:0.82rem;font-weight:700;cursor:pointer">儲存</button>'+
             '</div>'+
             // 已設定列表
             (Object.keys(ov).length>0?
@@ -10499,7 +10502,7 @@ window.toggleArranged = function(idx){
         if(window._reRenderCalendar) window._reRenderCalendar();
         var toast=document.createElement('div');
         toast.textContent='✅ 班次已更新到日曆！';
-        toast.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#2B7A4B;color:#fff;padding:10px 22px;border-radius:8px;font-size:0.88rem;font-weight:700;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.3)';
+        toast.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#192643;color:#fff;padding:10px 22px;border-radius:8px;font-size:0.88rem;font-weight:700;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.3)';
         document.body.appendChild(toast);
         setTimeout(function(){toast.remove();},2000);
       };
@@ -11598,7 +11601,7 @@ function updateResult(key) {
 <!-- =====================================================================
      太平新光分校 — 改期欄位片段 (Reschedule Date/Time Picker Snippet)
      替換現有的改期文字輸入欄位，放入 id="chgRescheduleFields" 的 div 內
-     依照網站樣式：Noto Sans TC、綠色主題 #2B7A4B、border-radius: 8px
+     依照網站樣式：Noto Sans TC、綠色主題 #192643、border-radius: 8px
      ===================================================================== -->
 
 <div id="chgRescheduleFields" style="
@@ -11616,11 +11619,11 @@ function updateResult(key) {
   <div style="
     font-size: 0.78rem;
     font-weight: 800;
-    color: #2B7A4B;
+    color: #192643;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     padding-bottom: 8px;
-    border-bottom: 2px solid #E8F5EE;
+    border-bottom: 2px solid #EEE7DB;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -11653,13 +11656,13 @@ function updateResult(key) {
         font-size: 1rem;
         font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif;
         color: #2D3436;
-        background: #F8F6F3;
+        background: #F5EDE0;
         transition: border-color 0.2s, background 0.2s;
         width: 100%;
         cursor: pointer;
       "
-      onfocus="this.style.borderColor='#2B7A4B'; this.style.background='#fff';"
-      onblur="this.style.borderColor='#ddd'; this.style.background='#F8F6F3';"
+      onfocus="this.style.borderColor='#192643'; this.style.background='#fff';"
+      onblur="this.style.borderColor='#ddd'; this.style.background='#F5EDE0';"
     />
     <span style="font-size: 0.75rem; color: #7B8794; margin-top: 2px;">
       最早可選明日起算的可預約日期
@@ -11701,8 +11704,8 @@ function updateResult(key) {
           value="14:00-15:00"
           style="display: none;"
           onchange="
-            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#2B7A4B'; });
-            this.closest('label').querySelector('.chg-slot-btn').style.background='#2B7A4B';
+            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#192643'; });
+            this.closest('label').querySelector('.chg-slot-btn').style.background='#192643';
             this.closest('label').querySelector('.chg-slot-btn').style.color='#fff';
           "
         />
@@ -11710,8 +11713,8 @@ function updateResult(key) {
           display: inline-block;
           padding: 10px 20px;
           border-radius: 8px;
-          border: 2px solid #2B7A4B;
-          color: #2B7A4B;
+          border: 2px solid #192643;
+          color: #192643;
           font-weight: 600;
           font-size: 0.9rem;
           font-family: 'Noto Sans TC', sans-serif;
@@ -11729,8 +11732,8 @@ function updateResult(key) {
           value="15:00-16:00"
           style="display: none;"
           onchange="
-            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#2B7A4B'; });
-            this.closest('label').querySelector('.chg-slot-btn').style.background='#2B7A4B';
+            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#192643'; });
+            this.closest('label').querySelector('.chg-slot-btn').style.background='#192643';
             this.closest('label').querySelector('.chg-slot-btn').style.color='#fff';
           "
         />
@@ -11738,8 +11741,8 @@ function updateResult(key) {
           display: inline-block;
           padding: 10px 20px;
           border-radius: 8px;
-          border: 2px solid #2B7A4B;
-          color: #2B7A4B;
+          border: 2px solid #192643;
+          color: #192643;
           font-weight: 600;
           font-size: 0.9rem;
           font-family: 'Noto Sans TC', sans-serif;
@@ -11757,8 +11760,8 @@ function updateResult(key) {
           value="16:30-17:30"
           style="display: none;"
           onchange="
-            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#2B7A4B'; });
-            this.closest('label').querySelector('.chg-slot-btn').style.background='#2B7A4B';
+            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#192643'; });
+            this.closest('label').querySelector('.chg-slot-btn').style.background='#192643';
             this.closest('label').querySelector('.chg-slot-btn').style.color='#fff';
           "
         />
@@ -11766,8 +11769,8 @@ function updateResult(key) {
           display: inline-block;
           padding: 10px 20px;
           border-radius: 8px;
-          border: 2px solid #2B7A4B;
-          color: #2B7A4B;
+          border: 2px solid #192643;
+          color: #192643;
           font-weight: 600;
           font-size: 0.9rem;
           font-family: 'Noto Sans TC', sans-serif;
@@ -11785,8 +11788,8 @@ function updateResult(key) {
           value="19:00-20:00"
           style="display: none;"
           onchange="
-            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#2B7A4B'; });
-            this.closest('label').querySelector('.chg-slot-btn').style.background='#2B7A4B';
+            document.querySelectorAll('.chg-slot-btn').forEach(function(el){ el.style.background=''; el.style.color='#192643'; });
+            this.closest('label').querySelector('.chg-slot-btn').style.background='#192643';
             this.closest('label').querySelector('.chg-slot-btn').style.color='#fff';
           "
         />
@@ -11794,8 +11797,8 @@ function updateResult(key) {
           display: inline-block;
           padding: 10px 20px;
           border-radius: 8px;
-          border: 2px solid #2B7A4B;
-          color: #2B7A4B;
+          border: 2px solid #192643;
+          color: #192643;
           font-weight: 600;
           font-size: 0.9rem;
           font-family: 'Noto Sans TC', sans-serif;
@@ -11831,7 +11834,7 @@ function updateResult(key) {
         font-size: 1rem;
         font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif;
         color: #2D3436;
-        background: #F8F6F3;
+        background: #F5EDE0;
         transition: border-color 0.2s, background 0.2s;
         width: 100%;
         cursor: pointer;
@@ -11842,8 +11845,8 @@ function updateResult(key) {
         background-position: right 14px center;
         padding-right: 38px;
       "
-      onfocus="this.style.borderColor='#2B7A4B'; this.style.background='#fff';"
-      onblur="this.style.borderColor='#ddd'; this.style.background='#F8F6F3';"
+      onfocus="this.style.borderColor='#192643'; this.style.background='#fff';"
+      onblur="this.style.borderColor='#ddd'; this.style.background='#F5EDE0';"
     >
       <option value="" disabled selected>— 請選擇類型 —</option>
       <option value="參訪校區">🏫 參訪校區</option>
@@ -11854,8 +11857,8 @@ function updateResult(key) {
 
   <!-- ── 提示說明 ── -->
   <div style="
-    background: #E8F5EE;
-    border-left: 4px solid #2B7A4B;
+    background: #EEE7DB;
+    border-left: 4px solid #192643;
     border-radius: 0 8px 8px 0;
     padding: 12px 16px;
     font-size: 0.83rem;
@@ -11863,7 +11866,7 @@ function updateResult(key) {
     line-height: 1.65;
   ">
     ⚠️ 改期須於原預約日期 <strong>24 小時前</strong>提出，逾時恕無法受理。
-    如有疑問請聯繫 <a href="https://line.me" style="color: #2B7A4B; font-weight: 600; text-decoration: underline;">LINE 官方帳號</a>。
+    如有疑問請聯繫 <a href="https://line.me" style="color: #192643; font-weight: 600; text-decoration: underline;">LINE 官方帳號</a>。
   </div>
 
 </div>
@@ -11893,12 +11896,12 @@ function updateResult(key) {
         // 重置所有按鈕
         slotContainer.querySelectorAll('.chg-slot-btn').forEach(function(btn) {
           btn.style.background = '#fff';
-          btn.style.color      = '#2B7A4B';
+          btn.style.color      = '#192643';
         });
         // 啟用被點擊的按鈕
         var btn = lbl.querySelector('.chg-slot-btn');
         if (btn) {
-          btn.style.background = '#2B7A4B';
+          btn.style.background = '#192643';
           btn.style.color      = '#fff';
         }
       });
@@ -11923,7 +11926,7 @@ function updateResult(key) {
         <textarea id="chgReason" rows="2" placeholder="方便讓我們知道原因嗎？" style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem;resize:vertical"></textarea>
       </div>
     </div>
-    <button id="chgSubmitBtn" onclick="submitBookingChange()" style="width:100%;padding:14px;background:var(--green,#2B7A4B);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px" disabled>請先選擇改期或取消</button>
+    <button id="chgSubmitBtn" onclick="submitBookingChange()" style="width:100%;padding:14px;background:var(--green,#192643);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px" disabled>請先選擇改期或取消</button>
     <div id="chgResult" style="display:none;margin-top:16px;padding:16px;background:#F0FDF4;border-radius:10px;text-align:center">
       <div style="font-size:2rem">✓</div>
       <p style="font-weight:700;margin:8px 0" id="chgResultTitle">已收到您的申請</p>
@@ -11931,8 +11934,8 @@ function updateResult(key) {
       <div id="chgRebookBtns" style="display:none;margin-top:16px">
         <p style="font-weight:600;font-size:0.9rem;margin-bottom:10px">想重新預約嗎？</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-          <button onclick="closeBookingChange();location.hash='booking';setTimeout(function(){var s=document.getElementById('bkType');if(s)s.value='參訪校區'},300)" style="padding:10px 16px;background:#2B7A4B;color:#fff;border:none;border-radius:8px;font-size:0.85rem;cursor:pointer">🏫 預約參訪</button>
-          <button onclick="closeBookingChange();location.hash='booking';setTimeout(function(){var s=document.getElementById('bkType');if(s)s.value='英文程度檢測'},300)" style="padding:10px 16px;background:#E8863A;color:#fff;border:none;border-radius:8px;font-size:0.85rem;cursor:pointer">📝 預約檢測</button>
+          <button onclick="closeBookingChange();location.hash='booking';setTimeout(function(){var s=document.getElementById('bkType');if(s)s.value='參訪校區'},300)" style="padding:10px 16px;background:#192643;color:#fff;border:none;border-radius:8px;font-size:0.85rem;cursor:pointer">🏫 預約參訪</button>
+          <button onclick="closeBookingChange();location.hash='booking';setTimeout(function(){var s=document.getElementById('bkType');if(s)s.value='英文程度檢測'},300)" style="padding:10px 16px;background:#C5A47E;color:#fff;border:none;border-radius:8px;font-size:0.85rem;cursor:pointer">📝 預約檢測</button>
           <button onclick="closeBookingChange();location.hash='booking';setTimeout(function(){var s=document.getElementById('bkType');if(s)s.value='課程體驗'},300)" style="padding:10px 16px;background:#1A4731;color:#fff;border:none;border-radius:8px;font-size:0.85rem;cursor:pointer">🎓 預約體驗課</button>
         </div>
       </div>
@@ -11954,7 +11957,7 @@ function selectChgAction(action) {
   _chgAction = action;
   var r = document.getElementById('chgOptReschedule');
   var c = document.getElementById('chgOptCancel');
-  r.style.borderColor = action === 'reschedule' ? 'var(--green,#2B7A4B)' : '#ddd';
+  r.style.borderColor = action === 'reschedule' ? 'var(--green,#192643)' : '#ddd';
   r.style.background = action === 'reschedule' ? '#F0FDF4' : '';
   c.style.borderColor = action === 'cancel' ? '#C0392B' : '#ddd';
   c.style.background = action === 'cancel' ? '#FEF2F2' : '';
@@ -11963,7 +11966,7 @@ function selectChgAction(action) {
   var btn = document.getElementById('chgSubmitBtn');
   btn.disabled = false;
   btn.textContent = action === 'reschedule' ? '🔄 送出改期申請' : '❌ 確認取消預約';
-  btn.style.background = action === 'cancel' ? '#C0392B' : 'var(--green,#2B7A4B)';
+  btn.style.background = action === 'cancel' ? '#C0392B' : 'var(--green,#192643)';
 }
 function submitBookingChange() {
   var parent = document.getElementById('chgParent').value.trim();
@@ -12031,7 +12034,7 @@ function submitBookingChange() {
     </div>
 
     <div id="campChgUpdateFields" style="display:none">
-      <div style="font-size:0.78rem;font-weight:800;color:var(--green,#2B7A4B);text-transform:uppercase;letter-spacing:0.06em;padding:10px 0 8px;border-bottom:2px solid #E8F5EE;margin-bottom:14px">📝 只填要改的那一項即可</div>
+      <div style="font-size:0.78rem;font-weight:800;color:var(--green,#192643);text-transform:uppercase;letter-spacing:0.06em;padding:10px 0 8px;border-bottom:2px solid #EEE7DB;margin-bottom:14px">📝 只填要改的那一項即可</div>
 
       <div class="form-group" style="margin-bottom:14px">
         <label style="font-weight:600;font-size:0.9rem">課程選擇（選填）</label>
@@ -12059,9 +12062,9 @@ function submitBookingChange() {
 
     <div id="campChgResult" style="display:none;padding:24px 0;text-align:center">
       <div style="font-size:3rem;margin-bottom:12px">✅</div>
-      <h3 id="campChgResultTitle" style="font-size:1.15rem;font-weight:800;color:var(--green,#2B7A4B);margin-bottom:8px">已收到變更申請</h3>
+      <h3 id="campChgResultTitle" style="font-size:1.15rem;font-weight:800;color:var(--green,#192643);margin-bottom:8px">已收到變更申請</h3>
       <p id="campChgResultDesc" style="font-size:0.9rem;color:var(--text-muted);line-height:1.6">老師確認後會以 LINE 或電話與您聯繫</p>
-      <button onclick="closeCampChange()" style="margin-top:18px;padding:10px 24px;background:var(--green,#2B7A4B);color:#fff;border:none;border-radius:8px;font-size:0.9rem;cursor:pointer">關閉</button>
+      <button onclick="closeCampChange()" style="margin-top:18px;padding:10px 24px;background:var(--green,#192643);color:#fff;border:none;border-radius:8px;font-size:0.9rem;cursor:pointer">關閉</button>
     </div>
   </div>
 </div>
@@ -12164,7 +12167,7 @@ function selectCampChgAction(action) {
   _campChgAction = action;
   var u = document.getElementById('campChgOptUpdate');
   var c = document.getElementById('campChgOptCancel');
-  u.style.borderColor = action === 'update' ? '#2B7A4B' : '#ddd';
+  u.style.borderColor = action === 'update' ? '#192643' : '#ddd';
   u.style.background  = action === 'update' ? '#F0FDF4' : '';
   c.style.borderColor = action === 'cancel' ? '#C0392B' : '#ddd';
   c.style.background  = action === 'cancel' ? '#FEF2F2' : '';
@@ -12173,7 +12176,7 @@ function selectCampChgAction(action) {
   var btn = document.getElementById('campChgSubmitBtn');
   btn.disabled = false;
   btn.textContent = action === 'update' ? '🔄 送出變更申請' : '❌ 確認取消報名';
-  btn.style.background = action === 'cancel' ? '#C0392B' : '#2B7A4B';
+  btn.style.background = action === 'cancel' ? '#C0392B' : '#192643';
 }
 function submitCampChange() {
   var phone = document.getElementById('campChgPhone').value.trim();
@@ -12295,10 +12298,10 @@ function submitRegisterChange() {
 </script>
 
 <!-- LINE 好友引導橫幅 -->
-<div id="lineFloatBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:linear-gradient(135deg,#2B7A4B,#1A4731);padding:12px 20px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.15)">
+<div id="lineFloatBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:linear-gradient(135deg,#192643,#1A4731);padding:12px 20px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.15)">
   <div style="max-width:600px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap">
     <span style="color:#fff;font-size:0.9rem;font-weight:600">📱 加入 LINE 好友，即時收到課程通知和預約提醒</span>
-    <a href="https://lin.ee/tdpTDdu" target="_blank" style="background:#fff;color:#2B7A4B;padding:8px 20px;border-radius:20px;font-weight:700;font-size:0.85rem;text-decoration:none;white-space:nowrap">加入好友 →</a>
+    <a href="https://lin.ee/tdpTDdu" target="_blank" style="background:#fff;color:#192643;padding:8px 20px;border-radius:20px;font-weight:700;font-size:0.85rem;text-decoration:none;white-space:nowrap">加入好友 →</a>
     <button onclick="this.parentElement.parentElement.style.display='none';sessionStorage.setItem('lineBannerClosed','1')" style="background:none;border:none;color:#fff9;font-size:1.2rem;cursor:pointer;padding:0 4px">✕</button>
   </div>
 </div>
