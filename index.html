@@ -152,15 +152,20 @@ ul{list-style:none}
 /* v2.19.2 · 導覽列對齊弋果深藍靖 (原 rgba(10,42,26) 是舊深綠) */
 .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(3,15,43,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:box-shadow 0.3s ease}
 .nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1200px;margin:0 auto;padding:0 20px}
-/* v2.19.5 · nav-logo · 紋章白底小徐章、字體金黃強調 */
-.nav-logo{display:flex;align-items:center;gap:14px;font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:#fff;text-decoration:none}
+/* v2.19.6 · nav 高度拉高 · 以容納放大 logo */
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:90px;max-width:1200px;margin:0 auto;padding:0 20px}
+/* v2.19.6 · nav-logo · 紋章白底徐章放大 (能看清細節) */
+.nav-logo{display:flex;align-items:center;gap:16px;font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:#fff;text-decoration:none}
 .nav-logo-badge{display:inline-flex;align-items:center;justify-content:center;
-  background:#fff;border-radius:50%;padding:6px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.3),0 0 0 2px rgba(197,164,126,0.35);
-  flex-shrink:0;transition:transform 0.3s ease}
-.nav-logo:hover .nav-logo-badge{transform:scale(1.05);box-shadow:0 2px 12px rgba(0,0,0,0.4),0 0 0 2px rgba(197,164,126,0.6)}
-.nav-logo-badge img{display:block;height:44px;width:44px;object-fit:contain}
+  background:#fff;border-radius:50%;padding:8px;
+  box-shadow:0 3px 12px rgba(0,0,0,0.35),0 0 0 2.5px rgba(197,164,126,0.4);
+  flex-shrink:0;transition:transform 0.3s ease,box-shadow 0.3s ease}
+.nav-logo:hover .nav-logo-badge{transform:scale(1.06);box-shadow:0 4px 16px rgba(0,0,0,0.45),0 0 0 2.5px rgba(197,164,126,0.7)}
+.nav-logo-badge img{display:block;height:64px;width:64px;object-fit:contain}
+@media(max-width:640px){
+  .nav-logo-badge{padding:6px}
+  .nav-logo-badge img{height:48px;width:48px}
+}
 .nav-logo-text{display:flex;flex-direction:column;line-height:1.2}
 /* v2.19.5 · 分校名金色 · 地址白色低調 */
 .nav-logo-text span:first-child{font-size:1.05rem;letter-spacing:0.02em;color:#C5A47E;font-weight:800}
@@ -222,7 +227,8 @@ ul{list-style:none}
   animation:auroraShimmer 8s ease-in-out infinite}
 @keyframes auroraShimmer{0%,100%{opacity:0.6;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.15)}}
 /* content */
-.hero-content{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:80px 20px 240px;text-align:center;width:100%}
+/* v2.19.6 · hero content 上方 padding 拉高 · 避 nav 壓到 */
+.hero-content{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:110px 20px 240px;text-align:center;width:100%}
 /* badge */
 .hero-badge{display:inline-flex;align-items:center;gap:8px;
   background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);
