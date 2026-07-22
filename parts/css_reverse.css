@@ -46,9 +46,11 @@
   bottom: -80px; left: -80px;
 }
 
+/* v2.20.5 · 满版 */
 .re-container {
-  max-width: 860px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
+  padding: 0 40px;
   position: relative;
   z-index: 1;
 }

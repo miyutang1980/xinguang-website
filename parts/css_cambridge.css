@@ -79,9 +79,11 @@
     pointer-events: none;
   }
 
+  /* v2.20.5 · 满版 */
   #cambridge-pathway .cp-inner {
-    max-width: 1080px;
-    margin: 0 auto;
+    max-width: none;
+    margin: 0;
+    padding: 0 40px;
     position: relative;
     z-index: 1;
   }
