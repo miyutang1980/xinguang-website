@@ -7400,6 +7400,31 @@ window.PROMOTION_CONFIG = {
   color: #A8C4D9;
 }
 #gift .gv2-detail-row:last-child { border-bottom: none; }
+
+/* v2.19.7 · 合規版明細 · 大字金額行 + 小字合規說明 */
+#gift .gv2-detail-big {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+#gift .gv2-detail-big span:first-child {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #E8D5A8;
+}
+#gift .gv2-detail-big .gv2-det-val {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fff;
+}
+#gift .gv2-detail-col-b .gv2-detail-big .gv2-det-val { color: #A6B4D4; }
+#gift .gv2-detail-footnote {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255,255,255,0.15);
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+}
 #gift .gv2-detail-row .gv2-det-val { font-weight: 600; color: #E8D5A8; }
 #gift .gv2-gift-total-row {
   margin-top: 10px;
@@ -8102,28 +8127,24 @@ window.PROMOTION_CONFIG = {
       }
     }
 
-    /* Detail breakdown */
+    /* v2.19.7 · 合規化明細 (兩行制) · 金額從屬於安親/托育費補貼 */
     if (detailGrid) {
       var daA = d.detail_a;
       var colA = '<div class="gv2-detail-col gv2-detail-col-a">' +
-        '<div class="gv2-detail-col-title">早鳥優惠明細</div>' +
-        '<div class="gv2-detail-row"><span>開學支援金</span><span class="gv2-det-val">' + fmt(daA.supply) + '</span></div>' +
-        '<div class="gv2-detail-row"><span>學期支援金</span><span class="gv2-det-val">' + fmt(daA.material) + '</span></div>' +
-        '<div class="gv2-detail-row"><span>安親/托育減免</span><span class="gv2-det-val">' + fmt(daA.tutor) + '</span></div>' +
-        '<div class="gv2-detail-row"><span>現金折扣合計</span><span class="gv2-det-val">' + fmt(daA.cash) + '</span></div>' +
+        '<div class="gv2-detail-col-title">早鳥優惠</div>' +
+        '<div class="gv2-detail-row gv2-detail-big"><span>安親/托育費補貼</span><span class="gv2-det-val">' + fmt(daA.cash) + '</span></div>' +
         '<div class="gv2-gift-total-row"><span>入學福利包</span><span class="gv2-det-val">✨ 全額贈送</span></div>' +
+        '<div class="gv2-detail-footnote">✱ 優惠均屬於分校自營安親/托育費的補貼、不含美語課程與教材費用。</div>' +
       '</div>';
 
       var colB = '';
       if (!d.noB && d.detail_b) {
         var daB = d.detail_b;
         colB = '<div class="gv2-detail-col gv2-detail-col-b">' +
-          '<div class="gv2-detail-col-title">一般報名明細</div>' +
-          '<div class="gv2-detail-row"><span>開學支援金</span><span class="gv2-det-val">' + fmt(daB.supply) + '</span></div>' +
-          '<div class="gv2-detail-row"><span>學期支援金</span><span class="gv2-det-val">' + fmt(daB.material) + '</span></div>' +
-          '<div class="gv2-detail-row"><span>安親/托育減免</span><span class="gv2-det-val">' + fmt(daB.tutor) + '</span></div>' +
-          '<div class="gv2-detail-row"><span>現金折扣合計</span><span class="gv2-det-val">' + fmt(daB.cash) + '</span></div>' +
+          '<div class="gv2-detail-col-title">一般報名</div>' +
+          '<div class="gv2-detail-row gv2-detail-big"><span>安親/托育費補貼</span><span class="gv2-det-val">' + fmt(daB.cash) + '</span></div>' +
           '<div class="gv2-gift-total-row"><span>入學福利包</span><span class="gv2-det-val" style="opacity:0.5">— 不含</span></div>' +
+          '<div class="gv2-detail-footnote">✱ 優惠均屬於分校自營安親/托育費的補貼、不含美語課程與教材費用。</div>' +
         '</div>';
       } else if (d.noB) {
         colB = '<div class="gv2-detail-col gv2-detail-col-b" style="display:flex;align-items:center;justify-content:center;min-height:120px;">' +
