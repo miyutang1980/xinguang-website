@@ -152,10 +152,18 @@
 <style>
 /* v2.20.1 · Why Us 學院風、字体放大 */
 .why-eagle .section-title{font-size:clamp(1.8rem,3.5vw,2.6rem)!important;font-weight:800;letter-spacing:0.02em;color:#192643;margin-bottom:12px}
-.why-eagle .section-subtitle{font-size:clamp(1rem,1.5vw,1.15rem)!important;color:#4B5877;line-height:1.7;letter-spacing:0.03em;max-width:640px;margin:0 auto 48px}
+.why-eagle .section-subtitle{font-size:clamp(0.95rem,1.3vw,1.1rem)!important;color:#4B5877;line-height:1.7;letter-spacing:0.03em;max-width:100%;text-align:center;margin:0 auto 48px;white-space:nowrap;overflow:hidden}
+/* v2.20.3 · 手機字小一點、可換行避化節遭遭 */
+@media(max-width:640px){
+  .why-eagle .section-subtitle{font-size:0.85rem!important;white-space:normal;max-width:340px}
+}
 .why-eagle .feature-card{padding:36px 32px;border-radius:20px;background:#FDFAF2;border:1px solid rgba(197,164,126,0.2);box-shadow:0 4px 20px rgba(3,15,43,0.06);transition:transform 0.3s ease,box-shadow 0.3s ease}
 .why-eagle .feature-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(3,15,43,0.12);border-color:rgba(197,164,126,0.4)}
-.why-eagle .feature-icon{width:88px;height:88px;font-size:2.6rem;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#F5EDE0 0%,#EEE7DB 100%);box-shadow:inset 0 2px 4px rgba(197,164,126,0.15)}
+/* v2.20.2 · SVG 圖示學院風 */
+.why-eagle .feature-icon{width:96px;height:96px;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#192643 0%,#0A1B3A 100%);box-shadow:0 6px 20px rgba(3,15,43,0.25),inset 0 0 0 2px rgba(197,164,126,0.35)}
+.why-eagle .feature-icon svg{width:52px;height:52px;stroke:#C5A47E;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.why-eagle .feature-card:hover .feature-icon{box-shadow:0 8px 28px rgba(3,15,43,0.35),inset 0 0 0 2px rgba(197,164,126,0.65)}
+.why-eagle .feature-card:hover .feature-icon svg{stroke:#D9B98F}
 .why-eagle .feature-card h3{font-size:clamp(1.25rem,2vw,1.5rem)!important;font-weight:800;color:#192643;margin-bottom:14px;letter-spacing:0.02em}
 .why-eagle .feature-card p{font-size:clamp(0.95rem,1.15vw,1.05rem)!important;color:#4B5877;line-height:1.75;letter-spacing:0.02em;margin-bottom:20px}
 .why-eagle .feature-card .btn{font-size:0.92rem;padding:10px 22px;font-weight:700;background:#192643;color:#fff;border:none;border-radius:30px;transition:all 0.25s ease}
@@ -167,19 +175,44 @@
     <p class="section-subtitle reveal">全外師沉浸 · 兒美到全英檢一氣呵成 · 安親托育一條龍，三大優勢專為台中家庭規劃</p>
     <div class="features-grid" style="max-width:1100px;margin:0 auto">
       <div class="feature-card reveal">
-        <div class="feature-icon blue">🎓</div>
+        <div class="feature-icon">
+          <!-- 學士帽 + 確定勾 -->
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M32 14 L54 24 L32 34 L10 24 Z"/>
+            <path d="M18 27 V42 C18 46 24 49 32 49 C40 49 46 46 46 42 V27"/>
+            <line x1="52" y1="25.5" x2="52" y2="38"/>
+            <circle cx="52" cy="40" r="1.8" fill="#C5A47E" stroke="none"/>
+          </svg>
+        </div>
         <h3>劍橋英檢內建</h3>
         <p>課程內建國際劍橋認證路徑，學習成果對接國際標準，孩子的進步不只是感覺、而是看得見的證書。</p>
         <a href="/certifications" class="btn btn-secondary">看國際認證 →</a>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon green">👩‍🏫</div>
+        <div class="feature-icon">
+          <!-- 老師塑像 + 簡化身體 -->
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="32" cy="20" r="7"/>
+            <path d="M18 50 C18 40 23 33 32 33 C41 33 46 40 46 50"/>
+            <path d="M32 33 L32 45"/>
+            <path d="M24 45 L40 45"/>
+            <circle cx="32" cy="20" r="3" fill="#C5A47E" stroke="none" opacity="0.3"/>
+          </svg>
+        </div>
         <h3>100% 全外師</h3>
         <p>純正美語沉浸環境，母語式互動教學，讓孩子從不敢開口，到日常對話都能自信自在。</p>
         <a href="/curriculum" class="btn btn-secondary">看課程規劃 →</a>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon orange">🏡</div>
+        <div class="feature-icon">
+          <!-- 房子 + 書本 · 象徵學習家 -->
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 30 L32 14 L52 30 V50 C52 51.1 51.1 52 50 52 H14 C12.9 52 12 51.1 12 50 Z"/>
+            <rect x="22" y="38" width="20" height="14" rx="1"/>
+            <line x1="22" y1="44" x2="42" y2="44"/>
+            <path d="M9 32 L32 12 L55 32"/>
+          </svg>
+        </div>
         <h3>安親托育一條龍</h3>
         <p>學英文 + 安親課輔一場搞定，家長下班不用兩邊接，孩子在同一個環境完成學習、作業、英語都照顧到。</p>
         <a href="/about" class="btn btn-secondary">認識分校 →</a>
