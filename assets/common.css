@@ -666,7 +666,7 @@ ul{list-style:none}
 
 
 
-/* ── 夏令營日期日曆 ── */
+/* ── 夏季課程日期日曆 ── */
 .camp-cal{background:var(--surface);border:1.5px solid var(--surface-dark);border-radius:10px;padding:12px;margin-bottom:6px}
 .camp-cal-header{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:6px}
 .camp-cal-wday{text-align:center;font-size:0.72rem;font-weight:800;color:var(--text-muted);padding:4px 0}

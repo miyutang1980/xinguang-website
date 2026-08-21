@@ -533,7 +533,7 @@ function toggleSubject(btn){
 /* ========== COURSE TABS ========== */
 // v2.18.16: 讀 URL ?course=xxx 自動切到該 tab + 滾到 #courses
 function _switchCourseTab(courseId) {
-  // 外部 redirect: 夏令營跳 #camp section
+  // 外部 redirect: 夏季課程跳 #camp section
   if (courseId === 'camp') {
     const camp = document.getElementById('camp');
     if (camp) camp.scrollIntoView({behavior:'smooth', block:'start'});
@@ -1450,7 +1450,7 @@ function submitInquiry(e){
 /* ========== CALL SCRIPT GENERATOR ========== */
 function generateCallScript(data) {
   var lines = [];
-  var goalMap = {env:'全美語浸潤環境',fast:'快速提升英文',cert:'準備英檢/劍橋',hw:'安親課輔服務',stable:'穩固英文基礎',camp:'暑假營隊'};
+  var goalMap = {env:'全美語浸潤環境',fast:'快速提升英文',cert:'準備英檢/劍橋',hw:'安親課輔服務',stable:'穩固英文基礎',camp:'暑假冬夏季課程'};
   var levelLabels = {'GK':'幼兒園程度','GK-G1':'幼兒園到一年級','G1':'一年級程度','G1-G2':'一到二年級之間','G2+':'二年級以上'};
   var oralQMap = {none:'無法用英文回應',gk:'能說單字',g1_lo:'片語程度',g1_hi:'簡單完整句',g2up:'能自由對話'};
 
@@ -1530,7 +1530,7 @@ function _addPending(payload){
 
 // 送達失敗時警告使用者
 function _showWebhookError(type){
-  var typeLabel = { camp:'夏令營報名', inquiry:'問課諮詢', booking:'預約／說明會', register:'正式註冊' }[type] || '表單';
+  var typeLabel = { camp:'夏季課程報名', inquiry:'問課諮詢', booking:'預約／說明會', register:'正式註冊' }[type] || '表單';
   alert('⚠️ ' + typeLabel + '送出遇到網路問題，資料已暫存。\n\n請你：\n1. 重新整理這個頁面再試一次\n2. 或撥電話到太平新光分校 04-23960585 詢問\n\n謝謝。');
 }
 
@@ -1684,7 +1684,7 @@ function autoFillForms(){
   if(c.sname){
     var el = document.getElementById('bkChild'); if(el && !el.value) el.value = c.sname;
   }
-  // 夏令營（第一個孩子）
+  // 夏季課程（第一個孩子）
   if(p.pname){
     var el = document.getElementById('cr_pname'); if(el && !el.value) el.value = p.pname;
     el = document.getElementById('cr_phone'); if(el && !el.value) el.value = p.phone||'';
@@ -1792,15 +1792,15 @@ function adminSaveCamp(data) {
   // 同步到 localStorage 供獨立後台使用
   var xgData = JSON.parse(localStorage.getItem('xg_admin_data') || '{}');
   if(!xgData.camp) xgData.camp = [];
-  data.source = '夏令營報名';
-  data.stage = '已報名夏令營';
+  data.source = '夏季課程報名';
+  data.stage = '已報名夏季課程';
   xgData.camp.push(data);
   localStorage.setItem('xg_admin_data', JSON.stringify(xgData));
   if(window._adminRefresh) window._adminRefresh();
 }
 
 window.clearAdminData = function(){
-  if(!confirm('確定清除所有預約、問課和夏令營記錄？')) return;
+  if(!confirm('確定清除所有預約、問課和夏季課程記錄？')) return;
   _adminData.inquiries=[]; _adminData.campRegs=[]; _adminData.bookings=[];
   if(window._bookingSlots) Object.keys(window._bookingSlots).forEach(function(k){delete window._bookingSlots[k];});
   if(window._adminRefresh) window._adminRefresh();
@@ -1827,7 +1827,7 @@ window.toggleArranged = function(idx){
         h+='<button onclick="clearAdminData()" style="background:rgba(255,80,80,0.2);color:#ff8080;border:none;border-radius:6px;padding:4px 10px;font-size:0.72rem;cursor:pointer">清除</button>';
         h+='<button onclick="document.getElementById(\'adminPanel\').remove()" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer">關閉</button>';
         h+='</div></div>';
-        h+='<div style="color:#aaa;font-size:0.72rem;margin-bottom:10px">預約：'+_adminData.bookings.length+' ｜ 問課：'+_adminData.inquiries.length+' ｜ 夏令營：'+_adminData.campRegs.length+'</div>';
+        h+='<div style="color:#aaa;font-size:0.72rem;margin-bottom:10px">預約：'+_adminData.bookings.length+' ｜ 問課：'+_adminData.inquiries.length+' ｜ 夏季課程：'+_adminData.campRegs.length+'</div>';
 
         // 預約記錄
         if(_adminData.bookings.length>0){
@@ -1867,9 +1867,9 @@ window.toggleArranged = function(idx){
           h+='<div style="border-top:1px solid rgba(255,255,255,0.08);margin:10px 0"></div>';
         }
 
-        // 夏令營
+        // 夏季課程
         if(_adminData.campRegs.length>0){
-          h+='<div style="font-weight:700;color:#FF8C00;margin:8px 0 6px">🏕️ 夏令營報名</div>';
+          h+='<div style="font-weight:700;color:#FF8C00;margin:8px 0 6px">🏕️ 夏季課程報名</div>';
           _adminData.campRegs.forEach(function(d,i){
             h+='<div style="background:rgba(255,140,0,0.08);border-radius:8px;padding:9px;margin-bottom:5px">';
             h+='<div style="font-weight:700;color:#FFD700">#'+(i+1)+' '+d.pname+' ｜ '+d.sname+'（'+d.grade+'）</div>';
@@ -2117,7 +2117,7 @@ window.toggleArranged = function(idx){
 
 // 願示/隱藏日期選擇器
 
-// ── 夏令營多孩子 ──────────────────────────────────────────
+// ── 夏季課程多孩子 ──────────────────────────────────────────
 var _campChildCount = 0;
 function campAddChild(){
   _campChildCount++;
@@ -2178,7 +2178,7 @@ function campAddChild(){
   // 八月
   html += '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:6px;font-weight:600;font-size:0.88rem">' +
     '<input type="checkbox" id="cr_aug_'+idx+'" onchange="toggleChildCampDays('+idx+',\'aug\')" style="width:16px;height:16px;accent-color:var(--green)">' +
-    '🕵️ 八月｜謎案追查隊（7/29–8/25）</label>';
+    '🕵️ 八月｜謎案追蹤隊（7/29–8/25）</label>';
   html += '<div id="days_child_aug_'+idx+'" style="display:none;margin:6px 0 12px 24px">' +
     buildCampCalendar('aug', idx) + '</div>';
 
@@ -2285,7 +2285,7 @@ function calcPrice() {
   if (!detail) return;
 
   var now = new Date();
-  /* v2.19.1 · 營隊早鳥也對齊一般報名截止日 */
+  /* v2.19.1 · 冬夏季課程早鳥也對齊一般報名截止日 */
   var _pc = window.PROMOTION_CONFIG || {};
   var deadline = new Date(_pc.standardDeadline || '2026-05-31T23:59:59');
   var beforeDeadline = now <= deadline;
@@ -2335,8 +2335,8 @@ function calcPrice() {
     if(childDetails.length <= 1){
       // 單一孩子：分七月/八月列
       if(c.julyDays > 0) rows += '<div class="camp-price-row"><span>🔬 七月｜超能科學派 ('+c.julyDays+'天)</span><span>'+cRate.toLocaleString()+' × '+c.julyDays+' = <strong>'+(cRate*c.julyDays).toLocaleString()+'</strong> 元</span></div>';
-      if(c.augDays > 0) rows += '<div class="camp-price-row"><span>🕵️ 八月｜謎案追查隊 ('+c.augDays+'天)</span><span>'+cRate.toLocaleString()+' × '+c.augDays+' = <strong>'+(cRate*c.augDays).toLocaleString()+'</strong> 元</span></div>';
-      if(c.hasDiscount) rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🎉 夏令營專屬優惠（滿 20 天）</span><span>-' + (cOrig - cPrice).toLocaleString() + ' 元</span></div>';
+      if(c.augDays > 0) rows += '<div class="camp-price-row"><span>🕵️ 八月｜謎案追蹤隊 ('+c.augDays+'天)</span><span>'+cRate.toLocaleString()+' × '+c.augDays+' = <strong>'+(cRate*c.augDays).toLocaleString()+'</strong> 元</span></div>';
+      if(c.hasDiscount) rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🎉 夏季課程專屬優惠（滿 20 天）</span><span>-' + (cOrig - cPrice).toLocaleString() + ' 元</span></div>';
       else if(beforeDeadline){
         var needed = 20 - c.totalDays;
         if(needed > 0) rows += '<div class="camp-price-row" style="color:var(--text-muted);font-size:0.8rem"><span>💡 再選 '+needed+' 天即享專屬優惠（單人合計滿 20 天）</span></div>';
@@ -2360,11 +2360,11 @@ function calcPrice() {
   // 多位孩子時顯示合計折扣
   var totalSaving = totalOrig - totalPrice;
   if(childDetails.length > 1 && totalSaving > 0){
-    rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🎉 夏令營專屬優惠折扣</span><span>-' + totalSaving.toLocaleString() + ' 元</span></div>';
+    rows += '<div class="camp-price-row" style="color:var(--orange)"><span>🎉 夏季課程專屬優惠折扣</span><span>-' + totalSaving.toLocaleString() + ' 元</span></div>';
   }
 
   if(!beforeDeadline && allDays > 0){
-    rows += '<div class="camp-price-row" style="color:var(--text-muted);font-size:0.8rem"><span>夏令營專屬優惠已於 5/31 截止</span></div>';
+    rows += '<div class="camp-price-row" style="color:var(--text-muted);font-size:0.8rem"><span>夏季課程專屬優惠已於 5/31 截止</span></div>';
   }
 
   rows += '<div class="camp-price-row total"><span>課程費用合計（不含學習資源費）</span><span>NTD ' + totalPrice.toLocaleString() + ' 元</span></div>';
