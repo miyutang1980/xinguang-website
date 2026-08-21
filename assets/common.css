@@ -1,6 +1,7 @@
 /* ========== RESET & BASE ========== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;scroll-behavior:smooth;scroll-padding-top:80px}
+/* v2.21.2 · scroll-padding 拉高避免 anchor 被 nav 遮 */
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;scroll-behavior:smooth;scroll-padding-top:120px}
 body{min-height:100dvh;line-height:1.6;font-family:'Noto Sans TC','Plus Jakarta Sans',sans-serif;color:#2D3436;background-color:#F5EDE0}
 img,picture,video,canvas,svg{display:block;max-width:100%;height:auto}
 input,button,textarea,select{font:inherit;color:inherit}
@@ -43,7 +44,8 @@ ul{list-style:none}
 /* ========== UTILITIES ========== */
 /* v2.20.5 · container 拉寬到滿版 */
 .container{width:100%;max-width:none;margin:0;padding:0 40px}
-.section-padding{padding:80px 0}
+/* v2.21.2 · section-padding 上方預留 nav (100px) + 額外 40px 避免遮蔽 */
+.section-padding{padding:140px 0 80px}
 .section-title{font-family:var(--font-display);font-size:clamp(1.75rem,1.2rem+2vw,2.5rem);font-weight:800;text-align:center;margin-bottom:16px;color:var(--text)}
 .section-subtitle{text-align:center;color:var(--text-muted);font-size:1rem;max-width:600px;margin:0 auto 48px;line-height:1.7}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--radius-lg);font-weight:700;font-size:0.95rem;transition:all var(--transition);cursor:pointer;border:none;text-decoration:none}
