@@ -4,7 +4,7 @@
 
 ## 正式發布條件
 
-- 前端檔案：`leave/index.html`、`leave/parent-center.css`、`leave/parent-center.js`。
+- 前端檔案：`leave/index.html`、`leave/parent-center.css`、`leave/poster-theme.css`、`leave/parent-center.js` 及 `leave/assets/`。
 - 校方核發工具：`parent-binding/index.html`、`parent-binding/binding.js`。
 - Gateway 必須同步升級至 `parent-center-v2`。完整 Gateway 含校方設定，只透過私有交付提供，不得提交到公開 GitHub。
 - LIFF Endpoint URL 維持 `https://taipingxinguang.org/leave/`，LIFF 必須啟用 `profile` scope。
@@ -29,3 +29,12 @@
 校方綁定工具每次請求都由後端驗證管理員／行政帳號。核發後清除畫面中的密碼；綁定碼不可張貼在群組，已綁定欄位不會直接被覆寫。
 
 本次只調整家長請假入口，不代表既有 Gateway 其他模組已完成安全稽核。
+
+## 2026-09-23 底稿設計更新
+
+- 使用校方提供的「我要請假」黃色／藍色底稿，桌面保留完整海報，手機改為短橫幅，表單放在同一設計框內。
+- 原圖壓縮為 WebP；素材隨頁面部署，不依賴額外圖片服務。樣式只套用 `leave-center`，不更改行政綁定工具版型。
+- 家長從官方 LINE 點既有 LIFF URL，預期在 LINE 內開啟頁面，不需要另開 Chrome。視窗高度由 LINE Developers 的 LIFF Size 設定控制，這次前端改版未變更該設定。
+- 已綁定帳號顯示自己的孩子；有多位可複選。若同次多選孩子，所選日期與服務項目會套用至所有被選孩子；不同需求需分次送出。
+- 這一輪不更改請假 API、LINE ID 或家長綁定資料。隔離預覽的虛構孩子不代表正式系統家長已完成綁定。
+- 正式發布前仍須完成 Gateway 版本相容、LINE 登入與至少一戶家長的真實綁定驗收；不得僅依本地模擬測試宣稱已上線。

@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#174C3C">
+  <meta name="theme-color" content="#ffe092">
   <title>家長請假中心｜弋果美語太平新光分校</title>
   <link rel="stylesheet" href="./parent-center.css">
+  <link rel="stylesheet" href="./poster-theme.css?v=20260923-1">
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script src="./parent-center.js" defer></script>
 </head>
-<body>
+<body class="leave-center">
   <header class="topbar">
     <a class="brand" href="https://taipingxinguang.org/" aria-label="太平新光分校首頁">
       <svg viewBox="0 0 40 40" role="img" aria-label="家校連線" width="36" height="36"><rect width="40" height="40" rx="12" fill="currentColor"/><path d="M10 15l10-5 10 5-10 5-10-5zm4 5v7c4 3 8 3 12 0v-7" fill="none" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -18,11 +19,13 @@
     <button id="themeBtn" class="quiet" type="button" aria-label="切換深色模式">深色</button>
   </header>
   <main>
-    <aside class="intro">
-      <p class="eyebrow">PARENT CARE</p>
-      <h1><span class="desktop-title">孩子的安排，<br>一次說清楚。</span><span class="mobile-title">家長請假中心</span></h1>
-      <p class="intro-text">請假與取消接送，在這裡一起完成。<br>只勾選需要調整的項目，其餘照常。</p>
-      <div class="intro-note"><span class="note-line"></span><div><strong>家長請假中心</strong><p>送出後記錄在系統，並通知相關老師。每日彙整照常保留。</p></div></div>
+    <aside class="intro" aria-label="我要請假">
+      <div class="poster-desktop"><img src="./assets/leave-poster.webp" width="720" height="1018" alt="弋果美語太平新光分校，我要請假。黃色底稿搭配孩子與手機日曆插畫。" fetchpriority="high"></div>
+      <div class="mobile-hero">
+        <div class="hero-copy"><p class="eyebrow">家長專屬服務</p><h1>我要請假</h1><p>選孩子、選日期，<br>一次安排好。</p></div>
+        <img src="./assets/leave-phone.webp" width="420" height="500" alt="" aria-hidden="true">
+      </div>
+      <div class="intro-note"><span class="note-line"></span><div><strong>孩子的安排，在 LINE 裡完成</strong><p>請假、取消接送分別勾選。確認送出後，系統會記錄並通知相關老師。</p></div></div>
       <div class="contact"><span>當天 11:30 後若需異動，請直接聯繫校方。</span><a href="tel:0423960585">04-2396-0585</a></div>
     </aside>
     <section class="workspace" aria-label="家長請假中心">
@@ -40,7 +43,7 @@
         <nav class="tabs" aria-label="功能切換"><button id="newTab" aria-pressed="true" type="button">我要請假</button><button id="historyTab" aria-pressed="false" type="button">我的紀錄 <span id="historyCount">0</span></button></nav>
         <form id="leaveForm" class="panel" novalidate>
           <div class="section-title"><div><p class="eyebrow" id="formEyebrow">NEW REQUEST</p><h2 id="formTitle">這次需要調整什麼？</h2></div><button id="addChild" class="text-button" type="button">綁定孩子</button></div>
-          <fieldset id="kidsField"><legend><span class="step">1</span> 選擇孩子 <small>可複選</small></legend><div id="kids" class="kid-grid"></div></fieldset>
+          <fieldset id="kidsField"><legend><span class="step">1</span> 哪位孩子要請假？ <small>可複選</small></legend><p class="kids-help">只顯示與您的 LINE 帳號綁定的孩子。<br>多選孩子時，將套用相同日期與請假項目。</p><div id="kids" class="kid-grid"></div></fieldset>
           <fieldset id="datesField"><legend><span class="step">2</span> 請假日期</legend><div class="date-grid"><label>開始日期<input id="dateFrom" type="date" required></label><label>結束日期<input id="dateTo" type="date" required></label></div><p class="help" id="dateHelp">一天請假，兩個日期選同一天即可。日期區間會逐日建立。</p></fieldset>
           <fieldset><legend><span class="step">3</span> 勾選調整項目 <small>可複選</small></legend>
             <div class="service-grid">
