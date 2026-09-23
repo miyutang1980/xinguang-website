@@ -2,8 +2,8 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>太平新光分校 · 孩子請假</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>太平新光分校 · 請假與接送</title>
 <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -28,6 +28,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 .kid-card .meta{font-size:0.82rem;color:#6B7280;margin-top:2px}
 .type-card{display:flex;align-items:flex-start;gap:12px;padding:14px;border:2px solid #E5E7EB;border-radius:10px;margin-bottom:8px;cursor:pointer;background:#fff;transition:all 0.15s}
 .type-card.selected{border-color:#10B981;background:#ECFDF5}
+.service-check{width:22px;height:22px;flex-shrink:0;margin-top:2px;accent-color:#047857}
+.type-card:focus-within{outline:2px solid #047857;outline-offset:2px}
+.selection-summary{padding:12px;background:#ECFDF5;border-radius:8px;font-size:0.9rem;color:#065F46;margin:12px 0}
+.selection-summary small{display:block;color:#4B5563;margin-top:4px}
+.success-modal .box{max-height:90vh;overflow-y:auto}
 .type-card .radio{width:22px;height:22px;border:2px solid #D1D5DB;border-radius:50%;flex-shrink:0;margin-top:2px;position:relative}
 .type-card.selected .radio{border-color:#10B981}
 .type-card.selected .radio::after{content:'';position:absolute;width:10px;height:10px;background:#10B981;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
@@ -61,8 +66,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft Jheng
 <body>
 
 <div class="header">
-  <h1>📝 孩子請假</h1>
-  <p>太平新光分校</p>
+  <h1>請假與接送</h1>
+  <p>太平新光分校 · 各項獨立勾選</p>
 </div>
 
 <div class="container" id="app">
@@ -105,10 +110,10 @@ const GW_URL = 'https://script.google.com/macros/s/AKfycbw-7_a_OfUVlgegcLxkux_9d
             Object.keys(parsed).forEach(function(k){
               var v = parsed[k];
               if (v === null || v === undefined) return;
-              if (typeof v === 'object') qs.append(k + '_json', JSON.stringify(v));
+              if (typeof v === 'object' || typeof v === 'boolean') qs.append(k + '_json', JSON.stringify(v));
               else qs.append(k, String(v));
             });
-            return origFetch.call(window, GW_URL + '?' + qs.toString());
+            return origFetch.call(window, GW_URL + '?' + qs.toString(), {signal: opts.signal, cache: 'no-store'});
           }
         }
       }
@@ -141,12 +146,44 @@ let _state = {
 };
 
 const LEAVE_TYPES = [
-  { v: 'pickup_only', t: '🚐 接車不接(改自己接)', d: '接車取消、美語/安親/托育照常' },
-  { v: 'pickup_eng', t: '📚 接車不接 + 美語請假', d: '接車取消 + 不上美語(其他照常)' },
-  { v: 'pickup_eng_daycare', t: '🏫 接車 + 美語 + 安親請假', d: '接車取消、美語請假、安親不留' },
-  { v: 'pickup_eng_nursery', t: '👶 接車 + 美語 + 托育請假', d: '接車取消、美語請假、托育不留' },
-  { v: 'all', t: '🛑 全部請假', d: '全部不來上課/不接車/不安親/不托育' }
+  { v: 1, t: '取消接送', d: '指定日期不需要學校接送；其他課程不受影響' },
+  { v: 2, t: '美語請假', d: '指定日期不上美語；未勾取消接送就不變更接送安排' },
+  { v: 4, t: '安親請假', d: '指定日期不留安親；美語、托育與接送各自勾選' },
+  { v: 8, t: '托育請假', d: '指定日期不留托育；美語、安親與接送各自勾選' }
 ];
+
+function serviceMask(type) {
+  const legacy = {pickup_only:1,pickup_eng:3,pickup_eng_daycare:7,pickup_eng_nursery:11,all:15};
+  if (Object.prototype.hasOwnProperty.call(legacy, type)) return legacy[type];
+  const match = /^services_([1-9]|1[0-5])$/.exec(String(type || ''));
+  return match ? Number(match[1]) : 0;
+}
+function serviceLabel(type) {
+  if (type === 'all') return '全部請假（舊紀錄：安親／托育依原資格）';
+  return LEAVE_TYPES.filter(t => serviceMask(type) & t.v).map(t => t.t).join('＋') || '尚未勾選';
+}
+function serviceCards(type, editing) {
+  return LEAVE_TYPES.map(t => `<label class="type-card ${serviceMask(type)&t.v?'selected':''}">
+    <input class="service-check" type="checkbox" aria-label="${t.t}" value="${t.v}"
+      ${serviceMask(type)&t.v?'checked':''} onchange="toggleService(${t.v},this.checked,${!!editing})">
+    <span class="info"><span class="title">${t.t}</span><span class="desc" style="display:block">${t.d}</span></span>
+  </label>`).join('');
+}
+function selectionSummary(type) {
+  return `<strong>本次變更：${esc(serviceLabel(type))}</strong><small>未勾選的項目不變更原安排，請至少勾選一項。</small>`;
+}
+function toggleService(bit, checked, editing) {
+  if (editing ? _state.editingSaving : _state.loading) return;
+  const field = editing ? 'editingLeaveType' : 'leaveType';
+  let mask = serviceMask(_state[field]);
+  mask = checked ? mask | bit : mask & ~bit;
+  _state[field] = mask ? 'services_' + mask : '';
+  const root = editing ? document.getElementById('successModal') : document.getElementById('tabBody');
+  root.querySelectorAll('.service-check').forEach(el => el.closest('.type-card').classList.toggle('selected', el.checked));
+  root.querySelector('.selection-summary').innerHTML = selectionSummary(_state[field]);
+  if (editing) document.getElementById('editSaveBtn').disabled = !mask || _state.editingSaving;
+  else document.getElementById('submitBtn').disabled = !mask || !_state.selectedKidIds.length || !_state.dateFrom || _state.loading;
+}
 
 function _getTodayStr() {
   const d = new Date();
@@ -174,13 +211,30 @@ function _getDateRange(from, to) {
 
 async function gwCall(action, payload) {
   const body = Object.assign({ _action: action }, payload || {});
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 25000);
+  try {
   const res = await fetch(GW_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(body),
-    redirect: 'follow'
+    redirect: 'follow',
+    signal: controller.signal
   });
+  if (!res.ok) return {success:false,error:'連線失敗，請稍後確認紀錄（HTTP '+res.status+'）'};
   return await res.json();
+  } catch (e) {
+    return {success:false,error:'連線中斷或逾時。送出結果可能尚未確認，請先查看「我的請假」，避免重複送出。'};
+  } finally { clearTimeout(timer); }
+}
+
+let _servicesBackendReady = false;
+async function requireIndependentServices() {
+  if (_servicesBackendReady) return true;
+  const r = await gwCall('leave_capabilities', {});
+  _servicesBackendReady = r.success === true && r.independentServices === true;
+  if (!_servicesBackendReady) alert('新版請假功能尚未就緒，未送出任何變更。請聯絡學校完成後端更新。');
+  return _servicesBackendReady;
 }
 
 async function init() {
@@ -265,6 +319,7 @@ function render() {
 }
 
 function switchTab(t) {
+  if (_state.loading || _state.editingSaving) return;
   _state.tab = t;
   if (t === 'mine' && _state.myLeaves.length === 0 && !_state.loadingMine) {
     loadMyLeaves();
@@ -334,8 +389,7 @@ function renderMine() {
 
   const cards = list.map(l => {
     const lockInfo = _isLocked(l);
-    const tl = LEAVE_TYPES.find(t => t.v === l.leaveType);
-    const typeLabel = tl ? tl.t : l.leaveType;
+    const typeLabel = l.leaveTypeLabel || serviceLabel(l.leaveType);
     let actions = '';
     if (lockInfo.locked) {
       actions = `<div style="text-align:center;padding:10px;background:${lockInfo.color}15;color:${lockInfo.color};border-radius:8px;font-size:0.85rem;font-weight:600;margin-top:10px">🔒 ${lockInfo.label}</div>`;
@@ -392,11 +446,7 @@ function startEditLeave(leaveNo) {
   _state.editingMakeup = l.makeup;
   // 顯示修改 modal(複用 success-modal 動畫、但變成表單)
   const m = document.getElementById('successModal');
-  const typesHtml = LEAVE_TYPES.map(t => `
-    <div class="type-card ${_state.editingLeaveType===t.v?'selected':''}" onclick="_state.editingLeaveType='${t.v}';startEditLeave('${leaveNo}')">
-      <div class="radio"></div>
-      <div class="info"><div class="title" style="font-size:0.85rem">${t.t}</div></div>
-    </div>`).join('');
+  const typesHtml = serviceCards(_state.editingLeaveType, true);
   m.querySelector('.box').innerHTML = `
     <div style="text-align:left">
       <h3 style="color:#111827;margin-bottom:8px">✏️ 修改請假 · ${esc(l.name)}</h3>
@@ -404,15 +454,16 @@ function startEditLeave(leaveNo) {
         📆 ${esc(l.date)} · ${esc(l.cls||'')} · 請假編號 ${esc(l.leaveNo)}<br>
         要改日期或孩子請先取消這筆、再重新填一次
       </div>
-      <label class="label">請假類型</label>
-      <div style="max-height:240px;overflow-y:auto;margin-bottom:14px">${typesHtml}</div>
+      <div class="label">請勾選本次要變更的項目（可複選）</div>
+      <div>${typesHtml}</div>
+      <div class="selection-summary" aria-live="polite">${selectionSummary(_state.editingLeaveType)}</div>
       <label class="label" style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="editMakeup" ${_state.editingMakeup?'checked':''} style="width:18px;height:18px;cursor:pointer">
         <span>需要補課 (不勾預設不補)</span>
       </label>
       <label class="label" style="margin-top:14px">原因說明</label>
       <textarea class="textarea" id="editReason" style="margin-bottom:14px;min-height:60px" placeholder="(選填) 例：發燒的 / 外出訪友 / 家庭事">${esc(_state.editingReason)}</textarea>
-      <button class="btn btn-primary" onclick="submitEditLeave()">✅ 儲存修改</button>
+      <button class="btn btn-primary" id="editSaveBtn" ${serviceMask(_state.editingLeaveType)?'':'disabled'} onclick="submitEditLeave()">儲存修改</button>
       <button class="btn btn-outline" onclick="closeEditModal()">取消</button>
     </div>`;
   m.classList.add('open');
@@ -425,6 +476,7 @@ function startEditLeave(leaveNo) {
 }
 
 function closeEditModal() {
+  if (_state.editingSaving) return;
   document.getElementById('successModal').classList.remove('open');
   // 還原成功彈窗 HTML(在 success modal 可能被覆寫)
   document.getElementById('successModal').querySelector('.box').innerHTML = `
@@ -436,16 +488,27 @@ function closeEditModal() {
 }
 
 async function submitEditLeave() {
-  const reason = (document.getElementById('editReason') || {}).value || _state.editingReason;
+  if (_state.editingSaving || !serviceMask(_state.editingLeaveType)) return;
+  const reasonEl = document.getElementById('editReason');
+  const reason = reasonEl ? reasonEl.value : _state.editingReason;
   const mkEl = document.getElementById('editMakeup');
   const makeup = mkEl ? mkEl.checked : _state.editingMakeup;
-  const r = await gwCall('leave_update', {
-    leaveNo: _state.editingLeaveNo,
-    lineUserId: _state.lineUserId,
-    leaveType: _state.editingLeaveType,
-    reason: reason,
-    makeup: makeup
-  });
+  const payload = {leaveNo:_state.editingLeaveNo,lineUserId:_state.lineUserId,
+    leaveType:_state.editingLeaveType,reason:reason,makeup:makeup};
+  _state.editingSaving = true;
+  const controls = document.querySelectorAll('#successModal input, #successModal textarea, #successModal button');
+  controls.forEach(el => el.disabled = true);
+  if (!(await requireIndependentServices())) {
+    _state.editingSaving = false;
+    controls.forEach(el => el.disabled = false);
+    document.getElementById('editSaveBtn').disabled = !serviceMask(_state.editingLeaveType);
+    return;
+  }
+  const r = await gwCall('leave_update', payload);
+  _state.editingSaving = false;
+  controls.forEach(el => el.disabled = false);
+  const saveBtn = document.getElementById('editSaveBtn');
+  if (saveBtn) saveBtn.disabled = !serviceMask(_state.editingLeaveType);
   if (r.success) {
     alert('✅ 已修改');
     closeEditModal();
@@ -478,16 +541,9 @@ function renderNew() {
   }).join('');
 
   // 類型卡片
-  const typesHtml = LEAVE_TYPES.map(t => `
-    <div class="type-card ${_state.leaveType===t.v?'selected':''}" onclick="selectType('${t.v}')">
-      <div class="radio"></div>
-      <div class="info">
-        <div class="title">${t.t}</div>
-        <div class="desc">${t.d}</div>
-      </div>
-    </div>`).join('');
+  const typesHtml = serviceCards(_state.leaveType, false);
 
-  const canSubmit = _state.selectedKidIds.length > 0 && _state.leaveType && _state.dateFrom;
+  const canSubmit = _state.selectedKidIds.length > 0 && serviceMask(_state.leaveType) && _state.dateFrom && !_state.loading;
 
   document.getElementById('tabBody').innerHTML = `
     <div class="card">
@@ -522,8 +578,10 @@ function renderNew() {
     </div>
 
     <div class="card">
-      <h2><span class="num">3</span> 請假類型</h2>
+      <h2><span class="num">3</span> 本次請假／接送項目</h2>
+      <p style="font-size:0.88rem;color:#4B5563;margin-bottom:12px">可分別勾選，互不連動。例如：只請美語，就只勾「美語請假」。</p>
       ${typesHtml}
+      <div class="selection-summary" aria-live="polite">${selectionSummary(_state.leaveType)}</div>
     </div>
 
     <div class="card">
@@ -542,11 +600,13 @@ function renderNew() {
 
   const ri = document.getElementById('reasonInput');
   if (ri) ri.addEventListener('input', e => { _state.reason = e.target.value; });
+  if (_state.loading) document.querySelectorAll('#tabBody input, #tabBody textarea, #tabBody button').forEach(el => el.disabled = true);
 }
 
 function esc(s){if(s==null)return '';return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
 function toggleKid(rowIndex) {
+  if (_state.loading) return;
   const i = _state.selectedKidIds.indexOf(rowIndex);
   if (i >= 0) _state.selectedKidIds.splice(i, 1);
   else _state.selectedKidIds.push(rowIndex);
@@ -554,6 +614,7 @@ function toggleKid(rowIndex) {
 }
 
 function changeDate(which, val) {
+  if (_state.loading) return;
   if (which === 'from') {
     _state.dateFrom = val;
     if (_state.dateTo < val) _state.dateTo = val;
@@ -563,32 +624,26 @@ function changeDate(which, val) {
   render();
 }
 
-function selectType(v) { _state.leaveType = v; render(); }
-
 async function submitLeave() {
   if (_state.loading) return;
   const dates = _getDateRange(_state.dateFrom, _state.dateTo);
   const kids = _state.kids.filter(k => _state.selectedKidIds.indexOf(k._row) >= 0);
-  if (!kids.length || !dates.length || !_state.leaveType) {
+  if (!kids.length || !dates.length || !serviceMask(_state.leaveType)) {
     alert('請完整填寫'); return;
   }
-  _state.loading = true; render();
-  // 取 textarea 最新值
   const ri = document.getElementById('reasonInput');
   if (ri) _state.reason = ri.value;
-  const r = await gwCall('leave_create', {
-    kids: kids,
-    dates: dates,
-    leaveType: _state.leaveType,
-    reason: _state.reason,
-    makeup: _state.makeup,
-    lineUserId: _state.lineUserId,
-    source: 'liff'
-  });
+  const payload = {kids:kids,dates:dates,leaveType:_state.leaveType,reason:_state.reason,
+    makeup:_state.makeup,lineUserId:_state.lineUserId,source:'liff'};
+  _state.loading = true; render();
+  if (!(await requireIndependentServices())) {
+    _state.loading = false; render(); return;
+  }
+  const r = await gwCall('leave_create', payload);
   _state.loading = false;
   if (r.success) {
     document.getElementById('successDetail').textContent =
-      '已送出 ' + r.count + ' 筆請假 · ' + kids.length + ' 個孩子 / ' + dates.length + ' 天';
+      '已送出 ' + r.count + ' 筆請假 · ' + kids.length + ' 個孩子 / ' + dates.length + ' 天。項目：' + serviceLabel(payload.leaveType);
     document.getElementById('successModal').classList.add('open');
   } else {
     render();
