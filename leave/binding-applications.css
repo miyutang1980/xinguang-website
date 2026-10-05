@@ -1,0 +1,14 @@
+.binding-steps{display:flex;gap:8px;list-style:none;counter-reset:step;padding:0;margin:22px 0;font-size:12px}
+.binding-steps li{flex:1;display:flex;align-items:center;gap:5px;color:var(--muted)}
+.binding-steps li:before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:24px;height:24px;flex:none;border-radius:50%;background:var(--soft);color:var(--green);font-weight:700}
+.family-fields{margin-top:20px}.family-fields>label,.family-grid{margin-bottom:16px}.family-fields legend{font-size:16px}
+.family-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:12px}
+.family-fields label{font-size:14px}
+.family-fields input[type=tel],.family-fields select{width:100%;min-width:0;min-height:46px;border:1px solid var(--line);border-radius:9px;padding:10px;color:var(--ink);background:var(--surface);font:inherit;margin-top:6px}
+.family-fields select:focus-visible{outline:3px solid #b58a36;outline-offset:3px}
+.application-child{display:flex;align-items:end;gap:12px;margin:10px 0}.application-child label{flex:1;min-width:0}.application-child button{min-height:46px}
+#familySubmit{width:100%;margin-top:18px}#familyMessage{font-size:14px;color:var(--green);margin-top:16px}
+.application-status{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0;overflow-wrap:anywhere}.application-status>p{margin-top:7px}.application-status strong{color:var(--green)}
+.binding-backup{border-top:1px solid var(--line);padding-top:18px;margin-top:24px;font-size:13px}.binding-backup summary{cursor:pointer;min-height:44px}.binding-backup button{margin-top:12px}
+#bindingPanel .actions{flex-wrap:wrap}
+@media(max-width:430px){.family-grid{grid-template-columns:1fr}.binding-steps{gap:4px;font-size:11px}#bindingPanel h2{font-size:23px}}

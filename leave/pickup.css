@@ -1,0 +1,9 @@
+.leave-center .tabs button{min-width:0;padding:10px 6px}
+.pickup-rule{padding:16px;background:var(--soft);border-left:3px solid var(--green);border-radius:10px;color:var(--ink)}
+.pickup-rule strong{font-size:15px}.pickup-rule p{margin-top:6px;font-size:13px;color:var(--muted)}
+.pickup-dates{margin-top:24px}
+.leave-center input[type=time]{width:100%;min-width:0;min-height:48px;border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:6px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+.pickup-note{margin-top:22px;font-size:14px}.pickup-history{margin-top:32px;border-top:1px solid var(--line);padding-top:24px}
+.pickup-history h3{font-size:17px;margin:0}.pickup-history .record-top{flex-wrap:wrap}.pickup-history .record h3{font-size:16px}
+.pickup-history .notification-list li{flex-wrap:wrap;overflow-wrap:anywhere}
+@media(max-width:380px){.leave-center .tabs button{font-size:13px}.leave-center .tabs span{margin-left:2px;padding:1px 3px}.pickup-dates{grid-template-columns:1fr}.pickup-history .section-title{align-items:flex-start}}
