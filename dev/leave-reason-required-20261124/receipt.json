@@ -17,5 +17,28 @@
     "boldGuidance": "請說明便於分校能協助後續課程進度安排。",
     "scriptVersion": "20261124-reason-required-1",
     "authentication": "LINE sign-in required; no parent application submitted"
+  },
+  "styleUpdate": {
+    "at": "2026-11-24T10:44:44.071Z",
+    "version": 62,
+    "base": 61,
+    "assetsVerified": 56,
+    "changedAssets": 1,
+    "unchangedAssets": 55,
+    "bindings": 0,
+    "schedules": 0,
+    "formalDataWrites": 0,
+    "notifications": 0,
+    "tests": 8,
+    "browser": {
+      "requiredLabel": "*必填*",
+      "requiredColor": "rgb(166, 43, 41)",
+      "guidanceFontSize": "12px",
+      "referenceFontSize": "12px",
+      "guidanceColor": "rgb(89, 107, 123)",
+      "referenceColor": "rgb(89, 107, 123)",
+      "guidanceFontWeight": "900",
+      "required": true
+    }
   }
 }

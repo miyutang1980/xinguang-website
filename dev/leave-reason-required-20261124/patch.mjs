@@ -6,9 +6,13 @@ export function replaceOnce(source, before, after) {
 export function patchHtml(source) {
   let result = replaceOnce(source,
     '<label for="reason">補充說明 <small>選填</small></label>',
-    '<label for="reason">補充說明 <small>必填</small></label><p id="reasonHelp"><strong>' + guidance + '</strong></p>');
+    '<label for="reason">補充說明 <small style="color:var(--error)">*必填*</small></label><p id="reasonHelp" style="font-size:var(--text-xs);color:var(--muted);font-weight:700"><strong>' + guidance + '</strong></p>');
   result = replaceOnce(result, '<textarea id="reason"', '<textarea id="reason" required aria-required="true" aria-describedby="reasonHelp"');
   return replaceOnce(result, 'parent-center.js?v=20261007-startup-1', 'parent-center.js?v=20261124-reason-required-1');
+}
+export function patchStyle61(source) {
+  let result = replaceOnce(source, '<small>必填</small>', '<small style="color:var(--error)">*必填*</small>');
+  return replaceOnce(result, '<p id="reasonHelp">', '<p id="reasonHelp" style="font-size:var(--text-xs);color:var(--muted);font-weight:700">');
 }
 export function patchScript(source) {
   return replaceOnce(source,
