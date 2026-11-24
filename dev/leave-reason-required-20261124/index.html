@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffe092">
+  <title>家長請假中心｜弋果美語太平新光分校</title>
+  <link rel="stylesheet" href="./parent-center.css">
+  <link rel="stylesheet" href="./poster-theme.css?v=20260923-1">
+  <link rel="stylesheet" href="./binding-applications.css?v=20260923-3">
+  <link rel="stylesheet" href="./pickup.css?v=20260923-4">
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script src="./parent-center.js?v=20261007-startup-1" defer></script>
+  <script src="./pickup.js?v=20260923-4" defer></script>
+</head>
+<body class="leave-center">
+  <header class="topbar">
+    <a class="brand" href="https://taipingxinguang.org/" aria-label="太平新光分校首頁">
+      <svg viewBox="0 0 40 40" role="img" aria-label="家校連線" width="36" height="36"><rect width="40" height="40" rx="12" fill="currentColor"/><path d="M10 15l10-5 10 5-10 5-10-5zm4 5v7c4 3 8 3 12 0v-7" fill="none" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span>弋果美語<span class="brand-sub">太平新光分校</span></span>
+    </a>
+    <button id="themeBtn" class="quiet" type="button" aria-label="切換深色模式">深色</button>
+  </header>
+  <main>
+    <aside class="intro" aria-label="我要請假">
+      <div class="poster-desktop"><img src="./assets/leave-poster.webp" width="720" height="1018" alt="弋果美語太平新光分校，我要請假。黃色底稿搭配孩子與手機日曆插畫。" fetchpriority="high"></div>
+      <div class="mobile-hero">
+        <div class="hero-copy"><p class="eyebrow">家長專屬服務</p><h1>家長中心</h1><p>請假、接孩子，<br>在這裡安排好。</p></div>
+        <img src="./assets/leave-phone.webp" width="420" height="500" alt="" aria-hidden="true">
+      </div>
+      <div class="intro-note"><span class="note-line"></span><div><strong>孩子的安排，在 LINE 裡完成</strong><p>請假、取消接送分別勾選。也可切換「接孩子通知」，告知校方預計到校時間。</p></div></div>
+      <div class="contact"><span>請假異動：當天 11:30 後請聯繫校方。接孩子通知另填日期與時間；緊急安排請來電確認。</span><a href="tel:0423960585">04-2396-0585</a></div>
+    </aside>
+    <section class="workspace" aria-label="家長請假中心">
+      <div id="connection" class="connection" role="status"><span class="dot"></span><span id="connectionText">正在確認 LINE 登入…</span></div>
+      <div id="globalError" class="alert" role="alert" hidden></div>
+      <div id="loginPanel" class="panel empty" hidden><p class="eyebrow">安全登入</p><h2>先確認您的 LINE 身分</h2><p>登入後，只會顯示與您綁定的孩子。</p><button id="loginBtn" class="primary">使用 LINE 登入</button><a class="text-link" href="https://liff.line.me/2009757754-paHJ5QJO">從 LINE 開啟家長中心</a></div>
+      <div id="loadingPanel" class="panel loading" aria-label="讀取中"><div class="skeleton short"></div><div class="skeleton"></div><div class="skeleton"></div><p>正在讀取孩子與請假紀錄，請稍候。</p></div>
+      <section id="bindingPanel" class="panel" hidden>
+        <p class="eyebrow">FAMILY CONNECTION</p><h2>一次連結您的孩子</h2>
+        <p class="muted">不用索取綁定碼。填好家長資料與孩子姓名，由校方核對後一次開通；每位家長請使用自己的 LINE 申請。</p>
+        <ol class="binding-steps"><li>填寫資料</li><li>校方核對</li><li>開始請假</li></ol>
+        <div id="applicationList" aria-live="polite"></div>
+        <p id="bindingUpgrade" class="alert" hidden>校方正在更新免碼申請功能，請稍後重新讀取。已綁定孩子仍可正常請假。</p>
+        <form id="familyForm">
+          <fieldset id="familyFields" class="family-fields">
+            <legend>家長資料</legend>
+            <label>家長姓名<input id="parentName" required maxlength="80" autocomplete="name" placeholder="請填真實姓名"></label>
+            <div class="family-grid"><label>與孩子的關係<select id="relationship" required><option value="">請選擇</option><option>爸爸</option><option>媽媽</option><option>祖父母</option><option>其他監護人</option></select></label><label>校方留存的聯絡電話<input id="parentPhone" type="tel" required maxlength="24" autocomplete="tel" placeholder="完整手機或市話"></label></div>
+            <label>要綁定的孩子 <small>一次最多 5 位</small></label>
+            <div id="appChildren"></div><button id="addAppChild" type="button" class="secondary">＋ 新增一位孩子</button>
+            <label class="makeup"><input id="familyConsent" type="checkbox" required>我是上述孩子的家長或經授權照顧者，同意校方核驗身分。</label>
+            <p class="help">申請不等於綁定完成。核准前不會顯示孩子班級與請假功能，也不會自動提交任何請假。</p>
+          </fieldset>
+          <button id="familySubmit" class="primary" type="submit">送出整份綁定申請</button>
+        </form>
+        <p id="familyMessage" role="status"></p>
+        <div class="actions"><button id="applicationRefresh" type="button" class="secondary">重新讀取審核狀態</button><button id="bindingBack" type="button" class="secondary" hidden>返回請假</button></div>
+        <details class="binding-backup"><summary>校方已提供綁定碼？使用備用方式</summary><form id="bindingForm"><label for="bindingCode">校方提供的綁定碼</label><input id="bindingCode" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" maxlength="24" required><p class="help">綁定碼 30 分鐘內有效，請勿轉傳他人。</p><button class="secondary" type="submit">使用綁定碼</button></form><p id="bindingMessage" role="status"></p></details>
+        <a class="text-link" href="tel:0423960585">資料不符或急需協助？聯絡校方</a>
+      </section>
+      <div id="center" hidden>
+        <nav class="tabs" aria-label="功能切換"><button id="newTab" aria-pressed="true" type="button">我要請假</button><button id="pickupTab" aria-pressed="false" type="button">接孩子通知</button><button id="historyTab" aria-pressed="false" type="button">請假紀錄 <span id="historyCount">0</span></button></nav>
+        <form id="leaveForm" class="panel" novalidate>
+          <div class="section-title"><div><p class="eyebrow" id="formEyebrow">NEW REQUEST</p><h2 id="formTitle">這次需要調整什麼？</h2></div><button id="addChild" class="text-button" type="button">新增／綁定進度</button></div>
+          <fieldset id="kidsField"><legend><span class="step">1</span> 哪位孩子要請假？ <small>可複選</small></legend><p class="kids-help">只顯示與您的 LINE 帳號綁定的孩子。<br>多選孩子時，將套用相同日期與請假項目。</p><div id="kids" class="kid-grid"></div></fieldset>
+          <fieldset id="datesField"><legend><span class="step">2</span> 請假日期</legend><div class="date-grid"><label>開始日期<input id="dateFrom" type="date" required></label><label>結束日期<input id="dateTo" type="date" required></label></div><p class="help" id="dateHelp">一天請假，兩個日期選同一天即可。日期區間會逐日建立。</p></fieldset>
+          <fieldset><legend><span class="step">3</span> 勾選調整項目 <small>可複選</small></legend>
+            <div class="service-grid">
+              <label class="choice service"><input type="checkbox" name="service" value="1"><span><strong>取消接送</strong><small>這次不搭校車</small></span><span class="checkmark"></span></label>
+              <label class="choice service"><input type="checkbox" name="service" value="2"><span><strong>美語請假</strong><small>美語課程不出席</small></span><span class="checkmark"></span></label>
+              <label class="choice service"><input type="checkbox" name="service" value="4"><span><strong>安親請假</strong><small>安親課輔不出席</small></span><span class="checkmark"></span></label>
+              <label class="choice service"><input type="checkbox" name="service" value="8"><span><strong>托育請假</strong><small>托育照顧不出席</small></span><span class="checkmark"></span></label>
+            </div>
+            <p class="selection-note">不會自動全選。只請美語假，不會取消接送。</p>
+          </fieldset>
+          <div class="detail-fields"><label for="reason">補充說明 <small>選填</small></label><textarea id="reason" rows="2" maxlength="500" placeholder="例如：身體不適，在家休息。"></textarea><label id="makeupWrap" class="makeup" hidden><input id="makeup" type="checkbox">需要校方聯繫美語補課安排</label></div>
+          <p id="formError" class="error-text" role="alert" hidden></p>
+          <div class="submit-row"><p id="selectionSummary">請選擇孩子與調整項目</p><button id="reviewBtn" class="primary" type="submit">確認請假內容 <span aria-hidden="true">→</span></button></div>
+          <button id="exitEdit" class="text-button" type="button" hidden>放棄修改，返回紀錄</button>
+        </form>
+        <section id="pickupPanel" class="panel" hidden aria-labelledby="pickupTitle">
+          <p class="eyebrow">PARENT PICKUP</p><h2 id="pickupTitle">幾點來接孩子？</h2>
+          <p class="muted">填好日期與時間，讓校方提前核對下課安排。這不是請假，也不會自動取消校車。</p>
+          <div class="pickup-rule"><strong>當天填，立即通知</strong><p>提前登記未來日期，於指定日期中午 12:00 起通知校方。排程或網路可能稍有延遲。</p></div>
+          <p id="pickupError" class="error-text" role="alert" hidden></p>
+          <p id="pickupUnavailable" class="alert" hidden>校方尚未完成接孩子通知設定，請先電話聯繫。其他請假功能不受影響。</p>
+          <form id="pickupForm" novalidate>
+            <fieldset id="pickupFields" disabled>
+              <legend><span class="step">1</span> 要接哪位孩子？ <small>可複選</small></legend>
+              <div id="pickupKids" class="kid-grid"></div>
+              <p class="help">多選孩子會套用相同日期與時間；不同安排請分開填寫。</p>
+              <div class="date-grid pickup-dates">
+                <label for="pickupDate">接孩子日期<input id="pickupDate" type="date" required></label>
+                <label for="pickupTime">預計接孩子時間<input id="pickupTime" type="time" required step="60" aria-describedby="pickupTimeHelp"></label>
+              </div>
+              <p id="pickupTimeHelp" class="help">例如 17:10。提前登記限中午 12:00 後接孩子；中午前接孩子請來電，或於當天填寫。</p>
+              <p id="pickupWhen" class="selection-note" role="status"></p>
+              <label class="pickup-note" for="pickupNote">補充說明 <small>選填，最多 300 字</small></label>
+              <textarea id="pickupNote" maxlength="300" rows="2" placeholder="例如：爸爸會到校門口接，請協助確認下課安排。"></textarea>
+              <div class="submit-row"><button id="pickupReview" type="submit" class="primary">確認接孩子通知 →</button></div>
+            </fieldset>
+          </form>
+          <section class="pickup-history" aria-labelledby="pickupHistoryTitle">
+            <div class="section-title"><h3 id="pickupHistoryTitle">我的接孩子通知</h3><button id="pickupRefresh" type="button" class="secondary">重新讀取</button></div>
+            <p class="help">只顯示本人送出的通知。要改時間，請先取消原通知再新增；已到接孩子時間請直接聯繫校方。</p>
+            <div id="pickupHistory" aria-live="polite"></div>
+          </section>
+        </section>
+        <section id="historyPanel" class="panel" hidden><div class="section-title"><div><p class="eyebrow">YOUR REQUESTS</p><h2>我的請假紀錄</h2></div><button id="refreshBtn" class="secondary" type="button">重新整理</button></div><p class="help">僅顯示您建立的紀錄。當天 11:30 前且尚未彙整通知的紀錄，可修改或取消。</p><div id="historyList"></div></section>
+      </div>
+      <footer class="workspace-footer">您的資料僅用於校務安排與身分核對。<br>當天臨時異動，請來電 <a href="tel:0423960585">04-2396-0585</a> 確認。</footer>
+    </section>
+  </main>
+  <dialog id="reviewDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-body"><p class="eyebrow" id="dialogEyebrow">最後確認</p><h2 id="dialogTitle">確認這次的安排</h2><div id="reviewContent"></div><p id="dialogError" class="error-text" role="alert" hidden></p><div class="dialog-actions"><button id="backBtn" class="secondary" type="button">返回修改</button><button id="sendBtn" class="primary" type="button">確認送出</button></div></div>
+  </dialog>
+  <dialog id="pickupDialog" aria-labelledby="pickupDialogTitle">
+    <div class="dialog-body"><p class="eyebrow">PICKUP NOTICE</p><h2 id="pickupDialogTitle">確認接孩子通知</h2>
+      <div id="pickupReviewContent"></div><p id="pickupDialogError" class="error-text" role="alert" hidden></p>
+      <div class="dialog-actions"><button id="pickupBack" class="secondary" type="button">返回修改</button><button id="pickupSend" class="primary" type="button">確認送出</button></div>
+    </div>
+  </dialog>
+</body>
+</html>

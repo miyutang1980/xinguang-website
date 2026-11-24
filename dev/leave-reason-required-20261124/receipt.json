@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-24T10:38:21.317Z",
+  "version": 61,
+  "base": 59,
+  "assetsVerified": 56,
+  "changedAssets": 2,
+  "unchangedAssets": 54,
+  "bindings": 0,
+  "schedules": 0,
+  "formalDataWrites": 0,
+  "notifications": 0,
+  "tests": 7,
+  "browser": {
+    "required": true,
+    "ariaRequired": "true",
+    "label": "補充說明 必填",
+    "boldGuidance": "請說明便於分校能協助後續課程進度安排。",
+    "scriptVersion": "20261124-reason-required-1",
+    "authentication": "LINE sign-in required; no parent application submitted"
+  }
+}
